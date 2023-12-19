@@ -3,7 +3,7 @@ version: "3.9"
 services:
   app:
     environment:
-      - CCMSAPI_SERVER_PORT=8089 # port number should match server.port in application.yaml
+      - EMP_SERVER_PORT=8089 # port number should match server.port in application.yaml
     build:
       context: .
     ports:
