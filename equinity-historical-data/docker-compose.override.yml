@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  app:
+    environment:
+      - HOST_ENV=local
+      - LAA_EMP_PORT_HTTP=8089
+
+    ports:
+      - "8081:8081"
+    command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081 -jar app.jar

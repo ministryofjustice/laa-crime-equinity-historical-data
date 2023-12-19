@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  app:
+    environment:
+      - EMP_SERVER_PORT=8089 # port number should match server.port in application.yaml
+    build:
+      context: .
+    ports:
+      - "8089:8089"
+      - "8188:8188"
