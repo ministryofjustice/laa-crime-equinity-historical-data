@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${APP_NAME}-ingress
+  namespace: ${APP_NAME}-${ENV_NAME}
+  labels:
+    app: ${APP_NAME}
+    app.kubernetes.io/metadata.name: ${APP_NAME}-${ENV_NAME}
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: ${APP_NAME}-ingress-${NAMESPACE}-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+spec:
+  ingressClassName: default # modsec
+  tls:
+    - hosts:
+        - ${NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+  rules:
+    - host: ${NAMESPACE}.apps.live.cloud-platform.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific #"Prefix"
+            backend:
+              service:
+                name: ${APP_NAME}
+                port:
+                  number: 8089
+          - path: /actuator/health
+            pathType: "Exact"
+            backend:
+              service:
+                name: ${APP_NAME}
+                port:
+                  number: 8188
+
+# This is a generic file that creates a Kubernetes ingress in our namespace.
+#  An ingress provides access to our application via the service described in the 'service.yml'.

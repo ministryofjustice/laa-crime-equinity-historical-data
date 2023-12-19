@@ -1,0 +1,218 @@
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Build and Deploy after PR merged
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+  workflow_dispatch:
+env:
+  JAVA_VERSION: 17
+  JAVA_DIST: temurin
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  capture-repo-info:
+    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    # map a step output to job output
+    outputs:
+      repo_name: ${{ steps.extract_repo_name.outputs.repo_name }}
+      app_name: ${{ steps.extract_app_name.outputs.app_name }}
+      working_directory: "./${{ steps.extract_repo_name.outputs.repo_name }}"
+
+    steps:
+      - name: Extract short repo name
+        shell: bash
+        run: echo "repo_name=${GITHUB_REPOSITORY#*\/laa-crime-}" >> $GITHUB_OUTPUT
+        id: extract_repo_name
+
+      - name: Extract app name name
+        shell: bash
+        run: echo "app_name=${GITHUB_REPOSITORY#ministryofjustice\/}" >> $GITHUB_OUTPUT
+        id: extract_app_name
+
+  test:
+    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    needs:
+      - capture-repo-info
+    env:
+      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
+      REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.JAVA_DIST}}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          build-root-directory: ${{env.WORKING_DIRECTORY}}
+
+      - name: Run Unit Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean test
+          build-root-directory: ${{env.WORKING_DIRECTORY}}
+
+      - name: Generate Test coverage report
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: jacocoTestCoverageVerification
+          build-root-directory: ${{env.WORKING_DIRECTORY}}
+
+  build:
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    needs:
+      - test
+      - capture-repo-info
+    env:
+      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
+      REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
+    environment: uat
+    defaults:
+      run:
+        working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+
+    steps:
+      # Checkout github repo
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.JAVA_DIST}}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          build-root-directory: ${{env.WORKING_DIRECTORY}}
+
+      - name: Build and install dependencies
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            clean
+            build
+            -Dorg.gradle.daemon=true
+            -Dorg.gradle.workers.max=2
+          build-root-directory: ${{env.WORKING_DIRECTORY}}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to AWS ECR
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to Docker container repo
+      - uses: aws-actions/amazon-ecr-login@v2
+        name: Login to AWS container repo
+        id: login-ecr
+        with:
+          mask-password: true
+
+      # Build and push docker image to container repo
+      - name: Build and push docker image
+        uses: docker/build-push-action@v5
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ env.REPO_NAME }}-${{ github.sha }} # Tags ECR image with commit sha
+        with:
+          context: ${{ needs.capture-repo-info.outputs.working_directory }}/.
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+          push: true
+
+  deploy-uat:
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    needs:
+      - build
+      - capture-repo-info
+    env:
+      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
+      REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
+      APP_NAME: ${{ needs.capture-repo-info.outputs.app_name }}
+      ENV_NAME: uat
+    environment: uat
+    defaults:
+      run:
+        working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+
+    steps:
+      # Checkout github repo
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to AWS ECR
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to Docker container repo
+      - uses: aws-actions/amazon-ecr-login@v2
+        name: Login to AWS container repo
+        id: login-ecr
+        with:
+          mask-password: true
+
+      # authenticates with the Cloud Platform and deploys the container image to the namespace
+      - name: Authenticate with Kubernetes cluster in Cloud Platform
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          kubectl config set-cluster ${{ env.KUBE_CLUSTER }} --certificate-authority=./ca.crt --server=https://${{ env.KUBE_CLUSTER }}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${{ env.KUBE_CLUSTER }} --cluster=${{ env.KUBE_CLUSTER }} --user=deploy-user --namespace=${{ env.KUBE_NAMESPACE }}
+          kubectl config use-context ${{ env.KUBE_CLUSTER }}
+        env:
+          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+
+      # Generate Kubernetes files from the deployments/templates/*.yml files
+      - name: Generate Kubernetes configuration files from the deployments/templates
+        run: |
+          mkdir -p deployments
+          cat kubernetes/deployments/templates/deployment.yml | envsubst > deployments/deployment.yml
+          cat kubernetes/deployments/templates/ingress.yml | envsubst > deployments/ingress.yml
+          cat kubernetes/deployments/templates/service.yml | envsubst > deployments/service.yml
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ env.REPO_NAME }}-${{ github.sha }} # Tags ECR image with commit sha
+          NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+          APP_NAME: ${{ env.APP_NAME }}
+          ENV_NAME: ${{ env.ENV_NAME }}
+
+      - name: Apply environment settings on Kubernetes cluster namespace
+        run: |
+          kubectl -n ${{ env.KUBE_NAMESPACE }} apply -f deployments/
+        env:
+          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}

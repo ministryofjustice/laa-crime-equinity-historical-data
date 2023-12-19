@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${APP_NAME}-service
+  namespace: ${APP_NAME}-${ENV_NAME}
+spec:
+  type: ClusterIP
+  selector:
+    app: ${APP_NAME}
+    app.kubernetes.io/metadata.name: ${APP_NAME}-${ENV_NAME}
+  ports:
+    - name: http
+      port: 8089
+      targetPort: http
+      protocol: TCP
+    - name: actuator
+      port: 8188
+      targetPort: actuator
+      protocol: TCP
+
+  # This is a generic file that creates a Kubernetes service. A service exposes the network to pods from a Kubernetes
+  # deployment. In this case, an ingress provides external access to our application,
+  # which points to the service defined in this file, which points to pods in a deployment.

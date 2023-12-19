@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}-deployment
+  namespace: ${APP_NAME}-${ENV_NAME}
+  labels:
+    app: ${APP_NAME}
+    app.kubernetes.io/metadata.name: ${APP_NAME}-${ENV_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_NAME}
+      app.kubernetes.io/metadata.name: ${APP_NAME}-${ENV_NAME}
+  template:
+    metadata:
+      name: ${APP_NAME}
+      namespace: ${APP_NAME}-${ENV_NAME}
+      labels:
+        app: ${APP_NAME}
+        app.kubernetes.io/metadata.name: ${APP_NAME}-${ENV_NAME}
+    spec:
+      containers:
+        - name: ${APP_NAME}
+          image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8089
+              protocol: TCP
+            - name: actuator
+              containerPort: 8188
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: actuator
+            initialDelaySeconds: 45
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: actuator
+            initialDelaySeconds: 45
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
+
+# This is a generic file that creates a Kubernetes deployment in our namespace. A deployment is a collection of pods
+# that runs one or more containers. In this application, currently only one container is run in the pod.
