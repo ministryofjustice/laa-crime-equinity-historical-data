@@ -4,7 +4,7 @@ services:
   app:
     environment:
       - HOST_ENV=local
-      - LAA_CCMS_API_GATEWAY_PORT_HTTP=8089
+      - LAA_EMP_PORT_HTTP=8089
 
     ports:
       - "8081:8081"
