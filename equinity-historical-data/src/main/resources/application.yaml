@@ -1,0 +1,11 @@
+server:
+  port: 8089
+
+management:
+  server:
+    port: 8188
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
