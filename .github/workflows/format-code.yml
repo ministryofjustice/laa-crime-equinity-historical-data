@@ -1,6 +1,8 @@
 on:
   pull_request:
     types: [ opened, edited, reopened, synchronize ]
+    branches-ignore:
+      - main
 
 jobs:
   format-code:
