@@ -1,4 +1,4 @@
-microservice-template/.gradle
+equinity-historical-data/.gradle
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
