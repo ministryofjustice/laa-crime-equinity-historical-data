@@ -88,7 +88,6 @@ jobs:
     env:
       WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
       REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
-    environment: uat
     defaults:
       run:
         working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
