@@ -158,7 +158,7 @@ jobs:
       REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
       APP_NAME: ${{ needs.capture-repo-info.outputs.app_name }}
       ENV_NAME: uat
-    environment: uat
+#    environment: uat
     defaults:
       run:
         working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
