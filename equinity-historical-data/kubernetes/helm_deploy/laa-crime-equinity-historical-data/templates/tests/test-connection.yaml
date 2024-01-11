@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "laa-crime-equinity-historical-data.fullname" . }}-test-connection"
+  labels:
+    {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "laa-crime-equinity-historical-data.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
