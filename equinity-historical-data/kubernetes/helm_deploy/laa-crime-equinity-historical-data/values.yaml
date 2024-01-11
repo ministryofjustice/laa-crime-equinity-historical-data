@@ -69,7 +69,7 @@ ingress:
   className: "modsec"
   annotations:
     external-dns.alpha.kubernetes.io/aws-weight: "100"
-    external-dns.alpha.kubernetes.io/set-identifier: "laa-crime-equinity-historical-data-ingress-laa-crime-equinity-historical-data-uat-green"
+#    external-dns.alpha.kubernetes.io/set-identifier: "laa-crime-equinity-historical-data-ingress-laa-crime-equinity-historical-data-uat-green"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
