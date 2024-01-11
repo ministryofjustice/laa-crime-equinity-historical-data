@@ -8,6 +8,7 @@ on:
     branches:
       - main
   pull_request:
+# TODO (EMP-79): uncomment these lines
 #    types:
 #      - closed
 #    branches:
@@ -23,6 +24,7 @@ permissions:
 
 jobs:
   capture-repo-info:
+    # TODO (EMP-79): uncomment these lines
 #    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
     runs-on: ubuntu-latest
     # map a step output to job output
@@ -43,6 +45,7 @@ jobs:
         id: extract_app_name
 
   test:
+    # TODO (EMP-79): uncomment these lines
 #    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
     runs-on: ubuntu-latest
     needs:
@@ -78,6 +81,7 @@ jobs:
           build-root-directory: ${{env.WORKING_DIRECTORY}}
 
   build:
+    # TODO (EMP-79): uncomment these lines
 #    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
@@ -146,6 +150,7 @@ jobs:
           push: true
 
   deploy-uat:
+    # TODO (EMP-79): uncomment these lines
 #    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
@@ -158,6 +163,7 @@ jobs:
       REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
       APP_NAME: ${{ needs.capture-repo-info.outputs.app_name }}
       ENV_NAME: uat
+      # TODO (EMP-79): uncomment these lines
 #    environment: uat
     defaults:
       run:
