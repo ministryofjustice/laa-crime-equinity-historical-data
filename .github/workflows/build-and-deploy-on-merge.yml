@@ -195,23 +195,32 @@ jobs:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
-      # Generate Kubernetes files from the deployments/templates/*.yml files
-      - name: Generate Kubernetes configuration files from the deployments/templates
+      - name: Helm deploy to Test environment
         run: |
-          mkdir -p deployments
-          cat kubernetes/deployments/templates/deployment.yml | envsubst > deployments/deployment.yml
-          cat kubernetes/deployments/templates/ingress.yml | envsubst > deployments/ingress.yml
-          cat kubernetes/deployments/templates/service.yml | envsubst > deployments/service.yml
+          cd kubernetes/helm_deploy/${{ env.APP_NAME }}
+          helm upgrade ${{ env.APP_NAME }} -f values.yaml -f values-${{ env.ENV_NAME }}.yaml . --namespace ${{ secrets.KUBE_NAMESPACE }} --install --set image.repository="${{ env.REGISTRY }}/${{ env.REPOSITORY }}" --set image.tag="${{ env.IMAGE_TAG }}"
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ env.REPO_NAME }}-${{ github.sha }} # Tags ECR image with commit sha
-          NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-          APP_NAME: ${{ env.APP_NAME }}
-          ENV_NAME: ${{ env.ENV_NAME }}
 
-      - name: Apply environment settings on Kubernetes cluster namespace
-        run: |
-          kubectl -n ${{ env.KUBE_NAMESPACE }} apply -f deployments/
-        env:
-          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+#      # Generate Kubernetes files from the deployments/templates/*.yml files
+#      - name: Generate Kubernetes configuration files from the deployments/templates
+#        run: |
+#          mkdir -p deployments
+#          cat kubernetes/deployments/templates/deployment.yml | envsubst > deployments/deployment.yml
+#          cat kubernetes/deployments/templates/ingress.yml | envsubst > deployments/ingress.yml
+#          cat kubernetes/deployments/templates/service.yml | envsubst > deployments/service.yml
+#        env:
+#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+#          IMAGE_TAG: ${{ env.REPO_NAME }}-${{ github.sha }} # Tags ECR image with commit sha
+#          NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+#          APP_NAME: ${{ env.APP_NAME }}
+#          ENV_NAME: ${{ env.ENV_NAME }}
+#
+#      - name: Apply environment settings on Kubernetes cluster namespace
+#        run: |
+#          kubectl -n ${{ env.KUBE_NAMESPACE }} apply -f deployments/
+#        env:
+#          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
