@@ -78,7 +78,7 @@ jobs:
           build-root-directory: ${{env.WORKING_DIRECTORY}}
 
   build:
-    if: ${{ github.event.pull_request.merged && github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -147,7 +147,7 @@ jobs:
           push: true
 
   deploy-uat:
-    if: ${{ github.event.pull_request.merged && github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
