@@ -9,18 +9,18 @@ metadata:
   name: "{{ $appName }}-deployment"
   namespace: "{{ $appName }}-{{ $envName }}"
   labels:
-      {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
-      app: {{ $appName }}
-      app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
+    app: {{ $appName }}
+    app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
+    {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "laa-crime-equinity-historical-data.selectorLabels" . | nindent 6 }}
       app: {{ $appName }}
       app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
+      {{- include "laa-crime-equinity-historical-data.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       name: {{ $appName }}
@@ -30,9 +30,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "laa-crime-equinity-historical-data.labels" . | nindent 8 }}
         app: {{ $appName }}
         app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
+        {{- include "laa-crime-equinity-historical-data.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
