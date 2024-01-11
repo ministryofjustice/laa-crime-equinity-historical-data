@@ -198,7 +198,7 @@ jobs:
       - name: Helm deploy to Test environment
         run: |
           cd kubernetes/helm_deploy/${{ env.APP_NAME }}
-          helm upgrade ${{ env.APP_NAME }} -f values.yaml . --namespace ${{ secrets.KUBE_NAMESPACE }} --install --set image.repository="${{ env.REGISTRY }}/${{ env.REPOSITORY }}" --set image.tag="${{ env.IMAGE_TAG }}"
+          helm upgrade ${{ env.APP_NAME }} -f values.yaml -f values-${{ env.ENV_NAME }}.yaml . --namespace ${{ secrets.KUBE_NAMESPACE }} --install --set image.repository="${{ env.REGISTRY }}/${{ env.REPOSITORY }}" --set image.tag="${{ env.IMAGE_TAG }}"
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
