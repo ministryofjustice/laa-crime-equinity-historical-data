@@ -1,0 +1,87 @@
+# This is a generic file that creates a Kubernetes deployment in our namespace. A deployment is a collection of pods
+# that runs one or more containers. In this application, currently only one container is run in the pod.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "laa-crime-equinity-historical-data.fullname" . }}
+  labels:
+      {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "laa-crime-equinity-historical-data.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "laa-crime-equinity-historical-data.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+{{/*          image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}*/}}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            {{- if not (eq (toString .Values.actuator.port) "http") }}
+            - name: actuator
+              containerPort: {{ .Values.actuator.port }}
+              protocol: TCP
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.actuator.health.path }}
+              {{- if not (eq (toString .Values.actuator.port) "http") }}
+              port: actuator
+              {{- else }}
+              port: http
+              {{- end }}
+            initialDelaySeconds: {{ .Values.actuator.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.actuator.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.actuator.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.actuator.liveness.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.actuator.health.path }}
+              {{- if not (eq (toString .Values.actuator.port) "http") }}
+              port: actuator
+              {{- else }}
+              port: http
+              {{- end }}
+            initialDelaySeconds: {{ .Values.actuator.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.actuator.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.actuator.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.actuator.readiness.failureThreshold }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
