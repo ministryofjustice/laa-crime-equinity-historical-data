@@ -1,11 +1,17 @@
 # This is a generic file that creates a Kubernetes deployment in our namespace. A deployment is a collection of pods
 # that runs one or more containers. In this application, currently only one container is run in the pod.
+{{- $appName := include "laa-crime-equinity-historical-data.fullname" . -}}
+{{- $envName := $.Values.service.environment -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "laa-crime-equinity-historical-data.fullname" . }}
+  name: "{{ $appName }}-deployment"
+  namespace: "{{ $appName }}-{{ $envName }}"
   labels:
       {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
+      app: {{ $appName }}
+      app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -13,14 +19,20 @@ spec:
   selector:
     matchLabels:
       {{- include "laa-crime-equinity-historical-data.selectorLabels" . | nindent 6 }}
+      app: {{ $appName }}
+      app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
   template:
     metadata:
+      name: {{ $appName }}
+      namespace: "{{ $appName }}-{{ $envName }}"
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "laa-crime-equinity-historical-data.labels" . | nindent 8 }}
+        app: {{ $appName }}
+        app.kubernetes.io/metadata.name: "{{ $appName }}-{{ $envName }}"
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
