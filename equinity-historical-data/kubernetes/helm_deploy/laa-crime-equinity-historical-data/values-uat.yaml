@@ -21,5 +21,8 @@ service:
 
 ingress:
   enabled: true
+  className: default
   annotations:
+    kubernetes.io/ingress.class: "default"
     external-dns.alpha.kubernetes.io/set-identifier: "laa-crime-equinity-historical-data-ingress-laa-crime-equinity-historical-data-uat-green"
+    external-dns.alpha.kubernetes.io/aws-weight: "100"

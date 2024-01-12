@@ -39,13 +39,15 @@ helm.sh/chart: {{ include "laa-crime-equinity-historical-data.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service | default "Helm" }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "laa-crime-equinity-historical-data.selectorLabels" -}}
+app: {{ .Chart.Name }}
+app.kubernetes.io/metadata.name: "{{ .Chart.Name }}-{{ .Values.service.environment }}"
 app.kubernetes.io/name: {{ include "laa-crime-equinity-historical-data.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
