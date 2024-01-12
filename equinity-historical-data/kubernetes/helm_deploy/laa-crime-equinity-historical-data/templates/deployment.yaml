@@ -1,11 +1,10 @@
-# This is a generic file that creates a Kubernetes deployment in our namespace. A deployment is a collection of pods
-# that runs one or more containers. In this application, currently only one container is run in the pod.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "laa-crime-equinity-historical-data.fullname" . }}
+  name: "{{ .Chart.Name }}-deployment"
+  namespace: "{{ .Chart.Name }}-{{ .Values.service.environment }}"
   labels:
-      {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
+    {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -15,6 +14,8 @@ spec:
       {{- include "laa-crime-equinity-historical-data.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      name: {{ .Chart.Name }}
+      namespace: "{{ .Chart.Name }}-{{ .Values.service.environment }}"
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
@@ -84,3 +85,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+# This is a generic file that creates a Kubernetes deployment in our namespace. A deployment is a collection of pods
+# that runs one or more containers. In this application, currently only one container is run in the pod.

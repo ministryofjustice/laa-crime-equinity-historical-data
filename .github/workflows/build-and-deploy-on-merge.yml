@@ -8,10 +8,10 @@ on:
     branches:
       - main
   pull_request:
-    types:
-      - closed
-    branches:
-      - main
+#    types:
+#      - closed
+#    branches:
+#      - main
   workflow_dispatch:
 env:
   JAVA_VERSION: 17
@@ -195,7 +195,7 @@ jobs:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
-      - name: Helm deploy to Test environment
+      - name: Helm deploy to ${{ env.ENV_NAME }}
         run: |
           cd kubernetes/helm_deploy/${{ env.APP_NAME }}
           helm upgrade ${{ env.APP_NAME }} -f values.yaml -f values-${{ env.ENV_NAME }}.yaml . --namespace ${{ secrets.KUBE_NAMESPACE }} --install --set image.repository="${{ env.REGISTRY }}/${{ env.REPOSITORY }}" --set image.tag="${{ env.IMAGE_TAG }}"

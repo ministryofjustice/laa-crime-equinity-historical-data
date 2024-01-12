@@ -1,21 +1,25 @@
+{{- $appName := include "laa-crime-equinity-historical-data.fullname" . -}}
+{{- $envName := $.Values.service.environment -}}
+
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "laa-crime-equinity-historical-data.fullname" . }}
+  namespace: "{{ $appName }}-{{ $envName }}"
   labels:
     {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: http
     {{- if not (eq (toString .Values.actuator.port) "http") }}
-    - port: {{ .Values.actuator.port }}
-      targetPort: actuator
+    - name: actuator
+      port: {{ .Values.actuator.port }}
+      targetPort: {{ .Values.actuator.port }}
       protocol: TCP
-      name: actuator
       {{- end }}
   selector:
     {{- include "laa-crime-equinity-historical-data.selectorLabels" . | nindent 4 }}

@@ -46,6 +46,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "laa-crime-equinity-historical-data.selectorLabels" -}}
+app: {{ .Chart.Name }}
+app.kubernetes.io/metadata.name: "{{ .Chart.Name }}-{{ .Values.service.environment }}"
 app.kubernetes.io/name: {{ include "laa-crime-equinity-historical-data.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

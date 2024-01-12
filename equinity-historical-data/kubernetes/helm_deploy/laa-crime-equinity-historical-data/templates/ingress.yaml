@@ -1,20 +1,9 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "laa-crime-equinity-historical-data.fullname" . -}}
-{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
-  {{- end }}
-{{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ .Chart.Name }}-ingress
+  namespace: "{{ .Chart.Name }}-{{ .Values.service.environment }}"
   labels:
     {{- include "laa-crime-equinity-historical-data.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -22,9 +11,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
-  {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -37,22 +24,22 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
-    - host: "{{ $fullName }}-{{ $.Values.service.environment }}.{{ .host }}"
+    - host: "{{ $.Chart.Name }}-{{ $.Values.service.environment }}.{{ .host }}"
       http:
         paths:
           {{- range .paths }}
           - path: {{ . }}
-            pathType: "Prefix"
+            pathType: "ImplementationSpecific"
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ $.Chart.Name }}
                 port:
                   number: {{ $.Values.service.port }}
           - path: {{ $.Values.actuator.health.path }}
             pathType: "Exact"
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ $.Chart.Name }}
                 port:
                   number: {{ $.Values.actuator.port }}
           {{- end }}
