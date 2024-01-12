@@ -23,8 +23,7 @@ permissions:
 
 jobs:
   capture-repo-info:
-    # TODO (EMP-79): uncomment these lines
-#    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
+    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
     runs-on: ubuntu-latest
     # map a step output to job output
     outputs:
@@ -44,8 +43,7 @@ jobs:
         id: extract_app_name
 
   test:
-    # TODO (EMP-79): uncomment these lines
-#    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
+    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
     runs-on: ubuntu-latest
     needs:
       - capture-repo-info
@@ -80,8 +78,7 @@ jobs:
           build-root-directory: ${{env.WORKING_DIRECTORY}}
 
   build:
-    # TODO (EMP-79): uncomment these lines
-#    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -149,8 +146,7 @@ jobs:
           push: true
 
   deploy-uat:
-    # TODO (EMP-79): uncomment these lines
-#    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -162,8 +158,7 @@ jobs:
       REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
       APP_NAME: ${{ needs.capture-repo-info.outputs.app_name }}
       ENV_NAME: uat
-      # TODO (EMP-79): uncomment these lines
-#    environment: uat
+    environment: uat
     defaults:
       run:
         working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
@@ -200,7 +195,7 @@ jobs:
           KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
-      - name: Helm deploy to Test environment
+      - name: Helm deploy to ${{ env.ENV_NAME }}
         run: |
           cd kubernetes/helm_deploy/${{ env.APP_NAME }}
           helm upgrade ${{ env.APP_NAME }} -f values.yaml -f values-${{ env.ENV_NAME }}.yaml . --namespace ${{ secrets.KUBE_NAMESPACE }} --install --set image.repository="${{ env.REGISTRY }}/${{ env.REPOSITORY }}" --set image.tag="${{ env.IMAGE_TAG }}"
