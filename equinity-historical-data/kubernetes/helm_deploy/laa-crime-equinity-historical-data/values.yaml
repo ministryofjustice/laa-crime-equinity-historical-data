@@ -76,8 +76,8 @@ ingress:
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-equinity-data"
-    kubernetes.io/ingress.class: "modsec"
-    # kubernetes.io/tls-acme: "true"
+#    kubernetes.io/ingress.class: "modsec"
+#     kubernetes.io/tls-acme: "true"
   hosts:
     - host: apps.live.cloud-platform.service.justice.gov.uk
       paths: [ "/" ]
