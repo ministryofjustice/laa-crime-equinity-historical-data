@@ -1,3 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://${DB_ENDPOINT};encrypt=true;trustServerCertificate=true;databaseName=eq_uat
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        format_sql: 'true'
+    show-sql: 'true'
+
 server:
   port: 8089
 
