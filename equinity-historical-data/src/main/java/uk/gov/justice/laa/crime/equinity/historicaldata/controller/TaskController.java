@@ -1,5 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +19,18 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TasksReposito
 import java.nio.charset.StandardCharsets;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("equinity/tasks")
 public class TaskController {
-    @Autowired
-    TasksRepository tasksRepository;
+    private final TasksRepository tasksRepository;
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
+    @GetMapping(value="/test")
+    public ResponseEntity<String> getTasks() {
+        return getTasksById(5001483L);
+    }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<String> getTasksById(@PathVariable("id") long id) {
+    private ResponseEntity<String> getTasksById(@PathVariable("id") long id) {
         int PRETTY_PRINT_INDENT_FACTOR = 4;
         Tasks task = tasksRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + id));
