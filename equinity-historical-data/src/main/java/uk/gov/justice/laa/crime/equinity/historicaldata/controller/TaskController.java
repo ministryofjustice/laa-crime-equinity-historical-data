@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Tasks;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TasksRepository;
-
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +23,10 @@ public class TaskController {
     private final TasksRepository tasksRepository;
 
     @GetMapping(value="/test")
-    public ResponseEntity<String> getTasks() {
-        return getTasksById(5001483L);
+    public ResponseEntity<LocalDateTime> getTasks() {
+        Tasks task = tasksRepository.findById(5001483L)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + 5001483L));
+        return new ResponseEntity<>(task.getDTOriginated(), HttpStatus.OK);
     }
 
     @GetMapping(value="/{id}")

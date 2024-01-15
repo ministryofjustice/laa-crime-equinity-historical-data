@@ -1,17 +1,27 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
-import jakarta.persistence.*; // for Spring Boot 3
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Tasks")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tasks {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
+    public LocalDateTime getDTOriginated() {
+        return DTOriginated;
+    }
 
-    @Column(name = "UF2Text")
-    private String UF2Text;
+    @Setter
+    @Column(name = "DTOriginated")
+    private LocalDateTime DTOriginated;
 
     public byte[] getOFDImage() {
         return OFDImage;
@@ -29,26 +39,4 @@ public class Tasks {
         return ID;
     }
 
-    public String getUF2Text() {
-        return UF2Text;
-    }
-
-    public void setUF2Text(String UF2Text) {
-        this.UF2Text = UF2Text;
-    }
-
-
-    public Tasks() {
-
-    }
-
-    public Tasks(String UF2Text) {
-        this.UF2Text = UF2Text;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Tutorial [id=" + ID + ", UF2Text=" +UF2Text + "]";
-    }
 }
