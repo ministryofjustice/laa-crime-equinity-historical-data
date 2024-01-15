@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +15,6 @@ public class Tasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-
     public LocalDateTime getDTOriginated() {
         return DTOriginated;
     }
@@ -24,8 +22,6 @@ public class Tasks {
     @Setter
     @Column(name = "DTOriginated")
     private LocalDateTime DTOriginated;
-
-
 
     public byte[] getOFDImage() {
         return OFDImage;
