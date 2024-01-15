@@ -1,11 +1,8 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.json.XML;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +27,7 @@ public class TaskController {
     }
 
     @GetMapping(value="/{id}")
-    private ResponseEntity<String> getTasksById(@PathVariable("id") long id) {
+    public ResponseEntity<String> getTasksById(@PathVariable("id") long id) {
         int PRETTY_PRINT_INDENT_FACTOR = 4;
         Tasks task = tasksRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + id));
