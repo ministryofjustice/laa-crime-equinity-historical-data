@@ -1,0 +1,39 @@
+name: 'Run unit tests with Gradle'
+description: 'This action runs unit tests for the application using Gradle'
+inputs:
+  java-version:
+    description: "java version used"
+    required: true
+  java-dist:
+    description: "name of java distribution used for JDK"
+    required: true
+  working-directory:
+    description: "Current working directory"
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK ${{inputs.java-version}}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{inputs.java-version}}
+        distribution: ${{inputs.java-dist}}
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: ${{inputs.working-directory}}
+
+    - name: Run Unit Tests
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: test
+        build-root-directory: ${{inputs.working-directory}}
+
+    - name: Generate Test coverage report
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: jacocoTestCoverageVerification
+        build-root-directory: ${{inputs.working-directory}}

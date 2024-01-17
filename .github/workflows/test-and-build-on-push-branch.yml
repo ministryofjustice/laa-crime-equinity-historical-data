@@ -25,30 +25,13 @@ jobs:
       - capture-repo-info
 
     steps:
-#      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Build app jar with gradle
         uses: './.github/actions/build-app-gradle'
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
           working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
-#
-#      - name: Set up JDK ${{env.JAVA_VERSION}}
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: ${{env.JAVA_VERSION}}
-#          distribution: ${{env.JAVA_DIST}}
-#
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          build-root-directory: ${{env.WORKING_DIRECTORY}}
-#
-#      - name: Build and install dependencies
-#        uses: gradle/gradle-build-action@v2
-#        with:
-#          arguments: clean build
-#          build-root-directory: ${{env.WORKING_DIRECTORY}}
 
   test:
     runs-on: ubuntu-latest
@@ -60,25 +43,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK ${{env.JAVA_VERSION}}
-        uses: actions/setup-java@v4
+      - name: Run unit tests with gradle
+        uses: './.github/actions/test-app-gradle'
         with:
           java-version: ${{env.JAVA_VERSION}}
-          distribution: ${{env.JAVA_DIST}}
+          java-dist: ${{env.JAVA_DIST}}
+          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
-
-      - name: Run Unit Tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: clean test
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
-
-      - name: Generate Test coverage report
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: jacocoTestCoverageVerification
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#      - name: Set up JDK ${{env.JAVA_VERSION}}
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: ${{env.JAVA_VERSION}}
+#          distribution: ${{env.JAVA_DIST}}
+#
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#
+#      - name: Run Unit Tests
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: test
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#
+#      - name: Generate Test coverage report
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: jacocoTestCoverageVerification
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
