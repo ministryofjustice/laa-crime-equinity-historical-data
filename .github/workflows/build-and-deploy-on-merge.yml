@@ -24,23 +24,7 @@ permissions:
 jobs:
   capture-repo-info:
     if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
-    runs-on: ubuntu-latest
-    # map a step output to job output
-    outputs:
-      repo_name: ${{ steps.extract_repo_name.outputs.repo_name }}
-      app_name: ${{ steps.extract_app_name.outputs.app_name }}
-      working_directory: "./${{ steps.extract_repo_name.outputs.repo_name }}"
-
-    steps:
-      - name: Extract short repo name
-        shell: bash
-        run: echo "repo_name=${GITHUB_REPOSITORY#*\/laa-crime-}" >> $GITHUB_OUTPUT
-        id: extract_repo_name
-
-      - name: Extract app name name
-        shell: bash
-        run: echo "app_name=${GITHUB_REPOSITORY#ministryofjustice\/}" >> $GITHUB_OUTPUT
-        id: extract_app_name
+    uses: ./.github/workflows/capture-repo-info.yml
 
   test:
     if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
