@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/build-app-gradle@main
+      - uses: ../.github/actions/build-app-gradle@main
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
