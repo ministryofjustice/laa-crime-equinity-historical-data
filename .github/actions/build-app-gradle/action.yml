@@ -1,6 +1,13 @@
 name: 'Build App with Gradle'
 description: 'This action builds application jar using Gradle'
 inputs:
+  ## Used to capture the intial values before they get overwritten
+  action_ref:
+    description: "Capture the starting value of github.action_ref. DO NOT SET"
+    default: ${{ github.action_ref }}
+  action_repository:
+    description: "Capture the starting value of github.action_repository. DO NOT SET"
+    default: ${{ github.action_repository }}
   java-version:
     required: true
     type: string
@@ -14,6 +21,9 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.action_repository }}
+        ref: ${{ inputs.action_ref }}
 
     - name: Set up JDK ${{inputs.java-version}}
       uses: actions/setup-java@v4
