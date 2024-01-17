@@ -4,8 +4,14 @@
 name: Unit-Tests on pushed branch
 
 on:
-  push:
-    branches-ignore: [main]
+  pull_request:
+#    types:
+#      - closed
+    branches:
+      - main
+#  push:
+#    branches-ignore: [main]
+  workflow_dispatch:
 env:
   JAVA_VERSION: 17
   JAVA_DIST: temurin
