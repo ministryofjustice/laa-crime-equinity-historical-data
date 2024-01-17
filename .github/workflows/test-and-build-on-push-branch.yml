@@ -5,12 +5,8 @@ name: Unit-Tests on pushed branch
 
 on:
   pull_request:
-#    types:
-#      - closed
     branches:
       - main
-#  push:
-#    branches-ignore: [main]
   workflow_dispatch:
 env:
   JAVA_VERSION: 17

@@ -7,11 +7,6 @@ on:
   push:
     branches:
       - main
-#  pull_request:
-#    types:
-#      - closed
-#    branches:
-#      - main
   workflow_dispatch:
 env:
   JAVA_VERSION: 17
@@ -23,11 +18,9 @@ permissions:
 
 jobs:
   capture-repo-info:
-    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
     uses: ./.github/workflows/capture-repo-info.yml
 
   test:
-    if: ${{ github.event.pull_request.merged || github.event_name == 'push' }}
     runs-on: ubuntu-latest
     needs:
       - capture-repo-info
@@ -43,7 +36,6 @@ jobs:
           working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
 
   build:
-    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -97,7 +89,6 @@ jobs:
           push: true
 
   deploy-uat:
-    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
