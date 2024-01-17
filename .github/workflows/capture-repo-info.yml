@@ -5,22 +5,28 @@ name: Collect repo info and app name
 
 on:
   workflow_call:
-env:
-  JAVA_VERSION: 17
-  JAVA_DIST: temurin
+    # Map the workflow outputs to job outputs
+    outputs:
+      repo_name:
+        description: "Repository short name"
+        value: ${{ jobs.collect-info.outputs.repo_name }}
+      app_name:
+        description: "App name derived from repository"
+        value: ${{ jobs.collect-info.outputs.app_name }}
+      working_directory:
+        description: "Working directory based on repository name"
+        value: "./${{ jobs.collect-info.outputs.repo_name }}"
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   collect-info:
     runs-on: ubuntu-latest
     # map a step output to job output
     outputs:
-      repo_name: ${{ steps.collect-info.outputs.repo_name }}
-      app_name: ${{ steps.collect-info.outputs.app_name }}
-      working_directory: "./${{ steps.collect-info.outputs.repo_name }}"
+      repo_name: ${{ steps.extract_repo_name.outputs.repo_name }}
+      app_name: ${{ steps.extract_app_name.outputs.app_name }}
 
     steps:
       - name: Extract short repo name
