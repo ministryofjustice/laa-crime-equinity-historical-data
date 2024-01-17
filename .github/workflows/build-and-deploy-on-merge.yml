@@ -31,35 +31,42 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - capture-repo-info
-    env:
-      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
-      REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
+#    env:
+#      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
+#      REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK ${{env.JAVA_VERSION}}
-        uses: actions/setup-java@v4
+      - name: Run unit tests with gradle
+        uses: './.github/actions/test-app-gradle'
         with:
           java-version: ${{env.JAVA_VERSION}}
-          distribution: ${{env.JAVA_DIST}}
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
-
-      - name: Run Unit Tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: clean test
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
-
-      - name: Generate Test coverage report
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: jacocoTestCoverageVerification
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
+          java-dist: ${{env.JAVA_DIST}}
+          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+#
+#      - name: Set up JDK ${{env.JAVA_VERSION}}
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: ${{env.JAVA_VERSION}}
+#          distribution: ${{env.JAVA_DIST}}
+#
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#
+#      - name: Run Unit Tests
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: clean test
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#
+#      - name: Generate Test coverage report
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: jacocoTestCoverageVerification
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
 
   build:
     if: ${{ github.event_name == 'push' }}
@@ -80,26 +87,33 @@ jobs:
       # Checkout github repo
       - uses: actions/checkout@v4
 
-      - name: Set up JDK ${{env.JAVA_VERSION}}
-        uses: actions/setup-java@v4
+      - name: Build app jar with gradle
+        uses: './.github/actions/build-app-gradle'
         with:
           java-version: ${{env.JAVA_VERSION}}
-          distribution: ${{env.JAVA_DIST}}
+          java-dist: ${{env.JAVA_DIST}}
+          working-directory: ${{ env.WORKING_DIRECTORY }}
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
-
-      - name: Build and install dependencies
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: |
-            clean
-            build
-            -Dorg.gradle.daemon=true
-            -Dorg.gradle.workers.max=2
-          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#      - name: Set up JDK ${{env.JAVA_VERSION}}
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: ${{env.JAVA_VERSION}}
+#          distribution: ${{env.JAVA_DIST}}
+#
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
+#
+#      - name: Build and install dependencies
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: |
+#            clean
+#            build
+#            -Dorg.gradle.daemon=true
+#            -Dorg.gradle.workers.max=2
+#          build-root-directory: ${{env.WORKING_DIRECTORY}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
