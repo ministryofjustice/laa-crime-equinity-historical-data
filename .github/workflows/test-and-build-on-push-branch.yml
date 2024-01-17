@@ -23,12 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - capture-repo-info
-    env:
-      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
-    defaults:
-      run:
-        working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
-
 
     steps:
       - uses: actions/checkout@v4
