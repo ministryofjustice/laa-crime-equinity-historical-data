@@ -1,0 +1,37 @@
+name: 'Build App with Gradle'
+description: 'This action builds application jar using Gradle'
+inputs:
+  java-version:
+    required: true
+    type: string
+  java-dist:
+    required: true
+    type: string
+  working-directory:
+    required: true
+    type: string
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK ${{inputs.java-version}}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{inputs.java-version}}
+        distribution: ${{inputs.java-dist}}
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: ${{inputs.working-directory}}
+
+    - name: Build and install dependencies
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: |
+          clean
+          build
+          -Dorg.gradle.daemon=true
+          -Dorg.gradle.workers.max=2
+        build-root-directory: ${{inputs.working-directory}}

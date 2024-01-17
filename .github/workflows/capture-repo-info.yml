@@ -1,0 +1,40 @@
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Collect repo info and app name
+
+on:
+  workflow_call:
+    # Map the workflow outputs to job outputs
+    outputs:
+      repo_name:
+        description: "Repository short name"
+        value: ${{ jobs.collect-info.outputs.repo_name }}
+      app_name:
+        description: "App name derived from repository"
+        value: ${{ jobs.collect-info.outputs.app_name }}
+      working_directory:
+        description: "Working directory based on repository name"
+        value: "./${{ jobs.collect-info.outputs.repo_name }}"
+
+permissions:
+  contents: read
+
+jobs:
+  collect-info:
+    runs-on: ubuntu-latest
+    # map a step output to job output
+    outputs:
+      repo_name: ${{ steps.extract_repo_name.outputs.repo_name }}
+      app_name: ${{ steps.extract_app_name.outputs.app_name }}
+
+    steps:
+      - name: Extract short repo name
+        shell: bash
+        run: echo "repo_name=${GITHUB_REPOSITORY#*\/laa-crime-}" >> $GITHUB_OUTPUT
+        id: extract_repo_name
+
+      - name: Extract app name name
+        shell: bash
+        run: echo "app_name=${GITHUB_REPOSITORY#ministryofjustice\/}" >> $GITHUB_OUTPUT
+        id: extract_app_name
