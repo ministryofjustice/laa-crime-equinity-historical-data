@@ -25,10 +25,14 @@ jobs:
       - capture-repo-info
     env:
       WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
+    defaults:
+      run:
+        working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ${{ needs.capture-repo-info.outputs.working_directory }}/.github/actions/build-app-gradle@main
+      - uses: ./.github/actions/build-app-gradle@main
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
