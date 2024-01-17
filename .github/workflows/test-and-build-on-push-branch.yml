@@ -27,6 +27,7 @@ jobs:
       WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
 
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/build-app-gradle@main
         with:
           java-version: ${{env.JAVA_VERSION}}
