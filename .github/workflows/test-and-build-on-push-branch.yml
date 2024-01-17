@@ -16,18 +16,8 @@ permissions:
   packages: write
 
 jobs:
-  capture-repo-name:
-    runs-on: ubuntu-latest
-    # map a step output to job output
-    outputs:
-      repo_name: ${{ steps.extract_repo_name.outputs.repo_name }}
-      working_directory: "./${{ steps.extract_repo_name.outputs.repo_name }}"
-
-    steps:
-      - name: Extract short repo name
-        shell: bash
-        run: echo "repo_name=${GITHUB_REPOSITORY#*\/laa-crime-}" >> $GITHUB_OUTPUT
-        id: extract_repo_name
+  capture-repo-info:
+    uses: ./.github/workflows/capture-repo-info.yml
 
   build:
     runs-on: ubuntu-latest
