@@ -1,0 +1,83 @@
+name: Deploy app to given environment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "Target environment to deploy"
+        required: true
+        type: string
+      working_directory:
+        description: "Application deployment working directory"
+        required: true
+        type: string
+      repo_name:
+        description: "Name of repository for source code"
+        required: true
+        type: string
+      app_name:
+        description: "Name of application being deployed"
+        required: true
+        type: string
+    secrets:
+      ECR_ROLE_TO_ASSUME:
+        required: true
+      KUBE_CERT:
+        required: true
+      KUBE_CLUSTER:
+        required: true
+      KUBE_TOKEN:
+        required: true
+      KUBE_NAMESPACE:
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    environment: ${{ inputs.environment }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
+    steps:
+      # Checkout github repo
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to AWS ECR
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to Docker container repo
+      - uses: aws-actions/amazon-ecr-login@v2
+        name: Login to AWS container repo
+        id: login-ecr
+        with:
+          mask-password: true
+
+      # authenticates with the Cloud Platform and deploys the container image to the namespace
+      - name: Authenticate with Kubernetes cluster in Cloud Platform
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          kubectl config set-cluster ${{ secrets.KUBE_CLUSTER }} --certificate-authority=./ca.crt --server=https://${{ secrets.KUBE_CLUSTER }}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${{ secrets.KUBE_CLUSTER }} --cluster=${{ secrets.KUBE_CLUSTER }} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config use-context ${{ secrets.KUBE_CLUSTER }}
+
+      - name: Helm deploy to ${{ inputs.environment }}
+        run: |
+          cd kubernetes/helm_deploy/${{ inputs.app_name }}
+          helm upgrade ${{ inputs.app_name }} -f values.yaml -f values-${{ inputs.environment }}.yaml . --namespace ${{ secrets.KUBE_NAMESPACE }} --install --set image.repository="${{ env.REGISTRY }}/${{ vars.ECR_REPOSITORY }}" --set image.tag="${{ env.IMAGE_TAG }}"
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ inputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
