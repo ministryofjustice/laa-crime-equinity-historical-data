@@ -90,8 +90,8 @@ jobs:
 
   deploy-uat:
 #    runs-on: ubuntu-latest
-#    permissions:
-#      id-token: write
+    permissions:
+      id-token: write
     needs:
       - build
       - capture-repo-info
