@@ -50,6 +50,6 @@ jobs:
     steps:
       - run: |
           echo "Coming soon"
-          echo "image_tag: [ [ ${ { env.IMAGE_TAG } } ] ]"
+          echo "image_tag: [[ ${{ env.IMAGE_TAG }} ]]"
         env:
           IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
