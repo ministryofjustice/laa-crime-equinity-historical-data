@@ -95,7 +95,7 @@ jobs:
     needs:
       - build
       - capture-repo-info
-    uses: ./.github/workflows/capture-repo-info.yml
+    uses: ./.github/workflows/deploy-to.yml
     with:
       environment: "uat"
       working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
