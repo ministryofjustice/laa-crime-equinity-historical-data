@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   capture-repo-info:
-    uses: ./.github/workflows/capture-repo-info.yml
+    uses: ./.github/workflows/_capture-repo-info.yml
 
   test:
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
     needs:
       - build
       - capture-repo-info
-    uses: ./.github/workflows/deploy-to.yml
+    uses: ./.github/workflows/_deploy-to.yml
     with:
       environment: "uat"
       working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
