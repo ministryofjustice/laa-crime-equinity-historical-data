@@ -31,16 +31,9 @@ on:
       KUBE_NAMESPACE:
         required: true
 
-#permissions:
-#  contents: read
-#  packages: write
-#  id-token: write
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-#    permissions:
-#      id-token: write
     environment: ${{ inputs.environment }}
     defaults:
       run:
@@ -72,7 +65,7 @@ jobs:
           echo "${{ secrets.KUBE_CERT }}" > ca.crt
           kubectl config set-cluster ${{ secrets.KUBE_CLUSTER }} --certificate-authority=./ca.crt --server=https://${{ secrets.KUBE_CLUSTER }}
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
-          kubectl config set-context ${{ secrets.KUBE_CLUSTER }} --cluster=${{ secrets.KUBE_CLUSTER }} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config set-context ${{ secrets.KUBE_CLUSTER }} --cluster=${{ secrets.KUBE_CLUSTER }} --user=deploy-user --namespace=${{ inputs.app_name }}-${{ inputs.environment }}
           kubectl config use-context ${{ secrets.KUBE_CLUSTER }}
 
       - name: Helm deploy to ${{ inputs.environment }}
