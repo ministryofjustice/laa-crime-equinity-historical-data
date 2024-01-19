@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   capture-repo-info:
-    uses: ./.github/workflows/capture-repo-info.yml
+    uses: ./.github/workflows/_capture-repo-info.yml
 
   build:
     runs-on: ubuntu-latest
