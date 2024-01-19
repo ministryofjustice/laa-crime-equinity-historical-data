@@ -101,4 +101,4 @@ jobs:
       working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
       repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
       app_name: ${{ needs.capture-repo-info.outputs.app_name }}
-      secrets: inherit
+    secrets: inherit
