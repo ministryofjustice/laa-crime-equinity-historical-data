@@ -31,9 +31,9 @@ on:
       KUBE_NAMESPACE:
         required: true
 
-permissions:
-  contents: read
-  packages: write
+#permissions:
+#  contents: read
+#  packages: write
 #  id-token: write
 
 jobs:
