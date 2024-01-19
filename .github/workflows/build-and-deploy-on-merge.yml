@@ -103,3 +103,29 @@ jobs:
       repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
       app_name: ${{ needs.capture-repo-info.outputs.app_name }}
     secrets: inherit
+
+  deploy-staging:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    needs:
+      - build
+      - capture-repo-info
+    runs-on: ubuntu-latest
+    environment: "staging"
+    steps:
+      - run: echo "Coming soon"
+
+  deploy-prod:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    needs:
+      - build
+      - capture-repo-info
+    runs-on: ubuntu-latest
+    environment: "prod"
+    steps:
+      - run: echo "Coming soon"
