@@ -19,17 +19,17 @@ on:
         description: "Name of application being deployed"
         required: true
         type: string
-    secrets:
-      ECR_ROLE_TO_ASSUME:
-        required: true
-      KUBE_CERT:
-        required: true
-      KUBE_CLUSTER:
-        required: true
-      KUBE_TOKEN:
-        required: true
-      KUBE_NAMESPACE:
-        required: true
+#    secrets:
+#      ECR_ROLE_TO_ASSUME:
+#        required: true
+#      KUBE_CERT:
+#        required: true
+#      KUBE_CLUSTER:
+#        required: true
+#      KUBE_TOKEN:
+#        required: true
+#      KUBE_NAMESPACE:
+#        required: true
 
 permissions:
   contents: read
