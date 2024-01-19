@@ -25,7 +25,6 @@ jobs:
       packages: write
       id-token: write
     needs:
-      - deploy-uat
       - capture-repo-info
     runs-on: ubuntu-latest
     environment: "staging"
