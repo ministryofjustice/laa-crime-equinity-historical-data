@@ -2,7 +2,6 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
 name: Build and Deploy after PR merged
-
 on:
   push:
     branches:
@@ -88,44 +87,44 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
 
-  deploy-uat:
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    needs:
-      - build
-      - capture-repo-info
-    uses: ./.github/workflows/_deploy-to.yml
-    with:
-      environment: "uat"
-      working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
-      repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
-      app_name: ${{ needs.capture-repo-info.outputs.app_name }}
-    secrets: inherit
-
-  deploy-staging:
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    needs:
-      - deploy-uat
-      - capture-repo-info
-    runs-on: ubuntu-latest
-    environment: "staging"
-    steps:
-      - run: echo "Coming soon"
-
-  deploy-prod:
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    needs:
-      - deploy-staging
-      - capture-repo-info
-    runs-on: ubuntu-latest
-    environment: "prod"
-    steps:
-      - run: echo "Coming soon"
+#  deploy-uat:
+#    permissions:
+#      contents: read
+#      packages: write
+#      id-token: write
+#    needs:
+#      - build
+#      - capture-repo-info
+#    uses: ./.github/workflows/_deploy-to.yml
+#    with:
+#      environment: "uat"
+#      working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+#      repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
+#      app_name: ${{ needs.capture-repo-info.outputs.app_name }}
+#    secrets: inherit
+#
+#  deploy-staging:
+#    permissions:
+#      contents: read
+#      packages: write
+#      id-token: write
+#    needs:
+#      - deploy-uat
+#      - capture-repo-info
+#    runs-on: ubuntu-latest
+#    environment: "staging"
+#    steps:
+#      - run: echo "Coming soon"
+#
+#  deploy-prod:
+#    permissions:
+#      contents: read
+#      packages: write
+#      id-token: write
+#    needs:
+#      - deploy-staging
+#      - capture-repo-info
+#    runs-on: ubuntu-latest
+#    environment: "prod"
+#    steps:
+#      - run: echo "Coming soon"
