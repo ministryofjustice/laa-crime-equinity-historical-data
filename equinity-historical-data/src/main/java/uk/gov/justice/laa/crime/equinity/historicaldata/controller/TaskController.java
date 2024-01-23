@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Tasks;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TasksRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
 import java.nio.charset.StandardCharsets;
 
 
@@ -19,11 +19,11 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @RequestMapping("equinity/tasks")
 public class TaskController {
-    private final TasksRepository tasksRepository;
+    private final TaskRepository taskRepository;
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<Tasks> getTasks(@PathVariable("id") long id) {
-        Tasks task = tasksRepository.findById(id)
+    public ResponseEntity<Task> getTasks(@PathVariable("id") long id) {
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + 5001483L));
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
@@ -31,7 +31,7 @@ public class TaskController {
     @GetMapping(value="/odf-image/{id}")
     public ResponseEntity<String> getTasksById(@PathVariable("id") long id) {
         int PRETTY_PRINT_INDENT_FACTOR = 4;
-        Tasks task = tasksRepository.findById(id)
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + id));
         byte[] varBinary = task.exportOFDImageFile();
         String str = new String(varBinary, StandardCharsets.UTF_8);

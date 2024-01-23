@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "Tasks")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tasks {
+public class Task {
 
     @Id
     @Getter
@@ -58,7 +58,7 @@ public class Tasks {
     @ManyToOne
     @JoinColumns({
         @JoinColumn(name="Type", referencedColumnName="TaskTypeID"),
-        @JoinColumn(name="State", referencedColumnName="StateID")
+        @JoinColumn(name="State", referencedColumnName="StateID"),
     })
     @Getter
     private TaskTypeState taskState;
