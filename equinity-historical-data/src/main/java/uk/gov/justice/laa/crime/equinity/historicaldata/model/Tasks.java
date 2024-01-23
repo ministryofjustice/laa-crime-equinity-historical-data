@@ -2,6 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -13,30 +14,71 @@ import java.time.LocalDateTime;
 public class Tasks {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private long ID;
-    public LocalDateTime getDTOriginated() {
-        return DTOriginated;
-    }
 
-    @Setter
+    @Column(name="Type", insertable=false, updatable=false)
+    @Getter
+    private Integer typeId;
+
+    @Column(name="State", insertable=false, updatable=false)
+    @Getter
+    private Integer stateId;
+
+    @Getter
+    private Integer OriginatorID;
+
     @Column(name = "DTOriginated")
+    @Getter
     private LocalDateTime DTOriginated;
 
-    public byte[] getOFDImage() {
-        return OFDImage;
-    }
+    @Getter
+    private Integer CurrentParticipantID;
 
-    public void setOFDImage(byte[] OFDImage) {
-        System.out.println("inside setOFDImage::");
-        this.OFDImage = OFDImage;
-    }
+    @Getter
+    private LocalDateTime DTLastSent;
+
+    @Getter
+    private String UF1Text;
+
+    @Getter
+    private String UF4Text;
+
+    @Getter
+    private String UF2Text;
+
+    @Getter
+    private String UF5Text;
+
+    @ManyToOne
+    @JoinColumn(name = "Type", insertable = false, updatable = false)
+    @Getter
+    private TaskType taskType;
+
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name="Type", referencedColumnName="TaskTypeID"),
+        @JoinColumn(name="State", referencedColumnName="StateID")
+    })
+    @Getter
+    private TaskTypeState taskState;
+
+    @ManyToOne
+    @JoinColumn(name = "OriginatorID", insertable = false, updatable = false)
+    @Getter
+    private Participant originator;
+
+    @ManyToOne
+    @JoinColumn(name = "CurrentParticipantID", insertable = false, updatable = false)
+    @Getter
+    private Participant currentParticipant;
+
 
     @Column(name = "OFDImage")
+    @Setter
     private byte[] OFDImage;
 
-    public long getID() {
-        return ID;
+    public byte[] exportOFDImageFile() {
+        return OFDImage;
     }
-
 }
