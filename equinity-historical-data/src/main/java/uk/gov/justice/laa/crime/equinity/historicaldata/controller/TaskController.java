@@ -13,7 +13,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Tasks;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TasksRepository;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 
 
 @RestController
@@ -22,19 +21,19 @@ import java.time.LocalDateTime;
 public class TaskController {
     private final TasksRepository tasksRepository;
 
-    @GetMapping(value="/test")
-    public ResponseEntity<LocalDateTime> getTasks() {
-        Tasks task = tasksRepository.findById(5001483L)
+    @GetMapping(value="/{id}")
+    public ResponseEntity<Tasks> getTasks(@PathVariable("id") long id) {
+        Tasks task = tasksRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + 5001483L));
-        return new ResponseEntity<>(task.getDTOriginated(), HttpStatus.OK);
+        return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
-    @GetMapping(value="/{id}")
+    @GetMapping(value="/odf-image/{id}")
     public ResponseEntity<String> getTasksById(@PathVariable("id") long id) {
         int PRETTY_PRINT_INDENT_FACTOR = 4;
         Tasks task = tasksRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + id));
-        byte[] varBinary = task.getOFDImage();
+        byte[] varBinary = task.exportOFDImageFile();
         String str = new String(varBinary, StandardCharsets.UTF_8);
         String resultString = str.replaceAll("\u0000", "");
         JSONObject xmlJSONObj = XML.toJSONObject(resultString);
