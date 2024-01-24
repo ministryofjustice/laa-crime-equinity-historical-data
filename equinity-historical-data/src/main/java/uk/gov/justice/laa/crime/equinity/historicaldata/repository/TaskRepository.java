@@ -1,12 +1,11 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Tasks;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 
-public interface TasksRepository extends JpaRepository<Tasks, Long> {
+
+public interface TaskRepository extends JpaRepository<Task, Long> {
   //  List<Tasks> findByID(Long ID);
 }
 
