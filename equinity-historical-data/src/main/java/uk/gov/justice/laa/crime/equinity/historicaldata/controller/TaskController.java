@@ -24,7 +24,7 @@ public class TaskController {
     @GetMapping(value="/{id}")
     public ResponseEntity<Task> getTasks(@PathVariable("id") long id) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + 5001483L));
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Comment with id = " + id));
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
