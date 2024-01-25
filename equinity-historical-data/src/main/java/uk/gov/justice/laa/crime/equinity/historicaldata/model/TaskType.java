@@ -31,6 +31,9 @@ public class TaskType {
     @Column(name = "UF3Description")
     private String UF3Description;
 
+    @Column(name = "UF3FieldType")
+    private String UF3FieldType;
+
     @Column(name = "UF4Description")
     private String UF4Description;
 
@@ -39,4 +42,7 @@ public class TaskType {
 
     @Column(name = "UF6Description")
     private String UF6Description;
+
+    @Column(name = "UF6FieldType")
+    private String UF6FieldType;
 }

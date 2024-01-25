@@ -48,6 +48,9 @@ public class Task {
     private String UF3Text;
 
     @Getter
+    private Integer UF3Number;
+
+    @Getter
     private String UF4Text;
 
     @Getter
@@ -55,6 +58,9 @@ public class Task {
 
     @Getter
     private String UF6Text;
+
+    @Getter
+    private Integer UF6Number;
 
     @ManyToOne
     @JoinColumn(name = "Type", insertable = false, updatable = false)
