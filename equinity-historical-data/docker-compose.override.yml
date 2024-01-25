@@ -8,6 +8,7 @@ services:
       - DB_ENDPOINT=host.docker.internal
       - DB_USER=local_db_username
       - DB_PASSWORD=local_db_password
+      - DB_DEBUG=true
 #    ports:
 #      - "8081:8081"
 #    command:
