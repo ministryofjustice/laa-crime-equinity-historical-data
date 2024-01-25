@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Description;
 
 
 @Getter
@@ -16,4 +17,6 @@ public class ParentTask {
     @Id
     private long ID;
 
+    @Getter
+    private String UF2Text;
 }
