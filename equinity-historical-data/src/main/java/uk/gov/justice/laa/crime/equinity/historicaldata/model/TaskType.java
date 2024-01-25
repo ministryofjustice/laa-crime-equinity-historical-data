@@ -28,9 +28,15 @@ public class TaskType {
     @Column(name = "UF2Description")
     private String UF2Description;
 
+    @Column(name = "UF3Description")
+    private String UF3Description;
+
     @Column(name = "UF4Description")
     private String UF4Description;
 
     @Column(name = "UF5Description")
     private String UF5Description;
+
+    @Column(name = "UF6Description")
+    private String UF6Description;
 }
