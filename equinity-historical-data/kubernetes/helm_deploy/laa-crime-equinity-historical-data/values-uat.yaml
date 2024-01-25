@@ -18,7 +18,7 @@ service:
   type: ClusterIP
   port: 8089
   environment: "uat"
-  dbDebug: true
+  dbDebug: "true"
 
 ingress:
   enabled: true
