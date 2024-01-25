@@ -25,7 +25,4 @@ public class TaskTypeState {
 
     @Column(name = "DisplayName")
     private String name;
-
-    @Column(name = "Description")
-    private String description;
 }
