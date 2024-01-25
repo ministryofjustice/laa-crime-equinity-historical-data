@@ -42,13 +42,19 @@ public class Task {
     private String UF1Text;
 
     @Getter
-    private String UF4Text;
-
-    @Getter
     private String UF2Text;
 
     @Getter
+    private String UF3Text;
+
+    @Getter
+    private String UF4Text;
+
+    @Getter
     private String UF5Text;
+
+    @Getter
+    private String UF6Text;
 
     @ManyToOne
     @JoinColumn(name = "Type", insertable = false, updatable = false)
