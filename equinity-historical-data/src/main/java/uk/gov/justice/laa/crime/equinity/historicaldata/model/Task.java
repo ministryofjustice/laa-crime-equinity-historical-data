@@ -85,6 +85,10 @@ public class Task {
     @Getter
     private Participant currentParticipant;
 
+    @ManyToOne
+    @JoinColumn(name = "UF3Number", insertable=false, updatable=false)
+    @Getter
+    private ParentTask parentTask;
 
     @Column(name = "OFDImage")
     @Setter
