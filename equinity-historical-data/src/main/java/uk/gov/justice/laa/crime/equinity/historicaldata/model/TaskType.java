@@ -23,20 +23,26 @@ public class TaskType {
     private String name;
 
     @Column(name = "UF1Description")
-    private String UF1Description;
+    private String UF1FieldDescription;
 
     @Column(name = "UF2Description")
-    private String UF2Description;
+    private String UF2FieldDescription;
 
     @Column(name = "UF3Description")
-    private String UF3Description;
+    private String UF3FieldDescription;
+
+    @Column(name = "UF3FieldType")
+    private String UF3FieldType;
 
     @Column(name = "UF4Description")
-    private String UF4Description;
+    private String UF4FieldDescription;
 
     @Column(name = "UF5Description")
-    private String UF5Description;
+    private String UF5FieldDescription;
 
     @Column(name = "UF6Description")
-    private String UF6Description;
+    private String UF6FieldDescription;
+
+    @Column(name = "UF6FieldType")
+    private String UF6FieldType;
 }
