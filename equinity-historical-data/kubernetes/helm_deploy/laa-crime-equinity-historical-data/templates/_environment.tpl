@@ -19,7 +19,7 @@ env:
         name: rds-mssql-instance-output
         key: database_password
   - name: DB_DEBUG
-    value: {{ .Values.service.dbDebug }}
+    value: {{ .Values.service.dbDebug | quote }}
   - name: HOST_ENV
     value: {{ .Values.service.environment }}
 {{- end -}}
