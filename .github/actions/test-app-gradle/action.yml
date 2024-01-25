@@ -22,18 +22,18 @@ runs:
         distribution: ${{inputs.java-dist}}
 
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v2.12.0
       with:
         build-root-directory: ${{inputs.working-directory}}
 
     - name: Run Unit Tests
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v2.12.0
       with:
         arguments: test
         build-root-directory: ${{inputs.working-directory}}
 
     - name: Generate Test coverage report
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v2.12.0
       with:
         arguments: jacocoTestCoverageVerification
         build-root-directory: ${{inputs.working-directory}}
