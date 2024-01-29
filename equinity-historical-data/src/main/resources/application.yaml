@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    format:
+      date: dd-MM-yyyy
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://${DB_ENDPOINT};encrypt=true;trustServerCertificate=true;databaseName=eq_uat
