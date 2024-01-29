@@ -14,5 +14,8 @@ service:
   port: 8089
   environment: "prod"
 
+database:
+  name: "equinity"
+
 ingress:
   enabled: false
