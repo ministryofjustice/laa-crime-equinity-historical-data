@@ -45,11 +45,10 @@ jobs:
     needs:
       - deploy-staging
       - capture-repo-info
-    runs-on: ubuntu-latest
-    environment: "prod"
-    steps:
-      - run: |
-          echo "Coming soon"
-          echo "image_tag: [[ ${{ env.IMAGE_TAG }} ]]"
-        env:
-          IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "prod"
+      working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+      repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
+      app_name: ${{ needs.capture-repo-info.outputs.app_name }}
+    secrets: inherit
