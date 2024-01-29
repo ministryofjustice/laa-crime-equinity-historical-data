@@ -2,7 +2,7 @@ FROM amazoncorretto:17-alpine
 
 # Downloading requirements
 RUN apk update \
-&& apk add curl unzip wget \
+&& apk add curl unzip wget
 
 # Installing AWS client
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
