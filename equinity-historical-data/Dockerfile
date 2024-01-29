@@ -1,13 +1,10 @@
 FROM amazoncorretto:17-alpine
 
-# Downloading requirements
+# Downloading dependencies
 RUN apk update \
-&& apk add curl unzip wget
+&& apk add curl unzip wget \
+&& apk add aws-cli
 
-# Installing AWS client
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
-RUN ./aws/install
 
 # Start building App for deployment
 RUN mkdir -p /opt/equinity-historical-data/
