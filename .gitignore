@@ -37,3 +37,5 @@ out/
 ### VS Code ###
 .vscode/
 *.java-version
+equinity-historical-data/docker-compose.override.yml
+equinity-historical-data/src/main/resources/application-local.yaml
