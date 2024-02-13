@@ -4,10 +4,7 @@ import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.json.XML;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
@@ -17,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -58,16 +56,23 @@ public class TaskSearchService {
         return tasksFound;
     }
 
-    public String getOfdImage(long taskId) {
-        int PRETTY_PRINT_INDENT_FACTOR = 4;
+    public Map<String, Object> getOfdImage(long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
 
-        byte[] varBinary = task.exportOFDImageFile();
-        String str = new String(varBinary, StandardCharsets.UTF_8);
-        String resultString = str.replaceAll("\u0000", "");
-        JSONObject xmlJSONObj = XML.toJSONObject(resultString);
-        return xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
+        // Collect and clean content
+        String odfImageContentString = new String(task.exportOFDImageFile(), StandardCharsets.UTF_8)
+            .replaceAll("\u0000", "")
+        ;
+
+        // Get form data
+        JSONObject xmlJSONFormData = (JSONObject) XML.toJSONObject(odfImageContentString)
+                .get("fd:formdata")
+        ;
+        // Cleanup form data by removing unused fields
+        xmlJSONFormData.remove("printinfo");
+        xmlJSONFormData.remove("schema");
+        return xmlJSONFormData.toMap();
     }
 
     public LocalDateTime convertToDateTime(LocalDate dateToConvert) {
