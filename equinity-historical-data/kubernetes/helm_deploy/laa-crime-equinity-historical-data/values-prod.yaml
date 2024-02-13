@@ -15,7 +15,7 @@ service:
   environment: "prod"
 
 database:
-  name: "equinity"
+  name: "eq_prod"
 
 ingress:
   enabled: false
