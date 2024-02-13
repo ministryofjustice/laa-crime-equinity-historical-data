@@ -15,9 +15,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 
 @RestController
@@ -70,7 +69,7 @@ public class TaskController {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
-    @GetMapping(value="/odf-image/{usn}")
+    @GetMapping(value="/{usn}/odf-image")
     @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "400",
@@ -85,8 +84,27 @@ public class TaskController {
                 schema = @Schema(implementation = ProblemDetail.class)
         )
     )
-    public ResponseEntity<String> getTasksById(@PathVariable("usn") long taskId) {
-        String ofdImageFileContents = taskService.getOfdImage(taskId);
+    public ResponseEntity<Map<String, Object>> getOdfImageByTaskId(@PathVariable("usn") long taskId) {
+        Map<String, Object> ofdImageFileContents = taskService.getOfdImage(taskId);
         return new ResponseEntity<>(ofdImageFileContents, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/odf-image/{usn}")
+    @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
+    @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "400",
+            description = "Bad request.",
+            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
+                    schema = @Schema(implementation = ProblemDetail.class)
+            )
+    )
+    @ApiResponse(responseCode = "500",
+            description = "Server Error.",
+            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
+                    schema = @Schema(implementation = ProblemDetail.class)
+            )
+    )
+    public ResponseEntity<Map<String, Object>> getTasksById(@PathVariable("usn") long taskId) {
+        return getOdfImageByTaskId(taskId);
     }
 }
