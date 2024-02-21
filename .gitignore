@@ -39,3 +39,8 @@ out/
 *.java-version
 equinity-historical-data/docker-compose.override.yml
 equinity-historical-data/src/main/resources/application-local.yaml
+data-api/pom.xml
+data-api/.openapi-generator/FILES
+data-api/.openapi-generator/VERSION
+data-api/README.md
+docker-compose.override.yml
