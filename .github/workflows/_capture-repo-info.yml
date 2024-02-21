@@ -13,9 +13,9 @@ on:
       app_name:
         description: "App name derived from repository"
         value: ${{ jobs.collect-info.outputs.app_name }}
-      working_directory:
-        description: "Working directory based on repository name"
-        value: "./${{ jobs.collect-info.outputs.repo_name }}"
+#      working_directory:
+#        description: "Working directory based on repository name"
+#        value: "./${{ jobs.collect-info.outputs.repo_name }}"
 
 permissions:
   contents: read

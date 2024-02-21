@@ -7,10 +7,10 @@ on:
         description: "Target environment to deploy"
         required: true
         type: string
-      working_directory:
-        description: "Application deployment working directory"
-        required: true
-        type: string
+#      working_directory:
+#        description: "Application deployment working directory"
+#        required: true
+#        type: string
       repo_name:
         description: "Name of repository for source code"
         required: true
@@ -35,9 +35,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    defaults:
-      run:
-        working-directory: ${{ inputs.working_directory }}
+#    defaults:
+#      run:
+#        working-directory: ${{ inputs.working_directory }}
 
     steps:
       # Checkout github repo
