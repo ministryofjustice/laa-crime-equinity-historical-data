@@ -4,7 +4,6 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-!**/data-api/**/generated/**/
 .DS_Store
 
 ### STS ###
@@ -44,4 +43,5 @@ data-api/pom.xml
 data-api/.openapi-generator/FILES
 data-api/.openapi-generator/VERSION
 data-api/README.md
+data-api/**/generated/**/
 docker-compose.override.yml
