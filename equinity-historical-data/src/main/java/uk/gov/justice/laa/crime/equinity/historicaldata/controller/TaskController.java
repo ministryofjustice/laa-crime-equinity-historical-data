@@ -14,15 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.TasksApi;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.model.TaskDetails;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("equinity/tasks")
-public class TaskController {
+public class TaskController implements TasksApi {
     private final TaskSearchService taskService;
 
     @GetMapping(value="/{usn}")
@@ -106,5 +109,13 @@ public class TaskController {
     )
     public ResponseEntity<Map<String, Object>> getTasksById(@PathVariable("usn") long taskId) {
         return getOdfImageByTaskId(taskId);
+    }
+
+    @Override
+    public ResponseEntity<TaskDetails> getTask(BigDecimal id) {
+        TaskDetails returnTask = new TaskDetails();
+        returnTask.setTypeId(BigDecimal.valueOf(1));
+        returnTask.setStateId(BigDecimal.valueOf(2));
+        return new ResponseEntity<>(returnTask, HttpStatus.OK);
     }
 }

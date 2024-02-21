@@ -1,12 +1,12 @@
 plugins {
     id 'org.openapi.generator' version '7.0.1'
-    id 'org.springframework.boot' version '3.0.5'
+    id 'org.springframework.boot' version '3.2.0'
 }
+
 
 apply plugin: "maven-publish"
 
 dependencies {
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.data:spring-data-commons'
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
@@ -36,16 +36,16 @@ publishing {
     }
 }
 
-sourceSets.main.java.srcDirs += ['generated/src/main/java']
+//sourceSets.main.java.srcDirs += ['src/main/java/']
 
 
 openApiGenerate {
     generatorName = "spring"
     inputSpec = "$rootDir/data-api/open-api-specification.yml".toString() // Change this to the location of your OpenAPI specification
-    outputDir = "$rootDir/data-api/generated".toString()
-    apiPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.api"
-    modelPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.model"
-    invokerPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.invoker"
+    outputDir = "$rootDir/data-api".toString()
+    apiPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.api"
+    modelPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.model"
+    invokerPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.invoker"
     configOptions = [
             delegatePattern       : "false",
             interfaceOnly         : "true", // This will only generate interfaces, not implementations
@@ -62,17 +62,14 @@ openApiGenerate {
 compileJava.dependsOn 'openApiGenerate'
 
 clean {
-    delete "$rootDir/data-api/generated"
+    delete "$rootDir/data-api/src"
 }
 
 // disable for overall project when running a build
-tasks.named('bootJar') {
+bootJar {
     enabled = false
 }
 
-tasks.named('bootRun') {
+bootRun {
     enabled = false
 }
-
-
-

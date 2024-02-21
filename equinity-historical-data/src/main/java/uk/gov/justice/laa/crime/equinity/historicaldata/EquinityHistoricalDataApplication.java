@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EquinityHistoricalData {
+public class EquinityHistoricalDataApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EquinityHistoricalData.class, args);
+		SpringApplication.run(EquinityHistoricalDataApplication.class, args);
 	}
 
 }
