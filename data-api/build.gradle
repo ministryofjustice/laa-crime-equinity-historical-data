@@ -1,0 +1,75 @@
+plugins {
+    id 'org.openapi.generator' version '7.0.1'
+    id 'org.springframework.boot' version '3.2.0'
+}
+
+
+apply plugin: "maven-publish"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.data:spring-data-commons'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url 'https://maven.pkg.github.com/ministryofjustice/laa-crime-equinity-historical-data'
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+//sourceSets.main.java.srcDirs += ['src/main/java/']
+
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/data-api/open-api-specification.yml".toString() // Change this to the location of your OpenAPI specification
+    outputDir = "$rootDir/data-api".toString()
+    apiPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.api"
+    modelPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.model"
+    invokerPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.invoker"
+    configOptions = [
+            delegatePattern       : "false",
+            interfaceOnly         : "true", // This will only generate interfaces, not implementations
+            dateLibrary           : "java17",
+            java17                : "true",
+            useTags               : "true",
+            skipDefaultInterface  : "true",
+            useJakartaEe          : "true",
+            documentationProvider : "none",
+            serializableModel     : "true"
+    ]
+}
+
+compileJava.dependsOn 'openApiGenerate'
+
+clean {
+    delete "$rootDir/data-api/src"
+}
+
+// disable for overall project when running a build
+bootJar {
+    enabled = false
+}
+
+bootRun {
+    enabled = false
+}

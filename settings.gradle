@@ -1,0 +1,4 @@
+rootProject.name = 'laa-crime-equinity-historical-data'
+
+include 'data-api'
+include 'equinity-historical-data'

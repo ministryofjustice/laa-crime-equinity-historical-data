@@ -33,14 +33,14 @@ jobs:
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
-          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+#          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
 
   test:
     runs-on: ubuntu-latest
     needs:
       - capture-repo-info
-    env:
-      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
+#    env:
+#      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
 
     steps:
       - uses: actions/checkout@v4
@@ -50,4 +50,4 @@ jobs:
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
-          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
+#          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
