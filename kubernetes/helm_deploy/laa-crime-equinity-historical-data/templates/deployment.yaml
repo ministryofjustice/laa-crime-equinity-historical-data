@@ -39,6 +39,8 @@ spec:
               containerPort: {{ .Values.actuator.port }}
               protocol: TCP
             {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           livenessProbe:
             httpGet:
               path: {{ .Values.actuator.health.path }}
