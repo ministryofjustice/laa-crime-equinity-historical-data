@@ -1,8 +1,6 @@
 plugins {
     id 'org.openapi.generator' version '7.0.1'
-    id 'org.springframework.boot' version '3.2.0'
 }
-
 
 apply plugin: "maven-publish"
 
@@ -36,8 +34,7 @@ publishing {
     }
 }
 
-//sourceSets.main.java.srcDirs += ['src/main/java/']
-
+sourceSets.main.java.srcDirs += ["$rootDir/data-api/"]
 
 openApiGenerate {
     generatorName = "spring"
@@ -47,15 +44,15 @@ openApiGenerate {
     modelPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.model"
     invokerPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.invoker"
     configOptions = [
-            delegatePattern       : "false",
-            interfaceOnly         : "true", // This will only generate interfaces, not implementations
-            dateLibrary           : "java17",
-            java17                : "true",
-            useTags               : "true",
-            skipDefaultInterface  : "true",
-            useJakartaEe          : "true",
-            documentationProvider : "none",
-            serializableModel     : "true"
+        delegatePattern       : "false",
+        interfaceOnly         : "true", // This will only generate interfaces, not implementations
+        dateLibrary           : "java17",
+        java17                : "true",
+        useTags               : "true",
+        skipDefaultInterface  : "true",
+        useJakartaEe          : "true",
+        documentationProvider : "none",
+        serializableModel     : "true"
     ]
 }
 
