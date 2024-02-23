@@ -13,8 +13,6 @@ configurations {
 	}
 }
 
-apply plugin: "org.springframework.boot"
-
 dependencies {
 	implementation project(':data-api')
 
