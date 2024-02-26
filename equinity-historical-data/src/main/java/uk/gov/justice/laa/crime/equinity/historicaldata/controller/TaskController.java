@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.TasksApi;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.model.TaskDetails;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
@@ -18,9 +20,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.TasksApi;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.model.TaskDetails;
 
 @RestController
 @RequiredArgsConstructor
@@ -90,25 +89,6 @@ public class TaskController implements TasksApi {
     public ResponseEntity<Map<String, Object>> getOdfImageByTaskId(@PathVariable("usn") long taskId) {
         Map<String, Object> ofdImageFileContents = taskService.getOfdImage(taskId);
         return new ResponseEntity<>(ofdImageFileContents, HttpStatus.OK);
-    }
-
-    @GetMapping(value="/odf-image/{usn}")
-    @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
-    @ApiResponse(responseCode = "200")
-    @ApiResponse(responseCode = "400",
-            description = "Bad request.",
-            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
-                    schema = @Schema(implementation = ProblemDetail.class)
-            )
-    )
-    @ApiResponse(responseCode = "500",
-            description = "Server Error.",
-            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
-                    schema = @Schema(implementation = ProblemDetail.class)
-            )
-    )
-    public ResponseEntity<Map<String, Object>> getTasksById(@PathVariable("usn") long taskId) {
-        return getOdfImageByTaskId(taskId);
     }
 
     @Override
