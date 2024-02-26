@@ -15,7 +15,7 @@ service:
   environment: "prod"
 
 database:
-  name: "eq_prod"
+  name: "equinity_restore_new"
 
 ingress:
   enabled: true
