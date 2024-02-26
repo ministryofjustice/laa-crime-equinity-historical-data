@@ -56,12 +56,12 @@ public class TaskSearchService {
         return tasksFound;
     }
 
-    public Map<String, Object> getOfdImage(long taskId) {
+    public Map<String, Object> getCrmFile(long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
 
         // Collect and clean content
-        String odfImageContentString = new String(task.exportOFDImageFile(), StandardCharsets.UTF_8)
+        String odfImageContentString = new String(task.exportCrmFile(), StandardCharsets.UTF_8)
             .replaceAll("\u0000", "")
         ;
 
@@ -72,6 +72,23 @@ public class TaskSearchService {
         // Cleanup form data by removing unused fields
         xmlJSONFormData.remove("printinfo");
         xmlJSONFormData.remove("schema");
+        return xmlJSONFormData.toMap();
+    }
+
+    public Map<String, Object> getCrmFileSchema(long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
+
+        // Collect and clean content
+        String odfImageContentString = new String(task.exportCrmFile(), StandardCharsets.UTF_8)
+                .replaceAll("\u0000", "");
+
+        // Get form data
+        JSONObject xmlJSONFormData = (JSONObject) XML.toJSONObject(odfImageContentString)
+                .get("fd:formdata");
+        // Cleanup form data by removing unused fields
+        xmlJSONFormData.remove("printinfo");
+        xmlJSONFormData.remove("fielddata");
         return xmlJSONFormData.toMap();
     }
 
