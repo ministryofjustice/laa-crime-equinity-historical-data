@@ -92,9 +92,9 @@ public class Task {
 
     @Column(name = "OFDImage")
     @Setter
-    private byte[] OFDImage;
+    private byte[] crmFile;
 
-    public byte[] exportOFDImageFile() {
-        return OFDImage;
+    public byte[] exportCrmFile() {
+        return crmFile;
     }
 }

@@ -15,7 +15,9 @@ service:
   environment: "prod"
 
 database:
-  name: "eq_prod"
+  name: "equinity_restore_new"
 
 ingress:
-  enabled: false
+  enabled: true
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: "laa-crime-equinity-historical-data-ingress-laa-crime-equinity-historical-data-prod-green"
