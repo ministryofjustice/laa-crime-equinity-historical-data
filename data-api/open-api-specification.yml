@@ -3,6 +3,68 @@ info:
   title: 'Equinity-data-api'
   version: '1.0.0'
 paths:
+  /api/internal/v1/equinity/search/:
+    get:
+      tags:
+        - search
+        - CRM
+        - tasks
+      summary: 'Search CRM forms'
+      operationId: 'doSearchBy'
+      parameters:
+        - name: 'usn'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            example: '3456'
+            format: '^[0-9]{3,10}$'
+            minLength: 3
+            maxLength: 10
+            pattern: '[0-9]{3,10}'
+        - name: 'client'
+          description: 'Client name'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            example: 'John Doe'
+            minLength: 3
+            maxLength: 256
+        - name: 'clientDoB'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            example: '2023-01-31'
+        - name: 'submittedFrom'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            example: '2019-03-18'
+        - name: 'submittedTo'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            example: '2019-04-13'
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrmFormsDTO"
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '404':
+          description: 'Not found'
+        '500':
+          description: 'Internal server error'
+
   /equinity/tasks/{id}:
     get:
       tags:
@@ -34,6 +96,26 @@ paths:
 
 components:
   schemas:
+    CrmFormsDTO:
+      type: 'object'
+      readOnly: true
+      properties:
+        usn:
+          type: number
+        type:
+          type:
+            string
+        clientName:
+          type: string
+        originatedDate:
+          type: string
+        submittedDate:
+          type: string
+        providerAccount:
+          type: string
+        providerName:
+          type: string
+
     TaskDetails:
       type: 'object'
       properties:
