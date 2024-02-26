@@ -11,12 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.TasksApi;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.model.TaskDetails;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +21,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("equinity/tasks")
-public class TaskController implements TasksApi {
+public class TaskController {
     private final TaskSearchService taskService;
 
     @GetMapping(value="/{usn}")
@@ -71,7 +68,7 @@ public class TaskController implements TasksApi {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
-    @GetMapping(value="/{usn}/odf-image")
+    @GetMapping(value= "/{usn}/crm-file")
     @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "400",
@@ -86,16 +83,28 @@ public class TaskController implements TasksApi {
                 schema = @Schema(implementation = ProblemDetail.class)
         )
     )
-    public ResponseEntity<Map<String, Object>> getOdfImageByTaskId(@PathVariable("usn") long taskId) {
-        Map<String, Object> ofdImageFileContents = taskService.getOfdImage(taskId);
-        return new ResponseEntity<>(ofdImageFileContents, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") long taskId) {
+        Map<String, Object> crmFileContents = taskService.getCrmFile(taskId);
+        return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<TaskDetails> getTask(BigDecimal id) {
-        TaskDetails returnTask = new TaskDetails();
-        returnTask.setTypeId(BigDecimal.valueOf(1));
-        returnTask.setStateId(BigDecimal.valueOf(2));
-        return new ResponseEntity<>(returnTask, HttpStatus.OK);
+    @GetMapping(value= "/{usn}/crm-schema")
+    @Operation(description = "Search a specific Task by ID (USN) for its OFD Image Schema file")
+    @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "400",
+            description = "Bad request.",
+            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
+                    schema = @Schema(implementation = ProblemDetail.class)
+            )
+    )
+    @ApiResponse(responseCode = "500",
+            description = "Server Error.",
+            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
+                    schema = @Schema(implementation = ProblemDetail.class)
+            )
+    )
+    public ResponseEntity<Map<String, Object>> getCrmFileSchemaByUsn(@PathVariable("usn") long taskId) {
+        Map<String, Object> crmFileSchema = taskService.getCrmFileSchema(taskId);
+        return new ResponseEntity<>(crmFileSchema, HttpStatus.OK);
     }
 }
