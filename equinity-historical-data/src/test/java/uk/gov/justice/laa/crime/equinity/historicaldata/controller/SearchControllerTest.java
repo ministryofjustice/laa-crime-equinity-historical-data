@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.model.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)

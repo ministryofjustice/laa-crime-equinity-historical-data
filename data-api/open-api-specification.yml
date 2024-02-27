@@ -18,7 +18,6 @@ paths:
           schema:
             type: string
             example: '3456'
-            format: '^[0-9]{3,10}$'
             minLength: 3
             maxLength: 10
             pattern: '[0-9]{3,10}'

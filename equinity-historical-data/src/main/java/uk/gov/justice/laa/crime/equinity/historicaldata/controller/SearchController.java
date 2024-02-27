@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.SearchApi;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.model.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
 import java.time.LocalDate;
