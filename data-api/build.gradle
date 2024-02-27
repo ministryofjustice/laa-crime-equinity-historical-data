@@ -41,7 +41,7 @@ openApiGenerate {
     inputSpec = "$rootDir/data-api/open-api-specification.yml".toString() // Change this to the location of your OpenAPI specification
     outputDir = "$rootDir/data-api".toString()
     apiPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.api"
-    modelPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.model"
+    modelPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto"
     invokerPackage = "uk.gov.justice.laa.crime.equinity.historicaldata.generated.invoker"
     configOptions = [
         delegatePattern       : "false",
