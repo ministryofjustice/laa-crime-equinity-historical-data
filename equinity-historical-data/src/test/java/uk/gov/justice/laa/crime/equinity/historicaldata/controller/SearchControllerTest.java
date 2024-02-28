@@ -208,4 +208,55 @@ class SearchControllerTest {
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
     }
+
+    @Test
+    void doSearchByTest_WhenShorterProviderAccountIsGivenThenReturnConstraintViolationException() {
+        String providerAccount = "0A0A0";
+        String expectedMessage = "size must be between";
+
+        softly.assertThatThrownBy(() -> controller.doSearchBy(
+                        null, null, null, null, null, providerAccount))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
+    void doSearchByTest_WhenLongerProviderAccountIsGivenThenReturnConstraintViolationException() {
+        String providerAccount = "0A0A0A1";
+        String expectedMessage = "size must be between";
+
+        softly.assertThatThrownBy(() -> controller.doSearchBy(
+                        null, null, null, null, null, providerAccount))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
+    void doSearchByTest_WhenInvalidFormatProviderAccountIsGivenThenReturnConstraintViolationException() {
+        List<String> providerAccounts = List.of(
+            "012*3A", " 0123A", "Z0123 ", "      ", "123 AB", "ID>=12",
+            "0A0A0A1", "0A0A0A12"
+        );
+        String expectedMessage = "must match";
+
+        // execute
+        providerAccounts.forEach(providerAccount ->
+            softly.assertThatThrownBy(() -> controller.doSearchBy(
+                    null, null, null, null, null, providerAccount))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining(expectedMessage)
+        );
+    }
+
+    @Test
+    void doSearchByTest_WhenValidProviderAccountIsGivenThenReturnDTO() {
+        String providerAccount = "0A0A0A";
+
+        // execute
+        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, null, null, providerAccount);
+
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+    }
 }
