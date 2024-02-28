@@ -44,6 +44,7 @@ paths:
             type: string
             pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
             example: '2019-03-18'
+
         - name: 'submittedTo'
           in: 'query'
           required: false
@@ -51,6 +52,16 @@ paths:
             type: string
             pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
             example: '2019-04-13'
+
+        - name: 'providerAccount'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            minLength: 6
+            maxLength: 6
+            pattern: "[0-9][A-Z]"
+            example: '0X12YZ'
       responses:
         '200':
           description: 'Success'

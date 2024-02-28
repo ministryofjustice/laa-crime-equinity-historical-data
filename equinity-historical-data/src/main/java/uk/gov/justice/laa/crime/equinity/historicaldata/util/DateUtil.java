@@ -6,16 +6,17 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConst
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Objects;
 
 @UtilityClass
 @ConfigurationPropertiesScan
-public class DateHelper {
+public class DateUtil {
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             .withLocale(Locale.UK);
 
-    public static LocalDate convertStringToLocalDate(String dateToConvert) {
+    public static LocalDate convertStringToLocalDate(String dateToConvert) throws DateTimeParseException {
         if (Objects.isNull(dateToConvert)) return null;
 
         return LocalDate.parse(dateToConvert, dateFormatter);

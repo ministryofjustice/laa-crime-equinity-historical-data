@@ -52,7 +52,7 @@ class SearchControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null))
+                usnTest, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -64,7 +64,7 @@ class SearchControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null))
+                usnTest, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -76,7 +76,7 @@ class SearchControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null))
+                usnTest, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -88,7 +88,7 @@ class SearchControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null))
+                usnTest, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -97,7 +97,7 @@ class SearchControllerTest {
     void doSearchByTest_WhenValidUsnThenReturnDTO() {
         String usnTest = "1234";
 
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(usnTest, null, null, null, null);
+        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(usnTest, null, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -114,7 +114,7 @@ class SearchControllerTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                   null, null, null, dateToTest, null))
+                   null, null, null, dateToTest, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -127,7 +127,7 @@ class SearchControllerTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                        null, null, null, null, dateToTest))
+                        null, null, null, null, dateToTest, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -140,7 +140,7 @@ class SearchControllerTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                        null, null, dateToTest, null, null))
+                        null, null, dateToTest, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -154,8 +154,58 @@ class SearchControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                null, null, null, startDate, endDate))
+                null, null, null, startDate, endDate, null))
             .isInstanceOf(DateRangeConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
+    void doSearchByTest_WhenOnlyValidSubmittedDateFromIsGivenThenReturnDTO() {
+        String dateToTest = "2024-02-19";
+
+        // execute
+        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, dateToTest, null, null);
+
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+    }
+
+    @Test
+    void doSearchByTest_WhenOnlyValidSubmittedDateToIsGivenThenReturnDTO() {
+        String dateToTest = "2024-02-19";
+
+        // execute
+        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, null, dateToTest, null);
+
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+    }
+
+    @Test
+    void doSearchByTest_WhenOnlyValidSubmittedDateRangeIsGivenThenReturnDTO() {
+        String dateToTestFrom = "2024-02-09";
+        String dateToTestTo = "2024-02-19";
+
+        // execute
+        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
+
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+    }
+
+    @Test
+    void doSearchByTest_WhenOnlyValidSubmittedDateRangeWithSameDatesIsGivenThenReturnDTO() {
+        String dateToTestFrom = "2024-02-19";
+        String dateToTestTo = "2024-02-19";
+
+        // execute
+        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
+
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
     }
 }
