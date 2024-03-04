@@ -24,4 +24,12 @@ public class EquinityExceptionResponseHandler {
     ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
+
+    @ExceptionHandler(DateRangeConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleDateRangeConstraintViolationException(
+            DateRangeConstraintViolationException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
 }
