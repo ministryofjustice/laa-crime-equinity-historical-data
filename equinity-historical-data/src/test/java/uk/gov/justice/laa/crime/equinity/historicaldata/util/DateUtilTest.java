@@ -26,7 +26,7 @@ class DateUtilTest {
     @BeforeAll
     void preTest() {
         testInvalidFormatDates = List.of(
-                "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
+            "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
         );
     }
 
@@ -36,7 +36,7 @@ class DateUtilTest {
     }
 
     @Test
-    void doSearchByTest_WhenShorterUsnThenReturnConstraintViolationException() {
+    void doSearchByTest_WhenInvalidDateFormatIsGivenThenReturnConstraintViolationException() {
         String expectedMessage = "could not be parsed";
 
         // execute
@@ -50,15 +50,27 @@ class DateUtilTest {
     @Test
     void convertStringToLocalDate_WhenOutOfBoundDateValidFormatThenReturnsDateLastDayOfMonth() {
         List<String> testDatesFeb = List.of(
-            "2024-02-31", "2024-02-30"
+            "2024-02-31", "2024-02-30", "2024-02-29"
         );
-        String expectedFeb = "2024-02-29";
+        String expectedLeap = "2024-02-29";
 
         testDatesFeb.forEach(dateToTest -> {
                 LocalDate convertedDate = DateUtil.convertStringToLocalDate(dateToTest);
                 assert convertedDate != null;
-                softly.assertThat(convertedDate.toString()).isEqualTo(expectedFeb);
+                softly.assertThat(convertedDate.toString()).isEqualTo(expectedLeap);
             }
+        );
+
+        testDatesFeb = List.of(
+                "2023-02-31", "2023-02-30", "2023-02-29", "2023-02-28"
+        );
+        String expectedFeb = "2023-02-28";
+
+        testDatesFeb.forEach(dateToTest -> {
+                    LocalDate convertedDate = DateUtil.convertStringToLocalDate(dateToTest);
+                    assert convertedDate != null;
+                    softly.assertThat(convertedDate.toString()).isEqualTo(expectedFeb);
+                }
         );
 
         String dateToTestSep = "2024-09-31";

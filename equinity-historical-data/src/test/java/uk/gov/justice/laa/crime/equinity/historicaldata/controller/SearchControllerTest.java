@@ -209,6 +209,9 @@ class SearchControllerTest {
         softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
     }
 
+    /**
+     * Provider Account input checks
+     */
     @Test
     void doSearchByTest_WhenShorterProviderAccountIsGivenThenReturnConstraintViolationException() {
         String providerAccount = "0A0A0";
@@ -250,7 +253,7 @@ class SearchControllerTest {
 
     @Test
     void doSearchByTest_WhenValidProviderAccountIsGivenThenReturnDTO() {
-        String providerAccount = "0A0A0A";
+        String providerAccount = "0A0z0A";
 
         // execute
         ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, null, null, providerAccount);

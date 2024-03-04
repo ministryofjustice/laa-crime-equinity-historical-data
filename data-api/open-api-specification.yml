@@ -60,7 +60,7 @@ paths:
             type: string
             minLength: 6
             maxLength: 6
-            pattern: "([0-9A-Z]){6}"
+            pattern: "([0-9A-Za-z]){6}"
             example: '0X12YZ'
       responses:
         '200':
