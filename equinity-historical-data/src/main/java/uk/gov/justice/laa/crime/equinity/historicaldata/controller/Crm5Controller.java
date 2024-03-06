@@ -1,10 +1,15 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm5InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5FormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
 @RestController
@@ -15,29 +20,32 @@ public class Crm5Controller implements Crm5InterfaceApi {
 
     @Override
     public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn) {
-        CRM5DetailsDTO crm5Details = new CRM5DetailsDTO();
-//        CrmFormDetails CrmFormDetails = getCrmFile(usn);
-//        crm5Details.setUsn(CrmFormDetails.getFielddataObject().getUsn());
-        return ResponseEntity.ok(crm5Details);
+        CRM5DetailsDTO crm5DetailsDTO = new CRM5DetailsDTO();
+        Crm5FormDetailsModel crmFormDetailsModel = getCrmFile(usn);
+        // Mapping
+        crm5DetailsDTO.setUsn(Integer.parseInt(Long.toString(usn)));
+        crm5DetailsDTO.setDetailsOfApplication(crmFormDetailsModel.getTargetpath());
+        // Return
+        return ResponseEntity.ok(crm5DetailsDTO);
     }
-//    public CrmFormDetails getCrmFile(long taskId) {
-//        CrmFormDetails crmFormDetails = null;
-//        JSONObject crmFileJsonObject = taskService.getXMLJsonObject(taskId);
-//        ObjectMapper om = new ObjectMapper();
-//        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        try {
-//            crmFormDetails = om.readValue(crmFileJsonObject.toString(), CrmFormDetails.class);
-//            System.out.println("getSubmitter_user_id::"+crmFormDetails.getFielddataObject().getSubmitter_user_id());
+    public Crm5FormDetailsModel getCrmFile(long taskId) {
+        Crm5FormDetailsModel crmFormDetails = null;
+        JSONObject crmFileJsonObject = taskService.getCrmFormJson(taskId);
+        ObjectMapper om = new ObjectMapper();
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try {
+            crmFormDetails = om.readValue(crmFileJsonObject.toString(), Crm5FormDetailsModel.class);
+            System.out.println("getTargetPath::"+crmFormDetails.getTargetpath());
 //            System.out.println("getSolicitorid::"+crmFormDetails.getFielddataObject().getSolicitorid());
 //            System.out.println("Fc_reject_reasons_text::"+crmFormDetails.getFielddataObject().getFc_reject_reasons_text());
 //            System.out.println("getDate_received::"+crmFormDetails.getFielddataObject().getClient_dob());
 //            System.out.println("getLinkedAttachment::"+crmFormDetails.getLinkedAttachmentsObject().getLinkedAttachment().getName());
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//        CRM5Details crm5Details = crm5Mapper.fromJsonToDto(crmFormDetails);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+//        Crm5FormDetailsModel crm5Details = crm5Mapper.fromJsonToDto(crmFormDetails);
 //        System.out.println("USN**::"+crm5Details.getUsn());
-//
-//        return crmFormDetails;
-//    }
+
+        return crmFormDetails;
+    }
 }

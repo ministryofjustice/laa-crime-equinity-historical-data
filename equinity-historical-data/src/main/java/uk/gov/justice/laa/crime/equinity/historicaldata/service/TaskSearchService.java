@@ -56,36 +56,40 @@ public class TaskSearchService {
         return tasksFound;
     }
 
-    public Map<String, Object> getCrmFile(long taskId) {
+    private JSONObject getCrmFileJson(long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
 
         // Collect and clean content
         String odfImageContentString = new String(task.exportCrmFile(), StandardCharsets.UTF_8)
-            .replaceAll("\u0000", "")
-        ;
+                .replaceAll("\u0000", "")
+                ;
 
         // Get form data
         JSONObject xmlJSONFormData = (JSONObject) XML.toJSONObject(odfImageContentString)
                 .get("fd:formdata")
-        ;
+                ;
+        return xmlJSONFormData;
+    }
+
+    public JSONObject getCrmFormJson(long taskId) {
+        JSONObject xmlJSONFormData = getCrmFileJson(taskId);
         // Cleanup form data by removing unused fields
         xmlJSONFormData.remove("printinfo");
         xmlJSONFormData.remove("schema");
+        return xmlJSONFormData;
+    }
+
+    public Map<String, Object> getCrmFile(long taskId) {
+        // Get form data
+        JSONObject xmlJSONFormData = getCrmFormJson(taskId);
+
         return xmlJSONFormData.toMap();
     }
 
     public Map<String, Object> getCrmFileSchema(long taskId) {
-        Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
-
-        // Collect and clean content
-        String odfImageContentString = new String(task.exportCrmFile(), StandardCharsets.UTF_8)
-                .replaceAll("\u0000", "");
-
         // Get form data
-        JSONObject xmlJSONFormData = (JSONObject) XML.toJSONObject(odfImageContentString)
-                .get("fd:formdata");
+        JSONObject xmlJSONFormData = getCrmFileJson(taskId);
         // Cleanup form data by removing unused fields
         xmlJSONFormData.remove("printinfo");
         xmlJSONFormData.remove("fielddata");
