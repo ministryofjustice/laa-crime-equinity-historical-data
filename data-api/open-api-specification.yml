@@ -78,6 +78,26 @@ paths:
         '500':
           description: 'Internal server error'
 
+  /crm5/{usn}:
+    get:
+      tags:
+        - CRM5Interface
+      operationId: getApplication
+      parameters:
+        - name: usn
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CRM5Details'
+                
   /equinity/tasks/{id}:
     get:
       tags:
