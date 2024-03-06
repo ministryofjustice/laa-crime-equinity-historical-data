@@ -96,7 +96,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CRM5Details'
+                $ref: '#/components/schemas/CRM5DetailsDTO'
                 
   /equinity/tasks/{id}:
     get:
@@ -147,6 +147,42 @@ components:
         providerAccount:
           type: string
         providerName:
+          type: string
+
+    CRM5DetailsDTO:
+      type: object
+      properties:
+        usn:
+          type: integer
+        hasPreviousApplication:
+          type: boolean
+        previousApplicationRef:
+          type: string
+        appealedPrevDecision:
+          type: boolean
+        appealedPrevDecisionDetails:
+          type: string
+        urgent:
+          type: boolean
+        urgencyReason:
+          type: string
+          enum:
+            - Urgent preparation prior to interview of client
+            - HMP has limited visiting times/or has a cancellation
+            - Deadline for representations imminent
+            - Late notification of adjudication/oral/paper hearing
+            - Urgent healthcare issues e.g. hospitalisation
+            - Deadline for submitting appeal
+            - Urgent HMP visit
+            - Application returned as incomplete hence delayed
+            - Brief Counsel/Expert tight time frame
+            - Additional costs e.g. client transferred HMP short notice
+            - Information required urgently by CCRC
+        StatementOfCase:
+          type: string
+        DetailsOfWorkCompleted:
+          type: string
+        DetailsOfApplication:
           type: string
 
     TaskDetails:
