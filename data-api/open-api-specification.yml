@@ -1,7 +1,7 @@
-openapi: '3.0.0'
+openapi: 3.0.1
 info:
-  title: 'Equinity-data-api'
-  version: '1.0.0'
+  title: OpenAPI definition
+  version: 1.0.0-oas3
 paths:
   /api/internal/v1/equinity/search/:
     get:
@@ -106,7 +106,25 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
-
+  /crm5/{usn}:
+    get:
+      tags:
+        - CRM5Interface
+      operationId: getApplication
+      parameters:
+        - name: usn
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CRM5Details'
 components:
   schemas:
     CrmFormsDTO:
@@ -138,3 +156,341 @@ components:
           type: number
         currentParticipant:
           type: 'string'
+    NameandDate:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        name:
+          type: string
+    Address:
+      type: object
+      properties:
+        noFixedAbode:
+          type: boolean
+        postcode:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        addressLine3:
+          type: string
+        city:
+          type: string
+        county:
+          type: string
+        country:
+          type: string
+    CaseDetails:
+      type: object
+      properties:
+        levelOfWork:
+          type: string
+        cwCriminalInvestigation:
+          type: integer
+          format: int32
+        cwCcrc:
+          type: integer
+          format: int32
+        cwAppealsReview:
+          type: integer
+          format: int32
+        cwPrisonLaw:
+          type: string
+    CaseHistory:
+      type: object
+      properties:
+        summary:
+          type: string
+        addtionalInfo:
+          type: string
+    Solicitor:
+      type: object
+      properties:
+        declaration:
+          $ref: '#/components/schemas/NameandDate'
+        certification:
+          $ref: '#/components/schemas/NameandDate'
+    CRM5Details:
+      type: object
+      properties:
+        usn:
+          type: integer
+        hasPreviousApplication:
+          type: boolean
+        previousApplicationRef:
+          type: string
+        appealedPrevDecision:
+          type: boolean
+        appealedPrevDecisionDetails:
+          type: string
+        urgent:
+          type: boolean
+        urgencyReason:
+          type: string
+          enum:
+            - Urgent preparation prior to interview of client
+            - HMP has limited visiting times/or has a cancellation
+            - Deadline for representations imminent
+            - Late notification of adjudication/oral/paper hearing
+            - Urgent healthcare issues e.g. hospitalisation
+            - Deadline for submitting appeal
+            - Urgent HMP visit
+            - Application returned as incomplete hence delayed
+            - Brief Counsel/Expert tight time frame
+            - Additional costs e.g. client transferred HMP short notice
+            - Information required urgently by CCRC
+        Firm:
+          $ref: '#/components/schemas/Firm'
+        CaseDetails:
+          $ref: '#/components/schemas/CaseDetails'
+        ClientDetails:
+          $ref: '#/components/schemas/ClientDetails'
+        CapitalDetails:
+          $ref: '#/components/schemas/CapitalDetails'
+        IncomeDetails:
+          $ref: '#/components/schemas/IncomeDetails'
+        Proceedings:
+          $ref: '#/components/schemas/Proceedings'
+        StatementOfCase:
+          type: string
+        CourtAppealFunding:
+          $ref: '#/components/schemas/AppealFunding'
+        DetailsOfWorkCompleted:
+          type: string
+        DetailsOfApplication:
+          type: string
+        AllCosts:
+          $ref: '#/components/schemas/AllCosts'
+        CaseHistory:
+          $ref: '#/components/schemas/CaseHistory'
+        Solicitor:
+          $ref: '#/components/schemas/Solicitor'
+        OfficeUseOnly:
+          $ref: '#/components/schemas/Decision'
+    Firm:
+      type: object
+      properties:
+        firmAddress:
+          type: string
+        firmName:
+          type: string
+        firmPhone:
+          type: string
+        firmSupplierNo:
+          type: string
+        firmContactName:
+          type: string
+        firmSolicitorName:
+          type: string
+        firmSolicitorRef:
+          type: string
+
+    CapitalDetails:
+      type: object
+      properties:
+        isUnder18:
+          type: boolean
+        hasIncomeSupport:
+          type: boolean
+          description: Does client or partner get income support
+        numOfDependants:
+          type: integer
+          format: int32
+        clientSavings:
+          type: integer
+          format: int32
+        partnerSavings:
+          type: integer
+          format: int32
+        totalSavings:
+          type: integer
+          format: int32
+    IncomeDetails:
+      type: object
+      properties:
+        hasIncomeSupport:
+          type: boolean
+          description: Does client or partner get income support
+        weeklyClientIncome:
+          type: integer
+          format: int32
+        weeklyPartnerIncome:
+          type: integer
+          format: int32
+        weeklyIncomeWithoutDeduction:
+          type: integer
+          format: int32
+        incomeTaxDeductions:
+          type: integer
+          format: int32
+        niDeductions:
+          type: integer
+          format: int32
+        partnerDeductions:
+          type: integer
+          format: int32
+        socialFundDeductions:
+          type: integer
+          format: int32
+        dependantChildrenUnder15:
+          type: integer
+          format: int32
+          description: Number of dependant children under 15 years
+        deductionUnder15:
+          type: integer
+          format: int32
+        dependantChildrenOver16:
+          type: integer
+          format: int32
+        deductionOver16:
+          type: integer
+          format: int32
+        totalDeductions:
+          type: integer
+          format: int32
+        totalWeeklyIncome:
+          type: integer
+          format: int32
+    ClientDetails:
+      type: object
+      properties:
+        UFN:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        surname:
+          type: string
+        maritalStatus:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        nationalInsuranceNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+    AllCosts:
+      type: object
+      properties:
+        AccruedCosts:
+          $ref: '#/components/schemas/AccruedCosts'
+        AnticipatedCosts:
+          $ref: '#/components/schemas/AnticipateCosts'
+        NewLimitRequest:
+          $ref: '#/components/schemas/CostOnly'
+    AccruedCosts:
+      type: object
+      properties:
+        Atttendance:
+          $ref: '#/components/schemas/TimeCost'
+        Preparation:
+          $ref: '#/components/schemas/TimeCost'
+        Advocacy:
+          $ref: '#/components/schemas/TimeCost'
+        Travel:
+          $ref: '#/components/schemas/TimeCost'
+        Waiting:
+          $ref: '#/components/schemas/TimeCost'
+        Letters:
+          $ref: '#/components/schemas/GeneralCost'
+        TelephoneCalls:
+          $ref: '#/components/schemas/GeneralCost'
+        Mileage:
+          $ref: '#/components/schemas/GeneralCost'
+        OtherDisbursement:
+          $ref: '#/components/schemas/CostOnly'
+        TotalCost:
+          $ref: '#/components/schemas/CostOnly'
+    AnticipateCosts:
+      type: object
+      properties:
+        Atttendance:
+          $ref: '#/components/schemas/TimeCost'
+        Preparation:
+          $ref: '#/components/schemas/TimeCost'
+        Advocacy:
+          $ref: '#/components/schemas/TimeCost'
+        Travel:
+          $ref: '#/components/schemas/TimeCost'
+        Waiting:
+          $ref: '#/components/schemas/TimeCost'
+        Letters:
+          $ref: '#/components/schemas/GeneralCost'
+        TelephoneCalls:
+          $ref: '#/components/schemas/GeneralCost'
+        Mileage:
+          $ref: '#/components/schemas/GeneralCost'
+        OtherDisbursement:
+          $ref: '#/components/schemas/CostOnly'
+        TotalCost:
+          $ref: '#/components/schemas/CostOnly'
+    Proceedings:
+      type: object
+      properties:
+        TypeOfProceedings:
+          $ref: '#/components/schemas/TypeOfProceedings'
+        DetailsOfProceedings:
+          $ref: '#/components/schemas/DetailsOfProceedings'
+    TypeOfProceedings:
+      type: object
+      properties:
+        preCharge:
+          type: string
+        appealProceedings:
+          type: string
+        prisonLaw:
+          type: string
+    DetailsOfProceedings:
+      type: object
+      properties:
+        dateOfNextHearing:
+          type: string
+          format: date-time
+        isCounselInstructed:
+          type: boolean
+    AppealFunding:
+      type: object
+      properties:
+        hasCourtAppeal:
+          type: boolean
+        appealDetails:
+          type: string
+        benefitOfCourt:
+          type: boolean
+        expertReport:
+          type: boolean
+    TimeCost:
+      type: object
+      properties:
+        time:
+          type: string
+          format: time
+          description: only Time in 24 hrs format HH:MM
+        cost:
+          type: number
+          format: float
+    GeneralCost:
+      type: object
+      properties:
+        total:
+          type: number
+          format: float
+        cost:
+          type: number
+          format: float
+    CostOnly:
+      properties:
+        cost:
+          type: number
+          format: float
+          description: Displayed along with currency symbol e.g £950.00
+    Decision:
+      properties:
+        decision:
+          type: string
+          description: Grant, Part Grant, Reject, Refer For ICA
