@@ -12,6 +12,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.TaskSearchService;
 
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import java.util.Map;
 @RequestMapping("equinity/tasks")
 public class TaskController {
     private final TaskSearchService taskService;
+    private final CrmFileService crmFileService;
 
     @GetMapping(value="/{usn}")
     @Operation(description = "Search Task by ID (USN)")
@@ -84,7 +86,7 @@ public class TaskController {
         )
     )
     public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") long taskId) {
-        Map<String, Object> crmFileContents = taskService.getCrmFile(taskId);
+        Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(taskId).toMap();
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
 
@@ -104,7 +106,7 @@ public class TaskController {
             )
     )
     public ResponseEntity<Map<String, Object>> getCrmFileSchemaByUsn(@PathVariable("usn") long taskId) {
-        Map<String, Object> crmFileSchema = taskService.getCrmFileSchema(taskId);
+        Map<String, Object> crmFileSchema = crmFileService.getCrmFileSchema(taskId).toMap();
         return new ResponseEntity<>(crmFileSchema, HttpStatus.OK);
     }
 }
