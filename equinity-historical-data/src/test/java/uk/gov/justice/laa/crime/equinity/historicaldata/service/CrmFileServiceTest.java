@@ -1,20 +1,25 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service;
 
+import io.micrometer.core.instrument.util.IOUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
+import org.json.XML;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -23,15 +28,23 @@ class CrmFileServiceTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
-    @MockBean
+    @Autowired
     TaskRepository taskRepository;
 
-    @Mock
+    @Autowired
     CrmFileService crmFileService;
 
 
-    void setupMockitoForTest() {
-//        given(taskRepository.findById(any())).willReturn(TASK);
+    @BeforeAll
+    void preTest() throws FileNotFoundException {
+        Task taskModel = new Task();
+        taskModel.setID(10L);
+        FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockOFDFile.txt");
+        JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+        byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
+
+        taskModel.setCrmFile(fileDataByte);
+        taskRepository.save(taskModel);
     }
 
     @AfterAll
@@ -39,17 +52,12 @@ class CrmFileServiceTest {
         softly.assertAll();
     }
 
-   // @Test
+    @Test
     void getCrmFileDataTest() {
-        // TODO (EMP-151): Add a mock to fake the return of the data. Also, can be used with a specific profile and use database connection
         long ustToTest = 10L;
-        String expectedPath = "toBeFilled";
-        String expectedFcCurrentUser = "toBeExpected";
-        JSONObject mockedCrm5Json = new JSONObject("{\"familypath\":\"\n" +
-                "<formslib>\\\\CDS5_1.ofmx\",\"fielddata\":{\"Proceedings_counsel_instructed\":\"\",\"Fc_current_user\":\"ABELSABLES\",\"Client_total_savings\":0,\"Client_address_line3\":\"\",\"Proceedings_prisonlaw\":\"\",\"Solicitor_sign_name\":\"\",\"Ctd_mileage_cost\":800,\"Sd_address_postcode\":\"\",\"Aa_first_sol_no_claim\":false,\"Originator_tl_passwordneverexpires\":0,\"Proceedings_crowncourtappeal\":\"\",\"Fc_priority\":1,\"Originator_tl_qn_answer_salt\":\"\",\"Provider_account\":\"0D182J\",\"Originator_tl_permanentlyremoved\":0,\"Appealed_prev_decision_details\":\"It was successful\",\"TlStateName\":\"Manual Review\",\"Originator_emailflag\":\"Y\",\"Sd_address_town\":\"\",\"Aa_transfer_from_solicitor\":false,\"Fc_injected\":false,\"Decision_original\":\"\",\"Tlmessage\":\"Pls consider my application\",\"Advocacy_threshold_income\":209,\"Originator_tl_dtlastfailedloginattempt\":\"2023-09-19T09:58:35\",\"Fc_selected_eformsreviewer\":\"\",\"Proceedings_precharge\":\"\",\"Client_address_line2\":\"\",\"Client_address_line1\":\"\",\"Originator_tl_usertype\":0,\"Ac_travel_time_partfilled\":0,\"Tlmultimessage\":\"\",\"Ctd_letters\":1,\"Tltasktype\":4,\"Tlautonumber\":0,\"Ac_advocacy_time_cost\":350,\"Fc_processingoffice\":\"Nottingham\",\"Ctd_advocacy_costs\":300,\"Ctd_letters_partfilled\":0,\"Tldateorig\":\"2024-02-14T11:35:55\",\"Provider_case_ref\":\"\",\"Advocacy_threshold_inc\":100,\"Caf_court_funding_details\":\"Court appeal was greanted and this is test.\",\"Originator_tl_failedloginattemptcount\":1,\"Fc_info_returned_flag\":false,\"Qc_override_reason\":\"\",\"Decision\":\"\",\"Fc_referred\":false,\"Appealed_prev_decision\":\"Yes\",\"Aa_gap_in_time\":false,\"Ou_signed_auth\":\"\",\"Fc_qa_required\":false,\"Originator_selfregistered\":0,\"Aa_within_6_months\":\"Yes\",\"Ctd_mileage_partfilled\":0,\"Client_forename\":\"Tim\",\"Fc_rfi_options_selected\":\"\",\"Client_state_benefit\":\"\",\"Ac_waiting_time_cost\":550,\"Show_client_under_18_question\":true,\"Ac_phone_calls\":8,\"Referral_reason_frc_ia\":\"\",\"Client_address_county\":\"\",\"Fd_additional_work\":\"This is detail application for testing\",\"Appeals_and_review\":true,\"Ctd_phone_calls\":2,\"Tlseqno\":2,\"Time_received\":\"12:13:10\",\"Lsc_accountoffice\":\"Reading\",\"Contact_name\":\"Quasi Modo\",\"Originator_routemethod\":1,\"Ac_travel_time_cost\":450,\"Originator_ntlogon\":\"ABELSABLES\",\"Advocacy_threshold_0\":3000,\"Advocacy_threshold_2\":3535,\"Originator_routeoffline\":0,\"Originator_supervisor\":\"\",\"Advocacy_threshold_1\":3335,\"Lsc_region\":\"South\",\"Ctd_other_cost\":900,\"Ac_preparation_time_partfilled\":0,\"Firm_phone\":\"02380 220 317\",\"Caf_client_has_cop_rep_order\":\"Yes\",\"Ac_waiting_time\":\"17:00:00\",\"Ac_phone_calls_partfilled\":0,\"Fc_dummy\":false,\"Qc_decision\":\"\",\"Ctd_attendance_time\":\"12:00:00\",\"Originator_dtlastupdated\":\"2021-12-24T07:51:22\",\"Prev_app_ref\":\"BN456745ER\",\"Ctd_mileage_miles\":3,\"Ccrc\":false,\"Originator_emailaddress\":\"alan.maydwell@justice.gov.uk\",\"Ch_case_history\":\"This is case history for testing\",\"Fc_reject_reasons_selected\":\"\",\"Fd_details_of_work\":\"This application is completed for testing\",\"Originator_tl_mustchangepassword\":0,\"Fc_possible_pg_reasons\":\"\",\"Originator_zone\":\"\",\"Submitter_language\":\"English\",\"Urgency_reason\":\"Late notification of adjudication/oral/paper hearing\",\"Client_marital_status\":\"\",\"Ac_attendance_time_cost\":150,\"Ac_waiting_time_partfilled\":0,\"Criminal_proceeding\":false,\"Originator_tl_facebookid\":\"\",\"Lsc_case_ref\":\"201223/777\",\"Originator_lscareaoffice\":\"\",\"Ac_mileage\":7,\"Fc_processingofficefax\":\"01264 341 951\",\"Advocacy_threshold_base\":3535,\"Fi_language\":\"\",\"Prison_law\":false,\"Fc_pg_options\":\"\",\"TlTaskLastUpdated\":\"2024-02-14T12:13:11\",\"Urgent\":\"Yes\",\"Form_type\":\"\",\"Fc_decided_by\":\"\",\"Caf_for_expert_report_only\":\"Yes\",\"Ctd_travel_time_partfilled\":0,\"Originator_lscemailaddress\":\"alan.maydwell@justice.gov.uk\",\"Advice_threshold_base\":1535,\"Fc_decision\":\"\",\"Tlsubstate\":\"Default\",\"Originator_department\":\"\",\"Aa_cds_provided_same_matter\":\"\",\"Fc_testing\":false,\"Id_total_weekly_income\":0,\"Ctd_waiting_time\":\"16:00:00\",\"Ou_new_limit_request\":9450,\"Ctd_preparation_time\":\"13:00:00\",\"Ctd_waiting_time_cost\":500,\"Ac_letters_cost\":650,\"Ac_attendance_time\":\"21:00:00\",\"Fc_qa_method\":\"System\",\"Firm_office\":\"0D182J,6 COLLEGE PLACE\",\"Advice_threshold_inc\":100,\"Tlnewmessage\":\"\",\"Solicitor_sign_forename\":\"\",\"Reason_details\":\"\",\"Ctd_phone_calls_partfilled\":0,\"Ac_advocacy_time_partfilled\":0,\"Ctd_travel_time\":\"15:00:00\",\"Originator_tl_googleid\":\"\",\"Id_total_deductions\":0,\"Ctd_phone_calls_cost\":700,\"Client_ufn\":\"201223/777\",\"Originator_type\":0,\"Ac_mileage_partfilled\":0,\"Certification_sol_name\":\"ABLES\",\"Fi_dtreceived\":\"2024-02-14T12:13:10\",\"Hide\":\"\",\"Ctd_waiting_time_partfilled\":0,\"Fi_form_subtype\":1,\"Solicitorname\":\"Quasi Modo\",\"Fc_current_user_type\":\"Provider\",\"Advice_threshold_0\":1000,\"Ac_other_cost\":950,\"Ch_additional_info\":\"This is additional information for case history for testing\",\"Full_grant_notes\":\"\",\"Advice_threshold_2\":1535,\"Advice_threshold_1\":1335,\"Caseworker\":\"\",\"Firm_address\":\"6 COLLEGE PLACE\\nLONDON ROAD\\nSOUTHAMPTON\\nSO15 2XL\",\"Fc_currentstage\":\"Initial\",\"Originator_dtlastaccessed\":\"2024-01-23T13:25:42\",\"Ctd_preparation_costs\":200,\"TLActionsOnLine\":\"Name,Type,SignatureButton,SignType\\r\\nRequest Info,1,Authority_sign,0\\r\\nRaise Priority,3,Authority_sign,0\\r\\nRefer To Supervisor,1,Authority_sign,0\\r\\nSend to Specific Caseworker,3,Authority_sign,0\\r\\nEscalate,1,Authority_sign,0\\r\\nPut Back Into Queue,3,Authority_sign,0\\r\\nCommit Decision,1,Authority_sign,0\",\"Originator_tl_qn_answer_hash\":\"\",\"Client_address_town\":\"\",\"Client_name\":\"\",\"Originator_displayname\":\"Quasi Modo\",\"Ac_letters_partfilled\":0,\"Decided_by_original\":\"\",\"Ac_attendance_time_partfilled\":0,\"Advice_threshold_income\":99,\"Sd_address_line_1\":\"\",\"Statement_of_case\":\"\",\"Sd_address_line_3\":\"\",\"Sd_address_line_2\":\"\",\"Ctd_advocacy_time\":\"14:00:00\",\"Unique_reference_number\":\"\",\"Fc_rfi_text\":\"\",\"Rbba_category\":\"\",\"Usn\":5001900,\"Aa_cds_provided_same_matter_reason\":\"\",\"Fc_info_returned\":false,\"Originator_notificationmethod\":2,\"Cds5_auto_reject\":0,\"Ctd_advocacy_partfilled\":0,\"Tltaskid\":5001900,\"Tltaskstate\":6,\"Ctd_total_costs\":4500,\"Statutory_charge\":\"\",\"Originator_jobtitle\":\"\",\"Id_client_state_benefit\":\"\",\"Client_surname\":\"Murphy\",\"New_limit_request\":9450,\"Ac_total_costs\":4950,\"Tlreadonly\":0,\"Ctd_preparation_partfilled\":0,\"Firm_supplier_no\":\"0D182J\",\"Fc_processingofficedx\":\"DX 10035 Nottingham 1\",\"Fc_ok_to_autogrant\":false,\"Class_calc\":1,\"Ctd_attendance_cost\":100,\"Originator_uniquename\":\"ABELSABLES\",\"Originator_id\":33702,\"Originator_tl_neverpermanentlyremove\":0,\"Ac_letters\":9,\"Additional_text\":\"\",\"Ac_preparation_time\":\"20:00:00\",\"Aa_given_at_police_station\":false,\"Total_partfilled\":0,\"Referral_reason_sol\":\"\",\"Ac_preparation_time_cost\":250,\"Criminal_investigation\":false,\"Level_of_work\":\"Advice\",\"Prev_app_made\":\"\",\"Client_under_18\":\"\",\"Ctd_attendance_partfilled\":0,\"Id_total_weekly_disp_income\":0,\"Ac_mileage_cost\":850,\"Summary_case_history\":\"\",\"Ac_advocacy_time\":\"19:00:00\",\"Originator_firm\":\"ABELS\",\"Firm_name\":\"ABELS\",\"Fc_rfi_options\":\"\",\"Fc_reject_reasons_text\":\"\",\"Fc_initial_processingoffice\":\"Nottingham\",\"Fc_decision_explanation\":\"\",\"Caf_approached_for_funding\":\"Yes\",\"Fc_processingofficeaddress\":\"Legal Aid Agency\\nFothergill House\\n2nd Floor, 16 King Street\\nNottingham\\nNG1 2AS\",\"Client_nfa\":false,\"Client_address_search\":\"\",\"Aa_criteria\":\"1. There is a gap in time and circumstances have changed materially between the first and second occasions when the Advice & Assistance was sought (for example, a client has been charged or convicted in the intervening period).\",\"Date_received\":\"2024-02-14T00:00:00\",\"Description_of_case\":\"\",\"Cds5_auto_reject_reason\":\"\",\"Prev_app\":\"Yes\",\"Ac_travel_time\":\"18:00:00\",\"Ctd_letters_cost\":600,\"Ou_upper_limit_extended\":9450,\"Ctd_travel_time_costs\":400,\"Certification_sol_date\":\"2024-02-14T00:00:00\",\"Fc_cw_requesting\":\"\",\"Originator__dtadded\":\"2020-02-25T00:00:00\",\"Fc_return_info_to_cw\":false,\"Client_address_postcode\":\"\",\"Match_carried_out\":false,\"Fc_possible_reject_reasons\":\"\",\"Solicitorid\":\"\",\"Ac_phone_calls_cost\":750,\"Sd_address_county\":\"\",\"Submitter_user_id\":\"ABELSABLES\"},\"read_only\":false,\"signature_data\":\"REaBEAAOAFNvbGljaXRvcl9zaWdughYAFACxmdGA+TklT3d6Ynos2GvZVj865IMMAAoAUXVhc2kgTW9kb4QMAAoAQUJFTFNBQkxFU4UCAAAAhggAIFnnShAj5kCHAgAAAIgCAAAA//8=\",\"attachfields\":\"\",\"SectionStates\":{\"State\":[\"INITIAL\",\"INITIAL\",\"INITIAL\",\"COMPLETE\",\"COMPLETE\",\"COMPLETE\",\"INITIAL\",\"INITIAL\",\"COMPLETE\",\"INITIAL\",\"INITIAL\",\"INITIAL\",\"COMPLETE\",\"COMPLETE\",\"COMPLETE\",\"COMPLETE\",\"COMPLETE\",\"INITIAL\",\"INITIAL\",\"INITIAL\"],\"SectionName\":[\"Genericfields\",\"Standard_properties\",\"Select_office\",\"General_information\",\"Firm_details\",\"Client_details\",\"Capital_details\",\"Income_details\",\"Advice_and_assistance\",\"Proceedings\",\"Statement_of_case_sect\",\"Solicitors_declaration\",\"Court_of_appeal_funding\",\"Work_completed\",\"Costs\",\"Case_history\",\"Solicitors_certification\",\"Furtherinfosection\",\"Officeuseonly\",\"Referral\"]},\"targetpath\":\"\\\\\\\\laa-uat\\\\OFServerForms\\\\CDS5_1.ofmx\",\"linkedAttachments\":{\"linkedAttachment\":{\"fileName\":\"3963.att\",\"savetype\":\"OFDAttachRef\",\"name\":\"driving_licence_example.pdf\"}},\"version\":1,\"\n" +
-                "\txmlns:fd\":\"urn:www-toplev-com:officeformsofd\"}");
+        String expectedPath = "\\\\laa-uat\\OFServerForms\\CDS5_1.ofmx";
+        String expectedFcCurrentUser = "ABELSABLES";
 
-        when(crmFileService.getCrmFormJson(anyLong())).thenReturn(mockedCrm5Json);
         Crm5Model result = crmFileService.getCrmFileData(ustToTest);
         softly.assertThat(result).isInstanceOf(Crm5Model.class);
         softly.assertThat(result.getTargetpath()).isEqualTo(expectedPath);
