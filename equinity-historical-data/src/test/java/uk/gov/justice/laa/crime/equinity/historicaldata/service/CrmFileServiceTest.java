@@ -56,7 +56,7 @@ class CrmFileServiceTest {
     void getCrmFileDataTest() {
         long ustToTest = 10L;
         String expectedPath = "\\\\laa-uat\\OFServerForms\\CDS5_1.ofmx";
-        String expectedFcCurrentUser = "ABELSABLES";
+        String expectedFcCurrentUser = "MOCK_USER_001";
 
         Crm5Model result = crmFileService.getCrmFileData(ustToTest);
         softly.assertThat(result).isInstanceOf(Crm5Model.class);
