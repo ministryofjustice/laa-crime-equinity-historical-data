@@ -91,12 +91,12 @@ public class Task {
     @Getter
     private ParentTask parentTask;
 
-    public byte[] exportCrmFile() {
-        return crmFile;
-    }
-
     @Column(name = "OFDImage")
     @Setter
     @Lob
     private byte[] crmFile;
+
+    public byte[] exportCrmFile() {
+        return crmFile;
+    }
 }
