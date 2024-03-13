@@ -41,14 +41,7 @@ public class CrmFileService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        CRM5DetailsDTO cmr5DetailsDTO = crm5Mapper.getEntityFromModel(crmFormDetails.getFormDetails());
-//        System.out.println("usn::"+cmr5DetailsDTO.getUsn());
-//        System.out.println("getDetailsOfWorkCompleted::"+cmr5DetailsDTO.getDetailsOfWorkCompleted());
-//        System.out.println("getfirm phone::"+cmr5DetailsDTO.getFirm().getFirmPhone());
-//        System.out.println("getFirmContactName::"+cmr5DetailsDTO.getFirm().getFirmContactName());
-//        System.out.println("getDateOfNextHearing::"+cmr5DetailsDTO.getProceedings().getDetailsOfProceedings().getDateOfNextHearing());
-//        System.out.println("getDateOfNextHearing::"+cmr5DetailsDTO.getProceedings().getTypeOfProceedings().getPreCharge());
-        return cmr5DetailsDTO;
+        return crm5Mapper.getEntityFromModel(crmFormDetails.getFormDetails());
     }
 
     private JSONObject getCrmFileJson(long taskId) {
