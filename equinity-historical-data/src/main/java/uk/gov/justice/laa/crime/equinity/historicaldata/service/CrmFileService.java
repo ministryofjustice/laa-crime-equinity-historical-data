@@ -1,12 +1,15 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
@@ -14,18 +17,22 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepositor
 import java.nio.charset.StandardCharsets;
 
 
+
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class CrmFileService {
     private final TaskRepository taskRepository;
     private final ObjectMapper jsonObjectMapper;
+    private final Crm5Mapper crm5Mapper;
 
-    public CrmFileService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-        this.jsonObjectMapper = new ObjectMapper(); // jsonObjectMapper;
-        jsonObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
+//    public CrmFileService(TaskRepository taskRepository) {
+//        this.taskRepository = taskRepository;
+//        this.jsonObjectMapper = new ObjectMapper(); // jsonObjectMapper;
+//        jsonObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//    }
 
-    public Crm5Model getCrmFileData(long taskId) {
+    public CRM5DetailsDTO getCrmFileData(long taskId) {
         Crm5Model crmFormDetails = null;
         JSONObject crmFileJsonObject = getCrmFormJson(taskId);
 
@@ -34,9 +41,14 @@ public class CrmFileService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-//        Crm5FormDetailsModel crm5Details = crm5Mapper.fromJsonToDto(crmFormDetails);
-
-        return crmFormDetails;
+        CRM5DetailsDTO cmr5DetailsDTO = crm5Mapper.getEntityFromModel(crmFormDetails.getFormDetails());
+//        System.out.println("usn::"+cmr5DetailsDTO.getUsn());
+//        System.out.println("getDetailsOfWorkCompleted::"+cmr5DetailsDTO.getDetailsOfWorkCompleted());
+//        System.out.println("getfirm phone::"+cmr5DetailsDTO.getFirm().getFirmPhone());
+//        System.out.println("getFirmContactName::"+cmr5DetailsDTO.getFirm().getFirmContactName());
+//        System.out.println("getDateOfNextHearing::"+cmr5DetailsDTO.getProceedings().getDetailsOfProceedings().getDateOfNextHearing());
+//        System.out.println("getDateOfNextHearing::"+cmr5DetailsDTO.getProceedings().getTypeOfProceedings().getPreCharge());
+        return cmr5DetailsDTO;
     }
 
     private JSONObject getCrmFileJson(long taskId) {

@@ -155,29 +155,25 @@ components:
         usn:
           type: integer
         hasPreviousApplication:
-          type: boolean
+          type: string
         previousApplicationRef:
           type: string
         appealedPrevDecision:
-          type: boolean
+          type: string
         appealedPrevDecisionDetails:
           type: string
         urgent:
-          type: boolean
+          type: string
         urgencyReason:
           type: string
-          enum:
-            - Urgent preparation prior to interview of client
-            - HMP has limited visiting times/or has a cancellation
-            - Deadline for representations imminent
-            - Late notification of adjudication/oral/paper hearing
-            - Urgent healthcare issues e.g. hospitalisation
-            - Deadline for submitting appeal
-            - Urgent HMP visit
-            - Application returned as incomplete hence delayed
-            - Brief Counsel/Expert tight time frame
-            - Additional costs e.g. client transferred HMP short notice
-            - Information required urgently by CCRC
+        Firm:
+          $ref: '#/components/schemas/Firm'
+        CaseDetails:
+          $ref: '#/components/schemas/CaseDetails'
+        ClientDetails:
+          $ref: '#/components/schemas/ClientDetails'
+        Proceedings:
+          $ref: '#/components/schemas/Proceedings'
         StatementOfCase:
           type: string
         DetailsOfWorkCompleted:
@@ -194,3 +190,96 @@ components:
           type: number
         currentParticipant:
           type: 'string'
+    Firm:
+      type: object
+      properties:
+        firmAddress:
+          type: string
+        firmName:
+          type: string
+        firmPhone:
+          type: string
+        firmSupplierNo:
+          type: string
+        firmContactName:
+          type: string
+        firmSolicitorName:
+          type: string
+        firmSolicitorRef:
+          type: string
+    CaseDetails:
+      type: object
+      properties:
+        levelOfWork:
+          type: string
+        cwCriminalInvestigation:
+          type: boolean
+        cwCcrc:
+          type: boolean
+        cwAppealsReview:
+          type: boolean
+        cwPrisonLaw:
+          type: boolean
+    ClientDetails:
+      type: object
+      properties:
+        UFN:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        surname:
+          type: string
+        maritalStatus:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        nationalInsuranceNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        noFixedAbode:
+          type: boolean
+        postcode:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        addressLine3:
+          type: string
+        city:
+          type: string
+        county:
+          type: string
+        country:
+          type: string
+    Proceedings:
+      type: object
+      properties:
+        TypeOfProceedings:
+          $ref: '#/components/schemas/TypeOfProceedings'
+        DetailsOfProceedings:
+          $ref: '#/components/schemas/DetailsOfProceedings'
+    TypeOfProceedings:
+      type: object
+      properties:
+        preCharge:
+          type: string
+        appealProceedings:
+          type: string
+        prisonLaw:
+          type: string
+    DetailsOfProceedings:
+      type: object
+      properties:
+        dateOfNextHearing:
+          type: string
+          format: date-time
+        isCounselInstructed:
+          type: string

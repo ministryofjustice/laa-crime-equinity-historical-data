@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
 
@@ -57,10 +57,12 @@ class CrmFileServiceTest {
         long ustToTest = 10L;
         String expectedPath = "\\\\laa-uat\\OFServerForms\\CDS5_1.ofmx";
         String expectedFcCurrentUser = "MOCK_USER_001";
+        String expectedUrgent ="Yes";
+        String expectedFirmName ="MOCK_FIRM_001";
 
-        Crm5Model result = crmFileService.getCrmFileData(ustToTest);
-        softly.assertThat(result).isInstanceOf(Crm5Model.class);
-        softly.assertThat(result.getTargetpath()).isEqualTo(expectedPath);
-        softly.assertThat(result.getFormDetails().getFc_current_user()).isEqualTo(expectedFcCurrentUser);
+        CRM5DetailsDTO   result = crmFileService.getCrmFileData(ustToTest);
+        softly.assertThat(result).isInstanceOf(CRM5DetailsDTO.class);
+        softly.assertThat(result.getFirm().getFirmName()).isEqualTo(expectedFirmName);
+        softly.assertThat(result.getUrgent()).isEqualTo(expectedUrgent);
     }
 }

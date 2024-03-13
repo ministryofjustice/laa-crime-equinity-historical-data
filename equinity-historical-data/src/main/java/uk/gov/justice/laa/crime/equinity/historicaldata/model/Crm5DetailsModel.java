@@ -2,9 +2,11 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Data
+@NoArgsConstructor
 public class Crm5DetailsModel {
     @JsonProperty("Proceedings_counsel_instructed")
     public String proceedings_counsel_instructed;

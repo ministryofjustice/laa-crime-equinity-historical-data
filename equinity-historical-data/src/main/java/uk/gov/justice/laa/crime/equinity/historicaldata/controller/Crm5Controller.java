@@ -12,17 +12,16 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 @RequiredArgsConstructor
 public class Crm5Controller implements Crm5InterfaceApi {
     private final CrmFileService crmFileService;
-//    private final CRM5Mapper crm5Mapper;
 
     @Override
     public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn) {
-        Crm5Model crmFormDetailsModel = crmFileService.getCrmFileData(usn);
+        CRM5DetailsDTO crm5DetailsDTO = crmFileService.getCrmFileData(usn);
 
         // Mapping
-        CRM5DetailsDTO crm5DetailsDTO = new CRM5DetailsDTO();
-        crm5DetailsDTO.setUsn(Integer.parseInt(Long.toString(usn)));
-        crm5DetailsDTO.setDetailsOfApplication(crmFormDetailsModel.getTargetpath());
-        crm5DetailsDTO.setStatementOfCase(crmFormDetailsModel.getFormDetails().getStatement_of_case());
+//        CRM5DetailsDTO crm5DetailsDTO = new CRM5DetailsDTO();
+//        crm5DetailsDTO.setUsn(Integer.parseInt(Long.toString(usn)));
+//        crm5DetailsDTO.setDetailsOfApplication(crmFormDetailsModel.getTargetpath());
+//        crm5DetailsDTO.setStatementOfCase(crmFormDetailsModel.getFormDetails().getStatement_of_case());
 
         // Return
         return ResponseEntity.ok(crm5DetailsDTO);

@@ -1,4 +1,6 @@
 spring:
+  jackson:
+    default-property-inclusion: NON_NULL
   mvc:
     format:
       date: dd-MM-yyyy
