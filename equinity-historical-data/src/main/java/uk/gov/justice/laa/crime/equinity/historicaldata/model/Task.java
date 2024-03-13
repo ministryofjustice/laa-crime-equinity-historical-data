@@ -15,6 +15,7 @@ public class Task {
 
     @Id
     @Getter
+    @Setter
     private long ID;
 
     @Column(name="Type", insertable=false, updatable=false)
@@ -92,6 +93,7 @@ public class Task {
 
     @Column(name = "OFDImage")
     @Setter
+    @Lob
     private byte[] crmFile;
 
     public byte[] exportCrmFile() {

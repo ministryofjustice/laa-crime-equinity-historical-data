@@ -78,6 +78,26 @@ paths:
         '500':
           description: 'Internal server error'
 
+  /crm5/{usn}:
+    get:
+      tags:
+        - CRM5Interface
+      operationId: getApplication
+      parameters:
+        - name: usn
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CRM5DetailsDTO'
+                
   /equinity/tasks/{id}:
     get:
       tags:
@@ -129,6 +149,38 @@ components:
         providerName:
           type: string
 
+    CRM5DetailsDTO:
+      type: object
+      properties:
+        usn:
+          type: integer
+        hasPreviousApplication:
+          type: string
+        previousApplicationRef:
+          type: string
+        appealedPrevDecision:
+          type: string
+        appealedPrevDecisionDetails:
+          type: string
+        urgent:
+          type: string
+        urgencyReason:
+          type: string
+        Firm:
+          $ref: '#/components/schemas/Firm'
+        CaseDetails:
+          $ref: '#/components/schemas/CaseDetails'
+        ClientDetails:
+          $ref: '#/components/schemas/ClientDetails'
+        Proceedings:
+          $ref: '#/components/schemas/Proceedings'
+        StatementOfCase:
+          type: string
+        DetailsOfWorkCompleted:
+          type: string
+        DetailsOfApplication:
+          type: string
+
     TaskDetails:
       type: 'object'
       properties:
@@ -138,3 +190,96 @@ components:
           type: number
         currentParticipant:
           type: 'string'
+    Firm:
+      type: object
+      properties:
+        firmAddress:
+          type: string
+        firmName:
+          type: string
+        firmPhone:
+          type: string
+        firmSupplierNo:
+          type: string
+        firmContactName:
+          type: string
+        firmSolicitorName:
+          type: string
+        firmSolicitorRef:
+          type: string
+    CaseDetails:
+      type: object
+      properties:
+        levelOfWork:
+          type: string
+        cwCriminalInvestigation:
+          type: boolean
+        cwCcrc:
+          type: boolean
+        cwAppealsReview:
+          type: boolean
+        cwPrisonLaw:
+          type: boolean
+    ClientDetails:
+      type: object
+      properties:
+        UFN:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        surname:
+          type: string
+        maritalStatus:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        nationalInsuranceNumber:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        noFixedAbode:
+          type: boolean
+        postcode:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        addressLine3:
+          type: string
+        city:
+          type: string
+        county:
+          type: string
+        country:
+          type: string
+    Proceedings:
+      type: object
+      properties:
+        TypeOfProceedings:
+          $ref: '#/components/schemas/TypeOfProceedings'
+        DetailsOfProceedings:
+          $ref: '#/components/schemas/DetailsOfProceedings'
+    TypeOfProceedings:
+      type: object
+      properties:
+        preCharge:
+          type: string
+        appealProceedings:
+          type: string
+        prisonLaw:
+          type: string
+    DetailsOfProceedings:
+      type: object
+      properties:
+        dateOfNextHearing:
+          type: string
+          format: date-time
+        isCounselInstructed:
+          type: string
