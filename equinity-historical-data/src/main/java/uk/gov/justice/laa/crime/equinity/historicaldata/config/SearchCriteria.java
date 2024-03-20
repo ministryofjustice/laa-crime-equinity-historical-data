@@ -28,7 +28,7 @@ public class SearchCriteria {
 
     private Specification<CrmFormsViewModel> byClientName(@Nullable String clientName){
         return (root, query, criteriaBuilder)
-                -> clientName == null ? null : criteriaBuilder.equal(root.get("clientName"), clientName);
+                -> clientName == null ? null : criteriaBuilder.like(root.get("clientName"), String.format("%%%s%%", clientName));
     }
 
     private Specification<CrmFormsViewModel> byClientDoB(@Nullable String clientDOB){
