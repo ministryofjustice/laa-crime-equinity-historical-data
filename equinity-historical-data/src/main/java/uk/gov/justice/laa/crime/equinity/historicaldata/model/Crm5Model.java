@@ -17,6 +17,6 @@ public class Crm5Model {
     private String attachfields;
     @JsonProperty("targetpath")
     private String targetpath;
-//    @JsonProperty("linkedAttachments")
-//    LinkedAttachments LinkedAttachmentsObject;
+    @JsonProperty("linkedAttachments")
+    LinkedAttachments linkedAttachmentsObject;
 }
