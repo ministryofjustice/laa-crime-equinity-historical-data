@@ -68,7 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CrmFormsDTO"
+                $ref: "#/components/schemas/SearchResultsDTO"
         '400':
           description: 'Bad request'
         '401':
@@ -129,6 +129,11 @@ paths:
 
 components:
   schemas:
+    SearchResultsDTO:
+      type: array
+      items:
+        $ref: "#/components/schemas/CrmFormsDTO"
+
     CrmFormsDTO:
       type: 'object'
       readOnly: true

@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,7 +29,7 @@ class CrmFileServiceTest {
     private SoftAssertions softly;
 
     @Autowired
-    TaskRepository taskRepository;
+    TaskImageFilesRepository taskImageFilesRepository;
 
     @Autowired
     CrmFileService crmFileService;
@@ -37,14 +37,14 @@ class CrmFileServiceTest {
 
     @BeforeAll
     void preTest() throws FileNotFoundException {
-        Task taskModel = new Task();
-        taskModel.setID(10L);
+        TaskImageFilesModel taskModel = new TaskImageFilesModel();
+        taskModel.setID(10);
         FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockOFDFile.txt");
         JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
         byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
 
         taskModel.setCrmFile(fileDataByte);
-        taskRepository.save(taskModel);
+        taskImageFilesRepository.save(taskModel);
     }
 
     @AfterAll

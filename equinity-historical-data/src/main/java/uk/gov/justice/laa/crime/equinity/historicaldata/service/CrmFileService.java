@@ -11,8 +11,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Task;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.nio.charset.StandardCharsets;
 
@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @Slf4j
 public class CrmFileService {
-    private final TaskRepository taskRepository;
+    private final TaskImageFilesRepository taskImageFilesRepository;
     private final ObjectMapper jsonObjectMapper;
     private final Crm5Mapper crm5Mapper;
 
@@ -45,11 +45,11 @@ public class CrmFileService {
     }
 
     private JSONObject getCrmFileJson(long taskId) {
-        Task task = taskRepository.findById(taskId)
+        TaskImageFilesModel task = taskImageFilesRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
 
         // Collect and clean content
-        String odfImageContentString = new String(task.exportCrmFile(), StandardCharsets.UTF_8)
+        String odfImageContentString = new String(task.getCrmFile(), StandardCharsets.UTF_8)
                 .replaceAll("\u0000", "");
         // Get form data
         return (JSONObject) XML.toJSONObject(odfImageContentString).get("fd:formdata");
