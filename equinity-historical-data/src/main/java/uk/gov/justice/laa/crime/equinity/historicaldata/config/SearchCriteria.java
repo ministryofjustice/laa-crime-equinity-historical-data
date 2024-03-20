@@ -28,7 +28,7 @@ public class SearchCriteria {
 
     private Specification<CrmFormsViewModel> byClientName(@Nullable String clientName){
         return (root, query, criteriaBuilder)
-                -> clientName == null ? null : criteriaBuilder.equal(root.get("clientName"), clientName);
+                -> clientName == null ? null : criteriaBuilder.like(root.get("clientName"), String.format("%%%s%%", clientName));
     }
 
     private Specification<CrmFormsViewModel> byClientDoB(@Nullable String clientDOB){
@@ -37,12 +37,12 @@ public class SearchCriteria {
 
     private Specification<CrmFormsViewModel> byDateSubmittedFrom(@Nullable LocalDate dateSubmittedFrom){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
+                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom.toString());
     }
 
     private Specification<CrmFormsViewModel> byDateSubmittedTo(@Nullable LocalDate dateSubmittedTo){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
+                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo.toString());
     }
 
     private Specification<CrmFormsViewModel> byProviderAccount(@Nullable String providerAccount){

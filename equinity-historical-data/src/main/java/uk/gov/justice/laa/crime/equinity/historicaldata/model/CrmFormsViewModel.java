@@ -1,10 +1,13 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
-
-import java.time.LocalDate;
 
 @Immutable @Entity
 @Table(name = "CrmFormsView")
@@ -24,9 +27,9 @@ public class CrmFormsViewModel {
     @Column(name="StatusName")
     private String status;
     @Column(name="OriginatedDate")
-    private LocalDate originatedDate;
+    private String originatedDate;
     @Column(name="SubmittedDate")
-    private LocalDate submittedDate;
+    private String submittedDate;
     @Column(name="ProviderAccount")
     private String providerAccount;
     @Column(name="ProviderName")

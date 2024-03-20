@@ -3,10 +3,10 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.SearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.SearchApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormsViewMapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.SearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.SearchService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
