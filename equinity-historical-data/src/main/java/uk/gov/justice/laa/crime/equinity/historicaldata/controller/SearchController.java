@@ -31,7 +31,7 @@ public class SearchController implements SearchApi {
 
         return ResponseEntity.ok(
             searchResultsMapper.getDTOsFromModel(
-                    searchService.searchAllByCriteria(searchCriteriaDTO)
+                searchService.searchAllByCriteria(searchCriteriaDTO)
             )
         );
     }

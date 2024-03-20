@@ -7,4 +7,3 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormsViewModel;
 
 public interface CrmFormsViewRepository extends JpaRepository<CrmFormsViewModel, Integer>, JpaSpecificationExecutor<CrmFormsViewModel> {
 }
-
