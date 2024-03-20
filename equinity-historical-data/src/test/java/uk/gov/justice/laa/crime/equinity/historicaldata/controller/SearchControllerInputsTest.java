@@ -11,21 +11,30 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.SearchService;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchControllerTest {
+class SearchControllerInputsTest {
     private List<String> testInvalidFormatDates;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
+
+    @MockBean
+    SearchService searchService;
 
     @Autowired
     SearchController controller;
@@ -35,6 +44,8 @@ class SearchControllerTest {
         testInvalidFormatDates = List.of(
             "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
         );
+
+        given(searchService.searchAllByCriteria(any())).willReturn(new ArrayList<>());
     }
 
     @AfterAll
@@ -97,11 +108,11 @@ class SearchControllerTest {
     void doSearchByTest_WhenValidUsnThenReturnDTO() {
         String usnTest = "1234";
 
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(usnTest, null, null, null, null, null);
+        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(usnTest, null, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     /**
@@ -164,11 +175,11 @@ class SearchControllerTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, dateToTest, null, null);
+        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, dateToTest, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     @Test
@@ -176,11 +187,11 @@ class SearchControllerTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, null, dateToTest, null);
+        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, null, dateToTest, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     @Test
@@ -189,11 +200,11 @@ class SearchControllerTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
+        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     @Test
@@ -202,11 +213,11 @@ class SearchControllerTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
+        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     /**
@@ -256,10 +267,10 @@ class SearchControllerTest {
         String providerAccount = "0A0z0A";
 
         // execute
-        ResponseEntity<CrmFormsDTO> response = controller.doSearchBy(null, null, null, null, null, providerAccount);
+        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, null, null, providerAccount);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 }
