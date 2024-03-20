@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormsViewModel;
 
 
-public interface CrmFormsViewRepository extends JpaRepository<CrmFormsViewModel, Long>, JpaSpecificationExecutor<CrmFormsViewModel> {
+public interface CrmFormsViewRepository extends JpaRepository<CrmFormsViewModel, Integer>, JpaSpecificationExecutor<CrmFormsViewModel> {
 }
 

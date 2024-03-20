@@ -37,12 +37,12 @@ public class SearchCriteria {
 
     private Specification<CrmFormsViewModel> byDateSubmittedFrom(@Nullable LocalDate dateSubmittedFrom){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
+                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom.toString());
     }
 
     private Specification<CrmFormsViewModel> byDateSubmittedTo(@Nullable LocalDate dateSubmittedTo){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
+                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo.toString());
     }
 
     private Specification<CrmFormsViewModel> byProviderAccount(@Nullable String providerAccount){
