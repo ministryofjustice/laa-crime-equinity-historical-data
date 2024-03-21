@@ -1,6 +1,5 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Build and Deploy after PR merged
 on:
   push:
@@ -32,7 +31,6 @@ jobs:
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
-#          working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
 
   build:
     runs-on: ubuntu-latest
@@ -42,11 +40,7 @@ jobs:
       - test
       - capture-repo-info
     env:
-#      WORKING_DIRECTORY: ${{ needs.capture-repo-info.outputs.working_directory }}
       REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
-#    defaults:
-#      run:
-#        working-directory: ${{ needs.capture-repo-info.outputs.working_directory }}
 
     steps:
       # Checkout github repo
@@ -57,7 +51,6 @@ jobs:
         with:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
-#          working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -83,7 +76,6 @@ jobs:
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ env.REPO_NAME }}-${{ github.sha }} # Tags ECR image with commit sha
         with:
-#          context: ${{ needs.capture-repo-info.outputs.working_directory }}/.
           context: .
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
@@ -99,7 +91,6 @@ jobs:
     uses: ./.github/workflows/_deploy-to.yml
     with:
       environment: "uat"
-#      working_directory: ${{ needs.capture-repo-info.outputs.working_directory }}
       repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
       app_name: ${{ needs.capture-repo-info.outputs.app_name }}
     secrets: inherit
