@@ -19,6 +19,22 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  security:
+    oauth2:
+      client:
+#        provider:
+#          equiniti:
+#            token-uri: ${EQ_OAUTH_URL}
+        registration:
+          equiniti:
+            client-id: ${EQ_OAUTH_CLIENT_ID}
+            client-secret: ${EQ_OAUTH_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+#            scope:
+#              - ${EQ_OAUTH_SCOPE}
+#      resource-server:
+#        jwt:
+#          issuer-uri: ${LAA_EQ_RESOURCE_SERVER_ISSUER_URI}
 
 server:
   port: 8089
