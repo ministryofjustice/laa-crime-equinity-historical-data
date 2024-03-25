@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 
 import java.time.LocalDate;
 
-public record SearchCriteriaDTO(
+public record CrmFormSearchCriteriaDTO(
         @Nullable String usn, @Nullable String client, @Nullable String clientDoB,
         @Nullable LocalDate submittedFrom, @Nullable LocalDate submittedTo,
         @Nullable String providerAccount

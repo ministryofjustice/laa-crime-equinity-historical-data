@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.archive.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,13 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormsModelInterface;
 
-@Immutable @Entity
-@Table(name = "CrmFormsView")
+@Immutable
+@Entity
+@Table(name = "CrmFormsView", catalog = "eq_archive", schema = "dbo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrmFormsViewModel {
+public class CrmFormArchiveModel implements CrmFormsModelInterface {
 
     @Id
     @Column(name="USN")
