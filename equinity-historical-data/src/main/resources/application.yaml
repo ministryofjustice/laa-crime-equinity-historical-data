@@ -22,6 +22,12 @@ spring:
 
 server:
   port: 8089
+  api:
+    url-path: /api/internal/v1/equinity
+    header-client-id: EQ-API-CLIENT-ID
+    header-client-secret: EQ-API-SECRET
+    client-id: ${EQ_OAUTH_CLIENT_ID}
+    client-secret: ${EQ_OAUTH_CLIENT_SECRET}
 
 management:
   server:

@@ -7,3 +7,12 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+server:
+  port: 8089
+  api:
+    url-path: /api/internal/v1/equinity
+    header-client-id: EQ-API-CLIENT-ID
+    header-client-secret: EQ-API-SECRET
+    client-id: mock-cli-id
+    client-secret: mock-cli-secret
