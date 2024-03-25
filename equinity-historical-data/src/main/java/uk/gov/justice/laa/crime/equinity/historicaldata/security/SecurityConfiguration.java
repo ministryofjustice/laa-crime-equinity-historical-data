@@ -22,8 +22,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .cors(AbstractHttpConfigurer::disable)
-            .csrf(AbstractHttpConfigurer::disable)
+//            .cors(AbstractHttpConfigurer::disable)
+//            .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .formLogin(AbstractHttpConfigurer::disable)
             .securityMatcher("/**")
