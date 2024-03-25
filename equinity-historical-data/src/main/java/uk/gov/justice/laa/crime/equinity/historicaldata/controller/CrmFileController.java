@@ -19,11 +19,11 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("equinity/tasks")
+@RequestMapping("/api/internal/v1/equinity/crm-file")
 public class CrmFileController {
     private final CrmFileService crmFileService;
 
-    @GetMapping(value= "/{usn}/crm-file")
+    @GetMapping(value= "/{usn}")
     @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "400",
@@ -43,7 +43,7 @@ public class CrmFileController {
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
 
-    @GetMapping(value= "/{usn}/crm-schema")
+    @GetMapping(value= "/{usn}/schema")
     @Operation(description = "Search a specific Task by ID (USN) for its OFD Image Schema file")
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "400",
