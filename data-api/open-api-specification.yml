@@ -6,7 +6,7 @@ paths:
   /api/internal/v1/equinity/search/:
     get:
       tags:
-        - search
+        - Search
         - CRM
         - tasks
       summary: 'Search CRM forms'
@@ -97,27 +97,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CRM5DetailsDTO'
-                
-  /equinity/tasks/{id}:
+  ###
+  # Archive
+  ###
+  /api/internal/v1/equinity/archive/search/:
     get:
       tags:
+        - Search Archive
+        - search
+        - CRM
         - tasks
-      summary: 'Get Task'
-      operationId: 'getTask'
+      summary: 'Search Archive for CRM forms'
+      operationId: 'doSearchArchiveBy'
       parameters:
-        - name: 'id'
-          in: 'path'
-          required: true
+        - name: 'usn'
+          in: 'query'
+          required: false
           schema:
-            type: number
+            type: string
             example: '3456'
+            minLength: 3
+            maxLength: 10
+            pattern: '[0-9]{3,10}'
+        - name: 'client'
+          description: 'Client name'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            example: 'John Doe'
+            minLength: 3
+            maxLength: 256
+        - name: 'clientDoB'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
+            example: '2023-01-31'
+        - name: 'submittedFrom'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
+            example: '2019-03-18'
+
+        - name: 'submittedTo'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
+            example: '2019-04-13'
+
+        - name: 'providerAccount'
+          in: 'query'
+          required: false
+          schema:
+            type: string
+            minLength: 6
+            maxLength: 6
+            pattern: "([0-9A-Za-z]){4,6}"
+            example: '0X12YZ'
       responses:
         '200':
-          description: 'Successful operation'
+          description: 'Success'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TaskDetails"
+                $ref: "#/components/schemas/SearchResultsDTO"
         '400':
           description: 'Bad request'
         '401':

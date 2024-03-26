@@ -14,5 +14,5 @@ server:
     url-path: /api/internal/v1/equinity
     header-client-id: EQ-API-CLIENT-ID
     header-client-secret: EQ-API-SECRET
-    client-id: mock-cli-id
-    client-secret: mock-cli-secret
+    client-id: local-client-x
+    client-secret: local-secret-x

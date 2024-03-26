@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
 
 @Immutable @Entity
 @Table(name = "CrmFormsView")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrmFormsViewModel {
+public class CrmFormViewModel implements CrmFormModelInterface {
 
     @Id
     @Column(name="USN")
