@@ -2,8 +2,11 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.archive.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import org.springframework.data.domain.Page;
 import uk.gov.justice.laa.crime.equinity.historicaldata.archive.model.CrmFormArchiveModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
 
 import java.util.List;
 
@@ -17,8 +20,11 @@ public interface CrmFormsArchiveMapper {
     @Mapping(target="submittedDate", source="submittedDate")
     @Mapping(target="providerAccount", source="providerAccount")
     @Mapping(target="providerName", source="providerName")
-    CrmFormsDTO getDTOFromModel(CrmFormArchiveModel crmFormsArchiveModel);
+    CrmFormsDTO getDTOFromModel(CrmFormArchiveModel crmFormArchiveModel);
 
-    List<CrmFormsDTO> getDTOsFromModel(List<CrmFormArchiveModel> crmFormsArchiveModels);
+    @Mapping(target="page", source="page.number")
+    @Mapping(target="perPage", source="page.size")
+    @Mapping(target="searchResultsDTO", source="crmFormsArchiveModels")
+    SearchDTO getDTOsFromModel(List<CrmFormArchiveModel> crmFormsArchiveModels, Page<CrmFormModelInterface> page);
 }
 

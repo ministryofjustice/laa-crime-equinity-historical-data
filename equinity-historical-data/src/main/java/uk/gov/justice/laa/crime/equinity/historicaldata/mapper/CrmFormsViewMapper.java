@@ -2,7 +2,10 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
 
 import java.util.List;
@@ -18,6 +21,9 @@ public interface CrmFormsViewMapper {
     @Mapping(target="providerName", source="providerName")
     CrmFormsDTO getDTOFromModel(CrmFormViewModel crmFormsViewModel);
 
-    List<CrmFormsDTO> getDTOsFromModel(List<CrmFormViewModel> crmFormsViewModels);
+    @Mapping(target="page", source="page.number")
+    @Mapping(target="perPage", source="page.size")
+    @Mapping(target="searchResultsDTO", source="crmFormsViewModels")
+    SearchDTO getDTOsFromModel(List<CrmFormViewModel> crmFormsViewModels, Page<CrmFormModelInterface> page);
 }
 

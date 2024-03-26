@@ -12,12 +12,11 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInter
 
 @Immutable
 @Entity
-@Table(name = "CrmFormsView", catalog = "eq_archive", schema = "dbo")
+@Table(name = "${TABLE_ARCHIVE}", catalog = "${CATALOG_ARCHIVE}", schema = "${SCHEMA_ARCHIVE}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CrmFormArchiveModel implements CrmFormModelInterface {
-
     @Id
     @Column(name="USN")
     private String USN;

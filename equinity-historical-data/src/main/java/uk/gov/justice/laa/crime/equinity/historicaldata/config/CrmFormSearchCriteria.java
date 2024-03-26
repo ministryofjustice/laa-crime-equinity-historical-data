@@ -2,12 +2,25 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.config;
 
 import jakarta.annotation.Nullable;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 @Configuration
 @NoArgsConstructor
 public class CrmFormSearchCriteria {
+    @Value("${server.api.perPage:20}")
+    private Integer DEFAULT_PER_PAGE;
+
+
+    public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+        int DEFAULT_PAGE = 0;
+        int page = (crmFormSearchCriteriaDTO.page() == null) ? DEFAULT_PAGE : crmFormSearchCriteriaDTO.page();
+        int perPage = (crmFormSearchCriteriaDTO.perPage() == null) ? DEFAULT_PER_PAGE :  crmFormSearchCriteriaDTO.perPage();
+        return PageRequest.of(page, perPage);
+    }
+
     public Specification<CrmFormModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
             .where(byUsn(crmFormSearchCriteriaDTO.usn())
