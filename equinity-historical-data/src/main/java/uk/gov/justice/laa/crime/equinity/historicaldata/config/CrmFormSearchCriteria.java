@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.time.LocalDate;
-
 @Configuration
 @NoArgsConstructor
 public class CrmFormSearchCriteria {
@@ -34,14 +32,14 @@ public class CrmFormSearchCriteria {
         return null;
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable LocalDate dateSubmittedFrom){
+    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom.toString());
+                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable LocalDate dateSubmittedTo){
+    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo.toString());
+                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
     }
 
     private Specification<CrmFormModelInterface> byProviderAccount(@Nullable String providerAccount){

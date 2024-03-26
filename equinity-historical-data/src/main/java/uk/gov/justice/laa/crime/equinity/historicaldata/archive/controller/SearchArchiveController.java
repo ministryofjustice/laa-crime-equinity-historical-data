@@ -8,9 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.archive.service.SearchAr
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.SearchArchiveApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,13 +20,10 @@ public class SearchArchiveController implements SearchArchiveApi {
 
     @Override
     public ResponseEntity<List<CrmFormsDTO>> doSearchArchiveBy(String usn, String client, String clientDoB, String submittedFrom, String submittedTo, String providerAccount) {
-        LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
-        LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
-        DateUtil.checkDateRangeIsValid(dateSubmittedFrom, dateSubmittedTo);
-
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
-                usn, client, clientDoB, dateSubmittedFrom, dateSubmittedTo, providerAccount
+                usn, client, clientDoB, submittedFrom, submittedTo, providerAccount
         );
+        crmFormSearchCriteriaDTO.validate();
 
         return ResponseEntity.ok(
             searchResultsMapper.getDTOsFromModel(
