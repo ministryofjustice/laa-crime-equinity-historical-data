@@ -2,6 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm5InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
@@ -9,6 +10,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/internal/v1/equinity")
 public class Crm5Controller implements Crm5InterfaceApi {
     private final CrmFileService crmFileService;
 
