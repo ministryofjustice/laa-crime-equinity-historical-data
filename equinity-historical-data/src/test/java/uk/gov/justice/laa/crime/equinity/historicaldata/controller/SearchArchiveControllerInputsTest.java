@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.SearchService;
 
 import java.util.List;
@@ -44,7 +44,7 @@ class SearchArchiveControllerInputsTest {
             "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
         );
 
-        given(searchService.searchAllByCriteria(any())).willReturn(new SearchDTO());
+        given(searchService.searchAllByCriteria(any())).willReturn(new SearchResultDTO());
     }
 
     @AfterAll
@@ -107,7 +107,7 @@ class SearchArchiveControllerInputsTest {
     void doSearchByTest_WhenValidUsnThenReturnDTO() {
         String usnTest = "1234";
 
-        ResponseEntity<SearchDTO> response = controller.doSearchBy(usnTest, null, null, null, null, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(usnTest, null, null, null, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -173,7 +173,7 @@ class SearchArchiveControllerInputsTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchDTO> response = controller.doSearchBy(null, null, null, dateToTest, null, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, dateToTest, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -184,7 +184,7 @@ class SearchArchiveControllerInputsTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchDTO> response = controller.doSearchBy(null, null, null, null, dateToTest, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, null, dateToTest, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -196,7 +196,7 @@ class SearchArchiveControllerInputsTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -208,7 +208,7 @@ class SearchArchiveControllerInputsTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -261,7 +261,7 @@ class SearchArchiveControllerInputsTest {
         String providerAccount = "0A0z0A";
 
         // execute
-        ResponseEntity<SearchDTO> response = controller.doSearchBy(null, null, null, null, null, providerAccount, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, null, null, providerAccount, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

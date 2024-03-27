@@ -30,7 +30,7 @@ server:
   port: 8089
   api:
     url-path: /api/internal/v1/equinity
-    perPage: 20
+    pageSize: 20
   security:
     client-id:
       header: EQ-API-CLIENT-ID

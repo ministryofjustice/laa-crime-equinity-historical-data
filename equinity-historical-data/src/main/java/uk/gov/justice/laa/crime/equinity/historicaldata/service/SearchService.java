@@ -7,7 +7,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInter
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormsViewMapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
@@ -20,7 +20,7 @@ public class SearchService {
     private final CrmFormSearchCriteria crmFormSearchCriteria;
     private final CrmFormsViewMapper searchResultsMapper;
 
-    public SearchDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+    public SearchResultDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return convertResults(searchPageByCriteria(crmFormSearchCriteriaDTO));
     }
 
@@ -37,7 +37,7 @@ public class SearchService {
         return pagedResults;
     }
 
-    private SearchDTO convertResults(Page<CrmFormModelInterface> pagedResults) {
+    private SearchResultDTO convertResults(Page<CrmFormModelInterface> pagedResults) {
         return searchResultsMapper.getDTOsFromModel(
                 pagedResults.stream()
                         .filter(CrmFormViewModel.class::isInstance)

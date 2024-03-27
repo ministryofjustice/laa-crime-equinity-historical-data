@@ -10,15 +10,15 @@ import org.springframework.data.jpa.domain.Specification;
 @Configuration
 @NoArgsConstructor
 public class CrmFormSearchCriteria {
-    @Value("${server.api.perPage:20}")
-    private Integer DEFAULT_PER_PAGE;
+    @Value("${server.api.pageSize:20}")
+    private Integer DEFAULT_PAGE_SIZE;
 
 
     public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         int DEFAULT_PAGE = 0;
         int page = (crmFormSearchCriteriaDTO.page() == null) ? DEFAULT_PAGE : crmFormSearchCriteriaDTO.page();
-        int perPage = (crmFormSearchCriteriaDTO.perPage() == null) ? DEFAULT_PER_PAGE :  crmFormSearchCriteriaDTO.perPage();
-        return PageRequest.of(page, perPage);
+        int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE :  crmFormSearchCriteriaDTO.pageSize();
+        return PageRequest.of(page, pageSize);
     }
 
     public Specification<CrmFormModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {

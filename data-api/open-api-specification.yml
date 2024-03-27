@@ -70,7 +70,7 @@ paths:
             type: integer
             minimum: 0
             example: 0
-        - name: 'perPage'
+        - name: 'pageSize'
           in: 'query'
           required: false
           schema:
@@ -85,7 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchDTO"
+                $ref: "#/components/schemas/SearchResultDTO"
         '400':
           description: 'Bad request'
         '401':
@@ -185,7 +185,7 @@ paths:
             type: integer
             minimum: 0
             example: 0
-        - name: 'perPage'
+        - name: 'pageSize'
           in: 'query'
           required: false
           schema:
@@ -200,7 +200,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchDTO"
+                $ref: "#/components/schemas/SearchResultDTO"
         '400':
           description: 'Bad request'
         '401':
@@ -212,21 +212,15 @@ paths:
 
 components:
   schemas:
-    SearchDTO:
+    SearchResultDTO:
       type: 'object'
       properties:
-        searchResultsDTO:
+        results:
           type: array
           items:
             $ref: "#/components/schemas/SearchCrmFormDTO"
-        page:
-          type: integer
-        perPage:
-          type: integer
-        totalPages:
-          type: integer
-        totalRecords:
-          type: number
+        paging:
+          $ref: '#/components/schemas/SearchPagingDTO'
     SearchCrmFormDTO:
       type: 'object'
       readOnly: true
@@ -246,6 +240,20 @@ components:
           type: string
         providerName:
           type: string
+    SearchPagingDTO:
+      type: 'object'
+      readOnly: true
+      properties:
+        size:
+          type: integer
+        number:
+          type: integer
+        total:
+          type: integer
+        itemsPage:
+          type: integer
+        itemsTotal:
+          type: number
 
     CRM5DetailsDTO:
       type: object

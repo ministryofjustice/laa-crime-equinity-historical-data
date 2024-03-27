@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.archive.service.SearchArchiveService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.SearchArchiveApi;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,9 +14,9 @@ public class SearchArchiveController implements SearchArchiveApi {
     private final SearchArchiveService searchService;
 
     @Override
-    public ResponseEntity<SearchDTO> doSearchArchiveBy(String usn, String client, String clientDoB, String submittedFrom, String submittedTo, String providerAccount, Integer page, Integer perPage) {
+    public ResponseEntity<SearchResultDTO> doSearchArchiveBy(String usn, String client, String clientDoB, String submittedFrom, String submittedTo, String providerAccount, Integer page, Integer pageSize) {
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
-                usn, client, clientDoB, submittedFrom, submittedTo, providerAccount, null, null
+                usn, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize
         );
 
         return ResponseEntity.ok(

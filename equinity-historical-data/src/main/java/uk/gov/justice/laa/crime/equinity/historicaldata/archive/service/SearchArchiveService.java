@@ -10,7 +10,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInter
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 
 
 @Service
@@ -20,7 +20,7 @@ public class SearchArchiveService {
     private final CrmFormSearchCriteria crmFormSearchCriteria;
     private final CrmFormsArchiveMapper searchResultsMapper;
 
-    public SearchDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+    public SearchResultDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return convertResults(searchPageByCriteria(crmFormSearchCriteriaDTO));
     }
 
@@ -37,7 +37,7 @@ public class SearchArchiveService {
         return pagedResults;
     }
 
-    private SearchDTO convertResults(Page<CrmFormModelInterface> pagedResults) {
+    private SearchResultDTO convertResults(Page<CrmFormModelInterface> pagedResults) {
         return searchResultsMapper.getDTOsFromModel(
                 pagedResults.stream()
                         .filter(CrmFormArchiveModel.class::isInstance)

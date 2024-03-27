@@ -6,12 +6,17 @@ import org.springframework.data.domain.Page;
 import uk.gov.justice.laa.crime.equinity.historicaldata.archive.model.CrmFormArchiveModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchPagingDTO;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CrmFormsArchiveMapper {
+
+    @Mapping(target="results", source="crmFormsArchiveModels")
+    @Mapping(target="paging", source="page")
+    SearchResultDTO getDTOsFromModel(List<CrmFormArchiveModel> crmFormsArchiveModels, Page<CrmFormModelInterface> page);
 
     @Mapping(target="usn", source="USN")
     @Mapping(target="type", source="type")
@@ -22,11 +27,10 @@ public interface CrmFormsArchiveMapper {
     @Mapping(target="providerName", source="providerName")
     SearchCrmFormDTO getDTOFromModel(CrmFormArchiveModel crmFormArchiveModel);
 
-    @Mapping(target="page", source="page.number")
-    @Mapping(target="perPage", source="page.size")
-    @Mapping(target="totalPages", source="page.totalPages")
-    @Mapping(target="totalRecords", source="page.totalElements")
-    @Mapping(target="searchResultsDTO", source="crmFormsArchiveModels")
-    SearchDTO getDTOsFromModel(List<CrmFormArchiveModel> crmFormsArchiveModels, Page<CrmFormModelInterface> page);
+    @Mapping(target="size", source="page.size")
+    @Mapping(target="number", source="page.number")
+    @Mapping(target="total", source="page.totalPages")
+    @Mapping(target="itemsPage", source="page.numberOfElements")
+    @Mapping(target="itemsTotal", source="page.totalElements")
+    SearchPagingDTO getPagingDTOFromPage(Page<CrmFormModelInterface> page);
 }
-
