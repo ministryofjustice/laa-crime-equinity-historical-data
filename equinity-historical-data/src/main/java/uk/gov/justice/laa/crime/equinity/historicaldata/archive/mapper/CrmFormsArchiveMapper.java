@@ -24,6 +24,8 @@ public interface CrmFormsArchiveMapper {
 
     @Mapping(target="page", source="page.number")
     @Mapping(target="perPage", source="page.size")
+    @Mapping(target="totalPages", source="page.totalPages")
+    @Mapping(target="totalRecords", source="page.totalElements")
     @Mapping(target="searchResultsDTO", source="crmFormsArchiveModels")
     SearchDTO getDTOsFromModel(List<CrmFormArchiveModel> crmFormsArchiveModels, Page<CrmFormModelInterface> page);
 }

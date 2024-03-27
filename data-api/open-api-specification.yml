@@ -223,6 +223,10 @@ components:
           type: integer
         perPage:
           type: integer
+        totalPages:
+          type: integer
+        totalRecords:
+          type: number
 
     CrmFormsDTO:
       type: 'object'

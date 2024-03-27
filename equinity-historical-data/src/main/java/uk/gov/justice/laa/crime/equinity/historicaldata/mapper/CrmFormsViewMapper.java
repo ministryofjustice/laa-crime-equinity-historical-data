@@ -23,6 +23,8 @@ public interface CrmFormsViewMapper {
 
     @Mapping(target="page", source="page.number")
     @Mapping(target="perPage", source="page.size")
+    @Mapping(target="totalPages", source="page.totalPages")
+    @Mapping(target="totalRecords", source="page.totalElements")
     @Mapping(target="searchResultsDTO", source="crmFormsViewModels")
     SearchDTO getDTOsFromModel(List<CrmFormViewModel> crmFormsViewModels, Page<CrmFormModelInterface> page);
 }
