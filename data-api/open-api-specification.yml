@@ -78,7 +78,7 @@ paths:
         '500':
           description: 'Internal server error'
 
-  /crm5/{usn}:
+  /api/internal/v1/equinity/crm5/{usn}:
     get:
       tags:
         - CRM5Interface
@@ -221,27 +221,27 @@ components:
         urgencyReason:
           type: string
         Firm:
-          $ref: '#/components/schemas/Firm'
+          $ref: '#/components/schemas/Crm5FirmDTO'
         CaseDetails:
-          $ref: '#/components/schemas/CaseDetails'
+          $ref: '#/components/schemas/Crm5CaseDetailsDTO'
         ClientDetails:
-          $ref: '#/components/schemas/ClientDetails'
+          $ref: '#/components/schemas/Crm5ClientDTO'
         CapitalDetails:
-          $ref: '#/components/schemas/CapitalDetails'
+          $ref: '#/components/schemas/Crm5CapitalDTO'
         IncomeDetails:
-          $ref: '#/components/schemas/IncomeDetails'
+          $ref: '#/components/schemas/Crm5IncomeDTO'
         Proceedings:
-          $ref: '#/components/schemas/Proceedings'
+          $ref: '#/components/schemas/Crm5ProceedingsDTO'
         CourtAppealFunding:
-          $ref: '#/components/schemas/AppealFunding'
+          $ref: '#/components/schemas/Crm5AppealFundingDTO'
         AllCosts:
-          $ref: '#/components/schemas/AllCosts'
+          $ref: '#/components/schemas/Crm5AllCostsDTO'
         CaseHistory:
-          $ref: '#/components/schemas/CaseHistory'
+          $ref: '#/components/schemas/Crm5CaseHistoryDTO'
         Solicitor:
-          $ref: '#/components/schemas/Solicitor'
+          $ref: '#/components/schemas/Crm5SolicitorDTO'
         OfficeUseOnly:
-          $ref: '#/components/schemas/Decision'
+          $ref: '#/components/schemas/Crm5DecisionDTO'
         StatementOfCase:
           type: string
         DetailsOfWorkCompleted:
@@ -258,7 +258,7 @@ components:
           type: number
         currentParticipant:
           type: 'string'
-    Firm:
+    Crm5FirmDTO:
       type: object
       properties:
         firmAddress:
@@ -275,7 +275,7 @@ components:
           type: string
         firmSolicitorRef:
           type: string
-    CaseDetails:
+    Crm5CaseDetailsDTO:
       type: object
       properties:
         levelOfWork:
@@ -288,7 +288,7 @@ components:
           type: boolean
         cwPrisonLaw:
           type: boolean
-    ClientDetails:
+    Crm5ClientDTO:
       type: object
       properties:
         UFN:
@@ -307,8 +307,8 @@ components:
         nationalInsuranceNumber:
           type: string
         address:
-          $ref: '#/components/schemas/Address'
-    Address:
+          $ref: '#/components/schemas/Crm5AddressDTO'
+    Crm5AddressDTO:
       type: object
       properties:
         noFixedAbode:
@@ -327,14 +327,14 @@ components:
           type: string
         country:
           type: string
-    Proceedings:
+    Crm5ProceedingsDTO:
       type: object
       properties:
         TypeOfProceedings:
-          $ref: '#/components/schemas/TypeOfProceedings'
+          $ref: '#/components/schemas/Crm5TypeOfProceedingsDTO'
         DetailsOfProceedings:
-          $ref: '#/components/schemas/DetailsOfProceedings'
-    TypeOfProceedings:
+          $ref: '#/components/schemas/Crm5DetailsOfProceedingsDTO'
+    Crm5TypeOfProceedingsDTO:
       type: object
       properties:
         preCharge:
@@ -343,7 +343,7 @@ components:
           type: string
         prisonLaw:
           type: string
-    DetailsOfProceedings:
+    Crm5DetailsOfProceedingsDTO:
       type: object
       properties:
         dateOfNextHearing:
@@ -351,7 +351,7 @@ components:
           format: date-time
         isCounselInstructed:
           type: string
-    CapitalDetails:
+    Crm5CapitalDTO:
       type: object
       properties:
         isUnder18:
@@ -371,7 +371,7 @@ components:
         totalSavings:
           type: integer
           format: int32
-    IncomeDetails:
+    Crm5IncomeDTO:
       type: object
       properties:
         hasIncomeSupport:
@@ -417,7 +417,7 @@ components:
         totalWeeklyIncome:
           type: integer
           format: int32
-    AppealFunding:
+    Crm5AppealFundingDTO:
       type: object
       properties:
         hasCourtAppeal:
@@ -428,62 +428,62 @@ components:
           type: boolean
         expertReport:
           type: boolean
-    AllCosts:
+    Crm5AllCostsDTO:
       type: object
       properties:
         AccruedCosts:
-          $ref: '#/components/schemas/AccruedCosts'
+          $ref: '#/components/schemas/Crm5AccruedCostsDTO'
         AnticipatedCosts:
-          $ref: '#/components/schemas/AnticipateCosts'
+          $ref: '#/components/schemas/Crm5AnticipateCostsDTO'
         NewLimitRequest:
-          $ref: '#/components/schemas/CostOnly'
-    AccruedCosts:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+    Crm5AccruedCostsDTO:
       type: object
       properties:
         Attendance:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Preparation:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Advocacy:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Travel:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Waiting:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Letters:
-          $ref: '#/components/schemas/GeneralCost'
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
         TelephoneCalls:
-          $ref: '#/components/schemas/GeneralCost'
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
         Mileage:
-          $ref: '#/components/schemas/GeneralCost'
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
         OtherDisbursement:
-          $ref: '#/components/schemas/CostOnly'
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
         TotalCost:
-          $ref: '#/components/schemas/CostOnly'
-    AnticipateCosts:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+    Crm5AnticipateCostsDTO:
       type: object
       properties:
         Attendance:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Preparation:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Advocacy:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Travel:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Waiting:
-          $ref: '#/components/schemas/TimeCost'
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
         Letters:
-          $ref: '#/components/schemas/GeneralCost'
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
         TelephoneCalls:
-          $ref: '#/components/schemas/GeneralCost'
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
         Mileage:
-          $ref: '#/components/schemas/GeneralCost'
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
         OtherDisbursement:
-          $ref: '#/components/schemas/CostOnly'
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
         TotalCost:
-          $ref: '#/components/schemas/CostOnly'
-    TimeCost:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+    Crm5TimeCostDTO:
       type: object
       properties:
         time:
@@ -493,7 +493,7 @@ components:
         cost:
           type: number
           format: float
-    GeneralCost:
+    Crm5GeneralCostDTO:
       type: object
       properties:
         total:
@@ -502,27 +502,27 @@ components:
         cost:
           type: number
           format: float
-    CostOnly:
+    Crm5CostOnlyDTO:
       properties:
         cost:
           type: number
           format: float
           description: Displayed along with currency symbol e.g £950.00
-    CaseHistory:
+    Crm5CaseHistoryDTO:
       type: object
       properties:
         summary:
           type: string
         addtionalInfo:
           type: string
-    Solicitor:
+    Crm5SolicitorDTO:
       type: object
       properties:
         declaration:
-          $ref: '#/components/schemas/NameandDate'
+          $ref: '#/components/schemas/Crm5NameAndDateDTO'
         certification:
-          $ref: '#/components/schemas/NameandDate'
-    NameandDate:
+          $ref: '#/components/schemas/Crm5NameAndDateDTO'
+    Crm5NameAndDateDTO:
       type: object
       properties:
         date:
@@ -530,7 +530,7 @@ components:
           format: date-time
         name:
           type: string
-    Decision:
+    Crm5DecisionDTO:
       properties:
         decision:
           type: string
