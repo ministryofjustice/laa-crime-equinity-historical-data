@@ -78,7 +78,7 @@ paths:
         '500':
           description: 'Internal server error'
 
-  /crm5/{usn}:
+  /api/internal/v1/equinity/crm5/{usn}:
     get:
       tags:
         - CRM5Interface
@@ -221,13 +221,27 @@ components:
         urgencyReason:
           type: string
         Firm:
-          $ref: '#/components/schemas/Firm'
+          $ref: '#/components/schemas/Crm5FirmDTO'
         CaseDetails:
-          $ref: '#/components/schemas/CaseDetails'
+          $ref: '#/components/schemas/Crm5CaseDetailsDTO'
         ClientDetails:
-          $ref: '#/components/schemas/ClientDetails'
+          $ref: '#/components/schemas/Crm5ClientDTO'
+        CapitalDetails:
+          $ref: '#/components/schemas/Crm5CapitalDTO'
+        IncomeDetails:
+          $ref: '#/components/schemas/Crm5IncomeDTO'
         Proceedings:
-          $ref: '#/components/schemas/Proceedings'
+          $ref: '#/components/schemas/Crm5ProceedingsDTO'
+        CourtAppealFunding:
+          $ref: '#/components/schemas/Crm5AppealFundingDTO'
+        AllCosts:
+          $ref: '#/components/schemas/Crm5AllCostsDTO'
+        CaseHistory:
+          $ref: '#/components/schemas/Crm5CaseHistoryDTO'
+        Solicitor:
+          $ref: '#/components/schemas/Crm5SolicitorDTO'
+        OfficeUseOnly:
+          $ref: '#/components/schemas/Crm5DecisionDTO'
         StatementOfCase:
           type: string
         DetailsOfWorkCompleted:
@@ -244,7 +258,7 @@ components:
           type: number
         currentParticipant:
           type: 'string'
-    Firm:
+    Crm5FirmDTO:
       type: object
       properties:
         firmAddress:
@@ -261,7 +275,7 @@ components:
           type: string
         firmSolicitorRef:
           type: string
-    CaseDetails:
+    Crm5CaseDetailsDTO:
       type: object
       properties:
         levelOfWork:
@@ -274,7 +288,7 @@ components:
           type: boolean
         cwPrisonLaw:
           type: boolean
-    ClientDetails:
+    Crm5ClientDTO:
       type: object
       properties:
         UFN:
@@ -293,8 +307,8 @@ components:
         nationalInsuranceNumber:
           type: string
         address:
-          $ref: '#/components/schemas/Address'
-    Address:
+          $ref: '#/components/schemas/Crm5AddressDTO'
+    Crm5AddressDTO:
       type: object
       properties:
         noFixedAbode:
@@ -313,14 +327,14 @@ components:
           type: string
         country:
           type: string
-    Proceedings:
+    Crm5ProceedingsDTO:
       type: object
       properties:
         TypeOfProceedings:
-          $ref: '#/components/schemas/TypeOfProceedings'
+          $ref: '#/components/schemas/Crm5TypeOfProceedingsDTO'
         DetailsOfProceedings:
-          $ref: '#/components/schemas/DetailsOfProceedings'
-    TypeOfProceedings:
+          $ref: '#/components/schemas/Crm5DetailsOfProceedingsDTO'
+    Crm5TypeOfProceedingsDTO:
       type: object
       properties:
         preCharge:
@@ -329,7 +343,7 @@ components:
           type: string
         prisonLaw:
           type: string
-    DetailsOfProceedings:
+    Crm5DetailsOfProceedingsDTO:
       type: object
       properties:
         dateOfNextHearing:
@@ -337,3 +351,187 @@ components:
           format: date-time
         isCounselInstructed:
           type: string
+    Crm5CapitalDTO:
+      type: object
+      properties:
+        isUnder18:
+          type: string
+        hasIncomeSupport:
+          type: string
+          description: Does client or partner get income support
+        numOfDependants:
+          type: integer
+          format: int32
+        clientSavings:
+          type: integer
+          format: int32
+        partnerSavings:
+          type: integer
+          format: int32
+        totalSavings:
+          type: integer
+          format: int32
+    Crm5IncomeDTO:
+      type: object
+      properties:
+        hasIncomeSupport:
+          type: boolean
+          description: Does client or partner get income support
+        weeklyClientIncome:
+          type: integer
+          format: int32
+        weeklyPartnerIncome:
+          type: integer
+          format: int32
+        weeklyIncomeWithoutDeduction:
+          type: integer
+          format: int32
+        incomeTaxDeductions:
+          type: integer
+          format: int32
+        niDeductions:
+          type: integer
+          format: int32
+        partnerDeductions:
+          type: integer
+          format: int32
+        socialFundDeductions:
+          type: integer
+          format: int32
+        dependantChildrenUnder15:
+          type: integer
+          format: int32
+          description: Number of dependant children under 15 years
+        deductionUnder15:
+          type: integer
+          format: int32
+        dependantChildrenOver16:
+          type: integer
+          format: int32
+        deductionOver16:
+          type: integer
+          format: int32
+        totalDeductions:
+          type: integer
+          format: int32
+        totalWeeklyIncome:
+          type: integer
+          format: int32
+    Crm5AppealFundingDTO:
+      type: object
+      properties:
+        hasCourtAppeal:
+          type: boolean
+        appealDetails:
+          type: string
+        benefitOfCourt:
+          type: boolean
+        expertReport:
+          type: boolean
+    Crm5AllCostsDTO:
+      type: object
+      properties:
+        AccruedCosts:
+          $ref: '#/components/schemas/Crm5AccruedCostsDTO'
+        AnticipatedCosts:
+          $ref: '#/components/schemas/Crm5AnticipateCostsDTO'
+        NewLimitRequest:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+    Crm5AccruedCostsDTO:
+      type: object
+      properties:
+        Attendance:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Preparation:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Advocacy:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Travel:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Waiting:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Letters:
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
+        TelephoneCalls:
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
+        Mileage:
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
+        OtherDisbursement:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+        TotalCost:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+    Crm5AnticipateCostsDTO:
+      type: object
+      properties:
+        Attendance:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Preparation:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Advocacy:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Travel:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Waiting:
+          $ref: '#/components/schemas/Crm5TimeCostDTO'
+        Letters:
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
+        TelephoneCalls:
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
+        Mileage:
+          $ref: '#/components/schemas/Crm5GeneralCostDTO'
+        OtherDisbursement:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+        TotalCost:
+          $ref: '#/components/schemas/Crm5CostOnlyDTO'
+    Crm5TimeCostDTO:
+      type: object
+      properties:
+        time:
+          type: string
+          format: time
+          description: only Time in 24 hrs format HH:MM
+        cost:
+          type: number
+          format: float
+    Crm5GeneralCostDTO:
+      type: object
+      properties:
+        total:
+          type: number
+          format: float
+        cost:
+          type: number
+          format: float
+    Crm5CostOnlyDTO:
+      properties:
+        cost:
+          type: number
+          format: float
+          description: Displayed along with currency symbol e.g £950.00
+    Crm5CaseHistoryDTO:
+      type: object
+      properties:
+        summary:
+          type: string
+        addtionalInfo:
+          type: string
+    Crm5SolicitorDTO:
+      type: object
+      properties:
+        declaration:
+          $ref: '#/components/schemas/Crm5NameAndDateDTO'
+        certification:
+          $ref: '#/components/schemas/Crm5NameAndDateDTO'
+    Crm5NameAndDateDTO:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        name:
+          type: string
+    Crm5DecisionDTO:
+      properties:
+        decision:
+          type: string
+          description: Grant, Part Grant, Reject, Refer For ICA
