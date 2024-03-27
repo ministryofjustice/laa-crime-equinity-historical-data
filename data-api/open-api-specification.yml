@@ -218,7 +218,7 @@ components:
         searchResultsDTO:
           type: array
           items:
-            $ref: "#/components/schemas/CrmFormsDTO"
+            $ref: "#/components/schemas/SearchCrmFormDTO"
         page:
           type: integer
         perPage:
@@ -227,8 +227,7 @@ components:
           type: integer
         totalRecords:
           type: number
-
-    CrmFormsDTO:
+    SearchCrmFormDTO:
       type: 'object'
       readOnly: true
       properties:
@@ -293,16 +292,6 @@ components:
           type: string
         DetailsOfApplication:
           type: string
-
-    TaskDetails:
-      type: 'object'
-      properties:
-        typeId:
-          type: number
-        stateId:
-          type: number
-        currentParticipant:
-          type: 'string'
     Crm5FirmDTO:
       type: object
       properties:

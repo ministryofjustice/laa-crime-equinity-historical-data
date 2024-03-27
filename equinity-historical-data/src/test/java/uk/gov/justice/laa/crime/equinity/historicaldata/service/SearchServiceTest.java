@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
@@ -57,7 +57,7 @@ class SearchServiceTest {
         softly.assertThat(results).isInstanceOf(SearchDTO.class);
         softly.assertThat(results.getSearchResultsDTO()).isNotEmpty();
         softly.assertThat(results.getSearchResultsDTO().size()).isEqualTo(1);
-        softly.assertThat(results.getSearchResultsDTO().get(0)).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(results.getSearchResultsDTO().get(0)).isInstanceOf(SearchCrmFormDTO.class);
         softly.assertThat(results.getSearchResultsDTO().get(0).getUsn()).isEqualTo(usn);
     }
 
@@ -72,7 +72,7 @@ class SearchServiceTest {
         softly.assertThat(results.getSearchResultsDTO().size()).isGreaterThan(1);
 
 
-        softly.assertThat(results.getSearchResultsDTO().get(0)).isInstanceOf(CrmFormsDTO.class);
+        softly.assertThat(results.getSearchResultsDTO().get(0)).isInstanceOf(SearchCrmFormDTO.class);
         softly.assertThat(results.getSearchResultsDTO().get(0).getUsn()).isEqualTo("1826829");
         softly.assertThat(results.getSearchResultsDTO().get(1).getUsn()).isEqualTo("1826830");
     }

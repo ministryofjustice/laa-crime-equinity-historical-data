@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
 
@@ -19,7 +19,7 @@ public interface CrmFormsViewMapper {
     @Mapping(target="submittedDate", source="submittedDate")
     @Mapping(target="providerAccount", source="providerAccount")
     @Mapping(target="providerName", source="providerName")
-    CrmFormsDTO getDTOFromModel(CrmFormViewModel crmFormsViewModel);
+    SearchCrmFormDTO getDTOFromModel(CrmFormViewModel crmFormsViewModel);
 
     @Mapping(target="page", source="page.number")
     @Mapping(target="perPage", source="page.size")
