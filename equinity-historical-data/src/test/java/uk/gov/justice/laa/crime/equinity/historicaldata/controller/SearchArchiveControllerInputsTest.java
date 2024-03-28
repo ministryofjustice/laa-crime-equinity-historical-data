@@ -15,10 +15,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFormsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.SearchService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,7 +44,7 @@ class SearchArchiveControllerInputsTest {
             "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
         );
 
-        given(searchService.searchAllByCriteria(any())).willReturn(new ArrayList<>());
+        given(searchService.searchAllByCriteria(any())).willReturn(new SearchResultDTO());
     }
 
     @AfterAll
@@ -63,7 +62,7 @@ class SearchArchiveControllerInputsTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null, null))
+                usnTest, null, null, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -75,7 +74,7 @@ class SearchArchiveControllerInputsTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null, null))
+                usnTest, null, null, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -87,7 +86,7 @@ class SearchArchiveControllerInputsTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null, null))
+                usnTest, null, null, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -99,7 +98,7 @@ class SearchArchiveControllerInputsTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                usnTest, null, null, null, null, null))
+                usnTest, null, null, null, null, null, null, null))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -108,11 +107,10 @@ class SearchArchiveControllerInputsTest {
     void doSearchByTest_WhenValidUsnThenReturnDTO() {
         String usnTest = "1234";
 
-        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(usnTest, null, null, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(usnTest, null, null, null, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     /**
@@ -125,7 +123,7 @@ class SearchArchiveControllerInputsTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                   null, null, null, dateToTest, null, null))
+                   null, null, null, dateToTest, null, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -138,7 +136,7 @@ class SearchArchiveControllerInputsTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                        null, null, null, null, dateToTest, null))
+                        null, null, null, null, dateToTest, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -151,7 +149,7 @@ class SearchArchiveControllerInputsTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                        null, null, dateToTest, null, null, null))
+                        null, null, dateToTest, null, null, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -165,7 +163,7 @@ class SearchArchiveControllerInputsTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                null, null, null, startDate, endDate, null))
+                null, null, null, startDate, endDate, null, null, null))
             .isInstanceOf(DateRangeConstraintViolationException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -175,11 +173,10 @@ class SearchArchiveControllerInputsTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, dateToTest, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, dateToTest, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     @Test
@@ -187,11 +184,10 @@ class SearchArchiveControllerInputsTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, null, dateToTest, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, null, dateToTest, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     @Test
@@ -200,11 +196,10 @@ class SearchArchiveControllerInputsTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     @Test
@@ -213,11 +208,10 @@ class SearchArchiveControllerInputsTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 
     /**
@@ -229,7 +223,7 @@ class SearchArchiveControllerInputsTest {
         String expectedMessage = "size must be between";
 
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                        null, null, null, null, null, providerAccount))
+                        null, null, null, null, null, providerAccount, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -240,7 +234,7 @@ class SearchArchiveControllerInputsTest {
         String expectedMessage = "size must be between";
 
         softly.assertThatThrownBy(() -> controller.doSearchBy(
-                        null, null, null, null, null, providerAccount))
+                        null, null, null, null, null, providerAccount, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -256,7 +250,7 @@ class SearchArchiveControllerInputsTest {
         // execute
         providerAccounts.forEach(providerAccount ->
             softly.assertThatThrownBy(() -> controller.doSearchBy(
-                    null, null, null, null, null, providerAccount))
+                    null, null, null, null, null, providerAccount, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage)
         );
@@ -267,10 +261,9 @@ class SearchArchiveControllerInputsTest {
         String providerAccount = "0A0z0A";
 
         // execute
-        ResponseEntity<List<CrmFormsDTO>> response = controller.doSearchBy(null, null, null, null, null, providerAccount);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(null, null, null, null, null, providerAccount, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isInstanceOf(List.class);
     }
 }

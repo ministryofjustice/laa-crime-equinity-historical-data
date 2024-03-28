@@ -32,4 +32,12 @@ public class EquinityExceptionResponseHandler {
     ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
+
+    @ExceptionHandler(NotEnoughSearchParametersException.class)
+    @ResponseStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
+    public ResponseEntity<String> handleNotEnoughSearchParametersException(
+            NotEnoughSearchParametersException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).body(exception.getMessage());
+    }
 }

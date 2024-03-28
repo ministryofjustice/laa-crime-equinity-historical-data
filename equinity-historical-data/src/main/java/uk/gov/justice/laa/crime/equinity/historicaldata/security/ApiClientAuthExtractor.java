@@ -10,14 +10,14 @@ import java.util.Optional;
 
 @Component
 public class ApiClientAuthExtractor {
-    @Value("${server.api.client-id}")
+    @Value("${server.security.client-id.secret}")
     private String apiClientId;
-    @Value("${server.api.client-secret}")
+    @Value("${server.security.client-secret.secret}")
     private String apiClientSecret;
 
-    @Value("${server.api.header-client-id}")
+    @Value("${server.security.client-id.header}")
     private String HEADER_CLIENT_ID;
-    @Value("${server.api.header-client-secret}")
+    @Value("${server.security.client-secret.header}")
     private String HEADER_CLIENT_SECRET;
 
 

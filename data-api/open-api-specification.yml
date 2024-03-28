@@ -62,13 +62,30 @@ paths:
             maxLength: 6
             pattern: "([0-9A-Za-z]){4,6}"
             example: '0X12YZ'
+        - name: 'page'
+          in: 'query'
+          required: false
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+            example: 0
+        - name: 'pageSize'
+          in: 'query'
+          required: false
+          schema:
+            default: 10
+            type: integer
+            minimum: 10
+            maximum: 100
+            example: 20
       responses:
         '200':
           description: 'Success'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchResultsDTO"
+                $ref: "#/components/schemas/SearchResultDTO"
         '400':
           description: 'Bad request'
         '401':
@@ -160,13 +177,30 @@ paths:
             maxLength: 6
             pattern: "([0-9A-Za-z]){4,6}"
             example: '0X12YZ'
+        - name: 'page'
+          in: 'query'
+          required: false
+          schema:
+            default: 0
+            type: integer
+            minimum: 0
+            example: 0
+        - name: 'pageSize'
+          in: 'query'
+          required: false
+          schema:
+           default: 10
+           type: integer
+           minimum: 10
+           maximum: 100
+           example: 20
       responses:
         '200':
           description: 'Success'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchResultsDTO"
+                $ref: "#/components/schemas/SearchResultDTO"
         '400':
           description: 'Bad request'
         '401':
@@ -178,12 +212,16 @@ paths:
 
 components:
   schemas:
-    SearchResultsDTO:
-      type: array
-      items:
-        $ref: "#/components/schemas/CrmFormsDTO"
-
-    CrmFormsDTO:
+    SearchResultDTO:
+      type: 'object'
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchCrmFormDTO"
+        paging:
+          $ref: '#/components/schemas/SearchPagingDTO'
+    SearchCrmFormDTO:
       type: 'object'
       readOnly: true
       properties:
@@ -202,6 +240,20 @@ components:
           type: string
         providerName:
           type: string
+    SearchPagingDTO:
+      type: 'object'
+      readOnly: true
+      properties:
+        size:
+          type: integer
+        number:
+          type: integer
+        total:
+          type: integer
+        itemsPage:
+          type: integer
+        itemsTotal:
+          type: number
 
     CRM5DetailsDTO:
       type: object
@@ -248,16 +300,6 @@ components:
           type: string
         DetailsOfApplication:
           type: string
-
-    TaskDetails:
-      type: 'object'
-      properties:
-        typeId:
-          type: number
-        stateId:
-          type: number
-        currentParticipant:
-          type: 'string'
     Crm5FirmDTO:
       type: object
       properties:

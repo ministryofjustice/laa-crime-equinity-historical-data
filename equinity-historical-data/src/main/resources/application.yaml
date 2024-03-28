@@ -20,14 +20,24 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+datasource:
+  archive:
+    table: CrmFormsView
+    catalog: eq_archive
+    schema: dbo
+
 server:
   port: 8089
   api:
     url-path: /api/internal/v1/equinity
-    header-client-id: EQ-API-CLIENT-ID
-    header-client-secret: EQ-API-SECRET
-    client-id: ${EQ_OAUTH_CLIENT_ID}
-    client-secret: ${EQ_OAUTH_CLIENT_SECRET}
+    pageSize: 20
+  security:
+    client-id:
+      header: EQ-API-CLIENT-ID
+      secret: ${EQ_OAUTH_CLIENT_ID}
+    client-secret:
+      header: EQ-API-SECRET
+      secret: ${EQ_OAUTH_CLIENT_SECRET}
 
 management:
   server:

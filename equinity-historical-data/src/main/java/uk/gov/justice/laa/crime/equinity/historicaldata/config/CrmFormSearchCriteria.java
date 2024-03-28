@@ -2,14 +2,25 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.config;
 
 import jakarta.annotation.Nullable;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.time.LocalDate;
 
 @Configuration
 @NoArgsConstructor
 public class CrmFormSearchCriteria {
+    @Value("${server.api.pageSize:20}")
+    private Integer DEFAULT_PAGE_SIZE;
+
+
+    public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+        int DEFAULT_PAGE = 0;
+        int page = (crmFormSearchCriteriaDTO.page() == null) ? DEFAULT_PAGE : crmFormSearchCriteriaDTO.page();
+        int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE :  crmFormSearchCriteriaDTO.pageSize();
+        return PageRequest.of(page, pageSize);
+    }
+
     public Specification<CrmFormModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
             .where(byUsn(crmFormSearchCriteriaDTO.usn())
@@ -34,14 +45,14 @@ public class CrmFormSearchCriteria {
         return null;
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable LocalDate dateSubmittedFrom){
+    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom.toString());
+                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable LocalDate dateSubmittedTo){
+    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo){
         return (root, query, criteriaBuilder)
-                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo.toString());
+                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
     }
 
     private Specification<CrmFormModelInterface> byProviderAccount(@Nullable String providerAccount){

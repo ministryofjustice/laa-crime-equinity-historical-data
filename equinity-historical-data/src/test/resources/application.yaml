@@ -1,18 +1,32 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;MODE=MSSQLServer;
     username: sa
     password: password
     driver-class-name: org.h2.Driver
-
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        naming-strategy: uk.gov.justice.laa.crime.equinity.historicaldata.archive.config.DynamicSchemaNamingStrategy
+
+datasource:
+  archive:
+    table: CrmFormsArchiveView
+    catalog:
+    schema:
 
 server:
   port: 8089
   api:
     url-path: /api/internal/v1/equinity
-    header-client-id: EQ-API-CLIENT-ID
-    header-client-secret: EQ-API-SECRET
-    client-id: local-client-x
-    client-secret: local-secret-x
+    pageSize: 20
+  security:
+    client-id:
+      header: EQ-API-CLIENT-ID
+      secret: local-client-x
+    client-secret:
+      header: EQ-API-SECRET
+      secret: local-secret-x

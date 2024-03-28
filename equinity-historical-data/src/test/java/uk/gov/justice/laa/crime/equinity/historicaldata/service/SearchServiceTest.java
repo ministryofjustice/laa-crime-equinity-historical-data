@@ -12,15 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
-
-import java.util.List;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchArchiveServiceTest {
+class SearchServiceTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
@@ -51,34 +51,36 @@ class SearchArchiveServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenExistingFullUsnShouldReturnSingleForm() {
         String usn = "1826829";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null);
-        List<CrmFormViewModel> results = searchService.searchAllByCriteria(searchCriteria);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
-        softly.assertThat(results).isNotEmpty();
-        softly.assertThat(results).isInstanceOf(List.class);
-        softly.assertThat(results.size()).isEqualTo(1);
-        softly.assertThat(results.get(0)).isInstanceOf(CrmFormViewModel.class);
-        softly.assertThat(results.get(0).getUSN()).isEqualTo(usn);
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(1);
+        softly.assertThat(results.getResults().get(0)).isInstanceOf(SearchCrmFormDTO.class);
+        softly.assertThat(results.getResults().get(0).getUsn()).isEqualTo(usn);
     }
 
     @Test
     void searchAllByCriteriaTest_GivenExistingPartialUsnShouldReturnMultipleForms() {
         String usn = "18268";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null);
-        List<CrmFormViewModel> results = searchService.searchAllByCriteria(searchCriteria);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
-        softly.assertThat(results).isNotEmpty();
-        softly.assertThat(results).isInstanceOf(List.class);
-        softly.assertThat(results.size()).isGreaterThan(1);
-        softly.assertThat(results.get(0)).isInstanceOf(CrmFormViewModel.class);
-        softly.assertThat(results.get(0).getUSN()).isEqualTo("1826829");
-        softly.assertThat(results.get(1).getUSN()).isEqualTo("1826830");
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isGreaterThan(1);
+
+
+        softly.assertThat(results.getResults().get(0)).isInstanceOf(SearchCrmFormDTO.class);
+        softly.assertThat(results.getResults().get(0).getUsn()).isEqualTo("1826829");
+        softly.assertThat(results.getResults().get(1).getUsn()).isEqualTo("1826830");
     }
 
     @Test
     void searchAllByCriteriaTest_GivenNonExistingUsnShouldReturnResourceNotFoundException() {
         String usn = "1826831";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null);
         String expectedMessage = "No Tasks were found";
 
         // execute
