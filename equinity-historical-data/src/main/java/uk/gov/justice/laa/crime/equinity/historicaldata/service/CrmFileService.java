@@ -26,12 +26,6 @@ public class CrmFileService {
     private final ObjectMapper jsonObjectMapper;
     private final Crm5Mapper crm5Mapper;
 
-//    public CrmFileService(TaskRepository taskRepository) {
-//        this.taskRepository = taskRepository;
-//        this.jsonObjectMapper = new ObjectMapper(); // jsonObjectMapper;
-//        jsonObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//    }
-
     public CRM5DetailsDTO getCrmFileData(long taskId) {
         Crm5Model crmFormDetails = null;
         JSONObject crmFileJsonObject = getCrmFormJson(taskId);
