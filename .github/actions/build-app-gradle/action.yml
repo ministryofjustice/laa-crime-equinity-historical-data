@@ -35,10 +35,3 @@ runs:
           -Dorg.gradle.daemon=true
           -Dorg.gradle.workers.max=2
         build-root-directory: ${{inputs.working-directory}}
-
-    - name: Run Sonar
-      uses: gradle/gradle-build-action@v2.12.0
-      with:
-        arguments: |
-          sonar
-        build-root-directory: ${{inputs.working-directory}}
