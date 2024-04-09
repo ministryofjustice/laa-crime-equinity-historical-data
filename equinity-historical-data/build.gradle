@@ -1,5 +1,6 @@
 plugins {
 	id 'jacoco'
+	id 'org.sonarqube' version '4.0.0.2929'
 }
 
 def versions = [
@@ -92,5 +93,19 @@ jacocoTestReport {
 					'**/config/**'
 			])
 		}))
+	}
+}
+
+sonar {
+	properties {
+		property "sonar.projectName", "laa-crime-equinity-historical-data"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.organization", "ministryofjustice"
+		property "sonar.projectKey", "ministryofjustice_laa-crime-equinity-historical-data"
+
+		property "sonar.exclusions", "**/entity/**.java , **/model/**.java , **/dto/**.java , **/config/**.java, **/jms/**.java,**/exception/**.java,**/handler/**.java,**/maatapi/**Client**.java,**/generated/**"
+		property "sonar.coverage.exclusions", "**/EquinityHistoricalDataApplication.java"
+		property "sonar.coverage.jacoco.xmlReportPaths",
+				"${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
 	}
 }
