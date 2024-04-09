@@ -28,4 +28,18 @@ public record CrmFormSearchCriteriaDTO(
     private boolean isNullOrBlank(String input) {
         return input == null || input.isBlank();
     }
+
+    @Override
+    public String toString() {
+        return "CrmFormSearchCriteriaDTO{" +
+                "usn='" + usn + '\'' +
+                ", client='" + client + '\'' +
+                ", clientDoB='" + clientDoB + '\'' +
+                ", submittedFrom='" + submittedFrom + '\'' +
+                ", submittedTo='" + submittedTo + '\'' +
+                ", providerAccount='" + providerAccount + '\'' +
+                ", page=" + page +
+                ", pageSize=" + pageSize +
+                '}';
+    }
 }

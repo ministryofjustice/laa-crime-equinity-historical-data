@@ -1,6 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
@@ -15,22 +16,26 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewR
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SearchService {
     private final CrmFormsViewRepository searchRepository;
     private final CrmFormSearchCriteria crmFormSearchCriteria;
     private final CrmFormsViewMapper searchResultsMapper;
 
     public SearchResultDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+        log.info("Sending paged request. Search criteria :: {}", crmFormSearchCriteriaDTO);
         return convertResults(searchPageByCriteria(crmFormSearchCriteriaDTO));
     }
 
     private Page<CrmFormModelInterface> searchPageByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+
         Page<CrmFormModelInterface> pagedResults = searchRepository.findAll(
                 crmFormSearchCriteria.getSpecification(crmFormSearchCriteriaDTO),
                 crmFormSearchCriteria.getNextPageRequest(crmFormSearchCriteriaDTO)
         );
 
         if (pagedResults.getTotalElements() == 0) {
+            log.info("No results found for the given search criteria :: {}", crmFormSearchCriteriaDTO);
             throw new ResourceNotFoundException("No Tasks were found");
         }
 
@@ -38,6 +43,7 @@ public class SearchService {
     }
 
     private SearchResultDTO convertResults(Page<CrmFormModelInterface> pagedResults) {
+        log.info("Converting search results. Search criteria :: totalElements=[{}] pages=[{}]", pagedResults.getTotalElements(), pagedResults.getTotalPages());
         return searchResultsMapper.getDTOsFromModel(
                 pagedResults.stream()
                         .filter(CrmFormViewModel.class::isInstance)
