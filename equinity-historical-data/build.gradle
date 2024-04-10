@@ -19,14 +19,13 @@ configurations {
 dependencies {
 	implementation project(':data-api')
 
-	// Logs
-//	implementation "org.springframework.boot:spring-boot-starter-logging:$versions.springStarter"
-	implementation "ch.qos.logback:logback-core:$versions.logback"
-	implementation "ch.qos.logback:logback-classic:$versions.logback"
-
 	// Spring
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+
+	// Logs
+	implementation "ch.qos.logback:logback-core:$versions.logback"
+	implementation "ch.qos.logback:logback-classic:$versions.logback"
 
 	//Enable Swagger UI
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
@@ -62,7 +61,7 @@ dependencies {
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
 	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation "com.h2database:h2:2.2.220"
+	testImplementation "com.h2database:h2:2.2.224"
 }
 
 jar {
