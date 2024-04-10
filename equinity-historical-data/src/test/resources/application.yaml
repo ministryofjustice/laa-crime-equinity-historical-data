@@ -15,6 +15,7 @@ spring:
     console:
       settings:
         web-allow-others: false
+      enabled: false
 
 
 datasource:

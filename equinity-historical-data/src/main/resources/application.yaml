@@ -19,6 +19,11 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  h2:
+    console:
+      settings:
+        web-allow-others: false
+      enabled: false
 
 datasource:
   archive:
