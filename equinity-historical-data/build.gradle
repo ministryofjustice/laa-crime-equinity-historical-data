@@ -23,8 +23,6 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-logging:$versions.springStarter"
 
-
-
 	//Enable Swagger UI
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
@@ -42,6 +40,7 @@ dependencies {
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
 	implementation 'org.json:json:20231013'
 
+	compileOnly "ch.qos.logback:logback-classic:1.4.12"
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
