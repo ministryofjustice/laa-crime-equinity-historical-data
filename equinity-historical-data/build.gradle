@@ -7,6 +7,7 @@ def versions = [
 		springdocVersion       		: '1.7.0',
 		springStarter		  		: '3.2.4',
 		springSecurity		  	 	: '6.2.3',
+		logback						: '1.5.3',
 ]
 
 configurations {
@@ -36,10 +37,10 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
 
 	// Logs
-//	implementation "org.springframework.boot:spring-boot-starter-logging:$versions.springStarter"
-	implementation 'ch.qos.logback:logback-core:1.5.4'
-	implementation "ch.qos.logback:logback-classic:1.5.4"
-// 1.2.13, 1.3.12, 1.4.12
+	implementation "org.springframework.boot:spring-boot-starter-logging:$versions.springStarter"
+	implementation "ch.qos.logback:logback-core:$versions.logback"
+	implementation "ch.qos.logback:logback-classic:$versions.logback"
+
 	// Annotations
 	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
