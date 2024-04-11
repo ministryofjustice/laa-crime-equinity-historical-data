@@ -37,7 +37,6 @@ jobs:
     permissions:
       id-token: write
     needs:
-      - test
       - capture-repo-info
     env:
       REPO_NAME: ${{ needs.capture-repo-info.outputs.repo_name }}
@@ -80,32 +79,30 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
 
+  snyk:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - capture-repo-info
+    env:
+      IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
+
+    steps:
+      # Login to Docker container repo
+      - uses: aws-actions/amazon-ecr-login@v2
+        name: Login to AWS container repo
+        id: login-ecr
+        with:
+          mask-password: true
+        
       - name: Run Snyk to check Docker images for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ env.REPO_NAME }}-${{ github.sha }} # Tags ECR image with commit sha
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --severity-threshold=critical
-
-#  snyk:
-#    runs-on: ubuntu-latest
-#    needs:
-#      - build
-#      - capture-repo-info
-#    env:
-#      IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
-#
-#    steps:
-#      - name: Run Snyk to check Docker images for vulnerabilities
-#        uses: snyk/actions/docker@master
-#        env:
-#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-#        with:
-#          image: ${{ env.IMAGE_TAG }}
-#          args: |
-#            --severity-threshold=critical
 
   deploy-uat:
     permissions:
@@ -114,6 +111,7 @@ jobs:
       id-token: write
     needs:
       - build
+      - test
       - capture-repo-info
     uses: ./.github/workflows/_deploy-to.yml
     with:
