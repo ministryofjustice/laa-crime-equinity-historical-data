@@ -89,7 +89,6 @@ jobs:
       IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
 
     steps:
-      - uses: actions/checkout@v4
       - name: Run Snyk to check Docker images for vulnerabilities
         uses: snyk/actions/docker@master
         env:
