@@ -88,13 +88,18 @@ jobs:
       IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
 
     steps:
+      - name: Login to AWS ECR
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
       # Login to Docker container repo
       - uses: aws-actions/amazon-ecr-login@v2
         name: Login to AWS container repo
         id: login-ecr
         with:
           mask-password: true
-        
+
       - name: Run Snyk to check Docker images for vulnerabilities
         uses: snyk/actions/docker@master
         env:
@@ -110,7 +115,7 @@ jobs:
       packages: write
       id-token: write
     needs:
-      - build
+      - snyk
       - test
       - capture-repo-info
     uses: ./.github/workflows/_deploy-to.yml
