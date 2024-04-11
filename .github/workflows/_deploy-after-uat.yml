@@ -74,10 +74,9 @@ jobs:
         continue-on-error: true # To make sure that further actions are called (e.g. SARIF upload)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
         with:
           command: monitor
-          image: ${{ secrets.IMAGE_TAG }}
+          image: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
           args: |
 #            --all-sub-projects
             --severity-threshold=critical
