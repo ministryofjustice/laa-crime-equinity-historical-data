@@ -83,7 +83,7 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     needs:
-      - deploy-staging
+      - build
       - capture-repo-info
 
     steps:
@@ -106,7 +106,7 @@ jobs:
       packages: write
       id-token: write
     needs:
-      - build
+      - snyk
       - capture-repo-info
     uses: ./.github/workflows/_deploy-to.yml
     with:
