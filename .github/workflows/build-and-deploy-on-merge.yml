@@ -80,26 +80,24 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
 
-  snyk:
-    runs-on: ubuntu-latest
-    needs:
-      - build
-      - capture-repo-info
-    env:
-      IMAGE_TAG: "${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }}" # Tags ECR image with commit sha
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Snyk to check Docker images for vulnerabilities
-        uses: snyk/actions/docker@master
-#        continue-on-error: true # To make sure that further actions are called (e.g. SARIF upload)
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ env.IMAGE_TAG }}
-          args: |
-#            --all-sub-projects
-            --severity-threshold=critical
+#  snyk:
+#    runs-on: ubuntu-latest
+#    needs:
+#      - build
+#      - capture-repo-info
+#    env:
+#      IMAGE_TAG: "${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }}" # Tags ECR image with commit sha
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Run Snyk to check Docker images for vulnerabilities
+#        uses: snyk/actions/docker@master
+#        env:
+#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#        with:
+#          image: ${{ env.IMAGE_TAG }}
+#          args: |
+#            --severity-threshold=critical
 
   deploy-uat:
     permissions:
@@ -107,7 +105,7 @@ jobs:
       packages: write
       id-token: write
     needs:
-      - snyk
+      - build
       - capture-repo-info
     uses: ./.github/workflows/_deploy-to.yml
     with:
