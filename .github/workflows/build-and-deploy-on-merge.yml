@@ -81,6 +81,8 @@ jobs:
 
   snyk:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     needs:
       - build
       - capture-repo-info
