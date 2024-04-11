@@ -85,6 +85,8 @@ jobs:
     needs:
       - build
       - capture-repo-info
+    env:
+      IMAGE_TAG: "${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }}" # Tags ECR image with commit sha
 
     steps:
       - uses: actions/checkout@v4
@@ -94,7 +96,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
+          image: ${{ env.IMAGE_TAG }}
           args: |
 #            --all-sub-projects
             --severity-threshold=critical
