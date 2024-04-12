@@ -69,6 +69,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: read
+      packages: read
+
     needs:
       - build
       - capture-repo-info
@@ -107,8 +110,7 @@ jobs:
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --all-projects 
-            --all-sub-projects  
+            --all-projects   
             --severity-threshold=critical
             --policy-path=.snyk
 
