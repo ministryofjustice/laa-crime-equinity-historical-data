@@ -104,8 +104,7 @@ jobs:
           echo " STEP 3 "
           ls ~
           echo " STEP 4 "
-          echo ${{ needs.capture-repo-info.outputs.app_name }}
-          
+          ls /github/workspace
           echo " END "
 
       - name: Run Snyk to check Docker images for vulnerabilities
@@ -115,10 +114,10 @@ jobs:
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --file=~/${{ env.WORKING_DIR }}/Dockerfile
             --all-projects
             --policy-path=.snyk
 
+#            --file=~/${{ env.WORKING_DIR }}/Dockerfile
 #            --all-sub-projects
 #            --severity-threshold=critical
 
