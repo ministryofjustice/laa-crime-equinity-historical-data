@@ -22,7 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read
       packages: write
     needs:
       - capture-repo-info
@@ -70,9 +69,7 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
-      packages: write
+      id-token: read
 
     needs:
       - build
@@ -100,9 +97,9 @@ jobs:
         shell: bash
         run: | 
           echo "\n STEP 1 \n"
-          ls
+          pwd
           echo "\n STEP 2 \n"
-          ls ../
+          ls 
           echo "\n END \n"
 
       - name: Run Snyk to check Docker images for vulnerabilities
@@ -113,8 +110,8 @@ jobs:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --file=Dockerfile
+            --all-projects
 
-#            --all-projects
 #            --all-sub-projects
 #            --severity-threshold=critical
 #            --policy-path=.snyk
@@ -136,9 +133,8 @@ jobs:
 
   deploy-uat:
     permissions:
-      contents: read
-      packages: write
       id-token: write
+      packages: write
     needs:
       - snyk
 #      - test # TODO (EMP-184): uncomment test to add this dependency
