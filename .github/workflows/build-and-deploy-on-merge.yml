@@ -107,10 +107,11 @@ jobs:
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --file=Dockerfile
-            --package-manager=pip 
+            --file=docker-compose.yaml
+#            --package-manager=pip
             --all-projects 
-            --severity-threshold=critical 
+            --severity-threshold=critical
+            --policy-path=.snyk
 
 # TODO (EMP-184): uncomment test to enable this step
 #  test:
