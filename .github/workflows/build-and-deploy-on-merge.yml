@@ -75,6 +75,7 @@ jobs:
       - build
       - capture-repo-info
     env:
+      WORKING_DIR: work/${{ needs.capture-repo-info.outputs.app_name }}/${{ needs.capture-repo-info.outputs.app_name }}
       IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
 
     steps:
@@ -103,7 +104,8 @@ jobs:
           echo " STEP 3 "
           ls ~
           echo " STEP 4 "
-          echo ${{ needs.capture-repo-info.outputs.repo_name }}
+          echo ${{ needs.capture-repo-info.outputs.app_name }}
+          
           echo " END "
 
       - name: Run Snyk to check Docker images for vulnerabilities
@@ -111,6 +113,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          entrypoint: ~/${{ env.WORKING_DIR }}
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --file=Dockerfile
