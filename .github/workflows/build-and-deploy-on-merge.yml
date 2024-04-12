@@ -110,7 +110,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ env.IMAGE_TAG }}
+          image: amazoncorretto:17-alpine
           args: |
             --all-projects
             --policy-path=.snyk
