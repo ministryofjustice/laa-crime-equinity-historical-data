@@ -108,7 +108,7 @@ jobs:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --file=Dockerfile
-            --package-manager=gradle 
+            --package-manager=apk 
             --all-projects 
             --severity-threshold=critical 
 
