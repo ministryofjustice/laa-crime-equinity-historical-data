@@ -18,20 +18,6 @@ jobs:
   capture-repo-info:
     uses: ./.github/workflows/_capture-repo-info.yml
 
-  test:
-    runs-on: ubuntu-latest
-    needs:
-      - capture-repo-info
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run unit tests with gradle
-        uses: './.github/actions/test-app-gradle'
-        with:
-          java-version: ${{env.JAVA_VERSION}}
-          java-dist: ${{env.JAVA_DIST}}
-
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -102,6 +88,12 @@ jobs:
         with:
           mask-password: true
 
+      - name: List current directory
+        shell: bash
+        run: | 
+          pwd
+          ls
+
       - name: Run Snyk to check Docker images for vulnerabilities
         uses: snyk/actions/docker@master
         env:
@@ -110,6 +102,20 @@ jobs:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --severity-threshold=critical
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - capture-repo-info
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run unit tests with gradle
+        uses: './.github/actions/test-app-gradle'
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          java-dist: ${{env.JAVA_DIST}}
 
   deploy-uat:
     permissions:
