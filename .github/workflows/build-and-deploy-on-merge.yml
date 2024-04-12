@@ -91,8 +91,11 @@ jobs:
       - name: List current directory
         shell: bash
         run: | 
-          pwd
+          echo "\n STEP 1 \n"
           ls
+          echo "\n STEP 2 \n"
+          ls ../
+          echo "\n END \n"
 
       - name: Run Snyk to check Docker images for vulnerabilities
         uses: snyk/actions/docker@master
