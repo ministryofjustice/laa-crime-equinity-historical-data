@@ -80,7 +80,7 @@ jobs:
 
     steps:
       # Checkout github repo
-#      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Login to AWS ECR
         uses: aws-actions/configure-aws-credentials@v4
@@ -110,7 +110,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          image: ${{ env.IMAGE_TAG }}
           args: |
             --all-projects
             --policy-path=.snyk
