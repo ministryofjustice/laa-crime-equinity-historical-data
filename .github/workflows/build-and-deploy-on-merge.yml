@@ -107,7 +107,7 @@ jobs:
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --file=docker-compose.yaml
+#            --file=docker-compose.yaml
 #            --package-manager=pip
             --all-projects 
             --severity-threshold=critical
