@@ -111,10 +111,11 @@ jobs:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --file=Dockerfile
-            --all-projects
-            --all-sub-projects
-            --severity-threshold=critical
-            --policy-path=.snyk
+
+#            --all-projects
+#            --all-sub-projects
+#            --severity-threshold=critical
+#            --policy-path=.snyk
 
 # TODO (EMP-184): uncomment test to enable this step
 #  test:
