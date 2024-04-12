@@ -12,7 +12,7 @@ env:
 
 permissions:
   contents: read
-  packages: write
+  packages: read
 
 jobs:
   capture-repo-info:
@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: read
+      packages: write
     needs:
       - capture-repo-info
     env:
@@ -70,7 +72,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
+      packages: write
 
     needs:
       - build
