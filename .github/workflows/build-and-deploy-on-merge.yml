@@ -103,7 +103,7 @@ jobs:
           echo " STEP 3 "
           ls ~
           echo " STEP 4 "
-          ls ~/Dockerfile
+          echo ${{ needs.capture-repo-info.outputs.repo_name }}
           echo " END "
 
       - name: Run Snyk to check Docker images for vulnerabilities
@@ -115,10 +115,11 @@ jobs:
           args: |
             --file=Dockerfile
             --all-projects
+            --policy-path=.snyk
 
 #            --all-sub-projects
 #            --severity-threshold=critical
-#            --policy-path=.snyk
+
 
 # TODO (EMP-184): uncomment test to enable this step
 #  test:
