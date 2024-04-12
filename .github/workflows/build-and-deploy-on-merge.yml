@@ -110,7 +110,9 @@ jobs:
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --all-projects   
+            --file=Dockerfile
+            --all-projects
+            --all-sub-projects
             --severity-threshold=critical
             --policy-path=.snyk
 
