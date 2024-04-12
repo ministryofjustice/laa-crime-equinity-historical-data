@@ -97,9 +97,9 @@ jobs:
         shell: bash
         run: | 
           echo "\n STEP 1 \n"
-          ls
+          pwd
           echo "\n STEP 2 \n"
-          ls ../
+          ls 
           echo "\n END \n"
 
       - name: Run Snyk to check Docker images for vulnerabilities
