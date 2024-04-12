@@ -113,10 +113,9 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          entrypoint: ~/${{ env.WORKING_DIR }}
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --file=Dockerfile
+            --file=~/${{ env.WORKING_DIR }}/Dockerfile
             --all-projects
             --policy-path=.snyk
 
