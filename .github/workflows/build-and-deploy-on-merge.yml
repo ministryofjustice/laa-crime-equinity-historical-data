@@ -22,7 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read
       packages: write
     needs:
       - capture-repo-info
@@ -70,9 +69,7 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
-      packages: write
+      id-token: read
 
     needs:
       - build
@@ -113,8 +110,8 @@ jobs:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --file=Dockerfile
+            --all-projects
 
-#            --all-projects
 #            --all-sub-projects
 #            --severity-threshold=critical
 #            --policy-path=.snyk
