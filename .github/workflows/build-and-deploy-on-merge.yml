@@ -133,9 +133,8 @@ jobs:
 
   deploy-uat:
     permissions:
-      contents: read
-      packages: write
       id-token: write
+      packages: write
     needs:
       - snyk
 #      - test # TODO (EMP-184): uncomment test to add this dependency
