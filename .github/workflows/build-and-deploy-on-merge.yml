@@ -110,11 +110,11 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: amazoncorretto:17-alpine
+          image: ${{ env.IMAGE_TAG }}
           args: |
-            --all-projects
             --policy-path=.snyk
 
+#            --all-projects
 #            --file=~/${{ env.WORKING_DIR }}/Dockerfile
 #            --all-sub-projects
 #            --severity-threshold=critical
