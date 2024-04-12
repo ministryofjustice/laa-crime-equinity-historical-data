@@ -12,7 +12,7 @@ env:
 
 permissions:
   contents: read
-  packages: write
+  packages: read
 
 jobs:
   capture-repo-info:
@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: read
+      packages: write
     needs:
       - capture-repo-info
     env:
@@ -70,7 +72,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      packages: read
+      packages: write
 
     needs:
       - build
@@ -111,10 +113,11 @@ jobs:
           image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
             --file=Dockerfile
-            --all-projects
-            --all-sub-projects
-            --severity-threshold=critical
-            --policy-path=.snyk
+
+#            --all-projects
+#            --all-sub-projects
+#            --severity-threshold=critical
+#            --policy-path=.snyk
 
 # TODO (EMP-184): uncomment test to enable this step
 #  test:
