@@ -75,7 +75,6 @@ jobs:
       - build
       - capture-repo-info
     env:
-      WORKING_DIR: work/${{ needs.capture-repo-info.outputs.app_name }}/${{ needs.capture-repo-info.outputs.app_name }}
       IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
 
     steps:
@@ -94,29 +93,22 @@ jobs:
         with:
           mask-password: true
 
-      - name: List current directory
-        shell: bash
-        run: | 
-          echo " STEP 1 "
-          pwd
-          echo " STEP 2 "
-          ls
-          echo " STEP 3 "
-          ls ~
-          echo " END "
-
-      - name: Run Snyk to check Docker images for vulnerabilities
+      - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         with:
-          image: ${{ env.IMAGE_TAG }}
+          image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --all-projects
+            --sub-project=equinity-historical-data
+            --severity-threshold=critical
             --file=Dockerfile
+
+#            --all-projects
 #            --policy-path=.snyk
 #            --all-sub-projects
-#            --severity-threshold=critical
 
 
 # TODO (EMP-184): uncomment test to enable this step
