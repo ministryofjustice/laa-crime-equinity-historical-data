@@ -10,16 +10,15 @@ allprojects{
 	apply plugin: "org.springframework.boot"
 	apply plugin: "io.spring.dependency-management"
 
+	repositories {
+		mavenCentral()
+	}
+
 	java {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17
 	}
-
-	repositories {
-		mavenCentral()
-	}
 }
-
 
 bootJar {
 	enabled = false
