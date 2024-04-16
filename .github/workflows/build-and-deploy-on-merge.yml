@@ -113,8 +113,7 @@ jobs:
           image: ${{ env.IMAGE_TAG }}
           args: |
             --policy-path=.snyk
-
-#            --all-projects
+            --all-projects
 #            --file=~/${{ env.WORKING_DIR }}/Dockerfile
 #            --all-sub-projects
 #            --severity-threshold=critical
