@@ -102,13 +102,12 @@ jobs:
         with:
           image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           args: |
-            --sub-project=equinity-historical-data
+            --all-projects
+            --all-sub-projects
             --severity-threshold=critical
             --file=Dockerfile
+            --policy-path=.snyk
 
-#            --all-projects
-#            --policy-path=.snyk
-#            --all-sub-projects
 
 
 # TODO (EMP-184): uncomment test to enable this step
