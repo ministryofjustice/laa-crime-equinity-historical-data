@@ -81,6 +81,9 @@ jobs:
       # Checkout github repo
       - uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to AWS ECR
         uses: aws-actions/configure-aws-credentials@v4
         with:
