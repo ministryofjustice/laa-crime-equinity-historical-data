@@ -6,6 +6,7 @@ plugins {
 def versions = [
 		springdocVersion       		: '1.7.0',
 		springStarter		  		: '3.2.4',
+		springWeb					: '6.1.6',
 		springSecurity		  	 	: '6.2.4',
 		logback						: '1.5.3',
 ]
@@ -22,6 +23,7 @@ dependencies {
 	// Spring
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+	implementation "org.springframework:spring-web:$versions.springWeb" // This is included in spring-boot-starter-web, but needed for vulnerability check
 
 	// Logs
 	implementation "ch.qos.logback:logback-core:$versions.logback"
