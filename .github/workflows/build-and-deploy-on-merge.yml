@@ -98,6 +98,8 @@ jobs:
 
 # TODO (EMP-184) remove and use after deploy-prod version once testing is done
   snyk-monitor:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     needs:
       - deploy-uat
