@@ -10,8 +10,10 @@ def versions = [
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+
+
     implementation 'org.springframework.data:spring-data-commons'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.8.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
