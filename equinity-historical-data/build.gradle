@@ -23,7 +23,7 @@ dependencies {
 	// Spring
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
-	implementation "org.springframework:spring-web:$versions.springWeb" // This is included in spring-boot-starter-web, but needed for vulnerability check
+
 
 	// Logs
 	implementation "ch.qos.logback:logback-core:$versions.logback"
