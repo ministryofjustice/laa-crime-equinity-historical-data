@@ -46,9 +46,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: |
-            --all-sub-projects
-            --severity-threshold=high
+          args: --all-sub-projects --severity-threshold=high
 
   snyk-docker:
     permissions:
