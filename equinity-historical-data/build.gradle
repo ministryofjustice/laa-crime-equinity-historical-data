@@ -114,6 +114,26 @@ jacocoTestReport {
 	}
 }
 
+jacocoTestCoverageVerification {
+	executionData = files([
+			'**/entity/**',
+			'**/dto/**',
+			'**/generated/**',
+			'**/config/**'
+	])
+	violationRules {
+		failOnViolation = true
+		rule {
+			limit {
+				minimum = 0.9
+			}
+		}
+	}
+}
+
+// to run coverage verification during the build (and fail when appropriate)
+check.dependsOn jacocoTestCoverageVerification
+
 sonar {
 	properties {
 		property "sonar.projectName", "laa-crime-equinity-historical-data"
