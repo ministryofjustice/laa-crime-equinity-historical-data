@@ -37,7 +37,7 @@ class DateUtilTest {
 
     @Test
     void doSearchByTest_WhenInvalidDateFormatIsGivenThenReturnConstraintViolationException() {
-        String expectedMessage = "could not be parsed";
+        String expectedMessage = "could not be parseds";
 
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
