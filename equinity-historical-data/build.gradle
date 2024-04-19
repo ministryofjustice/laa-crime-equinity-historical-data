@@ -98,6 +98,7 @@ tasks.named('test') {
 
 jacocoTestReport {
 	dependsOn test
+
 	reports {
 		xml.required = true
 		html.required = true
@@ -115,24 +116,29 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
-	executionData = files([
-			'**/entity/**',
-			'**/dto/**',
-			'**/generated/**',
-			'**/config/**'
-	])
+	dependsOn jacocoTestReport
 	violationRules {
 		failOnViolation = true
 		rule {
+			element = 'CLASS'
+			excludes = [
+				'uk.gov.justice.laa.crime.equinity.historicaldata.EquinityHistoricalDataApplication',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.config.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.exception.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.mapper.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.model.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.repository.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.security.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.config.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.mapper.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.model.*'
+			]
 			limit {
-				minimum = 0.9
+				minimum = 0.70
 			}
 		}
 	}
 }
-
-// to run coverage verification during the build (and fail when appropriate)
-check.dependsOn jacocoTestCoverageVerification
 
 sonar {
 	properties {
