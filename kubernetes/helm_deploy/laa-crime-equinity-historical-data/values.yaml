@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   # Override the image repository whose real value should come from secret.
   repository: ""
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
