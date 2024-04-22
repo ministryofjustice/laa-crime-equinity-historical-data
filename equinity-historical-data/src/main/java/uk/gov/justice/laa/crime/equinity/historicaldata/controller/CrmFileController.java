@@ -38,28 +38,9 @@ public class CrmFileController {
                 schema = @Schema(implementation = ProblemDetail.class)
         )
     )
-    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") long taskId) {
+    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId) {
         Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(taskId).toMap();
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
 
-    @GetMapping(value= "/{usn}/schema")
-    @Operation(description = "Search a specific Task by ID (USN) for its OFD Image Schema file")
-    @ApiResponse(responseCode = "200")
-    @ApiResponse(responseCode = "400",
-            description = "Bad request.",
-            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
-                    schema = @Schema(implementation = ProblemDetail.class)
-            )
-    )
-    @ApiResponse(responseCode = "500",
-            description = "Server Error.",
-            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
-                    schema = @Schema(implementation = ProblemDetail.class)
-            )
-    )
-    public ResponseEntity<Map<String, Object>> getCrmFileSchemaByUsn(@PathVariable("usn") long taskId) {
-        Map<String, Object> crmFileSchema = crmFileService.getCrmFileSchema(taskId).toMap();
-        return new ResponseEntity<>(crmFileSchema, HttpStatus.OK);
-    }
 }
