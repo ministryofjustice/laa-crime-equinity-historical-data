@@ -114,6 +114,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CRM5DetailsDTO'
+
+  /api/internal/v1/equinity/crm7/{usn}:
+    get:
+      tags:
+        - CRM7Interface
+      operationId: getApplicationCrm7
+      parameters:
+        - name: usn
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crm7DetailsDTO'
   ###
   # Archive
   ###
@@ -577,3 +597,54 @@ components:
         decision:
           type: string
           description: Grant, Part Grant, Reject, Refer For ICA
+
+    ###
+    # CRM 7
+    ###
+    Crm7DetailsDTO:
+      type: object
+      properties:
+        usn:
+          type: integer
+        Crm7SummaryOfClaimDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7SummaryOfClaimDTO'
+        Crm7SolicitorDetailsDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7SolicitorDetailsDTO'
+        Crm7CaseDetailsDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7CaseDetailsDTO'
+        Crm7NonStandardFeeClaimDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7NonStandardFeeClaimDTO'
+        Crm7CaseDisposalDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7CaseDisposalDTO'
+        Crm7ClaimDetailsDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7ClaimDetailsDTO'
+        Crm7PreOrderWorkDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7PreOrderWorkDTO'
+        Crm7ScheduleOfTimeSpentDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7ScheduleOfTimeSpentDTO'
+        Crm7ClaimOfCostsDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7ClaimOfCostsDTO'
+        Crm7DisbursementDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7DisbursementDTO'
+        Crm7ClaimTotalsDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7ClaimTotalsDTO'
+        Crm7CoversheetDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7CoversheetDTO'
+        Crm7CaseInformationDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7CaseInformationDTO'
+        Crm7OfficeUseOnlyDTO:
+          type: string
+#          $ref: '#/components/schemas/Crm7OfficeUseOnlyDTO'
