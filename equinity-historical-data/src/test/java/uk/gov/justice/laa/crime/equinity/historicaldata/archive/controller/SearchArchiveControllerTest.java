@@ -63,7 +63,7 @@ class SearchArchiveControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        usnTest, null, null, null, null, null, null, null))
+                        usnTest, null,null, null, null, null, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -75,7 +75,7 @@ class SearchArchiveControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        usnTest, null, null, null, null, null, null, null))
+                        usnTest, null,null, null, null, null, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -87,7 +87,7 @@ class SearchArchiveControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        usnTest, null, null, null, null, null, null, null))
+                        usnTest, null,null, null, null, null, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -99,7 +99,7 @@ class SearchArchiveControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        usnTest, null, null, null, null, null, null, null))
+                        usnTest, null,null, null, null, null, null, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -108,7 +108,7 @@ class SearchArchiveControllerTest {
     void doSearchArchiveByTest_WhenValidUsnThenReturnDTO() {
         String usnTest = "1234";
 
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(usnTest, null, null, null, null, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(usnTest, null,null, null, null, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -124,7 +124,7 @@ class SearchArchiveControllerTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
                 softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                                null, null, null, dateToTest, null, null, null, null))
+                                null, null,null, null, dateToTest, null, null, null, null))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage)
         );
@@ -137,7 +137,7 @@ class SearchArchiveControllerTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
                 softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                                null, null, null, null, dateToTest, null, null, null))
+                                null, null,null, null, null, dateToTest, null, null, null))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage)
         );
@@ -150,7 +150,7 @@ class SearchArchiveControllerTest {
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
                 softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                                null, null, dateToTest, null, null, null, null, null))
+                                null, null,null, dateToTest, null, null, null, null, null))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage)
         );
@@ -164,7 +164,7 @@ class SearchArchiveControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        null, null, null, startDate, endDate, null, null, null))
+                        null, null,null, null, startDate, endDate, null, null, null))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -174,7 +174,7 @@ class SearchArchiveControllerTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null, null, dateToTest, null, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null,null, null, dateToTest, null, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -185,7 +185,7 @@ class SearchArchiveControllerTest {
         String dateToTest = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null, null, null, dateToTest, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null,null, null, null, dateToTest, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -197,7 +197,7 @@ class SearchArchiveControllerTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null,null, null, dateToTestFrom, dateToTestTo, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -209,7 +209,7 @@ class SearchArchiveControllerTest {
         String dateToTestTo = "2024-02-19";
 
         // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null, null, dateToTestFrom, dateToTestTo, null, null, null);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null,null, null, dateToTestFrom, dateToTestTo, null, null, null);
 
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -219,23 +219,12 @@ class SearchArchiveControllerTest {
      * Provider Account input checks
      */
     @Test
-    void doSearchArchiveByTest_WhenShorterProviderAccountIsGivenThenReturnConstraintViolationException() {
-        String providerAccount = "0A0A0";
-        String expectedMessage = "size must be between";
-
-        softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        null, null, null, null, null, providerAccount, null, null))
-                .isInstanceOf(ConstraintViolationException.class)
-                .hasMessageContaining(expectedMessage);
-    }
-
-    @Test
     void doSearchArchiveByTest_WhenLongerProviderAccountIsGivenThenReturnConstraintViolationException() {
         String providerAccount = "0A0A0A1";
         String expectedMessage = "size must be between";
 
         softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                        null, null, null, null, null, providerAccount, null, null))
+                        null, null,null, null, null, null, providerAccount, null, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining(expectedMessage);
     }
@@ -251,7 +240,7 @@ class SearchArchiveControllerTest {
         // execute
         providerAccounts.forEach(providerAccount ->
                 softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
-                                null, null, null, null, null, providerAccount, null, null))
+                                null, null,null, null, null, null, providerAccount, null, null))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage)
         );
@@ -260,10 +249,17 @@ class SearchArchiveControllerTest {
     @Test
     void doSearchArchiveByTest_WhenValidProviderAccountIsGivenThenReturnDTO() {
         String providerAccount = "0A0z0A";
+        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null,null, null, null, null, null, providerAccount, null, null);
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null, null, null, null, null, providerAccount, null, null);
+        providerAccount = "0A0z0";
+        response = controller.doSearchArchiveBy(null,null, null, null, null, null, providerAccount, null, null);
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
+        providerAccount = "A0z0";
+        response = controller.doSearchArchiveBy(null,null, null, null, null, null, providerAccount, null, null);
         softly.assertThat(response).isInstanceOf(ResponseEntity.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

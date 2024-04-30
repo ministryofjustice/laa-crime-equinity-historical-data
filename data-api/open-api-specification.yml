@@ -11,6 +11,7 @@ paths:
       operationId: 'doSearchBy'
       parameters:
         - $ref: '#/components/parameters/searchUsn'
+        - $ref: '#/components/parameters/searchType'
         - $ref: '#/components/parameters/searchClient'
         - $ref: '#/components/parameters/searchClientDoB'
         - $ref: '#/components/parameters/searchSubmittedFrom'
@@ -74,6 +75,7 @@ paths:
       operationId: 'doSearchArchiveBy'
       parameters:
         - $ref: '#/components/parameters/searchUsn'
+        - $ref: '#/components/parameters/searchType'
         - $ref: '#/components/parameters/searchClient'
         - $ref: '#/components/parameters/searchClientDoB'
         - $ref: '#/components/parameters/searchSubmittedFrom'
@@ -118,6 +120,16 @@ components:
         minLength: 3
         maxLength: 10
         pattern: '[0-9]{3,10}'
+    searchType:
+      name: type
+      description: 'CRM form Type'
+      in: query
+      required: false
+      schema:
+        type: integer
+        example: 4
+        minLength: 1
+        maxLength: 3
     searchClient:
       name: client
       description: 'Client name'

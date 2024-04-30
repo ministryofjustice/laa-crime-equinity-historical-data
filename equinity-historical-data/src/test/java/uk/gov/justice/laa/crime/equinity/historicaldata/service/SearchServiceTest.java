@@ -51,7 +51,7 @@ class SearchServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenExistingFullUsnShouldReturnSingleForm() {
         String usn = "1826829";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
@@ -64,7 +64,7 @@ class SearchServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenExistingPartialUsnShouldReturnMultipleForms() {
         String usn = "18268";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
@@ -80,7 +80,7 @@ class SearchServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenNonExistingUsnShouldReturnResourceNotFoundException() {
         String usn = "1826831";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null);
         String expectedMessage = "No Tasks were found";
 
         // execute
