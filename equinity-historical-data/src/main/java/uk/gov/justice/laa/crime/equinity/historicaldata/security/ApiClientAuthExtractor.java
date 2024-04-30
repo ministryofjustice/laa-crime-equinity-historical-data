@@ -32,11 +32,6 @@ public class ApiClientAuthExtractor {
     }
 
     private boolean isValidApiClient(String requestClientId, String requestClientSecret) {
-        // TODO (EMP-197): Remove temp keys after UI connection test
-        String tempClient = "local-client-x";
-        String tempSecret = "local-secret-x";
-        if (tempClient.equals(requestClientId) && tempSecret.equals(requestClientSecret)) return true;
-
         return (apiClientId.equals(requestClientId) && apiClientSecret.equals(requestClientSecret));
     }
 }
