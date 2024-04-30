@@ -1,5 +1,5 @@
 SearchResultDTO:
-  type: 'object'
+  type: object
   properties:
     results:
       type: array
@@ -8,7 +8,7 @@ SearchResultDTO:
     paging:
       $ref: '#/SearchPagingDTO'
 SearchCrmFormDTO:
-  type: 'object'
+  type: object
   readOnly: true
   properties:
     usn:
@@ -27,7 +27,7 @@ SearchCrmFormDTO:
     providerName:
       type: string
 SearchPagingDTO:
-  type: 'object'
+  type: object
   readOnly: true
   properties:
     size:

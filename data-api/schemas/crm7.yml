@@ -27,7 +27,7 @@ Crm7DetailsDTO:
       $ref: '#/Crm7ClaimTotalsDTO'
     coversheet:
       type: string
-    #          $ref: '#/Crm7CoversheetDTO'
+#          $ref: '#/Crm7CoversheetDTO'
     caseInformation:
       $ref: '#/Crm7CaseInformationDTO'
     officeUseOnly:
