@@ -1,16 +1,26 @@
 plugins {
 	id 'jacoco'
+	id 'org.sonarqube' version '4.0.0.2929'
 }
 
 def versions = [
-		springdocVersion       		: '1.7.0',
+		springdocVersion       		: '1.8.0',
 		springStarter		  		: '3.2.4',
-		springSecurity		  	 	: '6.1.8',
+		springWeb					: '6.1.6',
+		springSecurity		  	 	: '6.2.4',
+		logback						: '1.5.6',
 ]
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+
+	all {
+		resolutionStrategy {
+			// Included in spring-boot-starter-web:3.2.4. Need new version to fix vulnerability
+			force "org.springframework:spring-web:$versions.springWeb"
+		}
 	}
 }
 
@@ -18,11 +28,16 @@ dependencies {
 	implementation project(':data-api')
 
 	// Spring
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
+	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+
+	// Logs
+	implementation "ch.qos.logback:logback-core:$versions.logback"
+	implementation "ch.qos.logback:logback-classic:$versions.logback"
+
 
 	//Enable Swagger UI
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
 	// Security (oAuth)
 	implementation "org.springframework.security:spring-security-core:$versions.springSecurity"
@@ -30,9 +45,13 @@ dependencies {
 	implementation "org.springframework.security:spring-security-config:$versions.springSecurity"
 	implementation "org.springframework.boot:spring-boot-starter-security:$versions.springStarter"
 
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
+	implementation 'io.netty:netty-codec-http:4.1.108.Final'
+
+	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
+
+
 	// Annotations
 	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
@@ -44,15 +63,15 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$versions.springStarter"
 
 	// If using JUnit Jupiter
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
 	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation "com.h2database:h2"
+	testImplementation "com.h2database:h2:2.2.224"
 }
 
 jar {
@@ -79,6 +98,7 @@ tasks.named('test') {
 
 jacocoTestReport {
 	dependsOn test
+
 	reports {
 		xml.required = true
 		html.required = true
@@ -92,5 +112,44 @@ jacocoTestReport {
 					'**/config/**'
 			])
 		}))
+	}
+}
+
+jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport
+	violationRules {
+		failOnViolation = true
+		rule {
+			element = 'CLASS'
+			excludes = [
+				'uk.gov.justice.laa.crime.equinity.historicaldata.EquinityHistoricalDataApplication',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.config.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.exception.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.mapper.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.model.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.security.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.config.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.mapper.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.model.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.controller.CrmFileController' // This is a temporary test class
+			]
+			limit {
+				minimum = 0.70
+			}
+		}
+	}
+}
+
+sonar {
+	properties {
+		property "sonar.projectName", "laa-crime-equinity-historical-data"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.organization", "ministryofjustice"
+		property "sonar.projectKey", "ministryofjustice_laa-crime-equinity-historical-data"
+
+		property "sonar.exclusions", "**/entity/**.java , **/model/**.java , **/dto/**.java , **/config/**.java, **/jms/**.java,**/exception/**.java,**/handler/**.java,**/maatapi/**Client**.java,**/generated/**"
+		property "sonar.coverage.exclusions", "**/EquinityHistoricalDataApplication.java"
+		property "sonar.coverage.jacoco.xmlReportPaths",
+				"${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
 	}
 }

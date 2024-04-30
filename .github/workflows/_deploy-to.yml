@@ -39,7 +39,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to AWS ECR
+      - name: Setup AWS ECR credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
@@ -47,7 +47,7 @@ jobs:
 
       # Login to Docker container repo
       - uses: aws-actions/amazon-ecr-login@v2
-        name: Login to AWS container repo
+        name: Login to AWS ECR container repo
         id: login-ecr
         with:
           mask-password: true

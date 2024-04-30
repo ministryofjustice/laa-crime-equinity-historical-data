@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
@@ -26,25 +27,19 @@ public class CrmFileService {
     private final ObjectMapper jsonObjectMapper;
     private final Crm5Mapper crm5Mapper;
 
-//    public CrmFileService(TaskRepository taskRepository) {
-//        this.taskRepository = taskRepository;
-//        this.jsonObjectMapper = new ObjectMapper(); // jsonObjectMapper;
-//        jsonObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//    }
-
-    public CRM5DetailsDTO getCrmFileData(long taskId) {
+    public CRM5DetailsDTO getCrmFileData(Long taskId) {
         Crm5Model crmFormDetails = null;
         JSONObject crmFileJsonObject = getCrmFormJson(taskId);
 
         try {
             crmFormDetails = jsonObjectMapper.readValue(crmFileJsonObject.toString(), Crm5Model.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new JSONException(e);
         }
         return crm5Mapper.getEntityFromModel(crmFormDetails.getFormDetails());
     }
 
-    private JSONObject getCrmFileJson(long taskId) {
+    private JSONObject getCrmFileJson(Long taskId) {
         TaskImageFilesModel task = taskImageFilesRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
 
@@ -56,7 +51,7 @@ public class CrmFileService {
     }
 
     // TODO (): make this private, once we have all CRM Form Files available for data-mapping
-    public JSONObject getCrmFormJson(long taskId) {
+    public JSONObject getCrmFormJson(Long taskId) {
         JSONObject xmlJSONFormData = getCrmFileJson(taskId);
         // Cleanup form data by removing unused fields
         xmlJSONFormData.remove("printinfo");
@@ -64,13 +59,4 @@ public class CrmFileService {
         return xmlJSONFormData;
     }
 
-    // TODO (): make this private, once we have all CRM Form Files available for data-mapping
-    public JSONObject getCrmFileSchema(long taskId) {
-        // Get form data
-        JSONObject xmlJSONFormData = getCrmFileJson(taskId);
-        // Cleanup form data by removing unused fields
-        xmlJSONFormData.remove("printinfo");
-        xmlJSONFormData.remove("fielddata");
-        return xmlJSONFormData;
-    }
 }

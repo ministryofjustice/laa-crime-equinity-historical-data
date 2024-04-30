@@ -11,6 +11,12 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         naming-strategy: uk.gov.justice.laa.crime.equinity.historicaldata.archive.config.DynamicSchemaNamingStrategy
+  h2:
+    console:
+      settings:
+        web-allow-others: false
+      enabled: false
+
 
 datasource:
   archive:
