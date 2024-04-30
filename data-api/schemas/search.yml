@@ -1,0 +1,42 @@
+SearchResultDTO:
+  type: object
+  properties:
+    results:
+      type: array
+      items:
+        $ref: "#/SearchCrmFormDTO"
+    paging:
+      $ref: '#/SearchPagingDTO'
+SearchCrmFormDTO:
+  type: object
+  readOnly: true
+  properties:
+    usn:
+      type: number
+    type:
+      type:
+        string
+    clientName:
+      type: string
+    originatedDate:
+      type: string
+    submittedDate:
+      type: string
+    providerAccount:
+      type: string
+    providerName:
+      type: string
+SearchPagingDTO:
+  type: object
+  readOnly: true
+  properties:
+    size:
+      type: integer
+    number:
+      type: integer
+    total:
+      type: integer
+    itemsPage:
+      type: integer
+    itemsTotal:
+      type: number

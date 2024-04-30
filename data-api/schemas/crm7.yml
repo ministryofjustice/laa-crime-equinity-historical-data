@@ -1,0 +1,513 @@
+Crm7DetailsDTO:
+  type: object
+  properties:
+    usn:
+      type: integer
+    summary:
+      $ref: '#/Crm7SummaryOfClaimDTO'
+    solicitorDetails:
+      $ref: '#/Crm7SolicitorDetailsDTO'
+    caseDetails:
+      $ref: '#/Crm7CaseDetailsDTO'
+    nonStandardFeeClaim:
+      $ref: '#/Crm7NonStandardFeeClaimDTO'
+    caseDisposal:
+      $ref: '#/Crm7CaseDisposalDTO'
+    claimDetails:
+      $ref: '#/Crm7ClaimDetailsDTO'
+    preOrderWork:
+      $ref: '#/Crm7PreOrderWorkDTO'
+    scheduleOfTimeSpent:
+      $ref: '#/Crm7ScheduleOfTimeSpentDTO'
+    claimOfCosts:
+      $ref: '#/Crm7ClaimOfCostsDTO'
+    disbursement:
+      $ref: '#/Crm7DisbursementDTO'
+    claimTotals:
+      $ref: '#/Crm7ClaimTotalsDTO'
+    coversheet:
+      type: string
+#          $ref: '#/Crm7CoversheetDTO'
+    caseInformation:
+      $ref: '#/Crm7CaseInformationDTO'
+    officeUseOnly:
+      $ref: '#/Crm7OfficeUseOnlyDTO'
+
+Crm7SummaryOfClaimDTO:
+  type: object
+  properties:
+    clientSurname:
+      type: string
+    clientFirstName:
+      type: string
+    clientDateOfBirth:
+      type: string
+
+    UFN:
+      type: string
+    MaatNumber:
+      type: integer
+    RepresentationOrderNumber:
+      type: integer
+    RepresentationOrderDate:
+      type: string
+    RepresentationOrderSubmitMode:
+      type: string
+      enum:
+        - "post"
+        - "dx"
+    isLocatedInDesignatedArea:
+      type: string
+    stateReached:
+      type: string
+    outcomeCode:
+      type: string
+    matterType:
+      type: string
+    equalOpportunities:
+      $ref: '#/Crm7EqualOpportunitiesDTO'
+    officeUse:
+      $ref: '#/Crm7SummaryOfficeUseDTO'
+Crm7EqualOpportunitiesDTO:
+  type: object
+  properties:
+    monitoring1:
+      type: string
+    monitoring2:
+      type: string
+    monitoring3:
+      type: string
+    dateClassOfWorkClosed:
+      type: string
+    numberDefendantsRepresented:
+      type: integer
+    numberCourtAttendances:
+      type: integer
+    courtIdentifier:
+      type: string
+    youthCourt:
+      type: string
+Crm7SummaryOfficeUseDTO:
+  type: object
+  properties:
+    isLocatedInDesignatedArea:
+      type: string
+    stateReached:
+      type: string
+    equalOpportunitiesCode:
+      type: string
+    profitCost:
+      type: number
+      format: float
+    disbursements:
+      type: number
+      format: float
+    travelCost:
+      type: number
+      format: float
+
+Crm7SolicitorDetailsDTO:
+  type: object
+  properties:
+    firmName:
+      description: "Name of Firm"
+      type: string
+    address:
+      type: string
+    providerAccount:
+      description: "Account number"
+      type: string
+    telephone:
+      type: string
+    contactName:
+      type: string
+    solicitorName:
+      type: string
+    solicitorReference:
+      type: string
+
+Crm7CaseDetailsDTO:
+  type: object
+  properties:
+    URN:
+      type: string
+    mainOffence:
+      type: string
+    dateOffenceCommited:
+      type: string
+    isSeriousFraudCase:
+      type: string
+      description: "Is this a Serious Fraud Case or are there elements of Serious Fraud?"
+    isIndicativeOnlyOffenceCharge:
+      type: string
+      description: "Was the defendant or any co-defendant charged with any Indictable Only offence?"
+    dateChargeLaid:
+      type: string
+    indictmentAttachment:
+      description: "Whether attached electronically or by Post/DX"
+      type: string
+      enum:
+        - "post"
+        - "dx"
+    isWastedCostsCase:
+      type: string
+      description: "Were any wasted costs orders made in this case?"
+    wastedCosts:
+      description: "Available when isWastedCostsCase is affirmative"
+      type: number
+      format: float
+    orderDetails:
+      type: string
+
+Crm7NonStandardFeeClaimDTO:
+  type: object
+  properties:
+    reason:
+      type: string
+      description: "Tell us why you are claiming a non-standard fee by ticking the box(es) that apply in this case"
+      enum:
+        - "Core costs exceed higher limit"
+        - "Enhanced rates claimed"
+        - "Counsel assigned"
+        - "Extradition"
+        - "Representation Order withdrawn"
+        - "Other"
+    dateWithdrawn:
+      type: string
+    additionalDetails:
+      type: string
+
+Crm7CaseDisposalDTO:
+  type: object
+  properties:
+    category:
+      type: string
+      description: "Please select the category your claim falls within"
+    categoryOption:
+      type: string
+      description: "relevant option for category"
+
+Crm7ClaimDetailsDTO:
+  type: object
+  properties:
+    wasCounselAssigned:
+      type: string
+      description: "Yes/No"
+    wasCounselUnassigned:
+      type: string
+      description: "Yes/No"
+    wasAgentInstructed:
+      type: string
+      description: "Yes/No"
+    prosecutionEvidencePages:
+      type: integer
+    defenceStatementPages:
+      type: integer
+    defenceWitnesses:
+      type: integer
+    isSupplementalClaim:
+      type: string
+      description: "Yes/No"
+    supplementalClaimAttachments:
+      description: "whether attachment electronically or by Post"
+      type: string
+      enum:
+        - "Post"
+        - "DX"
+    wasTimeSpentOnTapedEvidence:
+      type: string
+      description: "Yes/No"
+    tapedEvidenceTime:
+      type: string
+      description: "available when wasTimeSpentOnTapedEvidence is affirmative"
+    isRemittedBackToMagistrates:
+      type: string
+      description: "Yes/No"
+    dateRemittedBackToMagistrates:
+      type: string
+      description: "available when isRemittedBackToMagistrates is affirmative"
+    crownCourtAttachments:
+      description: "whether attachment electronically or by Post. Available when isRemittedBackToMagistrates is affirmative"
+      type: string
+      enum:
+        - "Post"
+        - "DX"
+
+Crm7PreOrderWorkDTO:
+  type: object
+  properties:
+    isClaimBeforeGrantDate:
+      type: string
+      description: "Yes/No"
+    dateSubmitted:
+      type: string
+    firstCourtHearingDate:
+      type: string
+    dateReceivedByCourt:
+      type: string
+
+
+Crm7ScheduleOfTimeSpentDTO:
+  type: object
+  properties:
+    schedule:
+      type: array
+      items:
+        $ref: '#/Crm7ScheduleTimeTableDTO'
+    laaAdjustments:
+      type: array
+      items:
+        $ref: '#/Crm7ScheduleAdjustmentsTableDTO'
+Crm7ScheduleTimeTableDTO:
+  type: object
+  properties:
+    line:
+      type: integer
+    feeEarnerInitials:
+      type: string
+    date:
+      type: string
+    costType:
+      type: string
+    time:
+      type: string
+      description: "format hh:mm:ss"
+    hearingTypeCode:
+      type: string
+    personAttendedCode:
+      type: string
+    hourlyRate:
+      type: number
+      format: float
+    basicClaim:
+      type: number
+      format: float
+    uplift:
+      type: number
+      format: float
+      description: "% uplift claimed"
+    claim:
+      type: number
+      format: float
+Crm7ScheduleAdjustmentsTableDTO:
+  type: object
+  properties:
+    line:
+      type: integer
+    time:
+      type: string
+      description: "format hh:mm:ss"
+    hourlyRate:
+      type: number
+      format: float
+    basicClaim:
+      type: number
+      format: float
+    uplift:
+      type: number
+      format: float
+      description: "% uplift claimed"
+    claim:
+      type: number
+      format: float
+    comments:
+      type: string
+
+Crm7ClaimOfCostsDTO:
+  type: object
+  properties:
+    timeTotals:
+      $ref: '#/Crm7ClaimOfCostsTableDTO'
+    costTotals:
+      $ref: '#/Crm7ClaimOfCostsTableDTO'
+    totals:
+      $ref: '#/Crm7ClaimOfCostsTotalsDTO'
+    officeUse:
+      $ref: '#/Crm7ClaimOfCostsTotalsDTO'
+    lettersAndPhoneCalls:
+      $ref: '#/Crm7CommunicationsDTO'
+Crm7ClaimOfCostsTableDTO:
+  type: object
+  properties:
+    travel:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
+    waiting:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
+    attendance:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
+    preparation:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
+    advocacy:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
+Crm7ClaimOfCostsTotalsDTO:
+  type: object
+  properties:
+    basic:
+      type: number
+      format: float
+      description: "Total Basic Claim"
+    total:
+      type: number
+      format: float
+      description: "Total Claim"
+Crm7CommunicationsDTO:
+  type: object
+  properties:
+    totals:
+      $ref: '#/Crm7CommunicationsCostsDTO'
+    officeOnly:
+      $ref: '#/Crm7CommunicationsCostsDTO'
+    assessmentReasons:
+      type: string
+Crm7CommunicationsCostsDTO:
+  type: object
+  properties:
+    letters:
+      $ref: '#/Crm7CommunicationsCostsTableDTO'
+    telephoneCalls:
+      $ref: '#/Crm7CommunicationsCostsTableDTO'
+    total:
+      type: number
+      format: float
+    solicitorCost:
+      type: number
+      format: float
+Crm7CommunicationsCostsTableDTO:
+  type: object
+  properties:
+    number:
+      type: integer
+    rate:
+      type: number
+      format: float
+    uplift:
+      type: number
+      format: float
+    cost:
+      type: number
+      format: float
+
+Crm7DisbursementDTO:
+  type: object
+  properties:
+    disbursements:
+      type: array
+      items:
+        $ref: '#/Crm7DisbursementTableDTO'
+    totals:
+      $ref: '#/Crm7DisbursementTotalsDTO'
+    invoiceAttachments:
+      description: "Whether attached electronically or by post"
+      type: string
+      enum:
+        - "Post"
+        - "DX"
+    officeUse:
+      $ref: '#/Crm7DisbursementTotalsDTO'
+Crm7DisbursementTableDTO:
+  type: object
+  properties:
+    disbursement:
+      type: string
+    details:
+      type: string
+    miles:
+      type: number
+      format: float
+    netValue:
+      type: number
+      format: float
+      description: "Net value"
+    vatRate:
+      type: number
+      format: float
+      description: "VAT rate %"
+    vatValue:
+      type: number
+      format: float
+    total:
+      type: number
+      format: float
+Crm7DisbursementTotalsDTO:
+  type: object
+  properties:
+    net:
+      description: "Total Net"
+      type: number
+      format: float
+    vat:
+      description: "Total VAT"
+      type: number
+      format: float
+    total:
+      description: "Grand Total"
+      type: number
+      format: float
+
+Crm7ClaimTotalsDTO:
+  type: object
+  properties:
+    deductions:
+      type: number
+      format: float
+    total:
+      $ref: '#/Crm7ClaimTotalCostsDTO'
+    officeUse:
+      $ref: '#/Crm7ClaimTotalCostsDTO'
+Crm7ClaimTotalCostsDTO:
+  type: object
+  properties:
+    profit:
+      $ref: '#/Crm7ClaimTotalCostDetailsDTO'
+    disbursements:
+      type: number
+      format: float
+    travel:
+      $ref: '#/Crm7ClaimTotalCostDetailsDTO'
+    waiting:
+      $ref: '#/Crm7ClaimTotalCostDetailsDTO'
+Crm7ClaimTotalCostDetailsDTO:
+  type: object
+  properties:
+    net:
+      description: "Net Cost"
+      type: number
+      format: float
+    vatRate:
+      description: "Costs VAT Rate %"
+      type: number
+      format: float
+    total:
+      description: "Total Cost"
+      type: number
+      format: float
+
+Crm7CaseInformationDTO:
+  type: object
+  properties:
+    relevantDetails:
+      type: string
+      description: "Details of any relevant factors in support of a claim, inked cases, etc."
+    solicitorCertification:
+      $ref: '#/Crm7CaseInformationSolicitorDTO'
+    additionalInfo:
+      type: string
+      description: "Additional information pertinent to this submission"
+Crm7CaseInformationSolicitorDTO:
+  type: object
+  properties:
+    name:
+      type: string
+    date:
+      type: string
+
+Crm7OfficeUseOnlyDTO:
+  type: object
+  properties:
+    decision:
+      type: string
