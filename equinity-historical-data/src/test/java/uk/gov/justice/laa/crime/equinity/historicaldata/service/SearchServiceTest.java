@@ -95,7 +95,7 @@ class SearchServiceTest {
 
     @Test
     void searchAllByCriteriaTest_GivenNonExistingUsnShouldReturnResourceNotFoundException() {
-        String usn = "1826831";
+        String usn = "1826832";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null);
         String expectedMessage = "No Tasks were found";
 
