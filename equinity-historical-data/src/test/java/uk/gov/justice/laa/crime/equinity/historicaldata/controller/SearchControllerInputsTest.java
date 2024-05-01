@@ -26,7 +26,7 @@ import static org.mockito.BDDMockito.given;
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchArchiveControllerInputsTest {
+class SearchControllerInputsTest {
     private List<String> testInvalidFormatDates;
 
     @InjectSoftAssertions
