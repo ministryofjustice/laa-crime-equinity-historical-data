@@ -219,6 +219,17 @@ class SearchArchiveControllerTest {
      * Provider Account input checks
      */
     @Test
+    void doSearchArchiveByTest_WhenShorterProviderAccountIsGivenThenReturnConstraintViolationException() {
+        String providerAccount = "0A0";
+        String expectedMessage = "size must be between";
+
+        softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
+                        null, null, null, null, null, null, providerAccount, null, null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
     void doSearchArchiveByTest_WhenLongerProviderAccountIsGivenThenReturnConstraintViolationException() {
         String providerAccount = "0A0A0A1";
         String expectedMessage = "size must be between";
@@ -248,20 +259,18 @@ class SearchArchiveControllerTest {
 
     @Test
     void doSearchArchiveByTest_WhenValidProviderAccountIsGivenThenReturnDTO() {
-        String providerAccount = "0A0z0A";
-        ResponseEntity<SearchResultDTO> response = controller.doSearchArchiveBy(null,null, null, null, null, null, providerAccount, null, null);
-        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
-        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        // test cases
+        List<String> providerAccounts = List.of("0A0z0A", "0A0z0", "A0z0");
 
-        providerAccount = "0A0z0";
-        response = controller.doSearchArchiveBy(null,null, null, null, null, null, providerAccount, null, null);
-        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
-        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-        providerAccount = "A0z0";
-        response = controller.doSearchArchiveBy(null,null, null, null, null, null, providerAccount, null, null);
-        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
-        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        // execute
+        providerAccounts.forEach(providerAccount -> {
+                ResponseEntity<SearchResultDTO>  response = controller.doSearchArchiveBy(
+                        null, null, null, null,
+                        null, null, providerAccount,
+                        null, null);
+                softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+                softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            }
+        );
     }
-
 }
