@@ -24,6 +24,7 @@ public class CrmFormSearchCriteria {
     public Specification<CrmFormModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
             .where(byUsn(crmFormSearchCriteriaDTO.usn())
+            .and(byType(crmFormSearchCriteriaDTO.type()))
             .and(byClientName(crmFormSearchCriteriaDTO.client()))
             .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
             .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
@@ -34,6 +35,11 @@ public class CrmFormSearchCriteria {
     private Specification<CrmFormModelInterface> byUsn(@Nullable String usn){
         return (root, query, criteriaBuilder)
                 -> usn == null ? null : criteriaBuilder.like(root.get("USN"), String.format("%%%s%%", usn));
+    }
+
+    private Specification<CrmFormModelInterface> byType(@Nullable Integer type){
+        return (root, query, criteriaBuilder)
+                -> type == null ? null : criteriaBuilder.equal(root.get("typeId"), type);
     }
 
     private Specification<CrmFormModelInterface> byClientName(@Nullable String clientName){

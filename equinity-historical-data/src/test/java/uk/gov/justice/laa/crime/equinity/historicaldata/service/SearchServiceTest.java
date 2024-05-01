@@ -21,6 +21,13 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewR
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SearchServiceTest {
+    private static final Integer CRM4_TYPE_ID = 1;
+    private static final String CRM4_TYPE_NAME = "CRM4";
+    private static final Integer CRM5_TYPE_ID = 4;
+    private static final String CRM5_TYPE_NAME = "CRM5";
+    private static final Integer CRM7_TYPE_ID = 5;
+
+
     @InjectSoftAssertions
     private SoftAssertions softly;
 
@@ -32,15 +39,24 @@ class SearchServiceTest {
 
     @BeforeAll
     void preTest() {
-        CrmFormViewModel searchModel1 = new CrmFormViewModel();
-        searchModel1.setUSN("1826829");
-        searchModel1.setClientName("Mock Client");
-        searchRepository.save(searchModel1);
+        CrmFormViewModel searchModel = new CrmFormViewModel();
+        searchModel.setUSN("1826829");
+        searchModel.setClientName("Mock Client");
+        searchModel.setTypeId(CRM4_TYPE_ID);
+        searchModel.setType(CRM4_TYPE_NAME);
+        searchRepository.save(searchModel);
 
-        CrmFormViewModel searchModel2 = new CrmFormViewModel();
-        searchModel2.setUSN("1826830");
-        searchModel2.setClientName("Mock Client Name");
-        searchRepository.save(searchModel2);
+        searchModel.setUSN("1826830");
+        searchModel.setClientName("Mock Client Name");
+        searchModel.setTypeId(CRM4_TYPE_ID);
+        searchModel.setType(CRM4_TYPE_NAME);
+        searchRepository.save(searchModel);
+
+        searchModel.setUSN("1826831");
+        searchModel.setClientName("Mocked Client Name");
+        searchModel.setTypeId(CRM5_TYPE_ID);
+        searchModel.setType(CRM5_TYPE_NAME);
+        searchRepository.save(searchModel);
     }
 
     @AfterAll
@@ -81,6 +97,50 @@ class SearchServiceTest {
     void searchAllByCriteriaTest_GivenNonExistingUsnShouldReturnResourceNotFoundException() {
         String usn = "1826831";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null);
+        String expectedMessage = "No Tasks were found";
+
+        // execute
+        softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining(expectedMessage);
+    }
+
+    /**
+     * Search by Type
+     */
+    @Test
+    void searchAllByCriteriaTest_WhenTypeIsGivenExistingInMultipleThenShouldReturnMultipleForms() {
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM4_TYPE_ID,null, null, null, null, null, null, null);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isGreaterThan(1);
+        results.getResults().forEach(result -> {
+                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                softly.assertThat(result.getType()).isEqualTo(CRM4_TYPE_NAME);
+            }
+        );
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenTypeIsGivenExistsUniqueMultipleThenShouldReturnSingleForm() {
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM5_TYPE_ID,null, null, null, null, null, null, null);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(1);
+        results.getResults().forEach(result -> {
+                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                softly.assertThat(result.getType()).isEqualTo(CRM5_TYPE_NAME);
+            }
+        );
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenTypeIsGivenNonExistingValueThenShouldReturnResourceNotFoundException() {
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM7_TYPE_ID,null, null, null, null, null, null, null);
         String expectedMessage = "No Tasks were found";
 
         // execute
