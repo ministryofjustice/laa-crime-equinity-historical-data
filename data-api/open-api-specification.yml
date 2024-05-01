@@ -128,8 +128,8 @@ components:
       schema:
         type: integer
         example: 4
-        minLength: 1
-        maxLength: 3
+        minimum: 0
+        maximum: 999
     searchClient:
       name: client
       description: 'Client name'

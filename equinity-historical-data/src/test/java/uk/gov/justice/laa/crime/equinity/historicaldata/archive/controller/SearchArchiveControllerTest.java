@@ -115,6 +115,67 @@ class SearchArchiveControllerTest {
     }
 
     /**
+     * Type input checks
+     */
+    @Test
+    void doSearchByTest_WhenValidTypeStringValueIsGivenThenReturnDTO() {
+        // test cases
+        List<String> types = List.of(
+                "1", "23", "467", "0", "999", "000", "001", "023", "0001", "0023", "0467",
+                "00000313"
+        );
+
+        // execute
+        types.forEach(type -> {
+                ResponseEntity<SearchResultDTO>  response = controller.doSearchArchiveBy(
+                        null, Integer.valueOf(type), null, null,
+                        null, null, null,
+                        null, null);
+                softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+                softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            }
+        );
+    }
+
+    @Test
+    void doSearchByTest_WhenValidTypeIntegerValueIsGivenThenReturnDTO() {
+        // test cases
+        List<Integer> types = List.of(
+                1, 23, 467, 0, 999, 000, 001, 023, 0001, 0023, 0467, 00000313
+        );
+
+        // execute
+        types.forEach(type -> {
+                ResponseEntity<SearchResultDTO>  response = controller.doSearchArchiveBy(
+                        null, type, null, null,
+                        null, null, null,
+                        null, null);
+                softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+                softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            }
+        );
+    }
+
+    @Test
+    void doSearchByTest_WhenTypeIsGivenOutOfRangeValueThenReturnConstraintViolationException() {
+        // test cases
+        List<Integer> types = List.of(
+                1234, 1000, 1001, 9990, -1, -9991
+        );
+        String expectedMessage1stPart = "must be";
+        String expectedMessage2ndPart = "than or equal to";
+
+        // execute
+        types.forEach(type ->
+            softly.assertThatThrownBy(() -> controller.doSearchArchiveBy(
+                        null, type, null, null, null, null, null, null, null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining(expectedMessage1stPart)
+                .hasMessageContaining(expectedMessage2ndPart)
+        );
+    }
+
+    /**
      * Date Format input checks
      **/
     @Test
