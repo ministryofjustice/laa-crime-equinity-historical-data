@@ -7,7 +7,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 import java.time.LocalDate;
 
 public record CrmFormSearchCriteriaDTO(
-        @Nullable String usn, @Nullable String client, @Nullable String clientDoB,
+        @Nullable String usn, @Nullable Integer type,
+        @Nullable String client, @Nullable String clientDoB,
         @Nullable String submittedFrom, @Nullable String submittedTo,
         @Nullable String providerAccount,
         @Nullable Integer page, @Nullable Integer pageSize
@@ -17,7 +18,7 @@ public record CrmFormSearchCriteriaDTO(
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
         DateUtil.checkDateRangeIsValid(dateSubmittedFrom, dateSubmittedTo);
 
-        if (isNullOrBlank(usn)
+        if (isNullOrBlank(usn) && (type == null)
                 && isNullOrBlank(client) && isNullOrBlank(clientDoB)
                 && isNullOrBlank(submittedFrom) && isNullOrBlank(submittedTo)
                 && isNullOrBlank(providerAccount)) {
@@ -33,6 +34,7 @@ public record CrmFormSearchCriteriaDTO(
     public String toString() {
         return "CrmFormSearchCriteriaDTO{" +
                 "usn='" + usn + '\'' +
+                ", type='" + type + '\'' +
                 ", client='" + client + '\'' +
                 ", clientDoB='" + clientDoB + '\'' +
                 ", submittedFrom='" + submittedFrom + '\'' +

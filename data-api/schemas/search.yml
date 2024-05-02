@@ -26,6 +26,8 @@ SearchCrmFormDTO:
       type: string
     providerName:
       type: string
+    status:
+      type: string
 SearchPagingDTO:
   type: object
   readOnly: true

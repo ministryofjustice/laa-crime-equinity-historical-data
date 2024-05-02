@@ -25,6 +25,7 @@ public interface CrmFormsArchiveMapper {
     @Mapping(target="submittedDate", source="submittedDate")
     @Mapping(target="providerAccount", source="providerAccount")
     @Mapping(target="providerName", source="providerName")
+    @Mapping(target="status", source="status")
     SearchCrmFormDTO getDTOFromModel(CrmFormArchiveModel crmFormArchiveModel);
 
     @Mapping(target="size", source="page.size")
