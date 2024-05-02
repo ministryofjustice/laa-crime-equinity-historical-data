@@ -23,6 +23,8 @@ public class CrmFormArchiveModel implements CrmFormModelInterface {
 
     @Column(name="ClientSurname")
     private String clientName;
+    @Column(name="TypeId")
+    private Integer typeId;
     @Column(name="TypeName")
     private String type;
     @Column(name="StatusName")
