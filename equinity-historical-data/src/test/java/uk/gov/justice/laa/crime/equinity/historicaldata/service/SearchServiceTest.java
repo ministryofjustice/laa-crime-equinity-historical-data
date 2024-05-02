@@ -148,4 +148,51 @@ class SearchServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining(expectedMessage);
     }
+
+    /**
+     * Search by Client Name
+     */
+    @Test
+    void searchAllByCriteriaTest_WhenClientNameIsGivenExistingInMultipleThenShouldReturnMultipleForms() {
+        String client = "Mock Client";
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, client, null, null, null, null, null, null);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isGreaterThan(1);
+        results.getResults().forEach(result -> {
+                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                softly.assertThat(result.getClientName()).contains("Mock Client");
+            }
+        );
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenClientNameIsGivenExistsUniqueMultipleThenShouldReturnSingleForm() {
+        String client = "Mock Client Name";
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null,client, null, null, null, null, null, null);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(1);
+        results.getResults().forEach(result -> {
+                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                softly.assertThat(result.getClientName()).isEqualTo("Mock Client Name");
+            }
+        );
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenClientNameIsGivenNonExistingValueThenShouldReturnResourceNotFoundException() {
+        String client = "Fake Client";
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null,client, null, null, null, null, null, null);
+        String expectedMessage = "No Tasks were found";
+
+        // execute
+        softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining(expectedMessage);
+    }
 }
