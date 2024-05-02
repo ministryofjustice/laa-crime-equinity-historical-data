@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 @Data
 @NoArgsConstructor
-public class Crm5DetailsModel {
+public class Crm5DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Proceedings_counsel_instructed")
     public String proceedings_counsel_instructed;
     @JsonProperty("Fc_current_user")

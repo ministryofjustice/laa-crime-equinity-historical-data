@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Crm5Model {
+public class Crm5Model implements CrmFileModelInterface {
     @JsonProperty("fielddata")
     Crm5DetailsModel formDetails;
     @JsonProperty("read_only")

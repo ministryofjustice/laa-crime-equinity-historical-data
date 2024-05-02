@@ -5,15 +5,16 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
+import org.json.XML;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.json.XML;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
@@ -64,14 +65,15 @@ class CrmFileServiceTest {
     @Test
     void getCrmFileDataTest_ShouldReturnValidOFDFile() {
         long ustToTest = 10L;
-        String expectedPath = "\\\\laa-uat\\OFServerForms\\CDS5_1.ofmx";
-        String expectedFcCurrentUser = "MOCK_USER_001";
         String expectedUrgent ="Yes";
         String expectedFirmName ="MOCK_FIRM_001";
 
-        CRM5DetailsDTO   result = crmFileService.getCrmFileData(ustToTest);
-        softly.assertThat(result).isInstanceOf(CRM5DetailsDTO.class);
-        softly.assertThat(result.getFirm().getFirmName()).isEqualTo(expectedFirmName);
+        // execute
+        Crm5DetailsModel result = crmFileService.getCrmFileContent(ustToTest, Crm5Model.class).getFormDetails();
+
+        // checks
+        softly.assertThat(result).isInstanceOf(Crm5DetailsModel.class);
+        softly.assertThat(result.getFirm_name()).isEqualTo(expectedFirmName);
         softly.assertThat(result.getUrgent()).isEqualTo(expectedUrgent);
     }
 
@@ -81,7 +83,7 @@ class CrmFileServiceTest {
         String expectedMessage = "JSONObject";
 
         // execute
-        softly.assertThatThrownBy(() -> crmFileService.getCrmFileData(ustToTest))
+        softly.assertThatThrownBy(() -> crmFileService.getCrmFileContent(ustToTest, Crm5Model.class))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining(expectedMessage);
     }
