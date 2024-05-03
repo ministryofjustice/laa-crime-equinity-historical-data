@@ -9,14 +9,10 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFileModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
-
 import java.nio.charset.StandardCharsets;
-
 
 
 @Service
@@ -25,18 +21,27 @@ import java.nio.charset.StandardCharsets;
 public class CrmFileService {
     private final TaskImageFilesRepository taskImageFilesRepository;
     private final ObjectMapper jsonObjectMapper;
-    private final Crm5Mapper crm5Mapper;
 
-    public CRM5DetailsDTO getCrmFileData(Long taskId) {
-        Crm5Model crmFormDetails = null;
+    public <T extends CrmFileModelInterface> T getCrmFileContent(Long taskId, Class<T> returnClass) {
+        CrmFileModelInterface crmFormData;
         JSONObject crmFileJsonObject = getCrmFormJson(taskId);
 
         try {
-            crmFormDetails = jsonObjectMapper.readValue(crmFileJsonObject.toString(), Crm5Model.class);
+            crmFormData = jsonObjectMapper.readValue(crmFileJsonObject.toString(), returnClass);
         } catch (JsonProcessingException e) {
             throw new JSONException(e);
         }
-        return crm5Mapper.getEntityFromModel(crmFormDetails.getFormDetails());
+
+        return (T) crmFormData;
+    }
+
+    // TODO (): make this private, once we have all CRM Form Files available for data-mapping
+    public JSONObject getCrmFormJson(Long taskId) {
+        JSONObject xmlJSONFormData = getCrmFileJson(taskId);
+        // Cleanup form data by removing unused fields
+        xmlJSONFormData.remove("printinfo");
+        xmlJSONFormData.remove("schema");
+        return xmlJSONFormData;
     }
 
     private JSONObject getCrmFileJson(Long taskId) {
@@ -49,14 +54,4 @@ public class CrmFileService {
         // Get form data
         return (JSONObject) XML.toJSONObject(odfImageContentString).get("fd:formdata");
     }
-
-    // TODO (): make this private, once we have all CRM Form Files available for data-mapping
-    public JSONObject getCrmFormJson(Long taskId) {
-        JSONObject xmlJSONFormData = getCrmFileJson(taskId);
-        // Cleanup form data by removing unused fields
-        xmlJSONFormData.remove("printinfo");
-        xmlJSONFormData.remove("schema");
-        return xmlJSONFormData;
-    }
-
 }
