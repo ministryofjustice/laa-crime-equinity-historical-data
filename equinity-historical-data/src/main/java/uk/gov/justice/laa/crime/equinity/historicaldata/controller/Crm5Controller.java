@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm5InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 @RestController
@@ -13,12 +16,14 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 @Slf4j
 public class Crm5Controller implements Crm5InterfaceApi {
     private final CrmFileService crmFileService;
+    private final Crm5Mapper crm5Mapper;
 
     @Override
     public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn) {
         log.info("eForm CRM5 details request received :: usn=[{}]", usn);
-        CRM5DetailsDTO crm5DetailsDTO = crmFileService.getCrmFileData(usn);
+
+        Crm5DetailsModel crm5FileDetails = crmFileService.getCrmFileContent(usn, Crm5Model.class).getFormDetails();
+        CRM5DetailsDTO crm5DetailsDTO = crm5Mapper.getEntityFromModel(crm5FileDetails);
         return ResponseEntity.ok(crm5DetailsDTO);
     }
-
 }
