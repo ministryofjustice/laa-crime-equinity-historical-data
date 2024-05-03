@@ -4,551 +4,689 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
-    @JsonProperty("Proceedings_counsel_instructed")
-    public String proceedings_counsel_instructed;
-    @JsonProperty("Fc_current_user")
+    @JsonProperty("Phone_call_rate_london")
+    public float phone_call_rate_london;
+    @JsonProperty("Fc_current_user") // in CRM5
     public String fc_current_user;
-    @JsonProperty("Client_total_savings")
-    public int client_total_savings;
-    @JsonProperty("Client_address_line3")
-    public String client_address_line3;
-    @JsonProperty("Proceedings_prisonlaw")
-    public String proceedings_prisonlaw;
-    @JsonProperty("Solicitor_sign_name")
+    @JsonProperty("Cp_rbba_category")
+    public String cp_rbba_category;
+    @JsonProperty("Cld_taped_evidence")
+    public String cld_taped_evidence;
+    @JsonProperty("Cfc_cw_sol_core_costs")
+    public float cfc_cw_sol_core_costs;
+    @JsonProperty("Total_attendance_costs")
+    public float total_attendance_costs;
+    @JsonProperty("Cfc_cw_letters_costs")
+    public float cfc_cw_letters_costs;
+    @JsonProperty("Nsfc_extradition")
+    public boolean Nsfc_extradition;
+    @JsonProperty("Solicitor_sign_name") // in CRM5
     public String solicitor_sign_name;
-    @JsonProperty("Ctd_mileage_cost")
-    public int ctd_mileage_cost;
-    @JsonProperty("Sd_address_postcode")
+    @JsonProperty("Date_first_hearing")
+    public LocalDate Date_first_hearing;
+    @JsonProperty("Sd_address_postcode") // in CRM5 too
     public String sd_address_postcode;
-    @JsonProperty("Aa_first_sol_no_claim")
-    public boolean aa_first_sol_no_claim;
-    @JsonProperty("Originator_tl_passwordneverexpires")
+    @JsonProperty("Cld_attach_method")
+    public String cld_attach_method;
+    @JsonProperty("Sc_outcome_code")
+    public String sc_outcome_code;
+    @JsonProperty("Cfc_total_costs")
+    public float cfc_total_costs;
+    @JsonProperty("Originator_tl_passwordneverexpires") // CRM5 too
     public int originator_tl_passwordneverexpires;
-    @JsonProperty("Proceedings_crowncourtappeal")
-    public String proceedings_crowncourtappeal;
-    @JsonProperty("Fc_priority")
+    @JsonProperty("Sol_cert")
+    public boolean sol_cert;
+    @JsonProperty("Fc_priority") // CRM5 too
     public int fc_priority;
-    @JsonProperty("Originator_tl_qn_answer_salt")
+    @JsonProperty("Originator_tl_qn_answer_salt") // CRM5 too
     public String originator_tl_qn_answer_salt;
-    @JsonProperty("Provider_account")
+    @JsonProperty("Provider_account") // CRM5 too
     public String provider_account;
-    @JsonProperty("Originator_tl_permanentlyremoved")
+    @JsonProperty("Originator_tl_permanentlyremoved") // CRM5 too
     public int originator_tl_permanentlyremoved;
-    @JsonProperty("Id_attendance_allowance")
-    public int id_attendance_allowance;
-    @JsonProperty("Appealed_prev_decision_details")
-    public String appealed_prev_decision_details;
-    @JsonProperty("TlStateName")
+    @JsonProperty("Cfc_cw_letters_rate")
+    public float cfc_cw_letters_rate;
+    @JsonProperty("Prom_prov")
+    public String prom_prov;
+    @JsonProperty("Additional_info")
+    public String additional_info;
+    @JsonProperty("Cfc_disb_grand_total_ou")
+    public float cfc_disb_grand_total_ou;
+    @JsonProperty("TlStateName") // in CRM5 too
     public String tlStateName;
-    @JsonProperty("Originator_emailflag")
+    @JsonProperty("Counsel_instructed_unassigned")
+    public String counsel_instructed_unassigned;
+    @JsonProperty("Originator_emailflag") // in CRM5 too
     public String originator_emailflag;
-    @JsonProperty("Id_dependants_16_plus")
-    public int id_dependants_16_plus;
-    @JsonProperty("Sd_address_town")
+    @JsonProperty("Sd_address_town")  // in CRM5 too
     public String sd_address_town;
-    @JsonProperty("Aa_transfer_from_solicitor")
-    public boolean aa_transfer_from_solicitor;
-    @JsonProperty("Fc_injected")
+    @JsonProperty("Total_advocacy_time")
+    public int total_advocacy_time;
+    @JsonProperty("Cfc_disb_grand_total")
+    public float cfc_disb_grand_total;
+    @JsonProperty("Fc_injected") // in CRM5 too
     public boolean fc_injected;
-    @JsonProperty("Decision_original")
+    @JsonProperty("Cfc_cw_no_of_letters")
+    public int cfc_cw_no_of_letters;
+    @JsonProperty("Decision_original") // in CRM5 too
     public String decision_original;
-    @JsonProperty("Tlmessage")
+    @JsonProperty("Tlmessage") // in CRM5 too
     public String tlmessage;
-    @JsonProperty("Advocacy_threshold_income")
-    public int advocacy_threshold_income;
-    @JsonProperty("Originator_tl_dtlastfailedloginattempt")
-    public Date originator_tl_dtlastfailedloginattempt;
-    @JsonProperty("Fc_selected_eformsreviewer")
+    @JsonProperty("Cat3london")
+    public float cat3london;
+    @JsonProperty("Total_waiting_costs")
+    public float total_waiting_costs;
+    @JsonProperty("Ctou_profit_costs_total")
+    public float ctou_profit_costs_total;
+    @JsonProperty("Total_attendance_time_display_no_counsel")
+    public String total_attendance_time_display_no_counsel;
+    @JsonProperty("Fc_selected_eformsreviewer") // in CRM5 too
     public String fc_selected_eformsreviewer;
-    @JsonProperty("Proceedings_precharge")
-    public String proceedings_precharge;
-    @JsonProperty("Client_address_line2")
-    public String client_address_line2;
-    @JsonProperty("Client_address_line1")
-    public String client_address_line1;
-    @JsonProperty("Originator_tl_usertype")
+    @JsonProperty("Total_advocacy_time_display")
+    public String total_advocacy_time_display;
+    @JsonProperty("Originator_tl_usertype") // in CRM5 too
     public int originator_tl_usertype;
-    @JsonProperty("Ac_travel_time_partfilled")
-    public int ac_travel_time_partfilled;
-    @JsonProperty("Tlmultimessage")
+    @JsonProperty("Tlmultimessage") // in CRM5 too
     public String tlmultimessage;
-    @JsonProperty("Ctd_letters")
-    public int ctd_letters;
-    @JsonProperty("Tltasktype")
+    @JsonProperty("TLProjectUniqueName")
+    public String tLProjectUniqueName;
+    @JsonProperty("Tltasktype") // in CRM5 too
     public int tltasktype;
-    @JsonProperty("Tlautonumber")
+    @JsonProperty("Tlautonumber") // in CRM5 too
     public int tlautonumber;
-    @JsonProperty("Ac_advocacy_time_cost")
-    public int ac_advocacy_time_cost;
+    @JsonProperty("Total_preparation_time_display")
+    public String total_preparation_time_display;
+    @JsonProperty("Fc_is_highcourt")
+    public String fc_is_highcourt;
     @JsonProperty("Fc_processingoffice")
     public String fc_processingoffice;
-    @JsonProperty("Ctd_advocacy_costs")
-    public int ctd_advocacy_costs;
-    @JsonProperty("Ctd_letters_partfilled")
-    public int ctd_letters_partfilled;
-    @JsonProperty("Tldateorig")
-    public Date tldateorig;
-    @JsonProperty("Provider_case_ref")
+    @JsonProperty("Cw_total_basic_claim")
+    public float cw_total_basic_claim;
+    @JsonProperty("Agent_instructed")
+    public String agent_instructed;
+    @JsonProperty("Cat2national")
+    public float cat2national;
+    @JsonProperty("Tldateorig") // in CRM5 too
+    public LocalDateTime tldateorig;
+    @JsonProperty("Phone_call_rate_non_london")
+    public float phone_call_rate_non_london;
+    @JsonProperty("Provider_case_ref") // in CRM5 too
     public String provider_case_ref;
-    @JsonProperty("Client_partner_savings")
-    public int client_partner_savings;
-    @JsonProperty("Advocacy_threshold_inc")
-    public int advocacy_threshold_inc;
-    @JsonProperty("Caf_court_funding_details")
-    public String caf_court_funding_details;
-    @JsonProperty("Id_ni_contributions")
-    public int id_ni_contributions;
-    @JsonProperty("Originator_tl_failedloginattemptcount")
+    @JsonProperty("Cd_wasted_costs_order_details")
+    public String cd_wasted_costs_order_details;
+    @JsonProperty("Sc_no_of_court_attendances")
+    public int sc_no_of_court_attendances;
+    @JsonProperty("Cfc_disb_total_net")
+    public float cfc_disb_total_net;
+    @JsonProperty("Cfc_cw_letters_uplift")
+    public float cfc_cw_letters_uplift;
+    @JsonProperty("TLRecoveryLoad")
+    public boolean tLRecoveryLoad;
+    @JsonProperty("Originator_tl_failedloginattemptcount") // in CRM5 too
     public int originator_tl_failedloginattemptcount;
-    @JsonProperty("Fc_info_returned_flag")
+    @JsonProperty("Calc")
+    public int calc;
+    @JsonProperty("Cfc_letter_rate")
+    public float cfc_letter_rate;
+    @JsonProperty("Fc_info_returned_flag") // in CRM5 too
     public boolean fc_info_returned_flag;
-    @JsonProperty("Qc_override_reason")
+    @JsonProperty("Cfc_cw_calls_costs")
+    public float cfc_cw_calls_costs;
+    @JsonProperty("Qc_override_reason") // in CRM5 too
     public String qc_override_reason;
-    @JsonProperty("Decision")
+    @JsonProperty("Decision") // in CRM5 too
     public String decision;
-    @JsonProperty("Client_dob")
-    public Date client_dob;
-    @JsonProperty("Fc_referred")
+    @JsonProperty("Client_dob") // in CRM5 too
+    public LocalDate client_dob;
+    @JsonProperty("Fc_referred") // in CRM5 too
     public boolean fc_referred;
-    @JsonProperty("Appealed_prev_decision")
-    public String appealed_prev_decision;
-    @JsonProperty("Aa_gap_in_time")
-    public boolean aa_gap_in_time;
-    @JsonProperty("Ou_signed_auth")
+    @JsonProperty("Cfc_sol_core_costs")
+    public float cfc_sol_core_costs;
+    @JsonProperty("Cld_remitted_to_mags") // Yes/No?
+    public String cld_remitted_to_mags;
+    @JsonProperty("Ct_travel_costs_total")
+    public float ct_travel_costs_total;
+    @JsonProperty("Ou_signed_auth") // in CRM5 too
     public String ou_signed_auth;
-    @JsonProperty("Fc_qa_required")
+    @JsonProperty("Fc_qa_required") // in CRM5 too
     public boolean fc_qa_required;
-    @JsonProperty("Originator_selfregistered")
+    @JsonProperty("Total_waiting_time")
+    public int total_waiting_time;
+    @JsonProperty("Originator_selfregistered") // in CRM5 too
     public int originator_selfregistered;
-    @JsonProperty("Aa_within_6_months")
-    public String aa_within_6_months;
-    @JsonProperty("Id_dependants_under_16")
-    public int id_dependants_under_16;
-    @JsonProperty("Ctd_mileage_partfilled")
-    public int ctd_mileage_partfilled;
-    @JsonProperty("Client_forename")
+    @JsonProperty("Ctou_waiting_costs_vat_rate")
+    public float Ctou_waiting_costs_vat_rate;
+    @JsonProperty("Actioncode")
+    public String actioncode;
+    @JsonProperty("Cd_indictable_only") // Yes/No?
+    public String cd_indictable_only;
+    @JsonProperty("Total_claim")
+    public float total_claim;
+    @JsonProperty("Attendance_rate_london")
+    public float attendance_rate_london;
+    @JsonProperty("Cp_rep_order_attach_method") // Post/DX ?
+    public float cp_rep_order_attach_method;
+    @JsonProperty("Cp_rbba_category_cw")
+    public float pp_rbba_category_cw;
+    @JsonProperty("Total_waiting_time_display")
+    public String total_waiting_time_display;
+    @JsonProperty("Total_travel_costs")
+    public float total_travel_costs;
+    @JsonProperty("Total_attendance_costs_no_counsel")
+    public float total_attendance_costs_no_counsel;
+    @JsonProperty("Counsel_instructed_assigned") // Yes/No?
+    public String counsel_instructed_assigned;
+    @JsonProperty("Client_forename") // in crm5 too
     public String client_forename;
-    @JsonProperty("Fc_rfi_options_selected")
+    @JsonProperty("Fc_rfi_options_selected") // in crm5 too
     public String fc_rfi_options_selected;
-    @JsonProperty("Client_state_benefit")
-    public String client_state_benefit;
-    @JsonProperty("Ac_waiting_time_cost")
-    public int ac_waiting_time_cost;
-    @JsonProperty("Show_client_under_18_question")
-    public boolean show_client_under_18_question;
-    @JsonProperty("Ac_phone_calls")
-    public int ac_phone_calls;
-    @JsonProperty("Referral_reason_frc_ia")
+    @JsonProperty("Coversheet_printed")
+    public boolean coversheet_printed;
+    @JsonProperty("Cfc_no_of_letters")
+    public int cfc_no_of_letters;
+    @JsonProperty("Cw_total_attendance_costs")
+    public float cw_total_attendance_costs;
+    @JsonProperty("Referral_reason_frc_ia") // in crm5 too
     public String referral_reason_frc_ia;
-    @JsonProperty("Client_address_county")
-    public String client_address_county;
-    @JsonProperty("Fd_additional_work")
-    public String fd_additional_work;
-    @JsonProperty("Appeals_and_review")
-    public boolean appeals_and_review;
-    @JsonProperty("Ctd_phone_calls")
-    public int ctd_phone_calls;
-    @JsonProperty("Tlseqno")
+    @JsonProperty("Tlseqno") // in crm5 too
     public int tlseqno;
-    @JsonProperty("Time_received")
+    @JsonProperty("Cat2london")
+    public float cat2london;
+    @JsonProperty("Time_received")  // in crm5 too (maybe change to Time)
     public String time_received;
-    @JsonProperty("Lsc_accountoffice")
+    @JsonProperty("Lsc_accountoffice") // in crm5 too
     public String lsc_accountoffice;
-    @JsonProperty("Contact_name")
+    @JsonProperty("Contact_name") // in crm5 too
     public String contact_name;
-    @JsonProperty("Originator_routemethod")
+    @JsonProperty("Originator_routemethod") // in crm5 too
     public int originator_routemethod;
-    @JsonProperty("Ac_travel_time_cost")
-    public int ac_travel_time_cost;
-    @JsonProperty("Originator_ntlogon")
+    @JsonProperty("Cd_indictment_attach_method") // Post/DX?
+    public String cd_indictment_attach_method;
+    @JsonProperty("Date_submitted")
+    public LocalDate date_submitted;
+    @JsonProperty("Cw_total_travel_costs")
+    public float cw_total_travel_costs;
+    @JsonProperty("Originator_ntlogon") // in crm5 too
     public String originator_ntlogon;
-    @JsonProperty("Advocacy_threshold_0")
-    public int advocacy_threshold_0;
-    @JsonProperty("Advocacy_threshold_2")
-    public int advocacy_threshold_2;
-    @JsonProperty("Originator_routeoffline")
+    @JsonProperty("Originator_routeoffline") //  in crm5 too
     public int originator_routeoffline;
-    @JsonProperty("Originator_supervisor")
+    @JsonProperty("Originator_supervisor") // in crm5 too
     public String originator_supervisor;
-    @JsonProperty("Advocacy_threshold_1")
-    public int advocacy_threshold_1;
-    @JsonProperty("Lsc_region")
+    @JsonProperty("Lsc_region") // in crm5 too
     public String lsc_region;
-    @JsonProperty("Ctd_other_cost")
-    public int ctd_other_cost;
-    @JsonProperty("Ac_preparation_time_partfilled")
-    public int ac_preparation_time_partfilled;
-    @JsonProperty("Id_partner_weekly_income")
-    public int id_partner_weekly_income;
-    @JsonProperty("Firm_phone")
+    @JsonProperty("Total_attendance_time_display")
+    public String total_attendance_time_display;
+    @JsonProperty("Pow_claiming") // Yes/No?
+    public String pow_claiming;
+    @JsonProperty("Cfc_calls_uplift")
+    public float cfc_calls_uplift;
+    @JsonProperty("Cfc_disb_total_vat_ou")
+    public float cfc_disb_total_vat_ou;
+    @JsonProperty("Fc_integration_info_required")
+    public boolean fc_integration_info_required;
+    @JsonProperty("Firm_phone") // in crm5 too
     public String firm_phone;
-    @JsonProperty("Caf_client_has_cop_rep_order")
-    public String caf_client_has_cop_rep_order;
-    @JsonProperty("Ac_waiting_time")
-    public String ac_waiting_time;
-    @JsonProperty("Ac_phone_calls_partfilled")
-    public int ac_phone_calls_partfilled;
-    @JsonProperty("Fc_dummy")
+    @JsonProperty("Fc_dummy") // in crm5 too
     public boolean fc_dummy;
-    @JsonProperty("Qc_decision")
+    @JsonProperty("Qc_decision") // in crm5 too
     public String qc_decision;
-    @JsonProperty("Ctd_attendance_time")
-    public String ctd_attendance_time;
-    @JsonProperty("Originator_dtlastupdated")
-    public Date originator_dtlastupdated;
-    @JsonProperty("Prev_app_ref")
-    public String prev_app_ref;
-    @JsonProperty("Ctd_mileage_miles")
-    public int ctd_mileage_miles;
-    @JsonProperty("Ccrc")
-    public boolean ccrc;
-    @JsonProperty("Originator_emailaddress")
+    @JsonProperty("Originator_dtlastupdated") // in crm5 too
+    public LocalDateTime originator_dtlastupdated;
+    @JsonProperty("Cfc_no_of_calls")
+    public int cfc_no_of_calls;
+    @JsonProperty("Originator_emailaddress") // in crm5 too
     public String originator_emailaddress;
-    @JsonProperty("Ch_case_history")
-    public String ch_case_history;
-    @JsonProperty("Fc_reject_reasons_selected")
+    @JsonProperty("TLProjectName")
+    public String tLProjectName;
+    @JsonProperty("Sc_eo_3") // Y/N?
+    public String sc_eo_3;
+    @JsonProperty("Sc_eo_2")
+    public String sc_eo_2;
+    @JsonProperty("Sc_eo_1")
+    public String sc_eo_1;
+    @JsonProperty("Fc_reject_reasons_selected") // in crm5 too
     public String fc_reject_reasons_selected;
-    @JsonProperty("Fd_details_of_work")
-    public String fd_details_of_work;
-    @JsonProperty("Originator_tl_mustchangepassword")
+    @JsonProperty("Cd_wasted_cost_order") // Yes/No?
+    public String cd_wasted_cost_order;
+    @JsonProperty("Nsfc_core_costs_exceeded")
+    public boolean nsfc_core_costs_exceeded;
+    @JsonProperty("Originator_tl_mustchangepassword") // in crm5 too
     public int originator_tl_mustchangepassword;
-    @JsonProperty("Fc_possible_pg_reasons")
+    @JsonProperty("Total_basic_claim")
+    public float total_basic_claim;
+    @JsonProperty("Total_uplift")
+    public float total_uplift;
+    @JsonProperty("Fc_possible_pg_reasons") // in crm5 too
     public String fc_possible_pg_reasons;
-    @JsonProperty("Originator_zone")
+    @JsonProperty("Originator_zone") // in crm5 too
     public String originator_zone;
-    @JsonProperty("Submitter_language")
+    @JsonProperty("Submitter_language") // in crm5 too
     public String submitter_language;
-    @JsonProperty("Urgency_reason")
-    public String urgency_reason;
-    @JsonProperty("Client_marital_status")
-    public String client_marital_status;
-    @JsonProperty("Ac_attendance_time_cost")
-    public int ac_attendance_time_cost;
-    @JsonProperty("Ac_waiting_time_partfilled")
-    public int ac_waiting_time_partfilled;
-    @JsonProperty("Criminal_proceeding")
-    public boolean criminal_proceeding;
-    @JsonProperty("Originator_tl_facebookid")
+    @JsonProperty("Maat")
+    public String maat;
+    @JsonProperty("Cw_total_attendance_costs_no_counsel")
+    public float cw_total_attendance_costs_no_counsel;
+    @JsonProperty("Cdsp_category_2_radio")
+    public boolean cdsp_category_2_radio;
+    @JsonProperty("Cw_total_claim")
+    public float cw_total_claim;
+    @JsonProperty("Originator_tl_facebookid") // in crm5 too
     public String originator_tl_facebookid;
-    @JsonProperty("Lsc_case_ref")
+    @JsonProperty("Lsc_case_ref") // in crm5 too
     public String lsc_case_ref;
-    @JsonProperty("Originator_lscareaoffice")
+    @JsonProperty("Cat1london")
+    public float cat1london;
+    @JsonProperty("Travel_rate_non_london")
+    public float travel_rate_non_london;
+    @JsonProperty("Originator_lscareaoffice") // in crm5 too
     public String originator_lscareaoffice;
-    @JsonProperty("Ac_mileage")
-    public int ac_mileage;
-    @JsonProperty("Fc_processingofficefax")
+    @JsonProperty("Waiting_rate_non_london")
+    public float waiting_rate_non_london;
+    @JsonProperty("Nsfc_order_withdrawn_details")
+    public String nsfc_order_withdrawn_details;
+    @JsonProperty("Fc_processingofficefax") // in crm5 too
     public String fc_processingofficefax;
-    @JsonProperty("Advocacy_threshold_base")
-    public int advocacy_threshold_base;
-    @JsonProperty("Fi_language")
+    @JsonProperty("Ct_profit_costs_total")
+    public String ct_profit_costs_total;
+    @JsonProperty("Fi_language") // in crm5 too
     public String fi_language;
-    @JsonProperty("Prison_law")
-    public boolean prison_law;
-    @JsonProperty("Id_client_weekly_income")
-    public int id_client_weekly_income;
-    @JsonProperty("Fc_pg_options")
+    @JsonProperty("Sc_youth_court") // Yes/No?
+    public String sc_youth_court;
+    @JsonProperty("Ctou_profit_costs_vat_rate")
+    public float ctou_profit_costs_vat_rate;
+    @JsonProperty("Fc_pg_options") // in crm5 too
     public String fc_pg_options;
-    @JsonProperty("TlTaskLastUpdated")
-    public Date tlTaskLastUpdated;
-    @JsonProperty("Urgent")
-    public String urgent;
-    @JsonProperty("Form_type")
+    @JsonProperty("TlTaskLastUpdated") // in crm5 too
+    public LocalDateTime tlTaskLastUpdated;
+    @JsonProperty("Nsfc_counsel_assigned")
+    public boolean nsfc_counsel_assigned;
+    @JsonProperty("Ct_total")
+    public float ct_total;
+    @JsonProperty("Ct_total_cw")
+    public float ct_total_cw;
+    @JsonProperty("Form_type") // in crm5 too
     public String form_type;
-    @JsonProperty("Fc_decided_by")
+    @JsonProperty("Fc_decided_by") // in crm5 too
     public String fc_decided_by;
-    @JsonProperty("Caf_for_expert_report_only")
-    public String caf_for_expert_report_only;
-    @JsonProperty("Ctd_travel_time_partfilled")
-    public int ctd_travel_time_partfilled;
-    @JsonProperty("Originator_lscemailaddress")
+    @JsonProperty("Cdsp_category_1_radio")
+    public boolean cdsp_category_1_radio;
+    @JsonProperty("Attendance_rate_non_london")
+    public float attendance_rate_non_london;
+    @JsonProperty("Originator_lscemailaddress") // in crm5 too
     public String originator_lscemailaddress;
-    @JsonProperty("Advice_threshold_base")
-    public int advice_threshold_base;
-    @JsonProperty("Id_partner_deductions")
-    public int id_partner_deductions;
-    @JsonProperty("Fc_decision")
+    @JsonProperty("Fc_decision") // in crm5 too
     public String fc_decision;
-    @JsonProperty("Tlsubstate")
+    @JsonProperty("Cld_defence_pages")
+    public int cld_defence_pages;
+    @JsonProperty("Tlsubstate") // in crm5 too
     public String tlsubstate;
-    @JsonProperty("Originator_department")
+    @JsonProperty("Total_attendance_time_display_counsel")
+    public String total_attendance_time_display_counsel;
+
+    // TODO (EMP-217): Update Model to take Schedule into consideration
+//        "Schedule": {
+//            "row": [
+//                {
+//                    "Person_codes_options": "",
+//                    "Rate_cw": 49.7,
+//                    "Time_attendances_no_counsel": "01:01:00",
+//                    "Cost_type_full_list": "",
+//                    "Time_preparation_cw": "00:00:00",
+//                    "Time_total_cw": "01:01:00",
+//                    "Uplift_cw": 0,
+//                    "Time_attendances_cw": "00:00:00",
+//                    "Cost_type": "Attendance Without Counsel Assigned",
+//                    "Time_waiting_cw": "00:00:00",
+//                    "Person_codes": "D;",
+//                    "Assessment_cw": "",
+//                    "Time_total": "01:01:00",
+//                    "Time_display": "01:01:00",
+//                    "Time_travel_cw": "00:00:00",
+//                    "Basic_claim": 50.53,
+//                    "Rate": 49.7,
+//                    "Time_attendances_no_counsel_cw": "01:01:00",
+//                    "Claim_cw": 50.53,
+//                    "Date": "2022-05-02T00:00:00",
+//                    "Uplift": 0,
+//                    "Line": 1,
+//                    "Hearing_codes_options": "",
+//                    "Time_attendances_counsel_cw": "00:00:00",
+//                    "Basic_cw": 50.53,
+//                    "Time_advocacy_cw": "00:00:00",
+//                    "Fe_initials": "MB",
+//                    "Time_calc": 1.0166666666666666,
+//                    "Claim": 50.53,
+//                    "Hearing_codes": "PB;"
+//                },
+//                {
+//                    "Person_codes_options": "",
+//                    "Rate_cw": 34,
+//                    "Cost_type_full_list": "",
+//                    "Time_preparation_cw": "00:00:00",
+//                    "Time_total_cw": "12:01:00",
+//                    "Uplift_cw": 0,
+//                    "Time_attendances_cw": "00:00:00",
+//                    "Cost_type": "Attendance With Counsel Assigned",
+//                    "Time_waiting_cw": "00:00:00",
+//                    "Time_attendances_counsel": "12:01:00",
+//                    "Person_codes": "",
+//                    "Assessment_cw": "",
+//                    "Time_total": "12:01:00",
+//                    "Time_display": "12:01:00",
+//                    "Time_travel_cw": "00:00:00",
+//                    "Basic_claim": 408.57,
+//                    "Rate": 34,
+//                    "Time_attendances_no_counsel_cw": "00:00:00",
+//                    "Claim_cw": 408.57,
+//                    "Date": "1990-09-05T00:00:00",
+//                    "Uplift": 0,
+//                    "Line": 2,
+//                    "Hearing_codes_options": "",
+//                    "Time_attendances_counsel_cw": "12:01:00",
+//                    "Basic_cw": 408.57,
+//                    "Time_advocacy_cw": "00:00:00",
+//                    "Fe_initials": "MM",
+//                    "Time_calc": 12.016666666666666,
+//                    "Claim": 408.57,
+//                    "Hearing_codes": ""
+//                }
+//            ]
+//        }
+
+    @JsonProperty("Originator_department") // in crm5 too
     public String originator_department;
-    @JsonProperty("Aa_cds_provided_same_matter")
-    public String aa_cds_provided_same_matter;
-    @JsonProperty("Fc_testing")
+    @JsonProperty("Nsfc_rep_order_withdrawn")
+    public boolean nsfc_rep_order_withdrawn;
+    @JsonProperty("Fc_testing") // in crm5 too
     public boolean fc_testing;
-    @JsonProperty("Id_total_weekly_income")
-    public int id_total_weekly_income;
-    @JsonProperty("Ctd_waiting_time")
-    public String ctd_waiting_time;
-    @JsonProperty("Ou_new_limit_request")
-    public int ou_new_limit_request;
-    @JsonProperty("Ctd_preparation_time")
-    public String ctd_preparation_time;
-    @JsonProperty("Ctd_waiting_time_cost")
-    public int ctd_waiting_time_cost;
-    @JsonProperty("Ac_letters_cost")
-    public int ac_letters_cost;
-    @JsonProperty("Ac_attendance_time")
-    public String ac_attendance_time;
-    @JsonProperty("Fc_qa_method")
+    @JsonProperty("Travel_rate_london")
+    public float travel_rate_london;
+    @JsonProperty("Sc_prov_case_in_designated_area") // Yes/No?
+    public String sc_prov_case_in_designated_area;
+    @JsonProperty("Assessment_reasons")
+    public String assessment_reasons;
+    @JsonProperty("Fc_qa_method") // in crm5 too
     public String fc_qa_method;
-    @JsonProperty("Firm_office")
+    @JsonProperty("Cfc_cw_calls_rate")
+    public float cfc_cw_calls_rate;
+    @JsonProperty("Cw_total_advocacy_costs")
+    public float cw_total_advocacy_costs;
+    @JsonProperty("Firm_office") // in crm5 too
     public String firm_office;
-    @JsonProperty("Advice_threshold_inc")
-    public int advice_threshold_inc;
-    @JsonProperty("Proceedings_nexthearingdate")
-    public Date proceedings_nexthearingdate;
-    @JsonProperty("Tlnewmessage")
+    @JsonProperty("Cat3national")
+    public float cat3national;
+    @JsonProperty("Sc_court_identifier")
+    public String sc_court_identifier;
+    @JsonProperty("Advocacy_rate_non_london")
+    public float advocacy_rate_non_london;
+    @JsonProperty("Tlnewmessage") // in crm5 too
     public String tlnewmessage;
-    @JsonProperty("Solicitor_sign_forename")
-    public String solicitor_sign_forename;
-    @JsonProperty("Reason_details")
+    @JsonProperty("Preparation_rate_non_london")
+    public float preparation_rate_non_london;
+    @JsonProperty("Reason_details") // in crm5 too
     public String reason_details;
-    @JsonProperty("Ctd_phone_calls_partfilled")
-    public int ctd_phone_calls_partfilled;
-    @JsonProperty("Ac_advocacy_time_partfilled")
-    public int ac_advocacy_time_partfilled;
-    @JsonProperty("Ctd_travel_time")
-    public String ctd_travel_time;
-    @JsonProperty("Originator_tl_googleid")
+    @JsonProperty("Nsfc_enhanced_rates_claimed")
+    public boolean nsfc_enhanced_rates_claimed;
+    @JsonProperty("Cfc_letter_uplift")
+    public float Cfc_letter_uplift;
+    @JsonProperty("Ctou_waiting_costs_total")
+    public float ctou_waiting_costs_total;
+    @JsonProperty("Sc_court_indentifier")
+    public int sc_court_indentifier;
+    @JsonProperty("Relevant_case_info_details")
+    public String relevant_case_info_details;
+    @JsonProperty("Originator_tl_googleid") // in crm5 too
     public String originator_tl_googleid;
-    @JsonProperty("Id_total_deductions")
-    public int id_total_deductions;
-    @JsonProperty("Ctd_phone_calls_cost")
-    public int ctd_phone_calls_cost;
-    @JsonProperty("Client_ufn")
+    @JsonProperty("Sc_matter_type")
+    public int sc_matter_type;
+    @JsonProperty("Client_ufn") // in crm5 too
     public String client_ufn;
-    @JsonProperty("Originator_type")
+    @JsonProperty("Cd_serious_fraud_case") // Yes/No?
+    public String cd_serious_fraud_case;
+    @JsonProperty("Originator_type") // in crm5 too
     public int originator_type;
-    @JsonProperty("Id_dependants_16_plus_cost")
-    public int id_dependants_16_plus_cost;
-    @JsonProperty("Ac_mileage_partfilled")
-    public int ac_mileage_partfilled;
-    @JsonProperty("Client_dependants")
-    public int client_dependants;
-    @JsonProperty("Certification_sol_name")
-    public String certification_sol_name;
-    @JsonProperty("Fi_dtreceived")
-    public Date fi_dtreceived;
-    @JsonProperty("Hide")
+    @JsonProperty("Cfc_total_phone_costs")
+    public float cfc_total_phone_costs;
+    @JsonProperty("Showrbbawarning")
+    public boolean showrbbawarning;
+    @JsonProperty("Waiting_rate_london")
+    public float waiting_rate_london;
+    @JsonProperty("Total_attendance_costs_counsel")
+    public float total_attendance_costs_counsel;
+    @JsonProperty("Cdsp_category_1_type")
+    public String cdsp_category_1_type;
+    @JsonProperty("Total_travel_time_display")
+    public String total_travel_time_display;
+    @JsonProperty("Cfc_disb_total_net_ou")
+    public float cfc_disb_total_net_ou;
+    @JsonProperty("Cfc_total_letter_cost")
+    public float cfc_total_letter_cost;
+    @JsonProperty("Cdsp_category_3_radio")
+    public boolean cdsp_category_3_radio;
+    @JsonProperty("Fi_dtreceived") // in crm5 too
+    public LocalDateTime fi_dtreceived;
+    @JsonProperty("Hide") // in crm5 too
     public String hide;
-    @JsonProperty("Ctd_waiting_time_partfilled")
-    public int ctd_waiting_time_partfilled;
-    @JsonProperty("Fi_form_subtype")
-    public int fi_form_subtype;
-    @JsonProperty("Solicitorname")
+    @JsonProperty("Ct_profit_costs_vat_rate")
+    public float ct_profit_costs_vat_rate;
+    @JsonProperty("Fi_form_subtype") // in crm5 too
+    public String fi_form_subtype;
+    @JsonProperty("Solicitorname") // in crm5 too
     public String solicitorname;
-    @JsonProperty("Fc_current_user_type")
+    @JsonProperty("Attendance_rate_counsel_london")
+    public float attendance_rate_counsel_london;
+    @JsonProperty("Fc_current_user_type") // in crm5 too
     public String fc_current_user_type;
-    @JsonProperty("Client_savings")
-    public int client_savings;
-    @JsonProperty("Advice_threshold_0")
-    public int advice_threshold_0;
-    @JsonProperty("Ac_other_cost")
-    public int ac_other_cost;
-    @JsonProperty("Ch_additional_info")
-    public String ch_additional_info;
-    @JsonProperty("Full_grant_notes")
+    @JsonProperty("Full_grant_notes") // in crm5 too
     public String full_grant_notes;
-    @JsonProperty("Advice_threshold_2")
-    public int advice_threshold_2;
-    @JsonProperty("Advice_threshold_1")
-    public int advice_threshold_1;
-    @JsonProperty("Caseworker")
+    @JsonProperty("Caseworker") // in crm5 too
     public String caseworker;
-    @JsonProperty("Firm_address")
+    @JsonProperty("Firm_address") // in crm5 too
     public String firm_address;
-    @JsonProperty("Fc_currentstage")
+    @JsonProperty("Fc_currentstage") // in crm5 too
     public String fc_currentstage;
-    @JsonProperty("Originator_dtlastaccessed")
-    public Date originator_dtlastaccessed;
-    @JsonProperty("Ctd_preparation_costs")
-    public int ctd_preparation_costs;
-    @JsonProperty("TLActionsOnLine")
+    @JsonProperty("Cw_total_preparation_costs")
+    public float cw_total_preparation_costs;
+    @JsonProperty("Ctou_travel_costs_total")
+    public float ctou_travel_costs_total;
+    @JsonProperty("Originator_dtlastaccessed") // in crm5 too
+    public LocalDateTime originator_dtlastaccessed;
+    @JsonProperty("Urn")
+    public String urn;
+    @JsonProperty("Cfc_cw_calls_uplift")
+    public float cfc_cw_calls_uplift;
+    @JsonProperty("Total_attendance_time_no_counsel")
+    public float total_attendance_time_no_counsel;
+    @JsonProperty("TLActionsOnLine") // in crm5 too
     public String tLActionsOnLine;
-    @JsonProperty("Originator_tl_qn_answer_hash")
+    @JsonProperty("Originator_tl_qn_answer_hash") // in crm5 too
     public String originator_tl_qn_answer_hash;
-    @JsonProperty("Id_income_tax")
-    public int id_income_tax;
-    @JsonProperty("Client_address_town")
-    public String client_address_town;
-    @JsonProperty("Client_name")
+    @JsonProperty("Client_name") // in crm5 too
     public String client_name;
-    @JsonProperty("Originator_displayname")
+    @JsonProperty("Originator_displayname") // in crm5 too
     public String originator_displayname;
-    @JsonProperty("Ac_letters_partfilled")
-    public int ac_letters_partfilled;
-    @JsonProperty("Decided_by_original")
+    @JsonProperty("Decided_by_original") // in crm5 too
     public String decided_by_original;
-    @JsonProperty("Ac_attendance_time_partfilled")
-    public int ac_attendance_time_partfilled;
-    @JsonProperty("Advice_threshold_income")
-    public int advice_threshold_income;
-    @JsonProperty("Sd_address_line_1")
+    @JsonProperty("Cfc_cw_no_of_calls")
+    public int cfc_cw_no_of_calls;
+    @JsonProperty("Prog")
+    public String prog;
+    @JsonProperty("Sd_address_line_1") // in crm5 too
     public String sd_address_line_1;
-    @JsonProperty("Statement_of_case")
-    public String statement_of_case;
-    @JsonProperty("Sd_address_line_3")
+    @JsonProperty("Cdsp_other_details")
+    public String cdsp_other_details;
+    @JsonProperty("Cp_rbba_category_before_qc")
+    public String cp_rbba_category_before_qc;
+    @JsonProperty("Rep_order_date")
+    public LocalDate rep_order_date;
+    @JsonProperty("Emailto")
+    public String emailto;
+    @JsonProperty("Sd_address_line_3") // in crm5 too
     public String sd_address_line_3;
-    @JsonProperty("Sd_address_line_2")
+    @JsonProperty("Sd_address_line_2") // in crm5 too
     public String sd_address_line_2;
-    @JsonProperty("Ctd_advocacy_time")
-    public String ctd_advocacy_time;
-    @JsonProperty("Unique_reference_number")
+    @JsonProperty("Taskid")
+    public long taskid;
+    @JsonProperty("Form_version")
+    public int form_version;
+    @JsonProperty("Total_preparation_time")
+    public String total_preparation_time;
+    @JsonProperty("Cld_no_of_defence_witnesses")
+    public int cld_no_of_defence_witnesses;
+    @JsonProperty("Unique_reference_number") // in crm5 too
     public String unique_reference_number;
-    @JsonProperty("Fc_rfi_text")
+    @JsonProperty("Attendance_rate_counsel_non_london")
+    public float attendance_rate_counsel_non_london;
+    @JsonProperty("Fc_rfi_text") // in crm5 too
     public String fc_rfi_text;
-    @JsonProperty("Rbba_category")
+    @JsonProperty("Advocacy_rate_london")
+    public float advocacy_rate_london;
+    @JsonProperty("Rbba_category") // in crm5 too
     public String rbba_category;
-    @JsonProperty("Solicitor_sign_date")
-    public Date solicitor_sign_date;
-    @JsonProperty("Usn")
+    @JsonProperty("Cdsp_category_3_type")
+    public String Cdsp_category_3_type;
+    @JsonProperty("Solicitor_sign_date") // in crm5 too
+    public LocalDate solicitor_sign_date;
+    @JsonProperty("Usn") // in crm5 too
     public int usn;
-    @JsonProperty("Aa_cds_provided_same_matter_reason")
-    public String aa_cds_provided_same_matter_reason;
-    @JsonProperty("Fc_info_returned")
+    @JsonProperty("Fc_info_returned") // in crm5 too
     public boolean fc_info_returned;
-    @JsonProperty("Originator_notificationmethod")
+    @JsonProperty("Total_travel_time")
+    public float total_travel_time;
+    @JsonProperty("Originator_notificationmethod") // in crm5 too
     public int originator_notificationmethod;
-    @JsonProperty("Cds5_auto_reject")
-    public int cds5_auto_reject;
-    @JsonProperty("Ctd_advocacy_partfilled")
-    public int ctd_advocacy_partfilled;
-    @JsonProperty("Tltaskid")
+    @JsonProperty("Total_attendance_time")
+    public float total_attendance_time;
+    @JsonProperty("Tltaskid") // in crm5 too
     public int tltaskid;
-    @JsonProperty("Tltaskstate")
+    @JsonProperty("Tltaskstate") // in crm5 too
     public int tltaskstate;
-    @JsonProperty("Ctd_total_costs")
-    public int ctd_total_costs;
-    @JsonProperty("Statutory_charge")
+    @JsonProperty("Cld_supplemental_claim") // Yes/No?
+    public String cld_supplemental_claim;
+    @JsonProperty("Ctou_travel_costs_vat_rate")
+    public float ctou_travel_costs_vat_rate;
+    @JsonProperty("Cld_prev_claims_attach_method") // Post/DX?
+    public String cld_prev_claims_attach_method;
+    @JsonProperty("Attendance_rate_no_counsel_non_london")
+    public float attendance_rate_no_counsel_non_london;
+    @JsonProperty("Statutory_charge") // in crm5 too
     public String statutory_charge;
-    @JsonProperty("Originator_jobtitle")
+    @JsonProperty("Originator_jobtitle") // in crm5 too
     public String originator_jobtitle;
-    @JsonProperty("Id_client_state_benefit")
-    public String id_client_state_benefit;
-    @JsonProperty("Client_surname")
+    @JsonProperty("Sc_case_in_designated_area") // Yes/No?
+    public String sc_case_in_designated_area;
+    @JsonProperty("Cdsp_category")
+    public String cdsp_category;
+    @JsonProperty("Sc_date_class_of_work")
+    public LocalDate sc_date_class_of_work;
+    @JsonProperty("Cd_main_offence")
+    public String cd_main_offence;
+    @JsonProperty("Client_surname") // in crm5 too
     public String client_surname;
-    @JsonProperty("New_limit_request")
-    public int new_limit_request;
-    @JsonProperty("Ac_total_costs")
-    public int ac_total_costs;
-    @JsonProperty("Tlreadonly")
+    @JsonProperty("Letter_rate_non_london")
+    public float letter_rate_non_london;
+    @JsonProperty("Tlreadonly") // in crm5 too
     public int tlreadonly;
-    @JsonProperty("Ctd_preparation_partfilled")
-    public int ctd_preparation_partfilled;
-    @JsonProperty("Firm_supplier_no")
+    @JsonProperty("Cld_prosecution_pages")
+    public int cld_prosecution_pages;
+    @JsonProperty("Total_advocacy_costs")
+    public float total_advocacy_costs;
+    @JsonProperty("Cfc_calls_rate")
+    public float cfc_calls_rate;
+    @JsonProperty("Printed")
+    public boolean printed;
+    @JsonProperty("Sc_no_of_defendants")
+    public int sc_no_of_defendants;
+    @JsonProperty("Firm_supplier_no") // in crm5 too
     public String firm_supplier_no;
-    @JsonProperty("Fc_processingofficedx")
+    @JsonProperty("Cat1national")
+    public float cat1national;
+    @JsonProperty("Total_preparation_costs")
+    public float total_preparation_costs;
+    @JsonProperty("Fc_processingofficedx") // in crm5 too
     public String fc_processingofficedx;
-    @JsonProperty("Fc_ok_to_autogrant")
+    @JsonProperty("Fc_ok_to_autogrant") // in crm5 too
     public boolean fc_ok_to_autogrant;
-    @JsonProperty("Class_calc")
-    public int class_calc;
-    @JsonProperty("Ctd_attendance_cost")
-    public int ctd_attendance_cost;
-    @JsonProperty("Originator_uniquename")
+    @JsonProperty("Prog_prov")
+    public String prog_prov;
+    @JsonProperty("Originator_uniquename") // in crm5 too
     public String originator_uniquename;
-    @JsonProperty("Originator_id")
+    @JsonProperty("Prom")
+    public String prom;
+    @JsonProperty("Originator_id") // in crm5 too
     public int originator_id;
-    @JsonProperty("Originator_tl_neverpermanentlyremove")
+    @JsonProperty("Originator_tl_neverpermanentlyremove") // in crm5 too
     public int originator_tl_neverpermanentlyremove;
-    @JsonProperty("Ac_letters")
-    public int ac_letters;
-    @JsonProperty("Additional_text")
-    public String additional_text;
-    @JsonProperty("Ac_preparation_time")
-    public String ac_preparation_time;
-    @JsonProperty("Aa_given_at_police_station")
-    public boolean aa_given_at_police_station;
-    @JsonProperty("Total_partfilled")
-    public int total_partfilled;
-    @JsonProperty("Referral_reason_sol")
+    @JsonProperty("Preparation_rate_london")
+    public float preparation_rate_london;
+    @JsonProperty("Cd_offence_date")
+    public LocalDate cd_offence_date;
+    @JsonProperty("Referral_reason_sol") // in crm5 too
     public String referral_reason_sol;
-    @JsonProperty("Ac_preparation_time_cost")
-    public int ac_preparation_time_cost;
-    @JsonProperty("Criminal_investigation")
-    public boolean criminal_investigation;
-    @JsonProperty("Level_of_work")
-    public String level_of_work;
-    @JsonProperty("Prev_app_made")
-    public String prev_app_made;
-    @JsonProperty("Client_under_18")
-    public String client_under_18;
-    @JsonProperty("Ctd_attendance_partfilled")
-    public int ctd_attendance_partfilled;
-    @JsonProperty("Id_total_weekly_disp_income")
-    public int id_total_weekly_disp_income;
-    @JsonProperty("Ac_mileage_cost")
-    public int ac_mileage_cost;
-    @JsonProperty("Summary_case_history")
-    public String summary_case_history;
-    @JsonProperty("Ac_advocacy_time")
-    public String ac_advocacy_time;
-    @JsonProperty("Originator_firm")
+    @JsonProperty("Nsfc_other")
+    public boolean nsfc_other;
+    @JsonProperty("Originator_firm") // in crm5 too
     public String originator_firm;
-    @JsonProperty("Firm_name")
+    @JsonProperty("Firm_name") // in crm5 too
     public String firm_name;
-    @JsonProperty("Fc_rfi_options")
+    @JsonProperty("Fc_rfi_options") // in crm5 too
     public String fc_rfi_options;
-    @JsonProperty("Fc_reject_reasons_text")
+    @JsonProperty("Fc_reject_reasons_text") // in crm5 too
     public String fc_reject_reasons_text;
-    @JsonProperty("Fc_initial_processingoffice")
+    @JsonProperty("Cw_total_waiting_costs")
+    public float cw_total_waiting_costs;
+    @JsonProperty("Ct_waiting_costs_total")
+    public float ct_waiting_costs_total;
+    @JsonProperty("Cdsp_category_2_type")
+    public String cdsp_category_2_type;
+    @JsonProperty("Fc_initial_processingoffice") // in crm5 too
     public String fc_initial_processingoffice;
-    @JsonProperty("Fc_decision_explanation")
+    @JsonProperty("Fc_decision_explanation") // in crm5 too
     public String fc_decision_explanation;
-    @JsonProperty("Caf_approached_for_funding")
-    public String caf_approached_for_funding;
-    @JsonProperty("Fc_processingofficeaddress")
+    @JsonProperty("Fc_processingofficeaddress") // in crm5 too
     public String fc_processingofficeaddress;
-    @JsonProperty("Client_nfa")
-    public boolean client_nfa;
-    @JsonProperty("Client_address_search")
-    public String client_address_search;
-    @JsonProperty("Aa_criteria")
-    public String aa_criteria;
-    @JsonProperty("Date_received")
-    public Date date_received;
-    @JsonProperty("Description_of_case")
-    public String description_of_case;
-    @JsonProperty("Cds5_auto_reject_reason")
-    public String cds5_auto_reject_reason;
-    @JsonProperty("Prev_app")
-    public String prev_app;
-    @JsonProperty("Ac_travel_time")
-    public String ac_travel_time;
-    @JsonProperty("Ctd_letters_cost")
-    public int ctd_letters_cost;
-    @JsonProperty("Ou_upper_limit_extended")
-    public int ou_upper_limit_extended;
-    @JsonProperty("Ctd_travel_time_costs")
-    public int ctd_travel_time_costs;
-    @JsonProperty("Certification_sol_date")
-    public Date certification_sol_date;
-    @JsonProperty("Fc_cw_requesting")
+    @JsonProperty("Date_received") // in crm5 too
+    public LocalDate date_received;
+    @JsonProperty("Voucherrequired_count")
+    public int voucherrequired_count;
+    @JsonProperty("Fc_cw_requesting") // in crm5 too
     public String fc_cw_requesting;
-    @JsonProperty("Originator__dtadded")
-    public Date originator__dtadded;
-    @JsonProperty("Fc_return_info_to_cw")
+    @JsonProperty("Cfc_cw_total_costs")
+    public float cfc_cw_total_costs;
+    @JsonProperty("Total_attendance_time_counsel")
+    public float total_attendance_time_counsel;
+    @JsonProperty("Originator__dtadded") // in crm5 too
+    public LocalDate originator__dtadded;
+    @JsonProperty("Fc_return_info_to_cw") // in crm5 too
     public boolean fc_return_info_to_cw;
-    @JsonProperty("Id_dependants_under_16_cost")
-    public int id_dependants_under_16_cost;
-    @JsonProperty("Client_address_postcode")
-    public String client_address_postcode;
-    @JsonProperty("Match_carried_out")
+    @JsonProperty("Cfc_disb_total_vat")
+    public float cfc_disb_total_vat;
+    @JsonProperty("Sc_eo_code")
+    public String sc_eo_code;
+    @JsonProperty("Rep_order_no")
+    public String rep_order_no;
+    @JsonProperty("Match_carried_out") // in crm5 too
     public boolean match_carried_out;
-    @JsonProperty("Fc_possible_reject_reasons")
+    @JsonProperty("Cfc_disb_attach_method") // Post/DX?
+    public String cfc_disb_attach_method;
+    @JsonProperty("Fc_possible_reject_reasons") // in crm5 too
     public String fc_possible_reject_reasons;
-    @JsonProperty("Solicitorid")
+    @JsonProperty("Letter_rate_london")
+    public float letter_rate_london;
+    @JsonProperty("Solicitorid") // in crm5 too
     public String solicitorid;
-    @JsonProperty("Ac_phone_calls_cost")
-    public int ac_phone_calls_cost;
-    @JsonProperty("Sd_address_county")
+    @JsonProperty("Sd_address_county") // in crm5 too
     public String sd_address_county;
-    @JsonProperty("Submitter_user_id")
+    @JsonProperty("Maat_number")
+    public String maat_number;
+    @JsonProperty("Cw_total_attendance_costs_counsel")
+    public float cw_total_attendance_costs_counsel;
+    @JsonProperty("Submitter_user_id") // in crm5 too
     public String submitter_user_id;
 }
