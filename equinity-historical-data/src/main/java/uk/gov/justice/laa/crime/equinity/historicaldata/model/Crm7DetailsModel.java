@@ -172,7 +172,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Attendance_rate_london")
     public float attendance_rate_london;
     @JsonProperty("Cp_rep_order_attach_method") // Post/DX ?
-    public float cp_rep_order_attach_method;
+    public String cp_rep_order_attach_method;
     @JsonProperty("Cp_rbba_category_cw")
     public float pp_rbba_category_cw;
     @JsonProperty("Total_waiting_time_display")
@@ -330,8 +330,8 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Total_attendance_time_display_counsel")
     public String total_attendance_time_display_counsel;
 
-    @JsonProperty("Schedule")
-    public List<Crm7TimeSpentModel> schedule;
+    @JsonProperty("Schedule.Row")
+    List<Crm7TimeSpentModel> schedule;
 
     @JsonProperty("Originator_department") // in crm5 too
     public String originator_department;

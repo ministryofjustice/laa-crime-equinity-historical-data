@@ -40,11 +40,11 @@ class Crm7ControllerTest {
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML
-        FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockOFDFile.txt");
+        FileInputStream fis = new FileInputStream("src/test/resources/Crm7MockOFDFile.txt");
         JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
         byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
         TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setID(5001604L);
+        taskModel.setID(5001662L);
         taskModel.setCrmFile(fileDataByte);
         taskImageFilesRepository.save(taskModel);
     }
@@ -72,7 +72,7 @@ class Crm7ControllerTest {
 
     @Test
     void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse() {
-        Long usnTest = 5001604L;
+        Long usnTest = 5001662L;
         ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest);
         // TODO (EMP-217): update test assertions when search is implemented
         softly.assertThat(result.getBody()).isNull();
