@@ -58,7 +58,7 @@ public class Crm5ControllerTest {
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML
-        FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockOFDFile.txt");
+        FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockFile_5001604.txt");
         JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
         byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
         TaskImageFilesModel taskModel = new TaskImageFilesModel();
