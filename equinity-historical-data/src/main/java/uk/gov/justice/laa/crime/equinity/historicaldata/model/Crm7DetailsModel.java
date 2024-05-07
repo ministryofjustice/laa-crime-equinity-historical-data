@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -329,75 +330,8 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Total_attendance_time_display_counsel")
     public String total_attendance_time_display_counsel;
 
-    // TODO (EMP-217): Update Model to take Schedule into consideration
-//        "Schedule": {
-//            "row": [
-//                {
-//                    "Person_codes_options": "",
-//                    "Rate_cw": 49.7,
-//                    "Time_attendances_no_counsel": "01:01:00",
-//                    "Cost_type_full_list": "",
-//                    "Time_preparation_cw": "00:00:00",
-//                    "Time_total_cw": "01:01:00",
-//                    "Uplift_cw": 0,
-//                    "Time_attendances_cw": "00:00:00",
-//                    "Cost_type": "Attendance Without Counsel Assigned",
-//                    "Time_waiting_cw": "00:00:00",
-//                    "Person_codes": "D;",
-//                    "Assessment_cw": "",
-//                    "Time_total": "01:01:00",
-//                    "Time_display": "01:01:00",
-//                    "Time_travel_cw": "00:00:00",
-//                    "Basic_claim": 50.53,
-//                    "Rate": 49.7,
-//                    "Time_attendances_no_counsel_cw": "01:01:00",
-//                    "Claim_cw": 50.53,
-//                    "Date": "2022-05-02T00:00:00",
-//                    "Uplift": 0,
-//                    "Line": 1,
-//                    "Hearing_codes_options": "",
-//                    "Time_attendances_counsel_cw": "00:00:00",
-//                    "Basic_cw": 50.53,
-//                    "Time_advocacy_cw": "00:00:00",
-//                    "Fe_initials": "MB",
-//                    "Time_calc": 1.0166666666666666,
-//                    "Claim": 50.53,
-//                    "Hearing_codes": "PB;"
-//                },
-//                {
-//                    "Person_codes_options": "",
-//                    "Rate_cw": 34,
-//                    "Cost_type_full_list": "",
-//                    "Time_preparation_cw": "00:00:00",
-//                    "Time_total_cw": "12:01:00",
-//                    "Uplift_cw": 0,
-//                    "Time_attendances_cw": "00:00:00",
-//                    "Cost_type": "Attendance With Counsel Assigned",
-//                    "Time_waiting_cw": "00:00:00",
-//                    "Time_attendances_counsel": "12:01:00",
-//                    "Person_codes": "",
-//                    "Assessment_cw": "",
-//                    "Time_total": "12:01:00",
-//                    "Time_display": "12:01:00",
-//                    "Time_travel_cw": "00:00:00",
-//                    "Basic_claim": 408.57,
-//                    "Rate": 34,
-//                    "Time_attendances_no_counsel_cw": "00:00:00",
-//                    "Claim_cw": 408.57,
-//                    "Date": "1990-09-05T00:00:00",
-//                    "Uplift": 0,
-//                    "Line": 2,
-//                    "Hearing_codes_options": "",
-//                    "Time_attendances_counsel_cw": "12:01:00",
-//                    "Basic_cw": 408.57,
-//                    "Time_advocacy_cw": "00:00:00",
-//                    "Fe_initials": "MM",
-//                    "Time_calc": 12.016666666666666,
-//                    "Claim": 408.57,
-//                    "Hearing_codes": ""
-//                }
-//            ]
-//        }
+    @JsonProperty("Schedule")
+    public List<Crm7TimeSpentModel> schedule;
 
     @JsonProperty("Originator_department") // in crm5 too
     public String originator_department;
