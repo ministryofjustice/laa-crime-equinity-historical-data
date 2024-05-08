@@ -12,9 +12,11 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
@@ -22,48 +24,58 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class Crm5ControllerTest {
-
-    @Autowired
-    TaskImageFilesRepository taskImageFilesRepository;
-
+class Crm7ControllerTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
     @Autowired
-    Crm5Controller controller;
+    TaskImageFilesRepository taskImageFilesRepository;
 
-    @Test
-    void getApplication_TaskNotFound() {
-        Long usnTest = 10L;
-        softly.assertThatThrownBy(() -> controller.getApplication(usnTest))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
-
-    }
-
-    @Test
-    void getApplication_Valid() {
-        Long usnTest = 5001604L;
-        ResponseEntity<CRM5DetailsDTO> result = controller.getApplication(usnTest);
-        softly.assertThat(result.getBody()).isInstanceOf(CRM5DetailsDTO.class);
-        softly.assertThat(result.getBody().getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
-    }
+    @Autowired
+    Crm7Controller controller;
 
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML
-        FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockFile_5001604.txt");
+        FileInputStream fis = new FileInputStream("src/test/resources/Crm7MockFile_5001662.txt");
         JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
         byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
         TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setID(5001604L);
+        taskModel.setID(5001662L);
         taskModel.setCrmFile(fileDataByte);
         taskImageFilesRepository.save(taskModel);
+    }
+
+    /**
+     * USN input checks
+     */
+    @Test
+    void getApplicationCrm7Test_WhenUsnInputIsGivenNullThenReturnInvalidDataAccessApiUsageException() {
+        String expectedMessage = "not be null";
+
+        // execute
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(null))
+            .isInstanceOf(InvalidDataAccessApiUsageException.class)
+            .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
+    void getApplicationCrm7Test_WhenGivenNonExistingUsnThenReturnTaskNotFoundException() {
+        Long usnTest = 10L;
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest))
+            .isInstanceOf(ResourceNotFoundException.class)
+            .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+    }
+
+    @Test
+    void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse() {
+        Long usnTest = 5001662L;
+        ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest);
+        // TODO (EMP-217): update test assertions when search is implemented
+        softly.assertThat(result.getBody()).isNull();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

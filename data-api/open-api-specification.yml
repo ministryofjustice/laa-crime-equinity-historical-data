@@ -106,6 +106,7 @@ components:
       in: path
       required: true
       schema:
+        nullable: false
         type: integer
         format: int64
         maxLength: 10
