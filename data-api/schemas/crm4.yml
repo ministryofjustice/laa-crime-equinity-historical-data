@@ -1,0 +1,257 @@
+Crm4DetailsDTO:
+  type: object
+  properties:
+    greaterValue:
+      type: boolean
+    postMortemExamination:
+      type: string
+    CaseDetails:
+      $ref: '#/Crm4CaseDetailsDTO'
+    ExpenditureDetails:
+      $ref: '#/Crm4ExpenditureDetails'
+    AlternativeQuotes:
+      $ref: '#/Crm4AlternativeQuotes'
+    PriorAuthorityDetails:
+      $ref: '#/Crm4PriorAuthorityDTO'
+    AdditionalInfo:
+      type: string
+    Solicitor:
+      $ref: '#/Crm4SolicitorDTO'
+    OfficeUseOnly:
+      $ref: '#/Crm4DecisionDTO'
+Crm4ExpenditureDetails:
+  type: object
+  properties:
+    Details:
+      $ref: '#/Crm4ExpenDetails'
+    Preparation:
+      $ref: '#/Crm4PreparationDetails'
+    AdditionalExpenditure:
+      $ref: '#/Crm4Expenditure'
+    Travel:
+      $ref: '#/Crm4Travel'
+    Authority:
+      type: number
+      format: float
+      
+Crm4Travel:
+  type: object
+  properties:
+    hours:
+      type: string
+      format: time
+      description: only Time in 24 hrs format HH:MM
+    justification:
+      type: string
+    quantity:
+      type: integer
+    rate:
+      type: integer
+    total:
+      type: integer
+      
+Crm4Expenditure:
+  type: object
+  properties:
+    description:
+      type: string
+    justification:
+      type: string
+    quantity:
+      type: integer
+    rate:
+      type: integer
+    total:
+      type: integer
+      
+Crm4ExpenDetails:
+  type: object
+  properties:
+    expenditureType:
+      type: string
+    priorAuthority:
+      type: boolean
+    expertName:
+      type: string
+    companyName:
+      type: string
+    statusExpert:
+      type: string
+    postCodeExpert:
+      type: string
+Crm4PreparationDetails:
+  type: object
+  properties:
+    hours:
+      type: string
+      format: time
+      description: only Time in 24 hrs format HH:MM
+    hourlyRate:
+      type: boolean
+    total:
+      type: string
+Crm4CaseDetailsDTO:
+  type: object
+  properties:
+    isPOCA:
+      type: boolean
+    Firm:
+      $ref: '#/Crm4FirmDTO'
+    SolicitorDetails:
+      $ref: '#/Crm4SolicitorDetailsDTO'
+    ClientDetails:
+      $ref: '#/Crm4ClientDTO'
+    ProceedingDetails:
+      $ref: '#/Crm4ProceedingDetails'
+      
+Crm4FirmDTO:
+  type: object
+  properties:
+    urn:
+      type: string
+    firmAddress:
+      type: string
+    firmName:
+      type: string
+    firmPhone:
+      type: string
+    firmSupplierName:
+      type: string
+    firmSupplierNo:
+      type: string
+    firmContactName:
+      type: string
+    firmSolicitorName:
+      type: string
+      
+Crm4PriorAuthorityDTO:
+  type: object
+  properties:
+    authorityDetails:
+      type: string
+    prosecutionSummary:
+      type: string
+    defenceMitigation:
+      type: string
+    qcDetails:
+      type: string
+      
+Crm4AlternativeQuotes:
+  type: object
+  properties:
+    alternativeQuote:
+      type: boolean
+    reason:
+      type: string
+    numberOfQuotes:
+      type: string
+    defenceMitigation:
+      type: string
+    qcDetails:
+      type: string
+    Quotes:
+      type: array
+      items:
+        $ref: "#/Crm4Quote"
+      
+Crm4Quote:
+  type: object
+  properties:
+    companyName:
+      type: boolean
+    expertName:
+      type: string
+    contactPhone:
+      type: string
+    costBasis:
+      type: string
+    preparationHours:
+      type: string
+      format: time
+      description: only Time in 24 hrs format HH:MM
+    hourlyRate:
+      type: number
+      format: float
+    addtionalItemDesc:
+      type: string
+    addtionalItemAmount:
+      type: number
+      format: float
+    travelHours:
+      type: string
+      format: time
+      description: only Time in 24 hrs format HH:MM
+    travelHourlyRate:
+      type: number
+      format: float
+    quoteTotal:
+      type: number
+      format: float
+    qcDetails:
+      type: string
+      
+Crm4SolicitorDetailsDTO:
+  type: object
+  properties:
+    solicitorName:
+      type: string
+    solicitorReference:
+      type: string
+Crm4ClientDTO:
+  type: object
+  properties:
+    ufn:
+      type: string
+    maatNumber:
+      type: string
+    firstName:
+      type: string
+    middleName:
+      type: string
+    surname:
+      type: string
+    dateOfBirth:
+      type: string
+      format: date-time
+    prisonLaw:
+      type: boolean
+Crm4ProceedingDetails:
+  type: object
+  properties:
+    isClientDetained:
+      type: boolean
+    detainedDetails:
+      type: string
+    courtType:
+      type: string
+    psychiatricLiaison:
+      type: boolean
+    psychiatricDetails:
+      type: string
+    mainOffence:
+      type: string
+    actualPlea:
+      type: boolean
+    dateOfHearing:
+      type: string
+      format: date-time
+Crm4SolicitorDTO:
+  type: object
+  properties:
+    declaration:
+      $ref: '#/Crm4NameAndDateDTO'
+    certification:
+      $ref: '#/Crm4NameAndDateDTO'
+Crm4NameAndDateDTO:
+  type: object
+  properties:
+    date:
+      type: string
+      format: date-time
+    name:
+      type: string
+Crm4DecisionDTO:
+  properties:
+    decision:
+      type: string
+      description: Grant, Part Grant, Reject, Refer For ICA
