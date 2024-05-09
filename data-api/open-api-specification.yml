@@ -50,6 +50,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/CRM5DetailsDTO'
 
+  /api/internal/v1/equinity/crm4/{usn}:
+    get:
+      tags:
+        - CRM4Interface
+      operationId: getApplicationCrm4
+      parameters:
+        - $ref: '#/components/parameters/crmUsn'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crm4DetailsDTO'
+
   /api/internal/v1/equinity/crm7/{usn}:
     get:
       tags:
@@ -522,6 +537,10 @@ components:
         decision:
           type: string
           description: Grant, Part Grant, Reject, Refer For ICA
+
+    ## CRM 4
+    Crm4DetailsDTO:
+      $ref: "./schemas/crm4.yml#/Crm4DetailsDTO"
 
     ## CRM 7
     Crm7DetailsDTO:
