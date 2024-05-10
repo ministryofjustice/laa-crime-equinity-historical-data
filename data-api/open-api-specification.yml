@@ -238,6 +238,8 @@ components:
           $ref: '#/components/schemas/Crm5CaseDetailsDTO'
         ClientDetails:
           $ref: '#/components/schemas/Crm5ClientDTO'
+        AdviceAssistance:
+          $ref: '#/components/schemas/Crm5AdviceAssistanceDTO'
         CapitalDetails:
           $ref: '#/components/schemas/Crm5CapitalDTO'
         IncomeDetails:
@@ -259,6 +261,13 @@ components:
         DetailsOfWorkCompleted:
           type: string
         DetailsOfApplication:
+          type: string
+    Crm5AdviceAssistanceDTO:
+      type: object
+      properties:
+        transferFromSolicitor:
+          type: string
+        adviceCriteria:
           type: string
     Crm5FirmDTO:
       type: object
@@ -515,7 +524,7 @@ components:
       properties:
         summary:
           type: string
-        addtionalInfo:
+        additionalInfo:
           type: string
     Crm5SolicitorDTO:
       type: object
