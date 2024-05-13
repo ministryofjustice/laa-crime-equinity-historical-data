@@ -76,7 +76,7 @@ class Crm7ControllerTest {
     void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse() {
         Long usnTest = 5001662L;
         ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest);
-        // TODO (EMP-217): update test assertions when search is implemented
+
         softly.assertThat(result.getBody()).isNotNull();
         softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnTest.intValue());
