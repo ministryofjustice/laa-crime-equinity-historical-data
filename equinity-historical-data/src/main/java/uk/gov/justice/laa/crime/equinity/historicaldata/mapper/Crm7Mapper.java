@@ -10,6 +10,8 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="usn", source="usn")
     @Mapping(target="summary", source="model")
     @Mapping(target="solicitorDetails", source="model")
+    @Mapping(target="caseDetails", source="model")
+    @Mapping(target="nonStandardFeeClaim", source="model")
     Crm7DetailsDTO getDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")
@@ -54,5 +56,27 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="solicitorName", source="solicitorname")
     @Mapping(target="solicitorReference", source="solicitorid")
     Crm7SolicitorDetailsDTO getSolicitorDetailsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="urn", source="urn")
+    @Mapping(target="mainOffence", source="cd_main_offence")
+    @Mapping(target="dateOffenceCommited", source="cd_offence_date")
+    @Mapping(target="isSeriousFraudCase", expression="java(convertToEnum(Crm7CaseDetailsDTO.IsSeriousFraudCaseEnum.class, model.getCd_serious_fraud_case()))")
+    @Mapping(target="isIndictableOnlyOffenceCharge", expression="java(convertToEnum(Crm7CaseDetailsDTO.IsIndictableOnlyOffenceChargeEnum.class, model.getCd_indictable_only()))")
+    @Mapping(target="dateChargeLaid", source="cd_offence_date")
+    @Mapping(target="indictmentAttachment", expression="java(convertToEnum(Crm7CaseDetailsDTO.IndictmentAttachmentEnum.class, model.getCd_indictment_attach_method()))")
+    @Mapping(target="isWastedCostsCase", expression="java(convertToEnum(Crm7CaseDetailsDTO.IsWastedCostsCaseEnum.class, model.getCd_wasted_cost_order()))")
+    @Mapping(target="wastedCosts", source="cd_wasted_costs_order_details")
+    @Mapping(target="orderDetails", source="cd_wasted_costs_order_details")
+    Crm7CaseDetailsDTO getCaseDetailsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="reason.isCoreCostExceededLimit", source="nsfc_core_costs_exceeded")
+    @Mapping(target="reason.isEnhancedRatesClaim", source="nsfc_enhanced_rates_claimed")
+    @Mapping(target="reason.isCounselAssigned", source="nsfc_counsel_assigned")
+    @Mapping(target="reason.isExtradition", source="nsfc_extradition")
+    @Mapping(target="reason.isRepresentationOrderWithdrawn", source="nsfc_rep_order_withdrawn")
+    @Mapping(target="reason.isOther", source="nsfc_other")
+    @Mapping(target="dateWithdrawn", source="rep_order_date")
+    @Mapping(target="additionalDetails", source="nsfc_order_withdrawn_details")
+    Crm7NonStandardFeeClaimDTO getNonStandardFeeClaimDTOFromModel(Crm7DetailsModel model);
 }
 
