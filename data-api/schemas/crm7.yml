@@ -3,6 +3,8 @@ Crm7DetailsDTO:
   properties:
     usn:
       type: integer
+      schema:
+        format: int64
     summary:
       $ref: '#/Crm7SummaryOfClaimDTO'
     solicitorDetails:
@@ -42,22 +44,24 @@ Crm7SummaryOfClaimDTO:
       type: string
     clientDateOfBirth:
       type: string
-
-    UFN:
+    ufn:
       type: string
-    MaatNumber:
+    maatNumber:
       type: integer
-    RepresentationOrderNumber:
+    representationOrderNumber:
       type: integer
-    RepresentationOrderDate:
+    representationOrderDate:
       type: string
-    RepresentationOrderSubmitMode:
+    representationOrderSubmitMode:
       type: string
       enum:
-        - "post"
-        - "dx"
+        - "Post"
+        - "DX"
     isLocatedInDesignatedArea:
       type: string
+      enum:
+        - "Yes"
+        - "No"
     stateReached:
       type: string
     outcomeCode:
