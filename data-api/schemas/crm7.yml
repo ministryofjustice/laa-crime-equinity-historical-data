@@ -205,22 +205,44 @@ Crm7CaseDisposalDTO:
     category:
       type: string
       description: "Please select the category your claim falls within"
-    categoryOption:
-      type: string
+    option:
       description: "relevant option for category"
+      type: object
+      properties:
+        type1:
+          type: string
+        type2:
+          type: string
+        type3:
+          type: string
+    selection:
+      type: object
+      properties:
+        radio1:
+          type: boolean
+        radio2:
+          type: boolean
+        radio3:
+          type: boolean
 
 Crm7ClaimDetailsDTO:
   type: object
   properties:
     wasCounselAssigned:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     wasCounselUnassigned:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     wasAgentInstructed:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     prosecutionEvidencePages:
       type: integer
     defenceStatementPages:
@@ -229,7 +251,9 @@ Crm7ClaimDetailsDTO:
       type: integer
     isSupplementalClaim:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     supplementalClaimAttachments:
       description: "whether attachment electronically or by Post"
       type: string
@@ -238,13 +262,17 @@ Crm7ClaimDetailsDTO:
         - "DX"
     wasTimeSpentOnTapedEvidence:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     tapedEvidenceTime:
       type: string
       description: "available when wasTimeSpentOnTapedEvidence is affirmative"
     isRemittedBackToMagistrates:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     dateRemittedBackToMagistrates:
       type: string
       description: "available when isRemittedBackToMagistrates is affirmative"
@@ -260,7 +288,9 @@ Crm7PreOrderWorkDTO:
   properties:
     isClaimBeforeGrantDate:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     dateSubmitted:
       type: string
     firstCourtHearingDate:

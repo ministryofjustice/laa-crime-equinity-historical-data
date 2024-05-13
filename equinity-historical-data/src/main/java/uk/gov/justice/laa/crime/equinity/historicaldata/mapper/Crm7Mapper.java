@@ -12,6 +12,16 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="solicitorDetails", source="model")
     @Mapping(target="caseDetails", source="model")
     @Mapping(target="nonStandardFeeClaim", source="model")
+    @Mapping(target="caseDisposal", source="model")
+    @Mapping(target="claimDetails", source="model")
+    @Mapping(target="preOrderWork", source="model")
+    @Mapping(target="scheduleOfTimeSpent", expression="java(null)")
+    @Mapping(target="claimOfCosts", expression="java(null)")
+    @Mapping(target="disbursement", expression="java(null)")
+    @Mapping(target="claimTotals", expression="java(null)")
+    @Mapping(target="coversheet", expression="java(null)")
+    @Mapping(target="caseInformation", expression="java(null)")
+    @Mapping(target="officeUseOnly", expression="java(null)")
     Crm7DetailsDTO getDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")
@@ -78,5 +88,35 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="dateWithdrawn", source="rep_order_date")
     @Mapping(target="additionalDetails", source="nsfc_order_withdrawn_details")
     Crm7NonStandardFeeClaimDTO getNonStandardFeeClaimDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="category", source="cdsp_category")
+    @Mapping(target="option.type1", source="cdsp_category_1_type")
+    @Mapping(target="option.type2", source="cdsp_category_2_type")
+    @Mapping(target="option.type3", source="cdsp_category_3_type")
+    @Mapping(target="selection.radio1", source="cdsp_category_1_radio")
+    @Mapping(target="selection.radio2", source="cdsp_category_2_radio")
+    @Mapping(target="selection.radio3", source="cdsp_category_3_radio")
+    Crm7CaseDisposalDTO getCaseDisposalDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="wasCounselAssigned", expression="java(convertToEnum(Crm7ClaimDetailsDTO.WasCounselAssignedEnum.class, model.getCounsel_instructed_assigned()))")
+    @Mapping(target="wasCounselUnassigned", expression="java(convertToEnum(Crm7ClaimDetailsDTO.WasCounselUnassignedEnum.class, model.getCounsel_instructed_unassigned()))")
+    @Mapping(target="wasAgentInstructed", expression="java(convertToEnum(Crm7ClaimDetailsDTO.WasAgentInstructedEnum.class, model.getAgent_instructed()))")
+    @Mapping(target="prosecutionEvidencePages", source="cld_prosecution_pages")
+    @Mapping(target="defenceStatementPages", source="cld_defence_pages")
+    @Mapping(target="defenceWitnesses", source="cld_no_of_defence_witnesses")
+    @Mapping(target="isSupplementalClaim", expression="java(convertToEnum(Crm7ClaimDetailsDTO.IsSupplementalClaimEnum.class, model.getCld_supplemental_claim()))")
+    @Mapping(target="supplementalClaimAttachments", expression="java(convertToEnum(Crm7ClaimDetailsDTO.SupplementalClaimAttachmentsEnum.class, model.getCld_attach_method()))")
+    @Mapping(target="wasTimeSpentOnTapedEvidence", expression="java(convertToEnum(Crm7ClaimDetailsDTO.WasTimeSpentOnTapedEvidenceEnum.class, model.getCld_taped_evidence()))")
+    @Mapping(target="tapedEvidenceTime", expression="java(null)")
+    @Mapping(target="isRemittedBackToMagistrates", expression="java(convertToEnum(Crm7ClaimDetailsDTO.IsRemittedBackToMagistratesEnum.class, model.getCld_remitted_to_mags()))")
+    @Mapping(target="dateRemittedBackToMagistrates", expression="java(null)")
+    @Mapping(target="crownCourtAttachments", expression="java(convertToEnum(Crm7ClaimDetailsDTO.CrownCourtAttachmentsEnum.class, model.getCld_prev_claims_attach_method()))")
+    Crm7ClaimDetailsDTO getClaimDetailsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="isClaimBeforeGrantDate", expression="java(convertToEnum(Crm7PreOrderWorkDTO.IsClaimBeforeGrantDateEnum.class, model.getPow_claiming()))")
+    @Mapping(target="dateSubmitted", expression="java(null)")
+    @Mapping(target="firstCourtHearingDate", source="date_first_hearing")
+    @Mapping(target="dateReceivedByCourt", source="date_received")
+    Crm7PreOrderWorkDTO getPreOrderWorkDTOFromModel(Crm7DetailsModel model);
 }
 
