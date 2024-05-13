@@ -17,12 +17,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7SummaryOfClaimDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -74,8 +76,12 @@ class Crm7ControllerTest {
     void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse() {
         Long usnTest = 5001662L;
         ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest);
-        // TODO (EMP-217): update test assertions when search is implemented
-        softly.assertThat(result.getBody()).isNull();
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnTest.intValue());
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientFirstName()).isEqualTo("James");
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }
