@@ -89,8 +89,11 @@ Crm7EqualOpportunitiesDTO:
       type: integer
     courtIdentifier:
       type: string
-    youthCourt:
+    isYouthCourt:
       type: string
+      enum:
+        - "Yes"
+        - "No"
 Crm7SummaryOfficeUseDTO:
   type: object
   properties:

@@ -13,6 +13,7 @@ import java.util.List;
 public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Usn") // in crm5 too
     public Long usn;
+
     // Summary
     @JsonProperty("Client_surname") // in crm5 too
     public String client_surname;
@@ -38,16 +39,65 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String sc_outcome_code;
     @JsonProperty("Sc_matter_type")
     public int sc_matter_type;
+    // Summary - Equal Opportunities
+    @JsonProperty("Sc_date_class_of_work")
+    public LocalDate sc_date_class_of_work;
+    @JsonProperty("Sc_no_of_defendants")
+    public int sc_no_of_defendants;
+    @JsonProperty("Sc_no_of_court_attendances")
+    public int sc_no_of_court_attendances;
+    @JsonProperty("Sc_court_identifier")
+    public String sc_court_identifier;
+    @JsonProperty("Sc_youth_court") // Yes/No
+    public String sc_youth_court;
+    // Summary - Office Use
+    @JsonProperty("Sc_eo_1")
+    public String sc_eo_1;
+    @JsonProperty("Sc_eo_2")
+    public String sc_eo_2;
+    @JsonProperty("Sc_eo_3") // Y/N?
+    public String sc_eo_3;
+    @JsonProperty("Sc_prov_case_in_designated_area")
+    public String sc_prov_case_in_designated_area;
+    @JsonProperty("Tltaskstate") // in crm5 too
+    public int tltaskstate;
+    @JsonProperty("Sc_eo_code")
+    public String sc_eo_code;
+    @JsonProperty("Ctou_profit_costs_total")
+    public float ctou_profit_costs_total;
+    @JsonProperty("Cfc_disb_grand_total_ou")
+    public float cfc_disb_grand_total_ou;
+    @JsonProperty("Ctou_travel_costs_total")
+    public float ctou_travel_costs_total;
 
 
     @JsonProperty("Client_name") // in crm5 too
     public String client_name;
-    @JsonProperty("Sc_prov_case_in_designated_area") // Yes/No?
-    public String sc_prov_case_in_designated_area;
-    @JsonProperty("Tltaskstate") // in crm5 too
-    public int tltaskstate;
     @JsonProperty("Tlsubstate") // in crm5 too
     public String tlsubstate;
+    @JsonProperty("Sc_court_indentifier")
+    public int sc_court_indentifier;
+    /** *** **/
+
+    // Solicitor Details
+    @JsonProperty("Firm_name") // in crm5 too
+    public String firm_name;
+    @JsonProperty("Firm_address") // in crm5 too
+    public String firm_address;
+    @JsonProperty("Firm_supplier_no") // in crm5 too
+    public String firm_supplier_no;
+    @JsonProperty("Firm_phone") // in crm5 too
+    public String firm_phone;
+    @JsonProperty("Contact_name") // in crm5 too
+    public String contact_name;
+    @JsonProperty("Solicitorname") // in crm5 too
+    public String solicitorname;
+    @JsonProperty("Solicitorid") // in crm5 too
+    public String solicitorid;
+
+
+    @JsonProperty("Firm_office") // in crm5 too
+    public String firm_office;
     /** *** **/
 
 
@@ -97,8 +147,6 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String prom_prov;
     @JsonProperty("Additional_info")
     public String additional_info;
-    @JsonProperty("Cfc_disb_grand_total_ou")
-    public float cfc_disb_grand_total_ou;
 
     @JsonProperty("Counsel_instructed_unassigned")
     public String counsel_instructed_unassigned;
@@ -122,8 +170,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float cat3london;
     @JsonProperty("Total_waiting_costs")
     public float total_waiting_costs;
-    @JsonProperty("Ctou_profit_costs_total")
-    public float ctou_profit_costs_total;
+
     @JsonProperty("Total_attendance_time_display_no_counsel")
     public String total_attendance_time_display_no_counsel;
     @JsonProperty("Fc_selected_eformsreviewer") // in CRM5 too
@@ -160,8 +207,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String provider_case_ref;
     @JsonProperty("Cd_wasted_costs_order_details")
     public String cd_wasted_costs_order_details;
-    @JsonProperty("Sc_no_of_court_attendances")
-    public int sc_no_of_court_attendances;
+
     @JsonProperty("Cfc_disb_total_net")
     public float cfc_disb_total_net;
     @JsonProperty("Cfc_cw_letters_uplift")
@@ -239,8 +285,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String time_received;
     @JsonProperty("Lsc_accountoffice") // in crm5 too
     public String lsc_accountoffice;
-    @JsonProperty("Contact_name") // in crm5 too
-    public String contact_name;
+
     @JsonProperty("Originator_routemethod") // in crm5 too
     public int originator_routemethod;
     @JsonProperty("Cd_indictment_attach_method") // Post/DX?
@@ -267,8 +312,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float cfc_disb_total_vat_ou;
     @JsonProperty("Fc_integration_info_required")
     public boolean fc_integration_info_required;
-    @JsonProperty("Firm_phone") // in crm5 too
-    public String firm_phone;
+
     @JsonProperty("Fc_dummy") // in crm5 too
     public boolean fc_dummy;
     @JsonProperty("Qc_decision") // in crm5 too
@@ -281,12 +325,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String originator_emailaddress;
     @JsonProperty("TLProjectName")
     public String tLProjectName;
-    @JsonProperty("Sc_eo_3") // Y/N?
-    public String sc_eo_3;
-    @JsonProperty("Sc_eo_2")
-    public String sc_eo_2;
-    @JsonProperty("Sc_eo_1")
-    public String sc_eo_1;
+
     @JsonProperty("Fc_reject_reasons_selected") // in crm5 too
     public String fc_reject_reasons_selected;
     @JsonProperty("Cd_wasted_cost_order") // Yes/No?
@@ -333,8 +372,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String ct_profit_costs_total;
     @JsonProperty("Fi_language") // in crm5 too
     public String fi_language;
-    @JsonProperty("Sc_youth_court") // Yes/No?
-    public String sc_youth_court;
+
     @JsonProperty("Ctou_profit_costs_vat_rate")
     public float ctou_profit_costs_vat_rate;
     @JsonProperty("Fc_pg_options") // in crm5 too
@@ -385,12 +423,10 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float cfc_cw_calls_rate;
     @JsonProperty("Cw_total_advocacy_costs")
     public float cw_total_advocacy_costs;
-    @JsonProperty("Firm_office") // in crm5 too
-    public String firm_office;
+
     @JsonProperty("Cat3national")
     public float cat3national;
-    @JsonProperty("Sc_court_identifier")
-    public String sc_court_identifier;
+
     @JsonProperty("Advocacy_rate_non_london")
     public float advocacy_rate_non_london;
     @JsonProperty("Tlnewmessage") // in crm5 too
@@ -405,8 +441,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float Cfc_letter_uplift;
     @JsonProperty("Ctou_waiting_costs_total")
     public float ctou_waiting_costs_total;
-    @JsonProperty("Sc_court_indentifier")
-    public int sc_court_indentifier;
+
     @JsonProperty("Relevant_case_info_details")
     public String relevant_case_info_details;
     @JsonProperty("Originator_tl_googleid") // in crm5 too
@@ -443,8 +478,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float ct_profit_costs_vat_rate;
     @JsonProperty("Fi_form_subtype") // in crm5 too
     public String fi_form_subtype;
-    @JsonProperty("Solicitorname") // in crm5 too
-    public String solicitorname;
+
     @JsonProperty("Attendance_rate_counsel_london")
     public float attendance_rate_counsel_london;
     @JsonProperty("Fc_current_user_type") // in crm5 too
@@ -453,14 +487,12 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String full_grant_notes;
     @JsonProperty("Caseworker") // in crm5 too
     public String caseworker;
-    @JsonProperty("Firm_address") // in crm5 too
-    public String firm_address;
+
     @JsonProperty("Fc_currentstage") // in crm5 too
     public String fc_currentstage;
     @JsonProperty("Cw_total_preparation_costs")
     public float cw_total_preparation_costs;
-    @JsonProperty("Ctou_travel_costs_total")
-    public float ctou_travel_costs_total;
+
     @JsonProperty("Originator_dtlastaccessed") // in crm5 too
     public LocalDateTime originator_dtlastaccessed;
     @JsonProperty("Urn")
@@ -543,8 +575,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
 
     @JsonProperty("Cdsp_category")
     public String cdsp_category;
-    @JsonProperty("Sc_date_class_of_work")
-    public LocalDate sc_date_class_of_work;
+
     @JsonProperty("Cd_main_offence")
     public String cd_main_offence;
 
@@ -560,10 +591,8 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float cfc_calls_rate;
     @JsonProperty("Printed")
     public boolean printed;
-    @JsonProperty("Sc_no_of_defendants")
-    public int sc_no_of_defendants;
-    @JsonProperty("Firm_supplier_no") // in crm5 too
-    public String firm_supplier_no;
+
+
     @JsonProperty("Cat1national")
     public float cat1national;
     @JsonProperty("Total_preparation_costs")
@@ -592,8 +621,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public boolean nsfc_other;
     @JsonProperty("Originator_firm") // in crm5 too
     public String originator_firm;
-    @JsonProperty("Firm_name") // in crm5 too
-    public String firm_name;
+
     @JsonProperty("Fc_rfi_options") // in crm5 too
     public String fc_rfi_options;
     @JsonProperty("Fc_reject_reasons_text") // in crm5 too
@@ -626,8 +654,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public boolean fc_return_info_to_cw;
     @JsonProperty("Cfc_disb_total_vat")
     public float cfc_disb_total_vat;
-    @JsonProperty("Sc_eo_code")
-    public String sc_eo_code;
+
 
     @JsonProperty("Match_carried_out") // in crm5 too
     public boolean match_carried_out;
@@ -637,8 +664,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String fc_possible_reject_reasons;
     @JsonProperty("Letter_rate_london")
     public float letter_rate_london;
-    @JsonProperty("Solicitorid") // in crm5 too
-    public String solicitorid;
+
     @JsonProperty("Sd_address_county") // in crm5 too
     public String sd_address_county;
 
