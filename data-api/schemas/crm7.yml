@@ -136,29 +136,38 @@ Crm7SolicitorDetailsDTO:
 Crm7CaseDetailsDTO:
   type: object
   properties:
-    URN:
+    urn:
       type: string
     mainOffence:
       type: string
     dateOffenceCommited:
       type: string
     isSeriousFraudCase:
-      type: string
       description: "Is this a Serious Fraud Case or are there elements of Serious Fraud?"
-    isIndicativeOnlyOffenceCharge:
       type: string
+      enum:
+        - "Yes"
+        - "No"
+    isIndictableOnlyOffenceCharge:
       description: "Was the defendant or any co-defendant charged with any Indictable Only offence?"
+      type: string
+      enum:
+        - "Yes"
+        - "No"
     dateChargeLaid:
       type: string
     indictmentAttachment:
       description: "Whether attached electronically or by Post/DX"
       type: string
       enum:
-        - "post"
-        - "dx"
+        - "Post"
+        - "DX"
     isWastedCostsCase:
-      type: string
       description: "Were any wasted costs orders made in this case?"
+      type: string
+      enum:
+        - "Yes"
+        - "No"
     wastedCosts:
       description: "Available when isWastedCostsCase is affirmative"
       type: number
@@ -170,15 +179,21 @@ Crm7NonStandardFeeClaimDTO:
   type: object
   properties:
     reason:
-      type: string
       description: "Tell us why you are claiming a non-standard fee by ticking the box(es) that apply in this case"
-      enum:
-        - "Core costs exceed higher limit"
-        - "Enhanced rates claimed"
-        - "Counsel assigned"
-        - "Extradition"
-        - "Representation Order withdrawn"
-        - "Other"
+      type: object
+      properties:
+        isCoreCostExceededLimit:
+          type: boolean
+        isEnhancedRatesClaim:
+          type: boolean
+        isCounselAssigned:
+          type: boolean
+        isExtradition:
+          type: boolean
+        isRepresentationOrderWithdrawn:
+          type: boolean
+        isOther:
+          type: boolean
     dateWithdrawn:
       type: string
     additionalDetails:
@@ -190,22 +205,44 @@ Crm7CaseDisposalDTO:
     category:
       type: string
       description: "Please select the category your claim falls within"
-    categoryOption:
-      type: string
+    option:
       description: "relevant option for category"
+      type: object
+      properties:
+        type1:
+          type: string
+        type2:
+          type: string
+        type3:
+          type: string
+    selection:
+      type: object
+      properties:
+        radio1:
+          type: boolean
+        radio2:
+          type: boolean
+        radio3:
+          type: boolean
 
 Crm7ClaimDetailsDTO:
   type: object
   properties:
     wasCounselAssigned:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     wasCounselUnassigned:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     wasAgentInstructed:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     prosecutionEvidencePages:
       type: integer
     defenceStatementPages:
@@ -214,7 +251,9 @@ Crm7ClaimDetailsDTO:
       type: integer
     isSupplementalClaim:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     supplementalClaimAttachments:
       description: "whether attachment electronically or by Post"
       type: string
@@ -223,13 +262,17 @@ Crm7ClaimDetailsDTO:
         - "DX"
     wasTimeSpentOnTapedEvidence:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     tapedEvidenceTime:
       type: string
       description: "available when wasTimeSpentOnTapedEvidence is affirmative"
     isRemittedBackToMagistrates:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     dateRemittedBackToMagistrates:
       type: string
       description: "available when isRemittedBackToMagistrates is affirmative"
@@ -245,7 +288,9 @@ Crm7PreOrderWorkDTO:
   properties:
     isClaimBeforeGrantDate:
       type: string
-      description: "Yes/No"
+      enum:
+        - "Yes"
+        - "No"
     dateSubmitted:
       type: string
     firstCourtHearingDate:
