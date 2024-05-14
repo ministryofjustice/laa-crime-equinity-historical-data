@@ -20,7 +20,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="preOrderWork", source="model")
     @Mapping(target="scheduleOfTimeSpent", source="model")
     @Mapping(target="claimOfCosts", source="model")
-    @Mapping(target="disbursement", expression="java(null)")
+    @Mapping(target="disbursement", source="model")
     @Mapping(target="claimTotals", expression="java(null)")
     @Mapping(target="coversheet", expression="java(null)")
     @Mapping(target="caseInformation", expression="java(null)")
@@ -156,7 +156,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="costTotals", expression="java(getClaimOfCostsCostsDTOFromModel(model))")
     @Mapping(target="totals", expression="java(getClaimOfCostTotalsDTOFromModel(model))")
     @Mapping(target="officeUse", expression="java(getClaimOfCostOfficeUseTotalsDTOFromModel(model))")
-    @Mapping(target="lettersAndPhoneCalls", expression="java(null)")
+    @Mapping(target="lettersAndPhoneCalls", source="model")
     Crm7ClaimOfCostsDTO getClaimOfCostsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="travel", source="total_travel_time_display")
@@ -180,5 +180,62 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="basic", source="cw_total_basic_claim")
     @Mapping(target="total", source="cw_total_claim")
     Crm7ClaimOfCostsTotalsDTO getClaimOfCostOfficeUseTotalsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="totals", expression="java(getClaimOfCostCommunicationsTotalsDTOFromModel(model))")
+    @Mapping(target="officeOnly", expression="java(getClaimOfCostCommunicationsOfficeDTOFromModel(model))")
+    @Mapping(target="assessmentReasons", source="assessment_reasons")
+    Crm7CommunicationsDTO getClaimOfCostCommunicationsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="letters", expression="java(getClaimOfCostCommunicationsLettersDTOFromModel(model))")
+    @Mapping(target="telephoneCalls", expression="java(getClaimOfCostCommunicationsCallsDTOFromModel(model))")
+    @Mapping(target="total", source="cfc_total_costs")
+    @Mapping(target="solicitorCost", source="cfc_sol_core_costs")
+    Crm7CommunicationsCostsDTO getClaimOfCostCommunicationsTotalsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="number", source="cfc_no_of_letters")
+    @Mapping(target="rate", source="cfc_letter_rate")
+    @Mapping(target="uplift", source="cfc_letter_uplift")
+    @Mapping(target="cost", source="cfc_total_letter_cost")
+    Crm7CommunicationsCostsTableDTO getClaimOfCostCommunicationsLettersDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="number", source="cfc_no_of_calls")
+    @Mapping(target="rate", source="cfc_calls_rate")
+    @Mapping(target="uplift", source="cfc_cw_calls_uplift")
+    @Mapping(target="cost", source="cfc_total_phone_costs")
+    Crm7CommunicationsCostsTableDTO getClaimOfCostCommunicationsCallsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="letters", expression="java(getClaimOfCostOfficeLettersDTOFromModel(model))")
+    @Mapping(target="telephoneCalls", expression="java(getClaimOfCostOfficeCallsDTOFromModel(model))")
+    @Mapping(target="total", source="cfc_cw_total_costs")
+    @Mapping(target="solicitorCost", source="cfc_cw_sol_core_costs")
+    Crm7CommunicationsCostsDTO getClaimOfCostCommunicationsOfficeDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="number", source="cfc_cw_no_of_letters")
+    @Mapping(target="rate", source="cfc_cw_letters_rate")
+    @Mapping(target="uplift", source="cfc_cw_letters_uplift")
+    @Mapping(target="cost", source="cfc_cw_letters_costs")
+    Crm7CommunicationsCostsTableDTO getClaimOfCostOfficeLettersDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="number", source="cfc_cw_no_of_calls")
+    @Mapping(target="rate", source="cfc_cw_calls_rate")
+    @Mapping(target="uplift", source="cfc_calls_uplift")
+    @Mapping(target="cost", source="cfc_cw_calls_costs")
+    Crm7CommunicationsCostsTableDTO getClaimOfCostOfficeCallsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="disbursements", expression="java(null)")
+    @Mapping(target="totals", expression="java(getDisbursementTotalsDTOFromModel(model))")
+    @Mapping(target="invoiceAttachments", expression="java(convertToEnum(Crm7DisbursementDTO.InvoiceAttachmentsEnum.class, model.getCfc_disb_attach_method()))")
+    @Mapping(target="officeUse", expression="java(getDisbursementOfficeDTOFromModel(model))")
+    Crm7DisbursementDTO getDisbursementDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", source="cfc_disb_total_net")
+    @Mapping(target="vat", source="cfc_disb_total_vat")
+    @Mapping(target="total", source="cfc_disb_grand_total")
+    Crm7DisbursementTotalsDTO getDisbursementTotalsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", source="cfc_disb_total_net_ou")
+    @Mapping(target="vat", source="cfc_disb_total_vat_ou")
+    @Mapping(target="total", source="cfc_disb_grand_total_ou")
+    Crm7DisbursementTotalsDTO getDisbursementOfficeDTOFromModel(Crm7DetailsModel model);
 }
 
