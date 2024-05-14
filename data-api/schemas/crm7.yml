@@ -6,34 +6,34 @@ Crm7DetailsDTO:
       schema:
         format: int64
     summary:
-      $ref: '#/Crm7SummaryOfClaimDTO'
+      $ref: "#/Crm7SummaryOfClaimDTO"
     solicitorDetails:
-      $ref: '#/Crm7SolicitorDetailsDTO'
+      $ref: "#/Crm7SolicitorDetailsDTO"
     caseDetails:
-      $ref: '#/Crm7CaseDetailsDTO'
+      $ref: "#/Crm7CaseDetailsDTO"
     nonStandardFeeClaim:
-      $ref: '#/Crm7NonStandardFeeClaimDTO'
+      $ref: "#/Crm7NonStandardFeeClaimDTO"
     caseDisposal:
-      $ref: '#/Crm7CaseDisposalDTO'
+      $ref: "#/Crm7CaseDisposalDTO"
     claimDetails:
-      $ref: '#/Crm7ClaimDetailsDTO'
+      $ref: "#/Crm7ClaimDetailsDTO"
     preOrderWork:
-      $ref: '#/Crm7PreOrderWorkDTO'
+      $ref: "#/Crm7PreOrderWorkDTO"
     scheduleOfTimeSpent:
-      $ref: '#/Crm7ScheduleOfTimeSpentDTO'
+      $ref: "#/Crm7ScheduleOfTimeSpentDTO"
     claimOfCosts:
-      $ref: '#/Crm7ClaimOfCostsDTO'
+      $ref: "#/Crm7ClaimOfCostsDTO"
     disbursement:
-      $ref: '#/Crm7DisbursementDTO'
+      $ref: "#/Crm7DisbursementDTO"
     claimTotals:
-      $ref: '#/Crm7ClaimTotalsDTO'
+      $ref: "#/Crm7ClaimTotalsDTO"
     coversheet:
       type: string
-#          $ref: '#/Crm7CoversheetDTO'
+    #          $ref: '#/Crm7CoversheetDTO'
     caseInformation:
-      $ref: '#/Crm7CaseInformationDTO'
+      $ref: "#/Crm7CaseInformationDTO"
     officeUseOnly:
-      $ref: '#/Crm7OfficeUseOnlyDTO'
+      $ref: "#/Crm7OfficeUseOnlyDTO"
 
 Crm7SummaryOfClaimDTO:
   type: object
@@ -69,9 +69,9 @@ Crm7SummaryOfClaimDTO:
     matterType:
       type: string
     equalOpportunities:
-      $ref: '#/Crm7EqualOpportunitiesDTO'
+      $ref: "#/Crm7EqualOpportunitiesDTO"
     officeUse:
-      $ref: '#/Crm7SummaryOfficeUseDTO'
+      $ref: "#/Crm7SummaryOfficeUseDTO"
 Crm7EqualOpportunitiesDTO:
   type: object
   properties:
@@ -298,18 +298,17 @@ Crm7PreOrderWorkDTO:
     dateReceivedByCourt:
       type: string
 
-
 Crm7ScheduleOfTimeSpentDTO:
   type: object
   properties:
     schedule:
       type: array
       items:
-        $ref: '#/Crm7ScheduleTimeTableDTO'
+        $ref: "#/Crm7ScheduleTimeTableDTO"
     laaAdjustments:
       type: array
       items:
-        $ref: '#/Crm7ScheduleAdjustmentsTableDTO'
+        $ref: "#/Crm7ScheduleAdjustmentsTableDTO"
 Crm7ScheduleTimeTableDTO:
   type: object
   properties:
@@ -369,15 +368,15 @@ Crm7ClaimOfCostsDTO:
   type: object
   properties:
     timeTotals:
-      $ref: '#/Crm7ClaimOfCostsTableDTO'
+      $ref: "#/Crm7ClaimOfCostsTableDTO"
     costTotals:
-      $ref: '#/Crm7ClaimOfCostsTableDTO'
+      $ref: "#/Crm7ClaimOfCostsTableDTO"
     totals:
-      $ref: '#/Crm7ClaimOfCostsTotalsDTO'
+      $ref: "#/Crm7ClaimOfCostsTotalsDTO"
     officeUse:
-      $ref: '#/Crm7ClaimOfCostsTotalsDTO'
+      $ref: "#/Crm7ClaimOfCostsTotalsDTO"
     lettersAndPhoneCalls:
-      $ref: '#/Crm7CommunicationsDTO'
+      $ref: "#/Crm7CommunicationsDTO"
 Crm7ClaimOfCostsTableDTO:
   type: object
   properties:
@@ -411,18 +410,18 @@ Crm7CommunicationsDTO:
   type: object
   properties:
     totals:
-      $ref: '#/Crm7CommunicationsCostsDTO'
+      $ref: "#/Crm7CommunicationsCostsDTO"
     officeOnly:
-      $ref: '#/Crm7CommunicationsCostsDTO'
+      $ref: "#/Crm7CommunicationsCostsDTO"
     assessmentReasons:
       type: string
 Crm7CommunicationsCostsDTO:
   type: object
   properties:
     letters:
-      $ref: '#/Crm7CommunicationsCostsTableDTO'
+      $ref: "#/Crm7CommunicationsCostsTableDTO"
     telephoneCalls:
-      $ref: '#/Crm7CommunicationsCostsTableDTO'
+      $ref: "#/Crm7CommunicationsCostsTableDTO"
     total:
       type: number
       format: float
@@ -450,9 +449,9 @@ Crm7DisbursementDTO:
     disbursements:
       type: array
       items:
-        $ref: '#/Crm7DisbursementTableDTO'
+        $ref: "#/Crm7DisbursementTableDTO"
     totals:
-      $ref: '#/Crm7DisbursementTotalsDTO'
+      $ref: "#/Crm7DisbursementTotalsDTO"
     invoiceAttachments:
       description: "Whether attached electronically or by post"
       type: string
@@ -460,7 +459,7 @@ Crm7DisbursementDTO:
         - "Post"
         - "DX"
     officeUse:
-      $ref: '#/Crm7DisbursementTotalsDTO'
+      $ref: "#/Crm7DisbursementTotalsDTO"
 Crm7DisbursementTableDTO:
   type: object
   properties:
@@ -508,21 +507,21 @@ Crm7ClaimTotalsDTO:
       type: number
       format: float
     total:
-      $ref: '#/Crm7ClaimTotalCostsDTO'
+      $ref: "#/Crm7ClaimTotalCostsDTO"
     officeUse:
-      $ref: '#/Crm7ClaimTotalCostsDTO'
+      $ref: "#/Crm7ClaimTotalCostsDTO"
 Crm7ClaimTotalCostsDTO:
   type: object
   properties:
     profit:
-      $ref: '#/Crm7ClaimTotalCostDetailsDTO'
+      $ref: "#/Crm7ClaimTotalCostDetailsDTO"
     disbursements:
       type: number
       format: float
     travel:
-      $ref: '#/Crm7ClaimTotalCostDetailsDTO'
+      $ref: "#/Crm7ClaimTotalCostDetailsDTO"
     waiting:
-      $ref: '#/Crm7ClaimTotalCostDetailsDTO'
+      $ref: "#/Crm7ClaimTotalCostDetailsDTO"
 Crm7ClaimTotalCostDetailsDTO:
   type: object
   properties:
@@ -546,7 +545,7 @@ Crm7CaseInformationDTO:
       type: string
       description: "Details of any relevant factors in support of a claim, inked cases, etc."
     solicitorCertification:
-      $ref: '#/Crm7CaseInformationSolicitorDTO'
+      $ref: "#/Crm7CaseInformationSolicitorDTO"
     additionalInfo:
       type: string
       description: "Additional information pertinent to this submission"
