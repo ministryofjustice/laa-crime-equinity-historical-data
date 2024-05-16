@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class Row{
+public class Crm4ExpenditureModel{
     @JsonProperty("Description")
     public String description;
     @JsonProperty("Rate")

@@ -95,7 +95,7 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     public int total_authority;
 
     @JsonProperty("Ae")
-    public Ae ae;
+    public Crm4AdditionalExpenditure additionalExpenditure;
 
     @JsonProperty("Quotes_number")
     public int quotes_number;

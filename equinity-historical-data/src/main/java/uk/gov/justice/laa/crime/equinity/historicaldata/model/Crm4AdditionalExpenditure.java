@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 
-public class Ae  {
-    public List<Row> row;
+public class Crm4AdditionalExpenditure  {
+    public List<Crm4ExpenditureModel> row;
 }
