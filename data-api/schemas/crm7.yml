@@ -28,12 +28,13 @@ Crm7DetailsDTO:
     claimTotals:
       $ref: "#/Crm7ClaimTotalsDTO"
     coversheet:
-      type: string
+      type: boolean
     #          $ref: '#/Crm7CoversheetDTO'
     caseInformation:
       $ref: "#/Crm7CaseInformationDTO"
-    officeUseOnly:
-      $ref: "#/Crm7OfficeUseOnlyDTO"
+    decisionOfficeUseOnly:
+      type: string
+#      $ref: "#/Crm7DecisionOfficeUseOnlyDTO"
 
 Crm7SummaryOfClaimDTO:
   type: object
@@ -451,7 +452,7 @@ Crm7DisbursementDTO:
       items:
         $ref: "#/Crm7DisbursementTableDTO"
     totals:
-      $ref: "#/Crm7DisbursementTotalsDTO"
+      $ref: "#/Crm7ClaimTotalCostDetailsDTO"
     invoiceAttachments:
       description: "Whether attached electronically or by post"
       type: string
@@ -459,7 +460,7 @@ Crm7DisbursementDTO:
         - "Post"
         - "DX"
     officeUse:
-      $ref: "#/Crm7DisbursementTotalsDTO"
+      $ref: "#/Crm7ClaimTotalCostDetailsDTO"
 Crm7DisbursementTableDTO:
   type: object
   properties:
@@ -482,21 +483,6 @@ Crm7DisbursementTableDTO:
       type: number
       format: float
     total:
-      type: number
-      format: float
-Crm7DisbursementTotalsDTO:
-  type: object
-  properties:
-    net:
-      description: "Total Net"
-      type: number
-      format: float
-    vat:
-      description: "Total VAT"
-      type: number
-      format: float
-    total:
-      description: "Grand Total"
       type: number
       format: float
 
@@ -529,7 +515,7 @@ Crm7ClaimTotalCostDetailsDTO:
       description: "Net Cost"
       type: number
       format: float
-    vatRate:
+    vat:
       description: "Costs VAT Rate %"
       type: number
       format: float
@@ -557,8 +543,8 @@ Crm7CaseInformationSolicitorDTO:
     date:
       type: string
 
-Crm7OfficeUseOnlyDTO:
-  type: object
-  properties:
-    decision:
-      type: string
+#Crm7DecisionOfficeUseOnlyDTO:
+#  type: object
+#  properties:
+#    decision:
+#      type: string

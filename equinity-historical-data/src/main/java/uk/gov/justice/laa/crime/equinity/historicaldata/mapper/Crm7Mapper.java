@@ -21,10 +21,10 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="scheduleOfTimeSpent", source="model")
     @Mapping(target="claimOfCosts", source="model")
     @Mapping(target="disbursement", source="model")
-    @Mapping(target="claimTotals", expression="java(null)")
-    @Mapping(target="coversheet", expression="java(null)")
-    @Mapping(target="caseInformation", expression="java(null)")
-    @Mapping(target="officeUseOnly", expression="java(null)")
+    @Mapping(target="claimTotals", source="model")
+    @Mapping(target="coversheet", source="coversheet_printed")
+    @Mapping(target="caseInformation", source="model")
+    @Mapping(target="decisionOfficeUseOnly", source="decision")
     Crm7DetailsDTO getDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")
@@ -231,11 +231,66 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="net", source="cfc_disb_total_net")
     @Mapping(target="vat", source="cfc_disb_total_vat")
     @Mapping(target="total", source="cfc_disb_grand_total")
-    Crm7DisbursementTotalsDTO getDisbursementTotalsDTOFromModel(Crm7DetailsModel model);
+    Crm7ClaimTotalCostDetailsDTO getDisbursementTotalsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="net", source="cfc_disb_total_net_ou")
     @Mapping(target="vat", source="cfc_disb_total_vat_ou")
     @Mapping(target="total", source="cfc_disb_grand_total_ou")
-    Crm7DisbursementTotalsDTO getDisbursementOfficeDTOFromModel(Crm7DetailsModel model);
-}
+    Crm7ClaimTotalCostDetailsDTO getDisbursementOfficeDTOFromModel(Crm7DetailsModel model);
 
+    @Mapping(target="deductions", expression="java(null)")
+    @Mapping(target="total", expression="java(getClaimTotalsCostDTOFromModel(model))")
+    @Mapping(target="officeUse", expression="java(getClaimTotalsOfficeDTOFromModel(model))")
+    Crm7ClaimTotalsDTO getClaimTotalsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="profit", expression="java(getClaimTotalsCostProfitDTOFromModel(model))")
+    @Mapping(target="disbursements", source="cfc_disb_grand_total")
+    @Mapping(target="travel", expression="java(getClaimTotalsCostTravelDTOFromModel(model))")
+    @Mapping(target="waiting", expression="java(getClaimTotalsCostWaitDTOFromModel(model))")
+    Crm7ClaimTotalCostsDTO getClaimTotalsCostDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="vat", source="ct_profit_costs_vat_rate")
+    @Mapping(target="total", source="ct_profit_costs_total")
+    Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostProfitDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="vat", expression="java(null)")
+    @Mapping(target="total", source="ct_travel_costs_total")
+    Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostTravelDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="vat", expression="java(null)")
+    @Mapping(target="total", source="ct_waiting_costs_total")
+    Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostWaitDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="profit", expression="java(getClaimTotalsOfficeProfitDTOFromModel(model))")
+    @Mapping(target="disbursements", source="cfc_disb_grand_total_ou")
+    @Mapping(target="travel", expression="java(getClaimTotalsOfficeTravelDTOFromModel(model))")
+    @Mapping(target="waiting", expression="java(getClaimTotalsOfficeWaitDTOFromModel(model))")
+    Crm7ClaimTotalCostsDTO getClaimTotalsOfficeDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="vat", source="ctou_profit_costs_vat_rate")
+    @Mapping(target="total", source="ctou_profit_costs_total")
+    Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeProfitDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="vat", source="ctou_travel_costs_vat_rate")
+    @Mapping(target="total", source="ctou_travel_costs_total")
+    Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeTravelDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="vat", source="ctou_waiting_costs_vat_rate")
+    @Mapping(target="total", source="ctou_waiting_costs_total")
+    Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeWaitDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="relevantDetails", source="relevant_case_info_details")
+    @Mapping(target="solicitorCertification", source="model")
+    @Mapping(target="additionalInfo", source="additional_info")
+    Crm7CaseInformationDTO getCaseInformationDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="name", source="solicitor_sign_name")
+    @Mapping(target="date", source="solicitor_sign_date")
+    Crm7CaseInformationSolicitorDTO getCaseInformationSolicitorDTOFromModel(Crm7DetailsModel model);
+}
