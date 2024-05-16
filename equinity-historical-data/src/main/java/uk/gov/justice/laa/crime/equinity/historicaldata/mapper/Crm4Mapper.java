@@ -26,7 +26,6 @@ public interface Crm4Mapper {
     @Mapping(target="caseDetails.clientDetails.ufn", source="client_ufn")
     @Mapping(target="caseDetails.clientDetails.maatNumber", source="maat_number")
     @Mapping(target="caseDetails.clientDetails.firstName", source="client_forename")
-    @Mapping(target="caseDetails.clientDetails.middleName", expression = "java(null)")
     @Mapping(target="caseDetails.clientDetails.surname", source="client_surname")
     @Mapping(target="caseDetails.clientDetails.dateOfBirth", source="client_dob")
     @Mapping(target="caseDetails.clientDetails.prisonLaw", source="prison_law")
