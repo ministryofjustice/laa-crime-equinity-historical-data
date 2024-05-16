@@ -100,7 +100,7 @@ Crm4CaseDetailsDTO:
     ClientDetails:
       $ref: '#/Crm4ClientDTO'
     ProceedingDetails:
-      $ref: '#/Crm4ProceedingDetails'
+      $ref: '#/Crm4ProceedingDetailsDTO'
 
 Crm4FirmDTO:
   type: object
@@ -209,7 +209,7 @@ Crm4ClientDTO:
       format: date-time
     prisonLaw:
       type: string
-Crm4ProceedingDetails:
+Crm4ProceedingDetailsDTO:
   type: object
   properties:
     isClientDetained:
