@@ -9,5 +9,5 @@ import java.util.ArrayList;
 
 public class Crm4AdditionalExpenditures implements CrmFileDetailsModelInterface {    
 
-     public ArrayList<Crm4Expenditure> row;
+     public ArrayList<Crm4ExpenditureModel> row;
 }
