@@ -6,21 +6,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class Crm4Expenditure  {
+public class Crm4ExpenditureModel{
     @JsonProperty("Description")
     public String description;
-    @JsonProperty("Rate") 
+    @JsonProperty("Rate")
     public int rate;
-    @JsonProperty("Total") 
+    @JsonProperty("Total")
     public int total;
-    @JsonProperty("Quantity") 
+    @JsonProperty("Quantity")
     public int quantity;
-    @JsonProperty("Justification") 
+    @JsonProperty("Justification")
     public String justification;
-    @JsonProperty("Rate_cw") 
-    public int rate_cw;
-    @JsonProperty("Total_cw") 
-    public int total_cw;
-    @JsonProperty("Quantity_cw") 
-    public int quantity_cw;
 }
