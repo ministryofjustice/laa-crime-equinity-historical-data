@@ -48,7 +48,7 @@ public interface Crm4Mapper {
     @Mapping(target="expenditureDetails.preparation.hours", source = "preparation_hrs")
     @Mapping(target="expenditureDetails.preparation.hourlyRate", source = "preparation_rate")
     @Mapping(target="expenditureDetails.preparation.total", source = "preparation_total")
-    @Mapping(target="expenditureDetails.additionalExpenditure", source="additionalExpenditure")
+    @Mapping(target="expenditureDetails.additionalExpenditure", source="ae.row")
     @Mapping(target="expenditureDetails.travel.hours", source = "travel_no_of_hrs")
     @Mapping(target="expenditureDetails.travel.rate", source = "travel_per_hr")
     @Mapping(target="expenditureDetails.travel.total", source = "travel_cost_total")

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -95,8 +94,8 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Total_authority")
     public int total_authority;
 
-    @JsonProperty("Ae_cw.Row")
-    public List<Crm4Expenditure> additionalExpenditure;
+    @JsonProperty("Ae")
+    public Ae ae;
 
     @JsonProperty("Quotes_number")
     public int quotes_number;
