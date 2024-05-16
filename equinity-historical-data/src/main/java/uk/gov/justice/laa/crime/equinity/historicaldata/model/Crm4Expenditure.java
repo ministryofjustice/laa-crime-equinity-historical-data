@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class Crm4Expenditure implements CrmFileDetailsModelInterface {
+public class Crm4Expenditure  {
     @JsonProperty("Description")
     public String description;
     @JsonProperty("Rate") 

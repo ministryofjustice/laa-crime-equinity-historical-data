@@ -3,7 +3,10 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.Date;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 
@@ -61,10 +64,11 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     public String mainoffence;
     @JsonProperty("Plea")
     public String plea;
+    @JsonProperty("Nexthearingdate")
+    public Date nexthearingdate;
+
     @JsonProperty("Is_case_subject_to_poca")
     public String is_case_subject_to_poca;
-
-
     @JsonProperty("Expenditure_type")
     public String expenditure_type;
     @JsonProperty("Prior_authority_granted")
@@ -91,14 +95,15 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Total_authority")
     public int total_authority;
 
-
-    @JsonProperty("Ae_cw")
-    public Crm4AdditionalExpenditures ae_cw;
+    @JsonProperty("Ae_cw.Row")
+    public List<Crm4Expenditure> additionalExpenditure;
 
     @JsonProperty("Quotes_number")
     public int quotes_number;
     @JsonProperty("Obtained_alt_quotes")
     public String obtained_alt_quotes;
+    @JsonProperty("No_alt_quote_reasons")
+    public String no_alt_quote_reasons;
     @JsonProperty("Q1_company")
     public String q1_company;
     @JsonProperty("Q1_expertname")
@@ -128,7 +133,7 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     public String q2_company;
     @JsonProperty("Q2_expertname")
     public String q2_expertname;
-    @JsonProperty("Q1_phone")
+    @JsonProperty("Q2_phone")
     public String q2_phone;
     @JsonProperty("Q2_costbasis")
     public String q2_costbasis;
@@ -188,5 +193,7 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     public boolean solicitor_declaration;
     @JsonProperty("Solicitor_sign_date")
     public Date solicitor_sign_date;
+    @JsonProperty("TlStateName")
+    public String tlstatename;
 
 }

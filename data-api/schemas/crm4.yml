@@ -8,9 +8,9 @@ Crm4DetailsDTO:
     CaseDetails:
       $ref: '#/Crm4CaseDetailsDTO'
     ExpenditureDetails:
-      $ref: '#/Crm4ExpenditureDetails'
+      $ref: '#/Crm4ExpenditureDetailsDTO'
     AlternativeQuotes:
-      $ref: '#/Crm4AlternativeQuotes'
+      $ref: '#/Crm4AlternativeQuotesDTO'
     PriorAuthorityDetails:
       $ref: '#/Crm4PriorAuthorityDTO'
     AdditionalInfo:
@@ -19,38 +19,36 @@ Crm4DetailsDTO:
       $ref: '#/Crm4SolicitorDTO'
     OfficeUseOnly:
       $ref: '#/Crm4DecisionDTO'
-Crm4ExpenditureDetails:
+Crm4ExpenditureDetailsDTO:
   type: object
   properties:
     Details:
-      $ref: '#/Crm4ExpenDetails'
+      $ref: '#/Crm4ExpenDetailsDTO'
     Preparation:
-      $ref: '#/Crm4PreparationDetails'
+      $ref: '#/Crm4PreparationDetailsDTO'
     AdditionalExpenditure:
-      $ref: '#/Crm4Expenditure'
+      type: array
+      items:
+        $ref: '#/Crm4ExpenditureDTO'
     Travel:
-      $ref: '#/Crm4Travel'
+      $ref: '#/Crm4TravelDTO'
     Authority:
       type: number
       format: float
-      
-Crm4Travel:
+
+Crm4TravelDTO:
   type: object
   properties:
     hours:
       type: string
       format: time
       description: only Time in 24 hrs format HH:MM
-    justification:
-      type: string
-    quantity:
-      type: integer
     rate:
       type: integer
     total:
       type: integer
-      
-Crm4Expenditure:
+
+Crm4ExpenditureDTO:
   type: object
   properties:
     description:
@@ -63,14 +61,14 @@ Crm4Expenditure:
       type: integer
     total:
       type: integer
-      
-Crm4ExpenDetails:
+
+Crm4ExpenDetailsDTO:
   type: object
   properties:
     expenditureType:
       type: string
     priorAuthority:
-      type: boolean
+      type: string
     expertName:
       type: string
     companyName:
@@ -79,7 +77,7 @@ Crm4ExpenDetails:
       type: string
     postCodeExpert:
       type: string
-Crm4PreparationDetails:
+Crm4PreparationDetailsDTO:
   type: object
   properties:
     hours:
@@ -87,14 +85,14 @@ Crm4PreparationDetails:
       format: time
       description: only Time in 24 hrs format HH:MM
     hourlyRate:
-      type: boolean
+      type: integer
     total:
-      type: string
+      type: integer
 Crm4CaseDetailsDTO:
   type: object
   properties:
     isPOCA:
-      type: boolean
+      type: string
     Firm:
       $ref: '#/Crm4FirmDTO'
     SolicitorDetails:
@@ -103,7 +101,7 @@ Crm4CaseDetailsDTO:
       $ref: '#/Crm4ClientDTO'
     ProceedingDetails:
       $ref: '#/Crm4ProceedingDetails'
-      
+
 Crm4FirmDTO:
   type: object
   properties:
@@ -123,7 +121,7 @@ Crm4FirmDTO:
       type: string
     firmSolicitorName:
       type: string
-      
+
 Crm4PriorAuthorityDTO:
   type: object
   properties:
@@ -135,26 +133,22 @@ Crm4PriorAuthorityDTO:
       type: string
     qcDetails:
       type: string
-      
-Crm4AlternativeQuotes:
+
+Crm4AlternativeQuotesDTO:
   type: object
   properties:
     alternativeQuote:
-      type: boolean
+      type: string
     reason:
       type: string
     numberOfQuotes:
-      type: string
-    defenceMitigation:
-      type: string
-    qcDetails:
-      type: string
+      type: integer
     Quotes:
       type: array
       items:
-        $ref: "#/Crm4Quote"
-      
-Crm4Quote:
+        $ref: "#/Crm4QuoteDTO"
+
+Crm4QuoteDTO:
   type: object
   properties:
     companyName:
@@ -189,7 +183,7 @@ Crm4Quote:
       format: float
     qcDetails:
       type: string
-      
+
 Crm4SolicitorDetailsDTO:
   type: object
   properties:
@@ -214,24 +208,24 @@ Crm4ClientDTO:
       type: string
       format: date-time
     prisonLaw:
-      type: boolean
+      type: string
 Crm4ProceedingDetails:
   type: object
   properties:
     isClientDetained:
-      type: boolean
+      type: string
     detainedDetails:
       type: string
     courtType:
       type: string
     psychiatricLiaison:
-      type: boolean
+      type: string
     psychiatricDetails:
       type: string
     mainOffence:
       type: string
     actualPlea:
-      type: boolean
+      type: string
     dateOfHearing:
       type: string
       format: date-time
@@ -239,7 +233,7 @@ Crm4SolicitorDTO:
   type: object
   properties:
     declaration:
-      $ref: '#/Crm4NameAndDateDTO'
+      type: boolean
     certification:
       $ref: '#/Crm4NameAndDateDTO'
 Crm4NameAndDateDTO:
