@@ -200,8 +200,6 @@ Crm4ClientDTO:
       type: string
     firstName:
       type: string
-    middleName:
-      type: string
     surname:
       type: string
     dateOfBirth:
