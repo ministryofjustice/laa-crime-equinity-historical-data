@@ -162,7 +162,6 @@ Crm4QuoteDTO:
     preparationHours:
       type: number
       format: float
-      description: only Time in 24 hrs format HH:MM
     hourlyRate:
       type: number
       format: float
