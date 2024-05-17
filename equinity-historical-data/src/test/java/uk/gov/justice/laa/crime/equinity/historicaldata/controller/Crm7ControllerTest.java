@@ -53,8 +53,8 @@ class Crm7ControllerTest {
             // Mocking good XML
             try {
                 FileInputStream fis = new FileInputStream(testFile);
-                JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-                byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
+                JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+                byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
                 TaskImageFilesModel taskModel = new TaskImageFilesModel();
                 taskModel.setID(testUsn);
                 taskModel.setCrmFile(fileDataByte);
