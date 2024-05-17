@@ -3,6 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-
+@Slf4j
 public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Applyingge100")
     public boolean applyingge100;
@@ -244,7 +245,7 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
                     quote.setTravelHourlyRate(trvlHrsRate);
                     quote.setQuoteTotal(qtTotal);
                 } catch (NoSuchMethodException|IllegalAccessException |InvocationTargetException e) {
-
+                    log.error("eForm CRM4 unable to call quote Method:: urn="+urn, e.getMessage());
                 }
                 allQuotes.add(quote);
             }
