@@ -152,7 +152,7 @@ Crm4QuoteDTO:
   type: object
   properties:
     companyName:
-      type: boolean
+      type: string
     expertName:
       type: string
     contactPhone:
@@ -160,8 +160,8 @@ Crm4QuoteDTO:
     costBasis:
       type: string
     preparationHours:
-      type: string
-      format: time
+      type: number
+      format: float
       description: only Time in 24 hrs format HH:MM
     hourlyRate:
       type: number
@@ -174,7 +174,7 @@ Crm4QuoteDTO:
     travelHours:
       type: string
       format: time
-      description: only Time in 24 hrs format HH:MM
+      description: only Time in 24 hrs format HH:MM:SS
     travelHourlyRate:
       type: number
       format: float
