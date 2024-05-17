@@ -57,6 +57,7 @@ public interface Crm4Mapper {
     @Mapping(target="alternativeQuotes.alternativeQuote", source = "obtained_alt_quotes")
     @Mapping(target="alternativeQuotes.reason", source = "no_alt_quote_reasons")
     @Mapping(target="alternativeQuotes.numberOfQuotes", source = "quotes_number")
+    @Mapping(target="alternativeQuotes.quotes", source = "allQuotes")
 
 
     @Mapping(target="priorAuthorityDetails.authorityDetails", source = "authority_sought")

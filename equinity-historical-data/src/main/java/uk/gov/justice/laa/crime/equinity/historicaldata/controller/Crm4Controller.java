@@ -23,6 +23,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
         log.info("eForm CRM4 details request received :: usn=[{}]", usn);
 
         Crm4DetailsModel crm4FileDetails = crmFileService.getCrmFileContent(usn, Crm4Model.class).getFormDetails();
+        crm4FileDetails.setAllQuotes();
         Crm4DetailsDTO crm4DetailsDTO = crm4Mapper.getEntityFromModel(crm4FileDetails);
         return ResponseEntity.ok(crm4DetailsDTO);
     }
