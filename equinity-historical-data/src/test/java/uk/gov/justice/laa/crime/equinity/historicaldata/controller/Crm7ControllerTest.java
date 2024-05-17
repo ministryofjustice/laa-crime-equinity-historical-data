@@ -22,8 +22,10 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesMode
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @SpringBootTest
@@ -39,16 +41,28 @@ class Crm7ControllerTest {
     @Autowired
     Crm7Controller controller;
 
+    Map<Long, String> validUsnTests;
+
     @BeforeAll
-    void preTest() throws IOException {
-        // Mocking good XML
-        FileInputStream fis = new FileInputStream("src/test/resources/Crm7MockFile_5001662.txt");
-        JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-        byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
-        TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setID(5001662L);
-        taskModel.setCrmFile(fileDataByte);
-        taskImageFilesRepository.save(taskModel);
+    void preTest() {
+        validUsnTests = new HashMap<>();
+        validUsnTests.put(5001662L, "src/test/resources/Crm7MockFile_5001662.txt");
+        validUsnTests.put(4808706L,  "src/test/resources/Crm7MockFile_4808706.txt");
+
+        validUsnTests.forEach((testUsn, testFile) -> {
+            // Mocking good XML
+            try {
+                FileInputStream fis = new FileInputStream(testFile);
+                JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+                byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
+                TaskImageFilesModel taskModel = new TaskImageFilesModel();
+                taskModel.setID(testUsn);
+                taskModel.setCrmFile(fileDataByte);
+                taskImageFilesRepository.save(taskModel);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**
@@ -74,14 +88,19 @@ class Crm7ControllerTest {
 
     @Test
     void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse() {
-        Long usnTest = 5001662L;
-        ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest);
+        String expectedClientFirstName = "James";
+        String expectedClientSurname = "Bond";
 
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnTest.intValue());
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientFirstName()).isEqualTo("James");
-        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        validUsnTests.keySet().forEach((usnToTest) -> {
+            ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnToTest);
+
+            softly.assertThat(result.getBody()).isNotNull();
+            softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
+            softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnToTest.intValue());
+            softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+            softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
+            softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
+            softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        });
     }
 }

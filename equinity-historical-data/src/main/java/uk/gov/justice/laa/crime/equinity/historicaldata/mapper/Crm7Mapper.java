@@ -78,7 +78,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="dateChargeLaid", source="cd_offence_date")
     @Mapping(target="indictmentAttachment", expression="java(convertToEnum(Crm7CaseDetailsDTO.IndictmentAttachmentEnum.class, model.getCd_indictment_attach_method()))")
     @Mapping(target="isWastedCostsCase", expression="java(convertToEnum(Crm7CaseDetailsDTO.IsWastedCostsCaseEnum.class, model.getCd_wasted_cost_order()))")
-    @Mapping(target="wastedCosts", source="cd_wasted_costs_order_details")
+    @Mapping(target="wastedCosts", expression="java(emptyFloatToNull(model.getCd_wasted_costs_order_details()))")
     @Mapping(target="orderDetails", source="cd_wasted_costs_order_details")
     Crm7CaseDetailsDTO getCaseDetailsDTOFromModel(Crm7DetailsModel model);
 
