@@ -6,6 +6,10 @@ public interface CrmMapper {
         return (s == null || s.isEmpty()) ? null : Integer.parseInt(s);
     }
 
+    default Float emptyFloatToNull(String s) {
+        return (s == null || s.isEmpty()) ? null : Float.parseFloat(s);
+    }
+
     default <T extends Enum<T>> T convertToEnum(Class<T> enumClass, String s) {
         return (s == null || s.isEmpty()) ? null
                 : Enum.valueOf(enumClass, s.toUpperCase());

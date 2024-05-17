@@ -57,7 +57,7 @@ Crm7SummaryOfClaimDTO:
       type: string
       enum:
         - "Post"
-        - "DX"
+        - "Electronically"
     isLocatedInDesignatedArea:
       type: string
       enum:
@@ -162,7 +162,7 @@ Crm7CaseDetailsDTO:
       type: string
       enum:
         - "Post"
-        - "DX"
+        - "Electronically"
     isWastedCostsCase:
       description: "Were any wasted costs orders made in this case?"
       type: string
@@ -260,7 +260,7 @@ Crm7ClaimDetailsDTO:
       type: string
       enum:
         - "Post"
-        - "DX"
+        - "Electronically"
     wasTimeSpentOnTapedEvidence:
       type: string
       enum:
@@ -282,7 +282,7 @@ Crm7ClaimDetailsDTO:
       type: string
       enum:
         - "Post"
-        - "DX"
+        - "Electronically"
 
 Crm7PreOrderWorkDTO:
   type: object
@@ -458,7 +458,7 @@ Crm7DisbursementDTO:
       type: string
       enum:
         - "Post"
-        - "DX"
+        - "Electronically"
     officeUse:
       $ref: "#/Crm7ClaimTotalCostDetailsDTO"
 Crm7DisbursementTableDTO:

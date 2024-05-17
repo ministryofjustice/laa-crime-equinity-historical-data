@@ -68,7 +68,7 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Tlsubstate") // in crm5 too
     public String tlsubstate;
     @JsonProperty("Sc_court_indentifier")
-    public int sc_court_indentifier;
+    public String sc_court_indentifier;
     /** *** **/
 
     // Solicitor Details
