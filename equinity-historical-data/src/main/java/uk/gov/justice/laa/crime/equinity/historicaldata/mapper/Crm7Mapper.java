@@ -110,14 +110,14 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="isSupplementalClaim", expression="java(convertToEnum(Crm7ClaimDetailsDTO.IsSupplementalClaimEnum.class, model.getCld_supplemental_claim()))")
     @Mapping(target="supplementalClaimAttachments", expression="java(convertToEnum(Crm7ClaimDetailsDTO.SupplementalClaimAttachmentsEnum.class, model.getCld_attach_method()))")
     @Mapping(target="wasTimeSpentOnTapedEvidence", expression="java(convertToEnum(Crm7ClaimDetailsDTO.WasTimeSpentOnTapedEvidenceEnum.class, model.getCld_taped_evidence()))")
-    @Mapping(target="tapedEvidenceTime", expression="java(null)")
+    @Mapping(target="tapedEvidenceTime", source="cld_tape_running_time")
     @Mapping(target="isRemittedBackToMagistrates", expression="java(convertToEnum(Crm7ClaimDetailsDTO.IsRemittedBackToMagistratesEnum.class, model.getCld_remitted_to_mags()))")
     @Mapping(target="dateRemittedBackToMagistrates", expression="java(null)")
     @Mapping(target="crownCourtAttachments", expression="java(convertToEnum(Crm7ClaimDetailsDTO.CrownCourtAttachmentsEnum.class, model.getCld_prev_claims_attach_method()))")
     Crm7ClaimDetailsDTO getClaimDetailsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="isClaimBeforeGrantDate", expression="java(convertToEnum(Crm7PreOrderWorkDTO.IsClaimBeforeGrantDateEnum.class, model.getPow_claiming()))")
-    @Mapping(target="dateSubmitted", expression="java(null)")
+    @Mapping(target="dateSubmitted", source="date_submitted")
     @Mapping(target="firstCourtHearingDate", source="date_first_hearing")
     @Mapping(target="dateReceivedByCourt", source="date_received")
     Crm7PreOrderWorkDTO getPreOrderWorkDTOFromModel(Crm7DetailsModel model);
@@ -255,12 +255,12 @@ public interface Crm7Mapper extends CrmMapper {
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostProfitDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="net", expression="java(null)")
-    @Mapping(target="vat", expression="java(null)")
+    @Mapping(target="vat", source="ct_travel_costs_vat_rate")
     @Mapping(target="total", source="ct_travel_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostTravelDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="net", expression="java(null)")
-    @Mapping(target="vat", expression="java(null)")
+    @Mapping(target="vat", source="ct_waiting_costs_vat_rate")
     @Mapping(target="total", source="ct_waiting_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostWaitDTOFromModel(Crm7DetailsModel model);
 

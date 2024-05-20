@@ -172,6 +172,8 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public String cld_attach_method;
     @JsonProperty("Cld_taped_evidence")
     public String cld_taped_evidence;
+    @JsonProperty("Cld_tape_running_time")
+    public String cld_tape_running_time;
 
     @JsonProperty("Cld_remitted_to_mags") // Yes/No
     public String cld_remitted_to_mags;
@@ -317,8 +319,12 @@ public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
     public float ct_profit_costs_vat_rate;
     @JsonProperty("Ct_profit_costs_total")
     public String ct_profit_costs_total;
+    @JsonProperty("Ct_travel_costs_vat_rate")
+    public float ct_travel_costs_vat_rate;
     @JsonProperty("Ct_travel_costs_total")
     public float ct_travel_costs_total;
+    @JsonProperty("Ct_waiting_costs_vat_rate")
+    public float ct_waiting_costs_vat_rate;
     @JsonProperty("Ct_waiting_costs_total")
     public float ct_waiting_costs_total;
     @JsonProperty("Ct_total")
