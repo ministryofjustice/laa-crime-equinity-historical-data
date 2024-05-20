@@ -269,6 +269,8 @@ components:
           type: string
         adviceCriteria:
           type: string
+        laaAdviceAssistance:
+          $ref: '#/components/schemas/Crm5LaaAdviceAssistanceDTO'
     Crm5FirmDTO:
       type: object
       properties:
@@ -432,13 +434,13 @@ components:
       type: object
       properties:
         hasCourtAppeal:
-          type: boolean
+          type: string
         appealDetails:
           type: string
         benefitOfCourt:
-          type: boolean
+          type: string
         expertReport:
-          type: boolean
+          type: string
     Crm5AllCostsDTO:
       type: object
       properties:
@@ -546,6 +548,12 @@ components:
         decision:
           type: string
           description: Grant, Part Grant, Reject, Refer For ICA
+    Crm5LaaAdviceAssistanceDTO:
+      properties:
+        providedAdvice:
+          type: string
+        notes:
+          type: string
 
     ## CRM 4
     Crm4DetailsDTO:
