@@ -270,7 +270,7 @@ components:
         adviceCriteria:
           type: string
         laaAdviceAssistance:
-          $ref: '#/components/schemas/Crm5LaaAdviceAssistance'
+          $ref: '#/components/schemas/Crm5LaaAdviceAssistanceDTO'
     Crm5FirmDTO:
       type: object
       properties:
@@ -548,7 +548,7 @@ components:
         decision:
           type: string
           description: Grant, Part Grant, Reject, Refer For ICA
-    Crm5LaaAdviceAssistance:
+    Crm5LaaAdviceAssistanceDTO:
       properties:
         providedAdvice:
           type: string
