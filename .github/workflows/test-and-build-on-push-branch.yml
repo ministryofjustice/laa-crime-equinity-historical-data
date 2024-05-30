@@ -73,7 +73,7 @@ jobs:
       - name: Build a Docker image
         run: docker build -t ${{ env.IMAGE_TAG }} .
       - name: Run Snyk to check Docker image for vulnerabilities
-        uses: snyk/actions/docker@8349f9043a8b7f0f3ee8885bf28f0b388d2446e8
+        uses: snyk/actions/docker@d406fd286b663eb8c6f8adcced4f7bcd199c0a3f
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
