@@ -11,7 +11,8 @@ public record CrmFormSearchCriteriaDTO(
         @Nullable String client, @Nullable String clientDoB,
         @Nullable String submittedFrom, @Nullable String submittedTo,
         @Nullable String providerAccount,
-        @Nullable Integer page, @Nullable Integer pageSize
+        @Nullable Integer page, @Nullable Integer pageSize,
+        @Nullable String profileAcceptedTypes
         ) {
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
@@ -23,6 +24,10 @@ public record CrmFormSearchCriteriaDTO(
                 && isNullOrBlank(submittedFrom) && isNullOrBlank(submittedTo)
                 && isNullOrBlank(providerAccount)) {
             throw new NotEnoughSearchParametersException("Not enough search parameters. Search criteria needs at least 1 input");
+        }
+
+        if (isNullOrBlank(profileAcceptedTypes)) {
+            throw new NotEnoughSearchParametersException("Not enough search parameters. User profile accepted profileAcceptedTypes not given");
         }
     }
 

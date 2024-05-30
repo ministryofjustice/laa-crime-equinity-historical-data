@@ -19,6 +19,7 @@ paths:
         - $ref: '#/components/parameters/searchProviderAccount'
         - $ref: '#/components/parameters/searchPage'
         - $ref: '#/components/parameters/searchPageSize'
+        - $ref: '#/components/parameters/profileAcceptedTypes'
       responses:
         '200':
           description: 'Success'
@@ -98,6 +99,7 @@ paths:
         - $ref: '#/components/parameters/searchProviderAccount'
         - $ref: '#/components/parameters/searchPage'
         - $ref: '#/components/parameters/searchPageSize'
+        - $ref: '#/components/parameters/profileAcceptedTypes'
       responses:
         '200':
           description: 'Success'
@@ -209,6 +211,14 @@ components:
         minimum: 10
         maximum: 100
         example: 20
+    profileAcceptedTypes:
+      name: profileAcceptedTypes
+      in: header
+      required: true
+      schema:
+        type: string
+        minimum: 1
+        example: 1,2,3
 
   schemas:
     ## Search
