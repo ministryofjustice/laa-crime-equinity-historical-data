@@ -47,8 +47,10 @@ class Crm7ControllerTest {
     void preTest() {
         validUsnTests = new HashMap<>();
         validUsnTests.put(5001662L, "src/test/resources/Crm7MockFile_5001662.txt");
+        validUsnTests.put(5001597L, "src/test/resources/Crm7MockFile_5001597.txt");
         validUsnTests.put(4808706L,  "src/test/resources/Crm7MockFile_4808706.txt");
         validUsnTests.put(4808532L,  "src/test/resources/Crm7MockFile_4808532.txt");
+        validUsnTests.put(4808666L, "src/test/resources/Crm7MockFile_4808666.txt");
 
         validUsnTests.forEach((testUsn, testFile) -> {
             // Mocking good XML
