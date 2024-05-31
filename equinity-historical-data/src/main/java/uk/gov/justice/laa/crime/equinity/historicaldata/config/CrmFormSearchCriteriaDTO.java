@@ -11,7 +11,8 @@ public record CrmFormSearchCriteriaDTO(
         @Nullable String client, @Nullable String clientDoB,
         @Nullable String submittedFrom, @Nullable String submittedTo,
         @Nullable String providerAccount,
-        @Nullable Integer page, @Nullable Integer pageSize
+        @Nullable Integer page, @Nullable Integer pageSize,
+        @Nullable String profileAcceptedTypes
         ) {
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);

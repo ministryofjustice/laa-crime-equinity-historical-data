@@ -14,9 +14,9 @@ public class SearchArchiveController implements SearchArchiveApi {
     private final SearchArchiveService searchService;
 
     @Override
-    public ResponseEntity<SearchResultDTO> doSearchArchiveBy(String usn, Integer type, String client, String clientDoB, String submittedFrom, String submittedTo, String providerAccount, Integer page, Integer pageSize) {
+    public ResponseEntity<SearchResultDTO> doSearchArchiveBy(String profileAcceptedTypes, String usn, Integer type, String client, String clientDoB, String submittedFrom, String submittedTo, String providerAccount, Integer page, Integer pageSize) {
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
-                usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize
+                usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize, profileAcceptedTypes
         );
 
         return ResponseEntity.ok(

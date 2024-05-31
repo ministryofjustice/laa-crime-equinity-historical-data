@@ -10,6 +10,7 @@ paths:
       summary: 'Search CRM forms'
       operationId: 'doSearchBy'
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/searchUsn'
         - $ref: '#/components/parameters/searchType'
         - $ref: '#/components/parameters/searchClient'
@@ -89,6 +90,7 @@ paths:
       summary: 'Search Archive for CRM forms'
       operationId: 'doSearchArchiveBy'
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/searchUsn'
         - $ref: '#/components/parameters/searchType'
         - $ref: '#/components/parameters/searchClient'
@@ -209,6 +211,14 @@ components:
         minimum: 10
         maximum: 100
         example: 20
+    profileAcceptedTypes:
+      name: profileAcceptedTypes
+      in: header
+      required: false
+      schema:
+        type: string
+        minimum: 1
+        example: 1,2,3
 
   schemas:
     ## Search

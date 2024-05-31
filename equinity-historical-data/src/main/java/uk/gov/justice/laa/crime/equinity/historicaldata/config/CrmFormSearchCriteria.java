@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @NoArgsConstructor
 public class CrmFormSearchCriteria {
@@ -24,12 +27,14 @@ public class CrmFormSearchCriteria {
     public Specification<CrmFormModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
             .where(byUsn(crmFormSearchCriteriaDTO.usn())
-            .and(byType(crmFormSearchCriteriaDTO.type()))
-            .and(byClientName(crmFormSearchCriteriaDTO.client()))
-            .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
-            .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
-            .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
-            .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount())));
+                .and(byType(crmFormSearchCriteriaDTO.type()))
+                .and(byClientName(crmFormSearchCriteriaDTO.client()))
+                .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
+                .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
+                .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
+                .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
+                .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
+            );
     }
 
     private Specification<CrmFormModelInterface> byUsn(@Nullable String usn){
@@ -64,5 +69,13 @@ public class CrmFormSearchCriteria {
     private Specification<CrmFormModelInterface> byProviderAccount(@Nullable String providerAccount){
         return (root, query, criteriaBuilder)
             -> providerAccount == null ? null : criteriaBuilder.like(root.get("providerAccount"), String.format("%%%s%%", providerAccount));
+    }
+
+    private Specification<CrmFormModelInterface> byProfileAcceptedTypes(@Nullable String types){
+        if (types == null) return null;
+
+        List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));
+        return (root, query, criteriaBuilder)
+                -> root.get("typeId").in(convertedTypes);
     }
 }

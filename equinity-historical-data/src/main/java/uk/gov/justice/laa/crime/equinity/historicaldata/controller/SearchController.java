@@ -16,11 +16,15 @@ public class SearchController implements SearchApi {
     private final SearchService searchService;
 
     @Override
-    public ResponseEntity<SearchResultDTO> doSearchBy(String usn, Integer type, String client, String clientDoB, String submittedFrom, String submittedTo, String providerAccount, Integer page, Integer pageSize) {
+    public ResponseEntity<SearchResultDTO> doSearchBy(
+            String profileAcceptedTypes, String usn, Integer type, String client,
+            String clientDoB, String submittedFrom, String submittedTo,
+            String providerAccount, Integer page, Integer pageSize) {
         log.info("eForm search request received :: usn=[{}] type=[{}] client=[{}] submittedFrom=[{}] submittedTo=[{}] provider=[{}] page=[{}] pageSize=[{}] ",
                 usn, type, client, submittedFrom, submittedTo, providerAccount, page, pageSize);
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
-                usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize
+                usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize,
+                profileAcceptedTypes
         );
 
         return ResponseEntity.ok(
