@@ -10,6 +10,7 @@ paths:
       summary: 'Search CRM forms'
       operationId: 'doSearchBy'
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/searchUsn'
         - $ref: '#/components/parameters/searchType'
         - $ref: '#/components/parameters/searchClient'
@@ -19,7 +20,6 @@ paths:
         - $ref: '#/components/parameters/searchProviderAccount'
         - $ref: '#/components/parameters/searchPage'
         - $ref: '#/components/parameters/searchPageSize'
-        - $ref: '#/components/parameters/profileAcceptedTypes'
       responses:
         '200':
           description: 'Success'
@@ -90,6 +90,7 @@ paths:
       summary: 'Search Archive for CRM forms'
       operationId: 'doSearchArchiveBy'
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/searchUsn'
         - $ref: '#/components/parameters/searchType'
         - $ref: '#/components/parameters/searchClient'
@@ -99,7 +100,6 @@ paths:
         - $ref: '#/components/parameters/searchProviderAccount'
         - $ref: '#/components/parameters/searchPage'
         - $ref: '#/components/parameters/searchPageSize'
-        - $ref: '#/components/parameters/profileAcceptedTypes'
       responses:
         '200':
           description: 'Success'
@@ -214,7 +214,7 @@ components:
     profileAcceptedTypes:
       name: profileAcceptedTypes
       in: header
-      required: true
+      required: false
       schema:
         type: string
         minimum: 1

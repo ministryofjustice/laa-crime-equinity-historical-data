@@ -25,10 +25,6 @@ public record CrmFormSearchCriteriaDTO(
                 && isNullOrBlank(providerAccount)) {
             throw new NotEnoughSearchParametersException("Not enough search parameters. Search criteria needs at least 1 input");
         }
-
-        if (isNullOrBlank(profileAcceptedTypes)) {
-            throw new NotEnoughSearchParametersException("Not enough search parameters. User profile accepted profileAcceptedTypes not given");
-        }
     }
 
     private boolean isNullOrBlank(String input) {

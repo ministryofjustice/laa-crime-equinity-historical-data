@@ -38,7 +38,7 @@ class SearchArchiveControllerTest {
     @Autowired
     SearchArchiveController controller;
 
-    private static final String ACCEPTED_TYPES_DEFAULT = "1";
+    private static final String ACCEPTED_TYPES_DEFAULT = null;
 
     @BeforeAll
     void preTest() {
