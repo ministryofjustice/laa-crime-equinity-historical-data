@@ -22,6 +22,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
+
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -62,7 +65,8 @@ public class Crm5ControllerTest {
         JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
         byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
         TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setID(5001604L);
+        taskModel.setUSN(5001604L);
+        taskModel.setTypeId(CRM_TYPE_5);
         taskModel.setCrmFile(fileDataByte);
         taskImageFilesRepository.save(taskModel);
     }

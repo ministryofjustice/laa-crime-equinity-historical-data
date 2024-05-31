@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
+
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -59,7 +61,8 @@ class Crm7ControllerTest {
                 JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
                 byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
                 TaskImageFilesModel taskModel = new TaskImageFilesModel();
-                taskModel.setID(testUsn);
+                taskModel.setUSN(testUsn);
+                taskModel.setTypeId(CRM_TYPE_7);
                 taskModel.setCrmFile(fileDataByte);
                 taskImageFilesRepository.save(taskModel);
             } catch (FileNotFoundException e) {

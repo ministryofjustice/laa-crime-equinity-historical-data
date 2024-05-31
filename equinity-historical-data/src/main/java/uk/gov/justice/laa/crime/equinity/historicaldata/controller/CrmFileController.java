@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class CrmFileController {
     private final CrmFileService crmFileService;
 
-    @GetMapping(value= "/{usn}")
+    @GetMapping(value= "/{usn}/{type}")
     @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "400",
@@ -38,8 +39,13 @@ public class CrmFileController {
                 schema = @Schema(implementation = ProblemDetail.class)
         )
     )
-    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId) {
-        Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(taskId).toMap();
+    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId,
+                                                               @PathVariable("type") Integer type) {
+        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                taskId, type, null
+        );
+        Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(crmFormDetailsCriteriaDTO)
+                .toMap();
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
 

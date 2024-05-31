@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
+
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -45,7 +47,8 @@ class Crm4ControllerTest {
         JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
         byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
         TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setID(5001912L);
+        taskModel.setUSN(5001912L);
+        taskModel.setTypeId(CRM_TYPE_4);
         taskModel.setCrmFile(fileDataByte);
         taskImageFilesRepository.save(taskModel);
     }

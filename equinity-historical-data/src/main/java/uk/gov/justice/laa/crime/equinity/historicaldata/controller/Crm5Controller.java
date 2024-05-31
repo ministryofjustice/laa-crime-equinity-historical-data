@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm5InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
+
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +23,12 @@ public class Crm5Controller implements Crm5InterfaceApi {
     @Override
     public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn) {
         log.info("eForm CRM5 details request received :: usn=[{}]", usn);
-
-        Crm5DetailsModel crm5FileDetails = crmFileService.getCrmFileContent(usn, Crm5Model.class).getFormDetails();
+        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                usn, CRM_TYPE_5, null
+        );
+        Crm5DetailsModel crm5FileDetails = (Crm5DetailsModel) crmFileService
+                .getCrmImageFile(crmFormDetailsCriteriaDTO)
+                .getFormDetails();
         CRM5DetailsDTO crm5DetailsDTO = crm5Mapper.getEntityFromModel(crm5FileDetails);
         return ResponseEntity.ok(crm5DetailsDTO);
     }
