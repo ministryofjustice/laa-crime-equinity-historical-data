@@ -303,7 +303,7 @@ components:
       properties:
         levelOfWork:
           type: string
-        cwCriminalInvestigation:
+        cwCriminalProceeding:
           type: boolean
         cwCcrc:
           type: boolean
