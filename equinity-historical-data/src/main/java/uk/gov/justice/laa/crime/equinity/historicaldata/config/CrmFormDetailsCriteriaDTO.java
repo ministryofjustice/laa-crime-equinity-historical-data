@@ -9,8 +9,8 @@ public record CrmFormDetailsCriteriaDTO(
         @Nullable String profileAcceptedTypes
         ) {
     public CrmFormDetailsCriteriaDTO {
-        if (usn == null || type == null) {
-            throw new InvalidDataAccessApiUsageException("Expected USN and Crm eFrom type not be null");
+        if (usn == null) {
+            throw new InvalidDataAccessApiUsageException("Expected USN not be null");
         }
     }
 //

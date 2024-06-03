@@ -32,7 +32,7 @@ public class CrmFileService {
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
 
-    private static Class<? extends CrmFileModelInterface> getCrmFormTypeMapClass(int type) throws NotEnoughSearchParametersException {
+    private static Class<? extends CrmFileModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
         return switch (type) {
             case CRM_TYPE_4 -> Crm4Model.class;
             case CRM_TYPE_5 -> Crm5Model.class;

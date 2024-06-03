@@ -80,6 +80,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Crm7DetailsDTO'
+        '400':
+          description: 'Bad request'
+        '403':
+          description: 'Unauthorized'
+        '404':
+          description: 'Not found'
+        '500':
+          description: 'Internal server error'
   ###
   # Archive
   ###
@@ -123,7 +131,6 @@ components:
       in: path
       required: true
       schema:
-        nullable: false
         type: integer
         format: int64
         maxLength: 10
