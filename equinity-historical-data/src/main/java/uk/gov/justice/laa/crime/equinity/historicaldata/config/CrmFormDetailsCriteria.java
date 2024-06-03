@@ -20,17 +20,17 @@ public class CrmFormDetailsCriteria {
             );
     }
 
-    private Specification<CrmFileModelInterface> byUsn(@Nullable Long usn){
+    private Specification<CrmFileModelInterface> byUsn(@Nullable Long usn) {
         return (root, query, criteriaBuilder)
                 -> usn == null ? null : criteriaBuilder.equal(root.get("USN"), usn);
     }
 
-    private Specification<CrmFileModelInterface> byType(@Nullable Integer type){
+    private Specification<CrmFileModelInterface> byType(@Nullable Integer type) {
         return (root, query, criteriaBuilder)
                 -> type == null ? null : criteriaBuilder.equal(root.get("typeId"), type);
     }
 
-    private Specification<CrmFileModelInterface> byProfileAcceptedTypes(@Nullable String types){
+    private Specification<CrmFileModelInterface> byProfileAcceptedTypes(@Nullable String types) {
         if (types == null) return null;
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));

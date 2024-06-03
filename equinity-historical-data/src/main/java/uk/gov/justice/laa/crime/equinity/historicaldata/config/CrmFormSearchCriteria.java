@@ -37,41 +37,41 @@ public class CrmFormSearchCriteria {
             );
     }
 
-    private Specification<CrmFormModelInterface> byUsn(@Nullable String usn){
+    private Specification<CrmFormModelInterface> byUsn(@Nullable String usn) {
         return (root, query, criteriaBuilder)
                 -> usn == null ? null : criteriaBuilder.like(root.get("USN"), String.format("%%%s%%", usn));
     }
 
-    private Specification<CrmFormModelInterface> byType(@Nullable Integer type){
+    private Specification<CrmFormModelInterface> byType(@Nullable Integer type) {
         return (root, query, criteriaBuilder)
                 -> type == null ? null : criteriaBuilder.equal(root.get("typeId"), type);
     }
 
-    private Specification<CrmFormModelInterface> byClientName(@Nullable String clientName){
+    private Specification<CrmFormModelInterface> byClientName(@Nullable String clientName) {
         return (root, query, criteriaBuilder)
                 -> clientName == null ? null : criteriaBuilder.like(root.get("clientName"), String.format("%%%s%%", clientName));
     }
 
-    private Specification<CrmFormModelInterface> byClientDoB(@Nullable String clientDOB){
+    private Specification<CrmFormModelInterface> byClientDoB(@Nullable String clientDOB) {
         return null;
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom){
+    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
         return (root, query, criteriaBuilder)
                 -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo){
+    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {
         return (root, query, criteriaBuilder)
                 -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
     }
 
-    private Specification<CrmFormModelInterface> byProviderAccount(@Nullable String providerAccount){
+    private Specification<CrmFormModelInterface> byProviderAccount(@Nullable String providerAccount) {
         return (root, query, criteriaBuilder)
             -> providerAccount == null ? null : criteriaBuilder.like(root.get("providerAccount"), String.format("%%%s%%", providerAccount));
     }
 
-    private Specification<CrmFormModelInterface> byProfileAcceptedTypes(@Nullable String types){
+    private Specification<CrmFormModelInterface> byProfileAcceptedTypes(@Nullable String types) {
         if (types == null) return null;
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));

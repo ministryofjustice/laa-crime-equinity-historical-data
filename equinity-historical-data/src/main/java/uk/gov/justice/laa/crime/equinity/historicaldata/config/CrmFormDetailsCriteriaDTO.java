@@ -13,7 +13,7 @@ public record CrmFormDetailsCriteriaDTO(
             throw new InvalidDataAccessApiUsageException("Expected USN not be null");
         }
     }
-//
+
     @Override
     public String toString() {
         return "CrmFormDetailsCriteriaDTO{" +

@@ -28,8 +28,6 @@ public class Crm7Controller implements Crm7InterfaceApi {
         );
         Crm7DetailsModel crm7FileDetails = (Crm7DetailsModel) crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO).getFormDetails();
 
-        Crm7DetailsDTO detailsDTO = mapper.getDTOFromModel(crm7FileDetails);
-
-        return ResponseEntity.ok(detailsDTO);
+        return ResponseEntity.ok(mapper.getDTOFromModel(crm7FileDetails));
     }
 }

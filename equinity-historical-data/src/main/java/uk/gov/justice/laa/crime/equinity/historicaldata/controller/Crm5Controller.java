@@ -29,7 +29,6 @@ public class Crm5Controller implements Crm5InterfaceApi {
         Crm5DetailsModel crm5FileDetails = (Crm5DetailsModel) crmFileService
                 .getCrmImageFile(crmFormDetailsCriteriaDTO)
                 .getFormDetails();
-        CRM5DetailsDTO crm5DetailsDTO = crm5Mapper.getEntityFromModel(crm5FileDetails);
-        return ResponseEntity.ok(crm5DetailsDTO);
+        return ResponseEntity.ok(crm5Mapper.getEntityFromModel(crm5FileDetails));
     }
 }
