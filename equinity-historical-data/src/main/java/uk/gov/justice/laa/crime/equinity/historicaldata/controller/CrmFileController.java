@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import java.util.Map;
@@ -39,7 +40,11 @@ public class CrmFileController {
         )
     )
     public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId) {
-        Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(taskId).toMap();
+        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                taskId, null, null
+        );
+        Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(crmFormDetailsCriteriaDTO)
+                .toMap();
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
 

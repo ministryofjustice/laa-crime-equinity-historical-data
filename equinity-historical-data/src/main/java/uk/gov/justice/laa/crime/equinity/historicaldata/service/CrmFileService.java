@@ -8,10 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteria;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFileModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
+
 import java.nio.charset.StandardCharsets;
 
 
@@ -19,15 +22,58 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @Slf4j
 public class CrmFileService {
+    public static final int CRM_TYPE_4 = 1;
+    public static final int CRM_TYPE_5 = 4;
+    public static final int CRM_TYPE_7 = 5;
+    public static final int CRM_TYPE_14 = 6;
+    public static final int CRM_TYPE_15 = 7;
+
     private final TaskImageFilesRepository taskImageFilesRepository;
     private final ObjectMapper jsonObjectMapper;
+    private final CrmFormDetailsCriteria crmFormDetailsCriteria;
 
-    public <T extends CrmFileModelInterface> T getCrmFileContent(Long taskId, Class<T> returnClass) {
+    private static Class<? extends CrmFileModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
+        return switch (type) {
+            case CRM_TYPE_4 -> Crm4Model.class;
+            case CRM_TYPE_5 -> Crm5Model.class;
+            case CRM_TYPE_7 -> Crm7Model.class;
+            default -> throw new NotEnoughSearchParametersException("A valid CRM From Type is required. Given type: " + type);
+        };
+    }
+
+    public <T extends CrmFileModelInterface> T getCrmImageFile(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+        JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
+        return convertCrmFormJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
+    }
+
+    private JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+        TaskImageFilesModel task = (TaskImageFilesModel) taskImageFilesRepository.findOne(
+                crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
+            )
+            .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
+
+        // Collect and clean content
+        String odfImageContentString = new String(task.getCrmFile(), StandardCharsets.UTF_8)
+                .replaceAll("\u0000", "");
+
+        // Extract eForm data content
+        JSONObject crmFileJsonObject = (JSONObject) XML.toJSONObject(odfImageContentString)
+                .get("fd:formdata");
+
+        // Cleanup eForm data by removing unused fields
+        crmFileJsonObject.remove("printinfo");
+        crmFileJsonObject.remove("schema");
+        return crmFileJsonObject;
+    }
+
+    public <T extends CrmFileModelInterface> T convertCrmFormJsonToModel(JSONObject crmFileJsonObject, CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws NotEnoughSearchParametersException, JSONException {
         CrmFileModelInterface crmFormData;
-        JSONObject crmFileJsonObject = getCrmFormJson(taskId);
 
         try {
-            crmFormData = jsonObjectMapper.readValue(crmFileJsonObject.toString(), returnClass);
+            crmFormData = jsonObjectMapper.readValue(
+                crmFileJsonObject.toString(),
+                getCrmFormTypeMapClass(crmFormDetailsCriteriaDTO.type())
+            );
         } catch (JsonProcessingException e) {
             throw new JSONException(e);
         }
@@ -35,23 +81,9 @@ public class CrmFileService {
         return (T) crmFormData;
     }
 
-    // TODO (): make this private, once we have all CRM Form Files available for data-mapping
-    public JSONObject getCrmFormJson(Long taskId) {
-        JSONObject xmlJSONFormData = getCrmFileJson(taskId);
-        // Cleanup form data by removing unused fields
-        xmlJSONFormData.remove("printinfo");
-        xmlJSONFormData.remove("schema");
-        return xmlJSONFormData;
-    }
-
-    private JSONObject getCrmFileJson(Long taskId) {
-        TaskImageFilesModel task = taskImageFilesRepository.findById(taskId)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + taskId + " not found"));
-
-        // Collect and clean content
-        String odfImageContentString = new String(task.getCrmFile(), StandardCharsets.UTF_8)
-                .replaceAll("\u0000", "");
-        // Get form data
-        return (JSONObject) XML.toJSONObject(odfImageContentString).get("fd:formdata");
+    // TODO (): Delete this, once we have all CRM Form Files available for data-mapping
+    public JSONObject getCrmFormJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+        return getCrmFileJson(crmFormDetailsCriteriaDTO);
     }
 }
+

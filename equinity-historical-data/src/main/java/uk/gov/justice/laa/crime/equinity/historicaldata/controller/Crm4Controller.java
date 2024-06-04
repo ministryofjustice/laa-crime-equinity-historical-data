@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm4InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm4Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
+
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -21,10 +24,13 @@ public class Crm4Controller implements Crm4InterfaceApi {
     @Override
     public ResponseEntity<Crm4DetailsDTO> getApplicationCrm4(Long usn) {
         log.info("eForm CRM4 details request received :: usn=[{}]", usn);
-
-        Crm4DetailsModel crm4FileDetails = crmFileService.getCrmFileContent(usn, Crm4Model.class).getFormDetails();
+        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                usn, CRM_TYPE_4, null
+        );
+        Crm4DetailsModel crm4FileDetails = (Crm4DetailsModel) crmFileService
+                .getCrmImageFile(crmFormDetailsCriteriaDTO)
+                .getFormDetails();
         crm4FileDetails.setAllQuotes();
-        Crm4DetailsDTO crm4DetailsDTO = crm4Mapper.getEntityFromModel(crm4FileDetails);
-        return ResponseEntity.ok(crm4DetailsDTO);
+        return ResponseEntity.ok(crm4Mapper.getEntityFromModel(crm4FileDetails));
     }
 }

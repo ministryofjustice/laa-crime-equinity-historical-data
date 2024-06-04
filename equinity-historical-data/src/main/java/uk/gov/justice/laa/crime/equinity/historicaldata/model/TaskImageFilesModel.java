@@ -14,7 +14,11 @@ import org.hibernate.annotations.Immutable;
 public class TaskImageFilesModel {
 
     @Id
-    private Long ID;
+    @Column(name="USN")
+    private Long USN;
+
+    @Column(name="TypeId")
+    private Integer typeId;
 
     @Column(name = "OFDImage")
     @Lob

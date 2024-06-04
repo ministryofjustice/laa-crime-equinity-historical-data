@@ -13,14 +13,17 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -52,7 +55,8 @@ class CrmFileServiceTest {
 
     private void createMock(Long mockID, byte[] mockFile) throws IOException {
         TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setID(mockID);
+        taskModel.setUSN(mockID);
+        taskModel.setTypeId(CRM_TYPE_5);
         taskModel.setCrmFile(mockFile);
         taskImageFilesRepository.save(taskModel);
     }
@@ -69,7 +73,12 @@ class CrmFileServiceTest {
         String expectedFirmName ="MOCK_FIRM_001";
 
         // execute
-        Crm5DetailsModel result = crmFileService.getCrmFileContent(ustToTest, Crm5Model.class).getFormDetails();
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                ustToTest, CRM_TYPE_5, Integer.toString(CRM_TYPE_5)
+        );
+        Crm5DetailsModel result = (Crm5DetailsModel) crmFileService
+                .getCrmImageFile(detailsCriteriaDTO)
+                .getFormDetails();
 
         // checks
         softly.assertThat(result).isInstanceOf(Crm5DetailsModel.class);
@@ -83,7 +92,11 @@ class CrmFileServiceTest {
         String expectedMessage = "JSONObject";
 
         // execute
-        softly.assertThatThrownBy(() -> crmFileService.getCrmFileContent(ustToTest, Crm5Model.class))
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                ustToTest, CRM_TYPE_5, Integer.toString(CRM_TYPE_5)
+        );
+
+        softly.assertThatThrownBy(() -> crmFileService.getCrmImageFile(detailsCriteriaDTO))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining(expectedMessage);
     }
