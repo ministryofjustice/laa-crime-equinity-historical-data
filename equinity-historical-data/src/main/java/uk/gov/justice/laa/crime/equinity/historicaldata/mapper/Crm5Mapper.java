@@ -29,6 +29,7 @@ public interface Crm5Mapper {
     @Mapping(target="proceedings.detailsOfProceedings.isCounselInstructed", source="proceedings_counsel_instructed")
     @Mapping(target="caseDetails.levelOfWork", source="level_of_work")
     @Mapping(target="caseDetails.cwCriminalProceeding", source="criminal_proceeding")
+    @Mapping(target="caseDetails.cwCriminalInvestigation", source="criminal_investigation")
     @Mapping(target="caseDetails.cwCcrc", source="ccrc")
     @Mapping(target="caseDetails.cwAppealsReview", source="appeals_and_review")
     @Mapping(target="caseDetails.cwPrisonLaw", source="prison_law")
