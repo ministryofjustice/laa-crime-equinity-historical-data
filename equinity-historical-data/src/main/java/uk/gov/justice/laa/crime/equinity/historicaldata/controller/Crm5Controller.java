@@ -20,8 +20,9 @@ public class Crm5Controller implements Crm5InterfaceApi {
     private final CrmFileService crmFileService;
     private final Crm5Mapper crm5Mapper;
 
+
     @Override
-    public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn) {
+    public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn, String profileAcceptedTypes) {
         log.info("eForm CRM5 details request received :: usn=[{}]", usn);
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 usn, CRM_TYPE_5, null

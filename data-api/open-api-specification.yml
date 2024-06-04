@@ -42,6 +42,7 @@ paths:
         - CRM5Interface
       operationId: getApplication
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/crmUsn'
       responses:
         '200':
