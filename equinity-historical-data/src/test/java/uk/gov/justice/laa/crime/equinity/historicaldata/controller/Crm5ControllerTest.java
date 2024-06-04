@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
 
@@ -30,6 +29,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Crm5ControllerTest {
+    private static final String ACCEPTED_TYPES_DEFAULT = null;
 
     @Autowired
     TaskImageFilesRepository taskImageFilesRepository;
@@ -43,7 +43,7 @@ public class Crm5ControllerTest {
     @Test
     void getApplication_TaskNotFound() {
         Long usnTest = 10L;
-        softly.assertThatThrownBy(() -> controller.getApplication(usnTest))
+        softly.assertThatThrownBy(() -> controller.getApplication(usnTest, ACCEPTED_TYPES_DEFAULT))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Task with USN").hasMessageContaining("not found");
 
@@ -52,7 +52,7 @@ public class Crm5ControllerTest {
     @Test
     void getApplication_Valid() {
         Long usnTest = 5001604L;
-        ResponseEntity<CRM5DetailsDTO> result = controller.getApplication(usnTest);
+        ResponseEntity<CRM5DetailsDTO> result = controller.getApplication(usnTest, ACCEPTED_TYPES_DEFAULT);
         softly.assertThat(result.getBody()).isInstanceOf(CRM5DetailsDTO.class);
         softly.assertThat(result.getBody().getUsn()).isEqualTo(5001604);
         softly.assertThat(result.getBody().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
