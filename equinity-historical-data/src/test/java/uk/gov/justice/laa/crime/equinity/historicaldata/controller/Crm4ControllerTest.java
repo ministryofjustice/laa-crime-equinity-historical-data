@@ -31,7 +31,8 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4ControllerTest {
-    private static final String ACCEPTED_TYPES_DEFAULT = null;
+    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_4);
+    private static final String DENIED_PROFILE_TYPES = "9,19";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -63,7 +64,7 @@ class Crm4ControllerTest {
         String expectedMessage = "not be null";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm4(null, ACCEPTED_TYPES_DEFAULT))
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm4(null, ACCEPTED_PROFILE_TYPES))
             .isInstanceOf(InvalidDataAccessApiUsageException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -71,7 +72,7 @@ class Crm4ControllerTest {
     @Test
     void getApplicationCrm4Test_WhenGivenNonExistingUsnThenReturnTaskNotFoundException() {
         Long usnTest = 10L;
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm4(usnTest, ACCEPTED_TYPES_DEFAULT))
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm4(usnTest, ACCEPTED_PROFILE_TYPES))
             .isInstanceOf(ResourceNotFoundException.class)
             .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
@@ -80,12 +81,37 @@ class Crm4ControllerTest {
     void getApplicationCrm4Test_WhenGivenExistingUsnThenReturnValidResponse() {
         Long usnTest = 5001912L;
         String urn = "GH65789";
-        ResponseEntity<Crm4DetailsDTO> result = controller.getApplicationCrm4(usnTest, ACCEPTED_TYPES_DEFAULT);
+        ResponseEntity<Crm4DetailsDTO> result;
+
+        // Test with Accepted profile
+        result = controller.getApplicationCrm4(usnTest, ACCEPTED_PROFILE_TYPES);
 
         softly.assertThat(result.getBody()).isNotNull();
         softly.assertThat(result.getBody()).isInstanceOf(Crm4DetailsDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getExpenditureDetails().getDetails()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void getApplicationCrm4Test_WhenGivenExistingUsnWithNoProfileAcceptedTypesThenReturnValidResponse() {
+        Long usnTest = 5001912L;
+        String urn = "GH65789";
+        ResponseEntity<Crm4DetailsDTO> result = controller.getApplicationCrm4(usnTest, null);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm4DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getExpenditureDetails().getDetails()).isNotNull();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void getApplicationCrm4Test_WhenGivenExistingUsnButNotAcceptedTypeThenReturnTaskNotFoundException() {
+        Long usnTest = 5001912L;
+
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm4(usnTest, DENIED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
 }

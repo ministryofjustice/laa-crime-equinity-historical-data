@@ -25,7 +25,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
     public ResponseEntity<Crm4DetailsDTO> getApplicationCrm4(Long usn, String profileAcceptedTypes) {
         log.info("eForm CRM4 details request received :: usn=[{}]", usn);
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usn, CRM_TYPE_4, null
+                usn, CRM_TYPE_4, profileAcceptedTypes
         );
         Crm4DetailsModel crm4FileDetails = (Crm4DetailsModel) crmFileService
                 .getCrmImageFile(crmFormDetailsCriteriaDTO)

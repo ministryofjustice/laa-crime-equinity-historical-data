@@ -25,7 +25,7 @@ public class Crm5Controller implements Crm5InterfaceApi {
     public ResponseEntity<CRM5DetailsDTO> getApplication(Long usn, String profileAcceptedTypes) {
         log.info("eForm CRM5 details request received :: usn=[{}]", usn);
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usn, CRM_TYPE_5, null
+                usn, CRM_TYPE_5, profileAcceptedTypes
         );
         Crm5DetailsModel crm5FileDetails = (Crm5DetailsModel) crmFileService
                 .getCrmImageFile(crmFormDetailsCriteriaDTO)
