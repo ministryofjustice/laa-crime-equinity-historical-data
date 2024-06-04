@@ -24,7 +24,7 @@ public class Crm7Controller implements Crm7InterfaceApi {
     public ResponseEntity<Crm7DetailsDTO> getApplicationCrm7(Long usn, String profileAcceptedTypes) {
         log.info("eForm CRM7 details request received :: usn=[{}]", usn);
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usn, CRM_TYPE_7, null
+                usn, CRM_TYPE_7, profileAcceptedTypes
         );
         Crm7DetailsModel crm7FileDetails = (Crm7DetailsModel) crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO).getFormDetails();
 

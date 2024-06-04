@@ -34,7 +34,8 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm7ControllerTest {
-    private static final String ACCEPTED_TYPES_DEFAULT = null;
+    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_7);
+    private static final String DENIED_PROFILE_TYPES = "9,19";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -81,7 +82,7 @@ class Crm7ControllerTest {
         String expectedMessage = "not be null";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(null, ACCEPTED_TYPES_DEFAULT))
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(null, ACCEPTED_PROFILE_TYPES))
             .isInstanceOf(InvalidDataAccessApiUsageException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -89,7 +90,7 @@ class Crm7ControllerTest {
     @Test
     void getApplicationCrm7Test_WhenGivenNonExistingUsnThenReturnTaskNotFoundException() {
         Long usnTest = 10L;
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, ACCEPTED_TYPES_DEFAULT))
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, ACCEPTED_PROFILE_TYPES))
             .isInstanceOf(ResourceNotFoundException.class)
             .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
@@ -99,8 +100,9 @@ class Crm7ControllerTest {
         String expectedClientFirstName = "James";
         String expectedClientSurname = "Bond";
 
+        // Test with accepted types
         validUsnTests.keySet().forEach((usnToTest) -> {
-            ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnToTest, ACCEPTED_TYPES_DEFAULT);
+            ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnToTest, ACCEPTED_PROFILE_TYPES);
 
             softly.assertThat(result.getBody()).isNotNull();
             softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
@@ -110,5 +112,30 @@ class Crm7ControllerTest {
             softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
             softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         });
+    }
+
+    @Test
+    void getApplicationCrm7Test_WhenGivenExistingUsnWithNoProfileAcceptedTypesThenReturnValidResponse() {
+        Long usnTest = 5001662L;
+        String expectedClientFirstName = "James";
+        String expectedClientSurname = "Bond";
+
+        ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest, null);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnTest.intValue());
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void getApplicationCrm7Test_WhenGivenExistingUsnButNotAcceptedTypesThenReturnTaskNotFoundException() {
+        Long usnTest = 5001662L;
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, DENIED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
 }
