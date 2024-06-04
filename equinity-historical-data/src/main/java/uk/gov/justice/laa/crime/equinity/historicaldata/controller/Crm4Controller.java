@@ -22,7 +22,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
     private final Crm4Mapper crm4Mapper;
 
     @Override
-    public ResponseEntity<Crm4DetailsDTO> getApplicationCrm4(Long usn) {
+    public ResponseEntity<Crm4DetailsDTO> getApplicationCrm4(Long usn, String profileAcceptedTypes) {
         log.info("eForm CRM4 details request received :: usn=[{}]", usn);
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 usn, CRM_TYPE_4, null

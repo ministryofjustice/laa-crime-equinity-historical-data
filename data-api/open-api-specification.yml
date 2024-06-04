@@ -57,6 +57,7 @@ paths:
         - CRM4Interface
       operationId: getApplicationCrm4
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/crmUsn'
       responses:
         '200':
