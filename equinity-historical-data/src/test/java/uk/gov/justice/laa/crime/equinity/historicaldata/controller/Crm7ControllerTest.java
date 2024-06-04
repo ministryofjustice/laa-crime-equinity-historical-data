@@ -34,6 +34,8 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm7ControllerTest {
+    private static final String ACCEPTED_TYPES_DEFAULT = null;
+
     @InjectSoftAssertions
     private SoftAssertions softly;
 
@@ -79,7 +81,7 @@ class Crm7ControllerTest {
         String expectedMessage = "not be null";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(null))
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(null, ACCEPTED_TYPES_DEFAULT))
             .isInstanceOf(InvalidDataAccessApiUsageException.class)
             .hasMessageContaining(expectedMessage);
     }
@@ -87,7 +89,7 @@ class Crm7ControllerTest {
     @Test
     void getApplicationCrm7Test_WhenGivenNonExistingUsnThenReturnTaskNotFoundException() {
         Long usnTest = 10L;
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest))
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, ACCEPTED_TYPES_DEFAULT))
             .isInstanceOf(ResourceNotFoundException.class)
             .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
@@ -98,7 +100,7 @@ class Crm7ControllerTest {
         String expectedClientSurname = "Bond";
 
         validUsnTests.keySet().forEach((usnToTest) -> {
-            ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnToTest);
+            ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnToTest, ACCEPTED_TYPES_DEFAULT);
 
             softly.assertThat(result.getBody()).isNotNull();
             softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
