@@ -1,0 +1,98 @@
+Crm14DetailsDTO:
+  type: object
+  properties:
+    legalRepresentativeUse:
+      $ref: "#/CrmLegalRepDTO"
+    aboutYouPart1:
+      $ref: "#/Crm14AboutYouPart1DTO"
+    aboutYouPart2:
+      $ref: "#/Crm14AboutYouPart2DTO"
+    aboutYouPartner:
+      type: string
+    interestOfJusticePart1:
+      type: string
+    interestOfJusticePart2:
+      type: string
+    evidencePart1:
+      type: string
+    evidencePart2:
+      type: string
+    income:
+      type: string
+    legalRepresentationDetails:
+      type: string
+    aboutInformation:
+      type: string
+    declarations:
+      type: string
+    privacyNote:
+      type: string
+    submit:
+      type: string
+
+
+CrmLegalRepDTO:
+  type: object
+  properties:
+    dateStamp:
+      $ref: "#/Crm14DateStampDTO"
+    clientFirstName:
+      type: string
+    clientDateOfBirth:
+      type: string
+    ufn:
+      type: string
+    maatNumber:
+      type: integer
+    representationOrderNumber:
+      type: integer
+
+Crm14DateStampDTO:
+  type: object
+  properties:
+    usn:
+      type: integer
+      schema:
+        format: int64
+    date:
+      type: string
+      format: date-time
+    time:
+      type: string
+    clientName:
+      type: string
+    clientDateOfBirth:
+      type: string
+      format: date-time
+
+Crm14AboutYouPart1DTO:
+  type: object
+  properties:
+    clientSurname:
+      type: string
+    clientFirstName:
+      type: string
+    clientDateOfBirth:
+      type: string
+    ufn:
+      type: string
+    maatNumber:
+      type: integer
+    representationOrderNumber:
+      type: integer
+
+Crm14AboutYouPart2DTO:
+  type: object
+  properties:
+    clientSurname:
+      type: string
+    clientFirstName:
+      type: string
+    clientDateOfBirth:
+      type: string
+    ufn:
+      type: string
+    maatNumber:
+      type: integer
+    representationOrderNumber:
+      type: integer

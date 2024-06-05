@@ -83,6 +83,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Crm7DetailsDTO'
+
+  /api/internal/v1/equinity/crm14/{usn}:
+    get:
+      tags:
+        - CRM14Interface
+      operationId: getApplicationCrm14
+      parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
+        - $ref: '#/components/parameters/crmUsn'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crm14DetailsDTO'
   ###
   # Archive
   ###
@@ -576,3 +592,7 @@ components:
     ## CRM 7
     Crm7DetailsDTO:
       $ref: "./schemas/crm7.yml#/Crm7DetailsDTO"
+
+    ## CRM 14
+    Crm14DetailsDTO:
+      $ref: "./schemas/crm14.yml#/Crm14DetailsDTO"
