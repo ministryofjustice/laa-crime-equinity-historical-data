@@ -8,7 +8,7 @@ Crm14DetailsDTO:
     aboutYouPart2:
       $ref: "#/Crm14AboutYouPart2DTO"
     aboutYouPartner:
-      type: string
+      $ref: "#/Crm14APartnerDetailsDTO"
     interestOfJusticePart1:
       type: string
     interestOfJusticePart2:
@@ -36,16 +36,8 @@ CrmLegalRepDTO:
   properties:
     dateStamp:
       $ref: "#/Crm14DateStampDTO"
-    clientFirstName:
-      type: string
-    clientDateOfBirth:
-      type: string
-    ufn:
-      type: string
-    maatNumber:
-      type: integer
-    representationOrderNumber:
-      type: integer
+    legalRepUse:
+      $ref: "#/Crm14LegalRepUseDTO"
 
 Crm14DateStampDTO:
   type: object
@@ -65,13 +57,38 @@ Crm14DateStampDTO:
       type: string
       format: date-time
 
+Crm14LegalRepUseDTO:
+  type: object
+  properties:
+    usn:
+      type: integer
+      schema:
+        format: int64
+    urn:
+      type: string
+    applicationType:
+      type: string
+    meansTested:
+      type: string
+    caseType:
+      type: string
+    originatingCourt:
+      type: string
+    courtName:
+      type: string
+    dateOfTrial:
+      type: string
+      format: date-time
+
 Crm14AboutYouPart1DTO:
   type: object
   properties:
-    clientSurname:
+    aboutYou:
+      $ref: "#/Crm14AboutYouDTO"
+    hasHomeAddress:
       type: string
-    clientFirstName:
-      type: string
+    contactDetails:
+      $ref: "#/Crm14ContactDetailsDTO"
     clientDateOfBirth:
       type: string
     ufn:
@@ -81,14 +98,83 @@ Crm14AboutYouPart1DTO:
     representationOrderNumber:
       type: integer
 
+Crm14AboutYouDTO:
+  type: object
+  properties:
+    title:
+      type: string
+    otherTitle:
+      type: string
+    clientForename:
+      type: string
+    clientOthernames:
+      type: string
+    clientSurname:
+      type: string
+    clientDateOfBirth:
+      type: string
+      format: date-time
+    nationalInsurance:
+      type: string
+    applicationRegistrationCard:
+      type: string
+    welshCorrespondence:
+      type: boolean
+
+Crm14ContactDetailsDTO:
+  type: object
+  properties:
+    homeAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
+    correspondenceType:
+      type: string
+    correspondenceAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
+    emailId:
+      type: string
+    phoneNumber:
+      type: string
+    mobileNumber:
+      type: string
+    workPhoneNumber:
+      type: string
+
+Crm14AddressDetailsDTO:
+  type: object
+  properties:
+    addressLine1:
+      type: string
+    addressLine2:
+      type: string
+    addressLine3:
+      type: string
+    postCode:
+      type: string
+
 Crm14AboutYouPart2DTO:
   type: object
   properties:
-    clientSurname:
+    homeAddressType:
       type: string
-    clientFirstName:
+    relationshipToHomeOwner:
       type: string
-    clientDateOfBirth:
+    under18:
+      type: string
+    havePartner:
+      type: string
+    maritalStatus:
+      type: string
+
+Crm14APartnerDetailsDTO:
+  type: object
+  properties:
+    partnerDetails:
+      $ref: "#/Crm14AboutYouDTO"
+    hasHomeAddress:
+      type: string
+    contactDetails:
+      $ref: "#/Crm14ContactDetailsDTO"
+    coDefendant:
       type: string
     ufn:
       type: string
