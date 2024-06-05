@@ -176,9 +176,7 @@ Crm14APartnerDetailsDTO:
       $ref: "#/Crm14ContactDetailsDTO"
     coDefendant:
       type: string
-    ufn:
+    conflictOfInterest:
+      type: integer
+    partnerDifferentHome:
       type: string
-    maatNumber:
-      type: integer
-    representationOrderNumber:
-      type: integer
