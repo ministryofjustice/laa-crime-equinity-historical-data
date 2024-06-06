@@ -17,6 +17,4 @@ public class Crm14Model implements CrmFileModelInterface {
     private String attachfields;
     @JsonProperty("targetpath")
     private String targetpath;
-//    @JsonProperty("linkedAttachments")
-//    LinkedAttachments LinkedAttachmentsObject;
 }
