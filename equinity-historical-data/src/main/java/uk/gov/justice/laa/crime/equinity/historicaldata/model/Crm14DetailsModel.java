@@ -303,7 +303,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public boolean cant_present_own_case;
     @JsonProperty("Subformfundingdecision_1-Means_test_result_magsorcfs")
     public String subformfundingdecision_1_Means_test_result_magsorcfs;
-    //TODO single or array example
     @JsonProperty("Charges_brought")
     public Crm14ChargesBroughtModel charges_brought;
     @JsonProperty("Partner_child_benefit_paid_every")
