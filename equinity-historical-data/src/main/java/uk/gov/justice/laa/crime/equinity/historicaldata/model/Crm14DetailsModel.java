@@ -448,9 +448,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public int land_calc_2;
     @JsonProperty("Partner_trust_fund")
     public String partner_trust_fund;
-   //TODO - to review later after other sections
-    //@JsonProperty("Tblnewattachments")
-    //public Tblnewattachments tblnewattachments;
     @JsonProperty("Originator_jobtitle")
     public String originator_jobtitle;
     @JsonProperty("Prev_app_maat")

@@ -62,8 +62,6 @@ Crm14LegalRepUseDTO:
   properties:
     usn:
       type: integer
-      schema:
-        format: int64
     urn:
       type: string
     applicationType:
