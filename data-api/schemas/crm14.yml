@@ -85,14 +85,6 @@ Crm14AboutYouPart1DTO:
       type: string
     contactDetails:
       $ref: "#/Crm14ContactDetailsDTO"
-    clientDateOfBirth:
-      type: string
-    ufn:
-      type: string
-    maatNumber:
-      type: integer
-    representationOrderNumber:
-      type: integer
 
 Crm14AboutYouDTO:
   type: object
@@ -101,9 +93,9 @@ Crm14AboutYouDTO:
       type: string
     otherTitle:
       type: string
-    clientForename:
+    clientForeName:
       type: string
-    clientOthernames:
+    clientOtherNames:
       type: string
     clientSurname:
       type: string
