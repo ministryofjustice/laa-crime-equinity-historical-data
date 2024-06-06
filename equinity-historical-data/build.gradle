@@ -9,7 +9,6 @@ def versions = [
 		springWeb					: '6.2.4',
 		springSecurity		  	 	: '6.2.4',
 		logback						: '1.5.6',
-		lombok						: '1.18.32',
 ]
 
 configurations {
@@ -58,8 +57,8 @@ dependencies {
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
 	implementation 'org.json:json:20231013'
 
-	compileOnly "org.projectlombok:lombok:$versions.lombok"
-	annotationProcessor "org.projectlombok:lombok:$versions.lombok"
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
