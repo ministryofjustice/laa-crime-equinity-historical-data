@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -304,7 +305,7 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Subformfundingdecision_1-Means_test_result_magsorcfs")
     public String subformfundingdecision_1_Means_test_result_magsorcfs;
     @JsonProperty("Charges_brought")
-    public Crm14ChargesBroughtModel charges_brought;
+    public List<Crm14ChargesBroughtModel> charges_brought;
     @JsonProperty("Partner_child_benefit_paid_every")
     public String partner_child_benefit_paid_every;
     @JsonProperty("Subformfundingdecision_4-Appropriate_officer_name")
