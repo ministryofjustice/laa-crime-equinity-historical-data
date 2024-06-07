@@ -144,7 +144,6 @@ components:
       schema:
         type: integer
         format: int64
-        maxLength: 10
         example: 2008372910
     searchUsn:
       name: usn
@@ -235,7 +234,6 @@ components:
       required: false
       schema:
         type: string
-        minimum: 1
         example: 1,2,3
 
   schemas:
