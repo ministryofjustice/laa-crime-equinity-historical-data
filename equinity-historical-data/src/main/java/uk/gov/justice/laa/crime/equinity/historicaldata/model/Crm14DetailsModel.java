@@ -746,5 +746,5 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
 
     Crm14PartnerDetailsModel partnerDetails;
     Crm14FundingDecisionModel subformFundingDecision;
-    Crm14ExtensionCrm15DetailsModel extensionCrm15Details;
+    Crm14ExtensionCrm15AnnexModel extensionCrm15Details;
 }

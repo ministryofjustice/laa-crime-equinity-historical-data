@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Crm14ExtensionCrm15DetailsModel {
+public class Crm14ExtensionCrm15AnnexModel {
     @JsonProperty("Hide_crm15")
     public boolean hide_crm15;
     @JsonProperty("Child_benefit_crm15_paid_every")
