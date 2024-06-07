@@ -2,6 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -9,8 +10,8 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-// @EqualsAndHashCode(callSuper = true)
-public class Crm14DetailsModel  implements CrmFileDetailsModelInterface {
+@EqualsAndHashCode(callSuper = true)
+public class Crm14DetailsModel extends Crm14FundingDecisionModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Esa_partner")
     public boolean esa_partner;
     @JsonProperty("Solicitor_phone_landline")
@@ -997,6 +998,4 @@ public class Crm14DetailsModel  implements CrmFileDetailsModelInterface {
     public String other_benefits_crm15_details;
     @JsonProperty("Partner_wage_tax_calc")
     public int partner_wage_tax_calc;
-
-    Crm14FundingDecisionModel subformFundingDecision;
 }
