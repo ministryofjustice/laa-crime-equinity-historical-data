@@ -55,14 +55,10 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public Date lost_job_due_to_custody_date;
     @JsonProperty("Childcare_costs")
     public String childcare_costs;
-    @JsonProperty("Hide_crm15")
-    public boolean hide_crm15;
     @JsonProperty("Employed")
     public int employed;
     @JsonProperty("Tlmessage")
     public String tlmessage;
-    @JsonProperty("Child_benefit_crm15_paid_every")
-    public String child_benefit_crm15_paid_every;
     @JsonProperty("Fc_non_means_tested")
     public boolean fc_non_means_tested;
     @JsonProperty("Originator_tl_usertype")
@@ -147,8 +143,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String suspended_sentence_details;
     @JsonProperty("Home_address_search")
     public String home_address_search;
-    @JsonProperty("Freezing_order_crm15")
-    public String freezing_order_crm15;
     @JsonProperty("Court_name_display")
     public String court_name_display;
     @JsonProperty("Dwp_check_dob")
@@ -173,8 +167,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String submitter_language;
     @JsonProperty("Childcare_costs_paid_every")
     public String childcare_costs_paid_every;
-    @JsonProperty("Incapacity_benefit_crm15_paid_every")
-    public String incapacity_benefit_crm15_paid_every;
     @JsonProperty("Last_sent_datetime")
     public String last_sent_datetime;
     @JsonProperty("Legal_rep_laa_account")
@@ -247,8 +239,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public boolean asian_other;
     @JsonProperty("Expert_cross_exam")
     public boolean expert_cross_exam;
-    @JsonProperty("Jsa_crm15_paid_every")
-    public String jsa_crm15_paid_every;
     @JsonProperty("Food_bill_every")
     public String food_bill_every;
     @JsonProperty("Last_hmcts_stagefilter1")
@@ -291,8 +281,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String contact_postcode;
     @JsonProperty("Income_over_set_amount")
     public String income_over_set_amount;
-    @JsonProperty("Tax_credit_crm15_paid_every")
-    public String tax_credit_crm15_paid_every;
     @JsonProperty("White_and_black_african")
     public boolean white_and_black_african;
     @JsonProperty("Dwp_check_surname")
@@ -347,8 +335,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String receiving_benefits_2;
     @JsonProperty("Legal_rep_sign_date")
     public Date legal_rep_sign_date;
-    @JsonProperty("Universal_credit_crm15_paid_every")
-    public String universal_credit_crm15_paid_every;
     @JsonProperty("Other_reason_to_be_represented_details")
     public String other_reason_to_be_represented_details;
     @JsonProperty("User_signed_name")
@@ -371,8 +357,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public int priority_case_calc;
     @JsonProperty("Date_of_trial")
     public Date date_of_trial;
-    @JsonProperty("Other_benefits_crm15_paid_every")
-    public String other_benefits_crm15_paid_every;
     @JsonProperty("Has_errors")
     public boolean has_errors;
     @JsonProperty("Ni_number")
@@ -421,8 +405,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String contribute_legal_aid;
     @JsonProperty("Own_land_or_property")
     public String own_land_or_property;
-    @JsonProperty("State_pension_crm15_paid_every")
-    public String state_pension_crm15_paid_every;
     @JsonProperty("Indictable_offence")
     public int indictable_offence;
     @JsonProperty("Originator_emailflag")
@@ -515,8 +497,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String originator_ntlogon;
     @JsonProperty("Disabled")
     public String disabled;
-    @JsonProperty("Child_benefit_crm15")
-    public int child_benefit_crm15;
     @JsonProperty("Originator_routeoffline")
     public int originator_routeoffline;
     @JsonProperty("Income_calc")
@@ -535,14 +515,10 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String originator_emailaddress;
     @JsonProperty("Self_assessment_tax_received")
     public String self_assessment_tax_received;
-    @JsonProperty("Tax_credit_crm15")
-    public int tax_credit_crm15;
     @JsonProperty("Originator_tl_mustchangepassword")
     public int originator_tl_mustchangepassword;
     @JsonProperty("Tlstatename")
     public String tlstatename;
-    @JsonProperty("Other_income_crm15")
-    public String other_income_crm15;
     @JsonProperty("Lose_liberty")
     public boolean lose_liberty;
     @JsonProperty("Dwp_check_benefitchecktorepeat")
@@ -643,16 +619,12 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public String witness_trace_details;
     @JsonProperty("Fc_current_user_type")
     public String fc_current_user_type;
-    @JsonProperty("How_pay_bills_crm15")
-    public String how_pay_bills_crm15;
     @JsonProperty("Fc_currentstage")
     public String fc_currentstage;
     @JsonProperty("Salary_account")
     public String salary_account;
     @JsonProperty("Originator_dtlastaccessed")
     public Date originator_dtlastaccessed;
-    @JsonProperty("Disablement_benefit_crm15_paid_every")
-    public String disablement_benefit_crm15_paid_every;
     @JsonProperty("Receive_maintenance_payments")
     public String receive_maintenance_payments;
     @JsonProperty("TLActionsOnLine")
@@ -707,8 +679,6 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public int no_of_accounts_calc;
     @JsonProperty("Land_calc")
     public int land_calc;
-    @JsonProperty("Universal_credit_crm15")
-    public int universal_credit_crm15;
     @JsonProperty("Relationship_to_home_owner")
     public String relationship_to_home_owner;
     @JsonProperty("Print_signed")
@@ -773,9 +743,8 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     public int employment_ceased_3_months;
     @JsonProperty("Summary")
     public boolean summary;
-    @JsonProperty("Other_benefits_crm15_details")
-    public String other_benefits_crm15_details;
 
     Crm14PartnerDetailsModel partnerDetails;
     Crm14FundingDecisionModel subformFundingDecision;
+    Crm14ExtensionCrm15DetailsModel extensionCrm15Details;
 }
