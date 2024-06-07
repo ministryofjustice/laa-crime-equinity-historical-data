@@ -10,23 +10,23 @@ Crm14DetailsDTO:
     aboutYouPartner:
       $ref: "#/Crm14APartnerDetailsDTO"
     interestOfJusticePart1:
-      type: string
+      $ref: "#/Crm14InterestOfJusticePart1DTO"
     interestOfJusticePart2:
-      type: string
+      $ref: "#/Crm14InterestOfJusticePart2DTO"
     evidencePart1:
-      type: string
+      $ref: "#/Crm14EvidencePart1DTO"
     evidencePart2:
-      type: string
+      $ref: "#/Crm14EvidencePart2DTO"
     income:
-      type: string
+      $ref: "#/Crm14IncomeDTO"
     legalRepresentationDetails:
-      type: string
+      $ref: "#/Crm14LegalRepresentationDTO"
     aboutInformation:
-      type: string
+      $ref: "#/Crm14AboutInfoDTO"
     declarations:
-      type: string
-    privacyNote:
-      type: string
+      $ref: "#/Crm14DeclarationsDTO"
+    privacyAgree:
+      type: boolean
     submit:
       type: string
 
@@ -167,4 +167,191 @@ Crm14APartnerDetailsDTO:
     conflictOfInterest:
       type: integer
     partnerDifferentHome:
+      type: string
+
+Crm14DeclarationsDTO:
+  type: object
+  properties:
+    applicantFullName:
+      type: string
+    applicantSignedDate:
+      type: string
+      format: date-time
+    partnerFullName:
+      type: string
+    partnerSignedDate:
+      type: string
+      format: date-time
+    legalRepFullName:
+      type: string
+    legalRepSignedDate:
+      type: string
+      format: date-time
+    legalRepAccountNum:
+      type: string
+
+Crm14AboutInfoDTO:
+  type: object
+  properties:
+    gender:
+      type: string
+    disabled:
+      type: string
+    disabledDefinition:
+      type: string
+    ethnicity:
+      type: array
+      items: {}
+
+Crm14LegalRepresentationDTO:
+  type: object
+  properties:
+    solicitorApplyOffice:
+      type: string
+    solicitorAccountNum:
+      type: string
+    title:
+      type: string
+    solicitorFullName:
+      type: string
+    firmName:
+      type: string
+    homeAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
+    landLineNumber:
+      type: string
+    mobileNumber:
+      type: string
+    documentExchange:
+      type: string
+    fax:
+      type: string
+    emailId:
+      type: string
+    declarationStatement:
+      type: string
+    declarationConfirm:
+      type: boolean
+    signDate:
+      type: string
+      format: date-time
+
+Crm14IncomeDTO:
+  type: object
+  properties:
+    receiveBenefits:
+      type: string
+    selfBenefits:
+      type: array
+      items: {}
+    proofBenefits:
+      type: string
+
+Crm14InterestOfJusticePart1DTO:
+  type: object
+  properties:
+    chargesBrought:
+      $ref: "#/Crm14ChargesBroughtDTO"
+    offenceType:
+      type: string
+    anyDefendants:
+      type: string
+    defendantDetails:
+      type: string
+    notSameSolicitor:
+      type: string
+    notSameSolicitorReason:
+      type: string
+    otherCases:
+      type: string
+    otherCaseCharges:
+      type: string
+    otherCaseCourt:
+      type: string
+    otherCaseNextHearing:
+      type: string
+      format: date-time
+    otherCasePartnerCharges:
+      type: string
+    otherCasePartnerCourt:
+      type: string
+    otherCasePartnerNextHearing:
+      type: string
+      format: date-time
+    laCourt:
+      type: string
+    laCourtNextHearing:
+      type: string
+      format: date-time
+    proceedingsConcluded:
+      type: string
+    proceedingsConcludedNotes:
+      type: string
+
+Crm14InterestOfJusticePart2DTO:
+  type: object
+  properties:
+    loseLibertyDetails:
+      type: string
+    suspendedSentenceDetails:
+      type: string
+    loseLivelihoodDetails:
+      type: string
+    damageReputationDetails:
+      type: string
+    questionLawDetails:
+      type: string
+    ownCaseDetails:
+      type: string
+    witnessTraceDetails:
+      type: string
+    expertExamDetails:
+      type: string
+    interestsAnotherDetails:
+      type: string
+    otherReasonRepresentedDetails:
+      type: string
+
+Crm14ChargesBroughtDTO:
+  type: object
+  properties:
+    charge:
+      type: string
+    whenOffence:
+      type: string
+    offenceDate:
+      type: string
+      format: date-time
+
+Crm14EvidencePart1DTO:
+  type: object
+  properties:
+    remandedInCustody:
+      type: string
+    remandedDate:
+      type: string
+      format: date-time
+    heardInMagistrateCourt:
+      type: string
+    employmentCeased:
+      type: string
+    lostJobDuetoCustody:
+      type: string
+    lostJobDuetoCustodyDate:
+      type: string
+      format: date-time
+    partnerEmployed:
+      type: string
+
+Crm14EvidencePart2DTO:
+  type: object
+  properties:
+    fileName:
+      type: string
+    fileSize:
+      type: number
+      format: float
+    evidenceType:
+      type: string
+    providerNotes:
       type: string
