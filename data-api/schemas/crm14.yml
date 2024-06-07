@@ -1,0 +1,170 @@
+Crm14DetailsDTO:
+  type: object
+  properties:
+    legalRepresentativeUse:
+      $ref: "#/CrmLegalRepDTO"
+    aboutYouPart1:
+      $ref: "#/Crm14AboutYouPart1DTO"
+    aboutYouPart2:
+      $ref: "#/Crm14AboutYouPart2DTO"
+    aboutYouPartner:
+      $ref: "#/Crm14APartnerDetailsDTO"
+    interestOfJusticePart1:
+      type: string
+    interestOfJusticePart2:
+      type: string
+    evidencePart1:
+      type: string
+    evidencePart2:
+      type: string
+    income:
+      type: string
+    legalRepresentationDetails:
+      type: string
+    aboutInformation:
+      type: string
+    declarations:
+      type: string
+    privacyNote:
+      type: string
+    submit:
+      type: string
+
+
+CrmLegalRepDTO:
+  type: object
+  properties:
+    dateStamp:
+      $ref: "#/Crm14DateStampDTO"
+    legalRepUse:
+      $ref: "#/Crm14LegalRepUseDTO"
+
+Crm14DateStampDTO:
+  type: object
+  properties:
+    usn:
+      type: integer
+    date:
+      type: string
+      format: date-time
+    time:
+      type: string
+    clientName:
+      type: string
+    clientDateOfBirth:
+      type: string
+      format: date-time
+
+Crm14LegalRepUseDTO:
+  type: object
+  properties:
+    usn:
+      type: integer
+    urn:
+      type: string
+    applicationType:
+      type: string
+    meansTested:
+      type: string
+    caseType:
+      type: string
+    originatingCourt:
+      type: string
+    courtName:
+      type: string
+    dateOfTrial:
+      type: string
+      format: date-time
+
+Crm14AboutYouPart1DTO:
+  type: object
+  properties:
+    aboutYou:
+      $ref: "#/Crm14AboutYouDTO"
+    hasHomeAddress:
+      type: string
+    contactDetails:
+      $ref: "#/Crm14ContactDetailsDTO"
+
+Crm14AboutYouDTO:
+  type: object
+  properties:
+    title:
+      type: string
+    otherTitle:
+      type: string
+    clientForeName:
+      type: string
+    clientOtherNames:
+      type: string
+    clientSurname:
+      type: string
+    clientDateOfBirth:
+      type: string
+      format: date-time
+    nationalInsurance:
+      type: string
+    applicationRegistrationCard:
+      type: string
+    welshCorrespondence:
+      type: boolean
+
+Crm14ContactDetailsDTO:
+  type: object
+  properties:
+    homeAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
+    correspondenceType:
+      type: string
+    correspondenceAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
+    emailId:
+      type: string
+    phoneNumber:
+      type: string
+    mobileNumber:
+      type: string
+    workPhoneNumber:
+      type: string
+
+Crm14AddressDetailsDTO:
+  type: object
+  properties:
+    addressLine1:
+      type: string
+    addressLine2:
+      type: string
+    addressLine3:
+      type: string
+    postCode:
+      type: string
+
+Crm14AboutYouPart2DTO:
+  type: object
+  properties:
+    homeAddressType:
+      type: string
+    relationshipToHomeOwner:
+      type: string
+    under18:
+      type: string
+    havePartner:
+      type: string
+    maritalStatus:
+      type: string
+
+Crm14APartnerDetailsDTO:
+  type: object
+  properties:
+    partnerDetails:
+      $ref: "#/Crm14AboutYouDTO"
+    hasHomeAddress:
+      type: string
+    contactDetails:
+      $ref: "#/Crm14ContactDetailsDTO"
+    coDefendant:
+      type: string
+    conflictOfInterest:
+      type: integer
+    partnerDifferentHome:
+      type: string
