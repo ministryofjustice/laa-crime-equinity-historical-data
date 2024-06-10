@@ -39,9 +39,14 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="caseType", expression="java(convertCaseType(model))")
     @Mapping(target="originatingCourt", source="court_originating_display")
     @Mapping(target="courtName", source="court_name_display")
+    @Mapping(target="isPriorityCase", source="priority")
+    @Mapping(target="priorityCaseType.custody", source="custody")
+    @Mapping(target="priorityCaseType.vulnerable", source="vulnerable")
+    @Mapping(target="priorityCaseType.youth", source="youth")
+    @Mapping(target="priorityCaseType.lateApplication", source="late_application_cc")
+    @Mapping(target="priorityCaseType.imminentHearing", source="hearing_date_imminent")
     @Mapping(target="dateOfTrial", source="date_of_trial")
     Crm14LegalRepUseDTO getLegalUseRepDTOFromModel(Crm14DetailsModel model);
-
 
     default String convertCaseType(Crm14DetailsModel model) {
         if (model.summary) {

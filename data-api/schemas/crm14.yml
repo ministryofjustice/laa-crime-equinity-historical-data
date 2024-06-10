@@ -72,6 +72,21 @@ Crm14LegalRepUseDTO:
       type: string
     courtName:
       type: string
+    isPriorityCase:
+      type: string
+    priorityCaseType:
+      type: object
+      properties:
+        custody:
+          type: boolean
+        vulnerable:
+          type: boolean
+        youth:
+          type: boolean
+        lateApplication:
+          type: boolean
+        imminentHearing:
+          type: boolean
     dateOfTrial:
       type: string
       format: date-time
