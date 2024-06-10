@@ -37,6 +37,7 @@ public class CrmFileService {
             case CRM_TYPE_4 -> Crm4Model.class;
             case CRM_TYPE_5 -> Crm5Model.class;
             case CRM_TYPE_7 -> Crm7Model.class;
+            case CRM_TYPE_14 -> Crm14Model.class;
             default -> throw new NotEnoughSearchParametersException("A valid CRM From Type is required. Given type: " + type);
         };
     }

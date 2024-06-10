@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -224,7 +223,7 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Cant_present_own_case")
     public boolean cant_present_own_case;
     @JsonProperty("Charges_brought")
-    public List<Crm14ChargesBroughtModel> charges_brought;
+    public Crm14Charges charges;
     @JsonProperty("Welsh_corr_flag")
     public boolean welsh_corr_flag;
     @JsonProperty("Datestamp_usn")
