@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
+public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Applyingge100")
     public boolean applyingge100;
     @JsonProperty("Post_mortem_app")

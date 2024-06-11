@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Crm4Model implements CrmFileModelInterface {
+public class Crm4Model implements CrmFormModelInterface {
     @JsonProperty("fielddata")
     Crm4DetailsModel formDetails;
     @JsonProperty("read_only")
     private boolean read_only;
     @JsonProperty("targetpath")
     private String targetpath;
+
+    @JsonProperty("linkedAttachments")
+    private CrmEvidenceFilesModel evidenceFiles;
 }

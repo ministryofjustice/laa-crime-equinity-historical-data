@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 
-public class Crm4AdditionalExpenditures implements CrmFileDetailsModelInterface {    
+public class Crm4AdditionalExpenditures implements CrmFormDetailsModelInterface {
 
      public ArrayList<Crm4ExpenditureModel> row;
 }

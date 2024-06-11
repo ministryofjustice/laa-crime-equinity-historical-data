@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class Crm7DetailsModel implements CrmFileDetailsModelInterface {
+public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Usn") // in crm5 too
     public Long usn;
 
