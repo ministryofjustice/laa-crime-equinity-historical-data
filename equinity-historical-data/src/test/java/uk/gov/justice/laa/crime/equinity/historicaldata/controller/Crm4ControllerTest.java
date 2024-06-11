@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
@@ -81,15 +82,17 @@ class Crm4ControllerTest {
     void getApplicationCrm4Test_WhenGivenExistingUsnThenReturnValidResponse() {
         Long usnTest = 5001912L;
         String urn = "GH65789";
-        ResponseEntity<Crm4DetailsDTO> result;
+        ResponseEntity<Crm4FormDTO> result;
 
         // Test with Accepted profile
         result = controller.getApplicationCrm4(usnTest, ACCEPTED_PROFILE_TYPES);
 
         softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm4DetailsDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getExpenditureDetails().getDetails()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm4FormDTO.class);
+        softly.assertThat(result.getBody().getFormDetails()).isNotNull();
+        softly.assertThat(result.getBody().getFormDetails()).isInstanceOf(Crm4DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getExpenditureDetails().getDetails()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
@@ -97,12 +100,14 @@ class Crm4ControllerTest {
     void getApplicationCrm4Test_WhenGivenExistingUsnWithNoProfileAcceptedTypesThenReturnValidResponse() {
         Long usnTest = 5001912L;
         String urn = "GH65789";
-        ResponseEntity<Crm4DetailsDTO> result = controller.getApplicationCrm4(usnTest, null);
+        ResponseEntity<Crm4FormDTO> result = controller.getApplicationCrm4(usnTest, null);
 
         softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm4DetailsDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getExpenditureDetails().getDetails()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm4FormDTO.class);
+        softly.assertThat(result.getBody().getFormDetails()).isNotNull();
+        softly.assertThat(result.getBody().getFormDetails()).isInstanceOf(Crm4DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getExpenditureDetails().getDetails()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 

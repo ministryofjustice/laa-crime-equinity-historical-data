@@ -1,0 +1,18 @@
+CrmEvidenceFilesDTO:
+  type: object
+  properties:
+    files:
+      type: array
+      items:
+        $ref: "#/CrmEvidenceFileDTO"
+CrmEvidenceFileDTO:
+  type: object
+  readOnly: true
+  properties:
+    key:
+      type: string
+    type:
+      type:
+        string
+    name:
+      type: string

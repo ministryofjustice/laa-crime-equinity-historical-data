@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 //@EqualsAndHashCode(callSuper = true)
-public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
+public class Crm14DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
     @JsonProperty("Other_reason_to_be_represented")

@@ -32,7 +32,7 @@ public class CrmFileService {
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
 
-    private static Class<? extends CrmFileModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
+    private static Class<? extends CrmFormModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
         return switch (type) {
             case CRM_TYPE_4 -> Crm4Model.class;
             case CRM_TYPE_5 -> Crm5Model.class;
@@ -41,7 +41,7 @@ public class CrmFileService {
         };
     }
 
-    public <T extends CrmFileModelInterface> T getCrmImageFile(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+    public <T extends CrmFormModelInterface> T getCrmImageFile(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
         return convertCrmFormJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
     }
@@ -66,8 +66,8 @@ public class CrmFileService {
         return crmFileJsonObject;
     }
 
-    public <T extends CrmFileModelInterface> T convertCrmFormJsonToModel(JSONObject crmFileJsonObject, CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws NotEnoughSearchParametersException, JSONException {
-        CrmFileModelInterface crmFormData;
+    public <T extends CrmFormModelInterface> T convertCrmFormJsonToModel(JSONObject crmFileJsonObject, CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws NotEnoughSearchParametersException, JSONException {
+        CrmFormModelInterface crmFormData;
 
         try {
             crmFormData = jsonObjectMapper.readValue(
