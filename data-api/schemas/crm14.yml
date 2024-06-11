@@ -164,7 +164,7 @@ Crm14AboutYouPart2DTO:
     under18:
       type: string
     havePartner:
-      type: string
+      type: integer
     maritalStatus:
       type: string
 

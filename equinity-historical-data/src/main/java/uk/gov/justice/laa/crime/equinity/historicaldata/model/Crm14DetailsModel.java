@@ -743,6 +743,9 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Summary")
     public boolean summary;
 
+    @JsonProperty("Have_partner")
+    public int have_partner;
+
     Crm14PartnerDetailsModel partnerDetails;
     Crm14FundingDecisionModel subformFundingDecision;
     Crm14ExtensionCrm15AnnexModel extensionCrm15Details;

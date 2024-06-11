@@ -213,8 +213,6 @@ public class Crm14PartnerDetailsModel {
     public String partner_arc;
     @JsonProperty("Partner_employed")
     public String partner_employed;
-    @JsonProperty("Have_partner")
-    public int have_partner;
     @JsonProperty("Why_partner_no_sign")
     public String why_partner_no_sign;
     @JsonProperty("Partner_child_benefit_calc")
