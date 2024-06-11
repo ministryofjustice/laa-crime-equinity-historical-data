@@ -7,6 +7,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFileMod
 
 @Mapper(componentModel = "spring")
 public interface CrmFileLinkedAttachmentMapper extends CrmMapper {
+    // TODO (EMP-332): uncomment and resolve list mapping
 //    @Mapping(target="files", source="linkedAttachmentsModel")
 //    CrmEvidenceFilesDTO getDTOsFromModel(List<CrmFileLinkedAttachmentModel> linkedAttachmentsModel);
 

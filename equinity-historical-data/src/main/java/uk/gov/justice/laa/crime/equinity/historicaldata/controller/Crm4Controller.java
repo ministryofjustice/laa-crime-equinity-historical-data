@@ -36,11 +36,10 @@ public class Crm4Controller implements Crm4InterfaceApi {
 
         CrmEvidenceFilesModel evidenceFiles = crm4FormData.getEvidenceFiles();
 
-        Crm4FormDTO returnDTO = new Crm4FormDTO();
-        returnDTO.setFormDetails(crm4Mapper.getEntityFromModel(crm4FileDetails));
-        returnDTO.setEvidenceFiles(null);
-        return ResponseEntity.ok(returnDTO);
-//        return ResponseEntity.ok(crm4Mapper.getEntityFromModel(crm4FileDetails));
+        Crm4FormDTO crmFormDTO = new Crm4FormDTO();
+        crmFormDTO.setFormDetails(crm4Mapper.getEntityFromModel(crm4FileDetails));
+        crmFormDTO.setEvidenceFiles(null);
+        return ResponseEntity.ok(crmFormDTO);
     }
 
 }
