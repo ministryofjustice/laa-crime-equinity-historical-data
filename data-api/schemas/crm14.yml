@@ -215,8 +215,59 @@ Crm14AboutInfoDTO:
     disabledDefinition:
       type: string
     ethnicity:
-      type: array
-      items: {}
+      type: object
+      properties:
+        white:
+          type: object
+          properties:
+            british:
+              type: boolean
+            irish:
+              type: boolean
+            whiteOther:
+              type: boolean
+        mixed:
+          type: object
+          properties:
+            whiteCaribbean:
+              type: boolean
+            whiteAfrican:
+              type: boolean
+            whiteAsian:
+              type: boolean
+            mixedOther:
+              type: boolean
+        asian:
+          type: object
+          properties:
+            indian:
+              type: boolean
+            pakistani:
+              type: boolean
+            bangladeshi:
+              type: boolean
+            asianOther:
+              type: boolean
+        black:
+          type: object
+          properties:
+            blackCaribbean:
+              type: boolean
+            blackAfrican:
+              type: boolean
+            blackOther:
+              type: boolean
+        other:
+          type: object
+          properties:
+            chinese:
+              type: boolean
+            gypsy:
+              type: boolean
+            other:
+              type: boolean
+            dontSay:
+              type: boolean
 
 Crm14LegalRepresentationDTO:
   type: object
@@ -242,6 +293,8 @@ Crm14LegalRepresentationDTO:
     fax:
       type: string
     emailId:
+      type: string
+    adminEmailId:
       type: string
     declarationStatement:
       type: string

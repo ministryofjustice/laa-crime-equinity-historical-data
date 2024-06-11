@@ -2,14 +2,15 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
-//@EqualsAndHashCode(callSuper = true)
-public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
+@EqualsAndHashCode(callSuper = true)
+public class Crm14DetailsModel extends Crm14ExtensionCrm15AnnexModel implements CrmFileDetailsModelInterface {
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
     @JsonProperty("Other_reason_to_be_represented")
@@ -745,8 +746,4 @@ public class Crm14DetailsModel implements CrmFileDetailsModelInterface {
 
     @JsonProperty("Have_partner")
     public int have_partner;
-
-    Crm14PartnerDetailsModel partnerDetails;
-    Crm14FundingDecisionModel subformFundingDecision;
-    Crm14ExtensionCrm15AnnexModel extensionCrm15Details;
 }
