@@ -21,7 +21,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "aboutYouPart2", source = "model")
     @Mapping(target = "aboutYouPartner", source = "model")
     @Mapping(target = "interestOfJusticePart1", expression = "java(null)")
-    @Mapping(target = "interestOfJusticePart2", expression = "java(null)")
+    @Mapping(target = "interestOfJusticePart2",  source = "model")
     @Mapping(target = "evidencePart1", expression = "java(null)")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", expression = "java(null)")
@@ -134,6 +134,35 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "signDate", source="legal_rep_sign_date")
     Crm14LegalRepresentationDTO getLegalRepresentationDTOFromModel(Crm14DetailsModel model);
 
+    @Mapping(target="partnerDetails.title", source="partner_title")
+    @Mapping(target="partnerDetails.otherTitle", source = "partner_title_other")
+    @Mapping(target="partnerDetails.clientForeName", source="partner_forenames")
+    @Mapping(target="partnerDetails.clientOtherNames", source="partner_other_names")
+    @Mapping(target="partnerDetails.clientSurname", source="partner_surname")
+    @Mapping(target="partnerDetails.clientDateOfBirth", source="partner_date_of_birth")
+    @Mapping(target="partnerDetails.nationalInsurance", source="partner_ni")
+    @Mapping(target="partnerDetails.applicationRegistrationCard", source="partner_arc")
+    @Mapping(target="partnerDetails.welshCorrespondence", expression = "java(null)")
+    @Mapping(target="homeAddress.addressLine1", source = "partner_usual_address_1")
+    @Mapping(target="homeAddress.addressLine2", source = "partner_usual_address_2")
+    @Mapping(target="homeAddress.addressLine3", source = "partner_usual_address_3")
+    @Mapping(target="homeAddress.postCode", source = "partner_usual_postcode")
+    @Mapping(target="coDefendant", source = "any_codefendants")
+    @Mapping(target="partnerDifferentHome", source = "partner_different_home")
+    @Mapping(target="conflictOfInterest", source = "partner_conflict_of_interest")
+    Crm14APartnerDetailsDTO getPartnerDetailsDTOFromModel(Crm14DetailsModel model);
+
+    @Mapping(target="loseLibertyDetails", source = "lose_liberty_details")
+    @Mapping(target="suspendedSentenceDetails", source = "suspended_sentence_details")
+    @Mapping(target="loseLivelihoodDetails", source = "lose_livelihood_details")
+    @Mapping(target="damageReputationDetails", source = "damage_reputation_details")
+    @Mapping(target="questionLawDetails", source = "question_of_law_details")
+    @Mapping(target="ownCaseDetails", source = "cant_present_own_case_details")
+    @Mapping(target="witnessTraceDetails", source = "witness_trace_details")
+    @Mapping(target="expertExamDetails", source = "expert_cross_exam_details")
+    @Mapping(target="interestsAnotherDetails", source = "interests_of_another_details")
+    @Mapping(target="otherReasonRepresentedDetails", source = "other_reason_to_be_represented_details")
+    Crm14InterestOfJusticePart2DTO getInterestOfJusticePart2DTOFromModel(Crm14DetailsModel model);
 
     default String convertCaseType(Crm14DetailsModel model) {
         if (model.summary) {

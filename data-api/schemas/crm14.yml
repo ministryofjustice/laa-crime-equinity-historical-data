@@ -173,10 +173,8 @@ Crm14APartnerDetailsDTO:
   properties:
     partnerDetails:
       $ref: "#/Crm14AboutYouDTO"
-    hasHomeAddress:
-      type: string
-    contactDetails:
-      $ref: "#/Crm14ContactDetailsDTO"
+    homeAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
     coDefendant:
       type: string
     conflictOfInterest:

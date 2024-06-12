@@ -743,7 +743,9 @@ public class Crm14DetailsModel extends Crm14ExtensionCrm15AnnexModel implements 
     public int employment_ceased_3_months;
     @JsonProperty("Summary")
     public boolean summary;
-
     @JsonProperty("Have_partner")
     public int have_partner;
+
+    @JsonProperty("Partner_conflict_of_interest")
+    public int partner_conflict_of_interest;
 }
