@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -43,14 +44,16 @@ public class CrmFileService {
 
     public <T extends CrmFormModelInterface> T getCrmImageFile(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
+
         return convertCrmFormJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
     }
 
-    private JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+    private JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
         TaskImageFilesModel task = (TaskImageFilesModel) taskImageFilesRepository.findOne(
-                crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
+                    crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
             )
             .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
+
 
         // Collect and clean content
         String odfImageContentString = new String(task.getCrmFile(), StandardCharsets.UTF_8)
@@ -63,6 +66,31 @@ public class CrmFileService {
         // Cleanup eForm data by removing unused fields
         crmFileJsonObject.remove("printinfo");
         crmFileJsonObject.remove("schema");
+
+        // TODO (EMP-332): Refactor this conversion into a function
+        if (crmFileJsonObject.has("linkedAttachments")) {
+            JSONObject linkedAttachments = (JSONObject) crmFileJsonObject.get("linkedAttachments");
+
+            // TODO (EMP-332): Add this to the function version
+//            if (!linkedAttachments.has("linkedAttachment")) {
+//                linkedAttachments.put("linkedAttachment", new JSONArray());
+//                crmFileJsonObject.put("linkedAttachments", linkedAttachments);
+//            } else
+            if (linkedAttachments.has("linkedAttachment") && linkedAttachments.get("linkedAttachment") instanceof JSONObject) {
+                log.warn("CRM eForm evidence files expected to be a list. Try converting into a list :: usn=[{}] type=[{}]", crmFormDetailsCriteriaDTO.usn(), crmFormDetailsCriteriaDTO.type());
+
+                JSONArray linkedAttachmentArray = new JSONArray();
+                linkedAttachmentArray.put(linkedAttachments.get("linkedAttachment"));
+                linkedAttachments.put("linkedAttachment", linkedAttachmentArray);
+                crmFileJsonObject.put("linkedAttachments", linkedAttachments);
+            }
+        } else {
+            JSONObject linkedAttachments = new JSONObject();
+            linkedAttachments.put("linkedAttachment", new JSONArray());
+            crmFileJsonObject.put("linkedAttachments", linkedAttachments);
+        }
+        //
+
         return crmFileJsonObject;
     }
 

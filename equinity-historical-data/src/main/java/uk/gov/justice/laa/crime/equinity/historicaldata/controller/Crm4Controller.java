@@ -8,9 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCri
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm4InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm4Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
@@ -25,21 +23,13 @@ public class Crm4Controller implements Crm4InterfaceApi {
 
     @Override
     public ResponseEntity<Crm4FormDTO> getApplicationCrm4(Long usn, String profileAcceptedTypes) {
-        log.info("eForm CRM4 details request received :: usn=[{}]", usn);
-        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usn, CRM_TYPE_4, profileAcceptedTypes
-        );
-        Crm4Model crm4FormData = crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO);
+            log.info("eForm CRM4 details request received :: usn=[{}]", usn);
+            CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                    usn, CRM_TYPE_4, profileAcceptedTypes
+            );
+            Crm4Model crm4FormData = crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO);
+            crm4FormData.getFormDetails().setAllQuotes();
 
-        Crm4DetailsModel crm4FileDetails = crm4FormData.getFormDetails();
-        crm4FileDetails.setAllQuotes();
-
-        CrmEvidenceFilesModel evidenceFiles = crm4FormData.getEvidenceFiles();
-
-        Crm4FormDTO crmFormDTO = new Crm4FormDTO();
-        crmFormDTO.setFormDetails(crm4Mapper.getEntityFromModel(crm4FileDetails));
-        crmFormDTO.setEvidenceFiles(null);
-        return ResponseEntity.ok(crmFormDTO);
+            return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crm4FormData));
     }
-
 }

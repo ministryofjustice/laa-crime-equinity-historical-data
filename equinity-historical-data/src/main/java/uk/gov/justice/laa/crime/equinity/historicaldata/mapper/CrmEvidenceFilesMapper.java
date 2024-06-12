@@ -3,13 +3,14 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmEvidenceFileDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmEvidenceFilesDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFileModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFilesModel;
 
 @Mapper(componentModel = "spring")
-public interface CrmFileLinkedAttachmentMapper extends CrmMapper {
-    // TODO (EMP-332): uncomment and resolve list mapping
-//    @Mapping(target="files", source="linkedAttachmentsModel")
-//    CrmEvidenceFilesDTO getDTOsFromModel(List<CrmFileLinkedAttachmentModel> linkedAttachmentsModel);
+public interface CrmEvidenceFilesMapper extends CrmMapper {
+    @Mapping(target="files", source="files")
+    CrmEvidenceFilesDTO getDTOsFromModel(CrmEvidenceFilesModel model);
 
     @Mapping(target="key", source="key")
     @Mapping(target="type", source="type")
