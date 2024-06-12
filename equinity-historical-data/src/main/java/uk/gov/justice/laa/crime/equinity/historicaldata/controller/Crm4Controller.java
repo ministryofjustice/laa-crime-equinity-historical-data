@@ -23,14 +23,13 @@ public class Crm4Controller implements Crm4InterfaceApi {
 
     @Override
     public ResponseEntity<Crm4FormDTO> getApplicationCrm4(Long usn, String profileAcceptedTypes) {
-        log.info("eForm CRM4 details request received :: usn=[{}]", usn);
-        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usn, CRM_TYPE_4, profileAcceptedTypes
-        );
-        Crm4Model crm4FormData = crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO);
-        crm4FormData.getFormDetails().setAllQuotes();
+            log.info("eForm CRM4 details request received :: usn=[{}]", usn);
+            CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                    usn, CRM_TYPE_4, profileAcceptedTypes
+            );
+            Crm4Model crm4FormData = crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO);
+            crm4FormData.getFormDetails().setAllQuotes();
 
-        return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crm4FormData));
+            return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crm4FormData));
     }
-
 }
