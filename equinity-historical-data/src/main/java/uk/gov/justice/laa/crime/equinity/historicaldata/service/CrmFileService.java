@@ -68,14 +68,23 @@ public class CrmFileService {
         crmFileJsonObject.remove("schema");
 
         // TODO (EMP-332): Refactor this conversion into a function
-        JSONObject linkedAttachments = (JSONObject) crmFileJsonObject.get("linkedAttachments");
+        if (crmFileJsonObject.has("linkedAttachments")) {
+            JSONObject linkedAttachments = (JSONObject) crmFileJsonObject.get("linkedAttachments");
 
-        if (linkedAttachments.get("linkedAttachment") instanceof JSONObject) {
-            log.warn("CRM eForm evidence files expected to be a list. Try converting into a list :: usn=[{}] type=[{}]", crmFormDetailsCriteriaDTO.usn(), crmFormDetailsCriteriaDTO.type());
+            if (!linkedAttachments.has("linkedAttachment")) {
+                linkedAttachments.put("linkedAttachment", new JSONArray());
+                crmFileJsonObject.put("linkedAttachments", linkedAttachments);
+            } else if (linkedAttachments.get("linkedAttachment") instanceof JSONObject) {
+                log.warn("CRM eForm evidence files expected to be a list. Try converting into a list :: usn=[{}] type=[{}]", crmFormDetailsCriteriaDTO.usn(), crmFormDetailsCriteriaDTO.type());
 
-            JSONArray linkedAttachmentArray = new JSONArray();
-            linkedAttachmentArray.put(linkedAttachments.get("linkedAttachment"));
-            linkedAttachments.put("linkedAttachment", linkedAttachmentArray);
+                JSONArray linkedAttachmentArray = new JSONArray();
+                linkedAttachmentArray.put(linkedAttachments.get("linkedAttachment"));
+                linkedAttachments.put("linkedAttachment", linkedAttachmentArray);
+                crmFileJsonObject.put("linkedAttachments", linkedAttachments);
+            }
+        } else {
+            JSONObject linkedAttachments = new JSONObject();
+            linkedAttachments.put("linkedAttachment", new JSONArray());
             crmFileJsonObject.put("linkedAttachments", linkedAttachments);
         }
         //
