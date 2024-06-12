@@ -308,10 +308,29 @@ Crm14IncomeDTO:
     receiveBenefits:
       type: string
     selfBenefits:
-      type: array
-      items: {}
+      $ref: "#/Crm14BenefitsDTO"
     proofBenefits:
       type: string
+
+Crm14BenefitSupportDTO:
+  type: object
+  properties:
+    incomeSupport:
+      type: boolean
+    esa:
+      type: boolean
+    statePension:
+      type: boolean
+    jsa:
+      type: boolean
+
+Crm14BenefitsDTO:
+  type: object
+  properties:
+    you:
+      $ref: "#/Crm14BenefitSupportDTO"
+    partner:
+      $ref: "#/Crm14BenefitSupportDTO"
 
 Crm14InterestOfJusticePart1DTO:
   type: object
