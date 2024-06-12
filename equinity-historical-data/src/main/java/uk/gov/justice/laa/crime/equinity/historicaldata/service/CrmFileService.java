@@ -71,10 +71,12 @@ public class CrmFileService {
         if (crmFileJsonObject.has("linkedAttachments")) {
             JSONObject linkedAttachments = (JSONObject) crmFileJsonObject.get("linkedAttachments");
 
-            if (!linkedAttachments.has("linkedAttachment")) {
-                linkedAttachments.put("linkedAttachment", new JSONArray());
-                crmFileJsonObject.put("linkedAttachments", linkedAttachments);
-            } else if (linkedAttachments.get("linkedAttachment") instanceof JSONObject) {
+            // TODO (EMP-332): Add this to the function version
+//            if (!linkedAttachments.has("linkedAttachment")) {
+//                linkedAttachments.put("linkedAttachment", new JSONArray());
+//                crmFileJsonObject.put("linkedAttachments", linkedAttachments);
+//            } else
+            if (linkedAttachments.has("linkedAttachment") && linkedAttachments.get("linkedAttachment") instanceof JSONObject) {
                 log.warn("CRM eForm evidence files expected to be a list. Try converting into a list :: usn=[{}] type=[{}]", crmFormDetailsCriteriaDTO.usn(), crmFormDetailsCriteriaDTO.type());
 
                 JSONArray linkedAttachmentArray = new JSONArray();
