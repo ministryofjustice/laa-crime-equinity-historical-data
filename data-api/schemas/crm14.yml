@@ -307,7 +307,7 @@ Crm14IncomeDTO:
   properties:
     receiveBenefits:
       type: string
-    selfBenefits:
+    benefits:
       $ref: "#/Crm14BenefitsDTO"
     proofBenefits:
       type: string

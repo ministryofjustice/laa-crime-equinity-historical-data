@@ -20,11 +20,11 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "aboutYouPart1.contactDetails", source = "model")
     @Mapping(target = "aboutYouPart2", source = "model")
     @Mapping(target = "aboutYouPartner", source = "model")
-    @Mapping(target = "interestOfJusticePart1", expression = "java(null)")
+    @Mapping(target = "interestOfJusticePart1",  source = "model")
     @Mapping(target = "interestOfJusticePart2",  source = "model")
-    @Mapping(target = "evidencePart1", expression = "java(null)")
+    @Mapping(target = "evidencePart1", source = "model")
     @Mapping(target = "evidencePart2", expression = "java(null)")
-    @Mapping(target = "income", expression = "java(null)")
+    @Mapping(target = "income", source = "model")
     @Mapping(target = "legalRepresentationDetails", source = "model")
     @Mapping(target = "aboutInformation", source = "model")
     @Mapping(target = "declarations", source = "model")
@@ -163,6 +163,22 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="interestsAnotherDetails", source = "interests_of_another_details")
     @Mapping(target="otherReasonRepresentedDetails", source = "other_reason_to_be_represented_details")
     Crm14InterestOfJusticePart2DTO getInterestOfJusticePart2DTOFromModel(Crm14DetailsModel model);
+
+    @Mapping(target="receiveBenefits", source = "receive_benefits")
+    @Mapping(target="proofBenefits", source = "do_you_have_proof")
+    @Mapping(target="benefits.you.incomeSupport", source = "income_support")
+    @Mapping(target="benefits.you.esa", source = "esa")
+    @Mapping(target="benefits.you.statePension", source = "state_pension")
+    @Mapping(target="benefits.you.jsa", source = "jsa")
+    @Mapping(target="benefits.partner.incomeSupport", source = "income_support_partner")
+    @Mapping(target="benefits.partner.esa", source = "esa_partner")
+    @Mapping(target="benefits.partner.statePension", source = "state_pension_partner")
+    @Mapping(target="benefits.partner.jsa", source = "jsa_partner")
+    Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
+
+    @Mapping(target="offenceType", source = "offence_type")
+    Crm14InterestOfJusticePart1DTO getInterestOfJusticePart1DTOFromModel(Crm14DetailsModel model);
+
 
     default String convertCaseType(Crm14DetailsModel model) {
         if (model.summary) {
