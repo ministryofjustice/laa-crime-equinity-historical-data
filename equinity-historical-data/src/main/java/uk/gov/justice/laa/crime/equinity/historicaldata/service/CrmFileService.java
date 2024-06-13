@@ -53,14 +53,13 @@ public class CrmFileService {
 
     public JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
         TaskImageFilesModel task = (TaskImageFilesModel) taskImageFilesRepository.findOne(
-                        crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
-                )
-                .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
-
+                crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
+            )
+            .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
 
         // Collect and clean content
         String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.UTF_8)
-                .replaceAll("\u0000", "");
+            .replaceAll("\u0000", "");
 
         return convertCrmFileContentToJson(crmFormFileContent);
     }
