@@ -27,7 +27,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
             CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                     usn, CRM_TYPE_4, profileAcceptedTypes
             );
-            Crm4Model crm4FormData = crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO);
+            Crm4Model crm4FormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
             crm4FormData.getFormDetails().setAllQuotes();
 
             return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crm4FormData));

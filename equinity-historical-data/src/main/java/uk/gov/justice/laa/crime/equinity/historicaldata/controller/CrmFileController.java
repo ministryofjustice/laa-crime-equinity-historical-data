@@ -43,7 +43,7 @@ public class CrmFileController {
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 taskId, null, null
         );
-        Map<String, Object> crmFileContents = crmFileService.getCrmFormJson(crmFormDetailsCriteriaDTO)
+        Map<String, Object> crmFileContents = crmFileService.getCrmFileJson(crmFormDetailsCriteriaDTO)
                 .toMap();
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
     }
