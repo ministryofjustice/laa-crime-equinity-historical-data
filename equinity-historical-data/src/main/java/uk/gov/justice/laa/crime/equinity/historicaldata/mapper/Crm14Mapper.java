@@ -176,7 +176,24 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="benefits.partner.jsa", source = "jsa_partner")
     Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
 
+
+    @Mapping(target="chargesBrought", expression = "java(null)")
     @Mapping(target="offenceType", source = "offence_type")
+    @Mapping(target="anyDefendants", source = "any_codefendants")
+    @Mapping(target="defendantDetails", source = "codefendants_details")
+    @Mapping(target="notSameSolicitor", source = "why_not_rep_same_solicitor")
+    @Mapping(target="notSameSolicitorReason", source = "why_not_rep_same_solicitor_reasons")
+    @Mapping(target="otherCases", source = "other_cases")
+    @Mapping(target="otherCaseCharges.you.charges", source = "other_case_charges")
+    @Mapping(target="otherCaseCharges.you.court", source = "other_case_court")
+    @Mapping(target="otherCaseCharges.you.nextHearing", source = "other_case_next_hearing")
+    @Mapping(target="otherCaseCharges.partner.charges", source = "partner_other_case_charges")
+    @Mapping(target="otherCaseCharges.partner.court", source = "partner_other_case_court")
+    @Mapping(target="otherCaseCharges.partner.nextHearing", source = "partner_other_case_next_hearing")
+    @Mapping(target="laCourt", source = "court_name_display")
+    @Mapping(target="laCourtNextHearing", source = "hearing_date")
+    @Mapping(target="proceedingsConcluded", source = "proceedings_already_concluded")
+    @Mapping(target="proceedingsConcludedNotes", source = "proceedings_already_concluded_notes")
     Crm14InterestOfJusticePart1DTO getInterestOfJusticePart1DTOFromModel(Crm14DetailsModel model);
 
 

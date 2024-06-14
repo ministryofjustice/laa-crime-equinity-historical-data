@@ -324,6 +324,25 @@ Crm14BenefitSupportDTO:
     jsa:
       type: boolean
 
+Crm14OtherChargesDTO:
+  type: object
+  properties:
+    you:
+      $ref: "#/Crm14OtherChargeDTO"
+    partner:
+      $ref: "#/Crm14OtherChargeDTO"
+
+Crm14OtherChargeDTO:
+  type: object
+  properties:
+    charges:
+      type: string
+    court:
+      type: string
+    nextHearing:
+      type: string
+      format: date-time
+
 Crm14BenefitsDTO:
   type: object
   properties:
@@ -350,19 +369,7 @@ Crm14InterestOfJusticePart1DTO:
     otherCases:
       type: string
     otherCaseCharges:
-      type: string
-    otherCaseCourt:
-      type: string
-    otherCaseNextHearing:
-      type: string
-      format: date-time
-    otherCasePartnerCharges:
-      type: string
-    otherCasePartnerCourt:
-      type: string
-    otherCasePartnerNextHearing:
-      type: string
-      format: date-time
+      $ref: "#/Crm14OtherChargesDTO"
     laCourt:
       type: string
     laCourtNextHearing:
