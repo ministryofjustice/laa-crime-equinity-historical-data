@@ -419,16 +419,18 @@ Crm14EvidencePart1DTO:
   type: object
   properties:
     remandedInCustody:
-      type: string
+      type: integer
     remandedDate:
       type: string
       format: date-time
     heardInMagistrateCourt:
-      type: string
+      type: integer
+    employed:
+      type: integer
     employmentCeased:
-      type: string
+      type: integer
     lostJobDuetoCustody:
-      type: string
+      type: integer
     lostJobDuetoCustodyDate:
       type: string
       format: date-time

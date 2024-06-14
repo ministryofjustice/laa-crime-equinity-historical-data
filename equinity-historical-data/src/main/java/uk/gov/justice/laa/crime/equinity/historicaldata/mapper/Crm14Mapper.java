@@ -195,6 +195,16 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="proceedingsConcluded", source = "proceedings_already_concluded")
     @Mapping(target="proceedingsConcludedNotes", source = "proceedings_already_concluded_notes")
     Crm14InterestOfJusticePart1DTO getInterestOfJusticePart1DTOFromModel(Crm14DetailsModel model);
+    @Mapping(target="remandedInCustody", source = "remanded_in_custody")
+    @Mapping(target="remandedDate", source = "remanded_in_custody_date")
+    @Mapping(target="heardInMagistrateCourt", source = "heard_in_magistrates_court")
+    @Mapping(target="employed", source = "employed")
+    @Mapping(target="employmentCeased", source = "employment_ceased_3_months")
+    @Mapping(target="lostJobDuetoCustody", source = "lost_job_due_to_custody")
+    @Mapping(target="lostJobDuetoCustodyDate", source = "lost_job_due_to_custody_date")
+    @Mapping(target="partnerEmployed", source = "partner_employed")
+    Crm14EvidencePart1DTO getEvidencePart1DTOFromModel(Crm14DetailsModel model);
+
 
 
     default String convertCaseType(Crm14DetailsModel model) {
