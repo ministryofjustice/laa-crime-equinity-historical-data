@@ -32,6 +32,8 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CrmFileServiceTest {
+    private static final String TEST_FILES_PATH = "src/test/resources/%s";
+
     @InjectSoftAssertions
     private SoftAssertions softly;
 
@@ -56,14 +58,13 @@ class CrmFileServiceTest {
         crmFileTestTypes.put(4808706L, CRM_TYPE_7);
         crmFileTestTypes.put(5001597L, CRM_TYPE_7);
 
-
         crmFileTests =  new HashMap<>();
-        crmFileTests.put(5001604L, "src/test/resources/Crm5MockFile_5001604.txt"); // Mocking good XML
-        crmFileTests.put(11L, "src/test/resources/Crm5MockOFDFile_WrongFormat.txt"); // Invalid XML file
-        crmFileTests.put(5001912L, "src/test/resources/Crm4MockFile_5001912.txt");
-        crmFileTests.put(4808706L, "src/test/resources/Crm7MockFile_4808706.txt");
-        crmFileTests.put(5001662L, "src/test/resources/Crm7MockFile_5001662.txt");
-        crmFileTests.put(5001597L, "src/test/resources/Crm7MockFile_5001597.txt");
+        crmFileTests.put(5001604L, String.format(TEST_FILES_PATH, "Crm5MockFile_5001604.txt"));
+        crmFileTests.put(11L, String.format(TEST_FILES_PATH, "Crm5MockOFDFile_WrongFormat.txt"));
+        crmFileTests.put(5001912L, String.format(TEST_FILES_PATH, "Crm4MockFile_5001912.txt"));
+        crmFileTests.put(4808706L, String.format(TEST_FILES_PATH, "Crm7MockFile_4808706.txt"));
+        crmFileTests.put(5001662L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001662.txt"));
+        crmFileTests.put(5001597L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001597.txt"));
 
         crmFileTests.forEach((testUsn, testFile) -> {
             try {

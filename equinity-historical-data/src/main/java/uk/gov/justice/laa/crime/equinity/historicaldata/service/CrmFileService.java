@@ -28,6 +28,13 @@ public class CrmFileService {
     public static final int CRM_TYPE_7 = 5;
     public static final int CRM_TYPE_14 = 6;
     public static final int CRM_TYPE_15 = 7;
+    private static final String CHAR_NULL = "\u0000";
+    private static final String CHAR_EMPTY = "";
+    private static final String CRM_FORM_DATA = "fd:formdata";
+    private static final String CRM_PRINT_INFO = "printinfo";
+    private static final String CRM_SCHEMA = "schema";
+    private static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
+    private static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
 
     private final TaskImageFilesRepository taskImageFilesRepository;
     private final ObjectMapper jsonObjectMapper;
@@ -46,7 +53,7 @@ public class CrmFileService {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
 
         // Format sanity checks and conversions
-        crmFileJsonObject.put("linkedAttachments", convertCrmFormLinkedAttachments(crmFileJsonObject));
+        crmFileJsonObject.put(CRM_LINKED_EVIDENCE, convertCrmFormLinkedAttachments(crmFileJsonObject));
 
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
     }
@@ -59,19 +66,19 @@ public class CrmFileService {
 
         // Collect and clean content
         String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.UTF_8)
-            .replaceAll("\u0000", "");
+            .replaceAll(CHAR_NULL, CHAR_EMPTY);
 
         return convertCrmFileContentToJson(crmFormFileContent);
     }
 
     private JSONObject convertCrmFileContentToJson(String crmImageFile) throws JSONException {
         // Extract eForm data content
-        JSONObject crmFileJsonObject = (JSONObject) XML.toJSONObject(crmImageFile)
-                .get("fd:formdata");
+        JSONObject crmFileJsonObject = XML.toJSONObject(crmImageFile)
+                .getJSONObject(CRM_FORM_DATA);
 
         // Cleanup eForm data by removing unused fields
-        crmFileJsonObject.remove("printinfo");
-        crmFileJsonObject.remove("schema");
+        crmFileJsonObject.remove(CRM_PRINT_INFO);
+        crmFileJsonObject.remove(CRM_SCHEMA);
 
         return crmFileJsonObject;
     }
@@ -94,30 +101,28 @@ public class CrmFileService {
     public JSONObject convertCrmFormLinkedAttachments(JSONObject crmFileJsonObject) {
         JSONObject linkedAttachments;
 
-        if (!crmFileJsonObject.has("linkedAttachments")) {
+        if (!crmFileJsonObject.has(CRM_LINKED_EVIDENCE)) {
             linkedAttachments = new JSONObject();
-            linkedAttachments.put("linkedAttachment", new JSONArray());
+            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, new JSONArray());
             return linkedAttachments;
         }
 
-        linkedAttachments = (JSONObject) crmFileJsonObject.get("linkedAttachments");
+        linkedAttachments = (JSONObject) crmFileJsonObject.get(CRM_LINKED_EVIDENCE);
 
-        if (!linkedAttachments.has("linkedAttachment")) {
-            linkedAttachments.put("linkedAttachment", new JSONArray());
+        if (!linkedAttachments.has(CRM_LINKED_EVIDENCE_FILES)) {
+            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, new JSONArray());
             return linkedAttachments;
         }
 
-        if (linkedAttachments.get("linkedAttachment") instanceof JSONObject) {
+        if (linkedAttachments.get(CRM_LINKED_EVIDENCE_FILES) instanceof JSONObject) {
             log.warn("CRM eForm evidence files expected to be a list. Try converting into a list");
 
             JSONArray linkedAttachmentArray = new JSONArray();
-            linkedAttachmentArray.put(linkedAttachments.get("linkedAttachment"));
-            linkedAttachments.put("linkedAttachment", linkedAttachmentArray);
+            linkedAttachmentArray.put(linkedAttachments.get(CRM_LINKED_EVIDENCE_FILES));
+            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, linkedAttachmentArray);
             return linkedAttachments;
         }
 
         return linkedAttachments;
     }
-
 }
-
