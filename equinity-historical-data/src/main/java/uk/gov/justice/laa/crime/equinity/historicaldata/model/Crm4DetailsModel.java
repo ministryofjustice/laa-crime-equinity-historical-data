@@ -240,7 +240,7 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
                     quote.setContactPhone(contactPhone);
                     quote.setCostBasis(costBasis);
                     quote.setPreparationHours(prepHrs);
-                    quote.setAddtionalItemAmount(addItmAmt);
+                    quote.setAdditionalItemAmount(addItmAmt);
                     quote.setTravelHours(trvlHrs);
                     quote.setTravelHourlyRate(trvlHrsRate);
                     quote.setQuoteTotal(qtTotal);
