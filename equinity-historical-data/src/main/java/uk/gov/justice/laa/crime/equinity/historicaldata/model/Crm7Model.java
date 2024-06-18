@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +18,6 @@ public class Crm7Model implements CrmFormModelInterface {
     @JsonProperty("targetpath")
     private String targetpath;
 
-    @Override
-    public CrmEvidenceFilesModel getEvidenceFiles() {
-        return (CrmEvidenceFilesModel) List.of();
-    }
+    @JsonProperty("linkedAttachments")
+    private CrmEvidenceFilesModel evidenceFiles;
 }

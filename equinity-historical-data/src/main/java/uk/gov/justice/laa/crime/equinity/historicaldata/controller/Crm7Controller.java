@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm7InterfaceApi;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm7Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
@@ -21,13 +21,14 @@ public class Crm7Controller implements Crm7InterfaceApi {
     private final Crm7Mapper mapper;
 
     @Override
-    public ResponseEntity<Crm7DetailsDTO> getApplicationCrm7(Long usn, String profileAcceptedTypes) {
+    public ResponseEntity<Crm7FormDTO> getApplicationCrm7(Long usn, String profileAcceptedTypes) {
         log.info("eForm CRM7 details request received :: usn=[{}]", usn);
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 usn, CRM_TYPE_7, profileAcceptedTypes
         );
-        Crm7DetailsModel crm7FileDetails = (Crm7DetailsModel) crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO).getFormDetails();
 
-        return ResponseEntity.ok(mapper.getDTOFromModel(crm7FileDetails));
+        Crm7Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
+
+        return ResponseEntity.ok(mapper.getDTOFromModel(crmFormData));
     }
 }

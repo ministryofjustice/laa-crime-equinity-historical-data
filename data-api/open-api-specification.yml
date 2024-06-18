@@ -82,7 +82,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Crm7DetailsDTO'
+                $ref: '#/components/schemas/Crm7FormDTO'
 
   /api/internal/v1/equinity/crm14/{usn}:
     get:
@@ -260,8 +260,13 @@ components:
           $ref: '#/components/schemas/CrmEvidenceFilesDTO'
 
     ## CRM 7
-    Crm7DetailsDTO:
-      $ref: "./schemas/crm7.yml#/Crm7DetailsDTO"
+    Crm7FormDTO:
+      type: object
+      properties:
+        formDetails:
+          $ref: "./schemas/crm7.yml#/Crm7DetailsDTO"
+        evidenceFiles:
+          $ref: '#/components/schemas/CrmEvidenceFilesDTO'
 
     ## CRM 14
     Crm14DetailsDTO:
