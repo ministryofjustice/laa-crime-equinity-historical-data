@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * This class was created to contain all fields.
+ * Lombok is not compiling if we put all fields in CRM14DetailsModel.
+ */
 @Data
 @NoArgsConstructor
 public class Crm14AdditionalDetails {
