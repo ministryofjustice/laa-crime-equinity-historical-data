@@ -193,6 +193,11 @@ Crm4SolicitorDetailsDTO:
 Crm4ClientDTO:
   type: object
   properties:
+    repOrderNumber:
+      type: string
+    repOrderDate:
+      type: string
+      format: date-time
     ufn:
       type: string
     maatNumber:
@@ -226,6 +231,8 @@ Crm4ProceedingDetailsDTO:
     dateOfHearing:
       type: string
       format: date-time
+    purposeOfHearing:
+      type: string
 Crm4SolicitorDTO:
   type: object
   properties:
