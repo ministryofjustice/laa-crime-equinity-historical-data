@@ -7,8 +7,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14DetailsModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
-
-    // TODO - check if this field can be Enum
     @Mapping(target="legalRepresentativeUse.dateStamp.usn", source="datestamp_usn")
     @Mapping(target="legalRepresentativeUse.dateStamp.date", source="datestamp_date")
     @Mapping(target="legalRepresentativeUse.dateStamp.time", source="datestamp_time")
@@ -32,7 +30,6 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "submit", source = "last_action")
 
     Crm14DetailsDTO getDTOFromModel(Crm14DetailsModel model);
-
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
     @Mapping(target="applicationType", source="application_type")
