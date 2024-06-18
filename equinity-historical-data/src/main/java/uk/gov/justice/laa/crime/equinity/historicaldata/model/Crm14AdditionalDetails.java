@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class Crm14PartnerModel {
+public class Crm14AdditionalDetails {
 
     @JsonProperty("Have_partner")
     public int have_partner;

@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Crm14DetailsModel extends Crm14PartnerModel implements CrmFormDetailsModelInterface {
+public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmFormDetailsModelInterface {
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
     @JsonProperty("Other_reason_to_be_represented")
