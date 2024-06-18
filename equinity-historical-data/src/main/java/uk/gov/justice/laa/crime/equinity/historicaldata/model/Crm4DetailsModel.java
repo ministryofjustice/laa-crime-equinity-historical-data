@@ -42,6 +42,10 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     public String solicitorid;
     @JsonProperty("Prison_law")
     public String prison_law;
+    @JsonProperty("Rep_order_number")
+    public String rep_order_number;
+    @JsonProperty("Client_dateoforder")
+    public Date client_dateoforder;
     @JsonProperty("Client_ufn")
     public String client_ufn;
     @JsonProperty("Maat_number")
@@ -70,6 +74,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     public String plea;
     @JsonProperty("Nexthearingdate")
     public Date nexthearingdate;
+    @JsonProperty("Nexthearingpurpose")
+    public String Nexthearingpurpose;
 
     @JsonProperty("Is_case_subject_to_poca")
     public String is_case_subject_to_poca;

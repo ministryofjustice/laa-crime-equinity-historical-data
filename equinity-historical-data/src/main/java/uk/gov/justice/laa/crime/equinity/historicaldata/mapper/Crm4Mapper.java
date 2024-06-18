@@ -29,6 +29,8 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="caseDetails.solicitorDetails.solicitorName", source="solicitorname")
     @Mapping(target="caseDetails.solicitorDetails.solicitorReference", source="solicitorid")
 
+    @Mapping(target="caseDetails.clientDetails.repOrderNumber", source="rep_order_number")
+    @Mapping(target="caseDetails.clientDetails.repOrderDate", source="client_dateoforder")
     @Mapping(target="caseDetails.clientDetails.ufn", source="client_ufn")
     @Mapping(target="caseDetails.clientDetails.maatNumber", source="maat_number")
     @Mapping(target="caseDetails.clientDetails.firstName", source="client_forename")
@@ -44,6 +46,7 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="caseDetails.proceedingDetails.mainOffence", source="mainoffence")
     @Mapping(target="caseDetails.proceedingDetails.actualPlea", source="plea")
     @Mapping(target="caseDetails.proceedingDetails.dateOfHearing", source = "nexthearingdate")
+    @Mapping(target="caseDetails.proceedingDetails.purposeOfHearing", source = "nexthearingpurpose")
     @Mapping(target="additionalInfo", source="ai_text")
     @Mapping(target="expenditureDetails.details.expenditureType", source = "expenditure_type")
     @Mapping(target="expenditureDetails.details.priorAuthority", source = "prior_authority_granted")
@@ -76,5 +79,5 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="solicitor.certification.name", source="solicitorname")
     @Mapping(target="officeUseOnly.decision", source = "tlstatename")
 
-    Crm4DetailsDTO getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
+    Crm4DetailsDTO    getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
 }
