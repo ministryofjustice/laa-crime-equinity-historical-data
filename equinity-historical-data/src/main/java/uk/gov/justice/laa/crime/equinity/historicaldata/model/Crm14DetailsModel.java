@@ -2,15 +2,15 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
-//@EqualsAndHashCode(callSuper = true)
-public class Crm14DetailsModel implements CrmFormDetailsModelInterface {
+@EqualsAndHashCode(callSuper = true)
+public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmFormDetailsModelInterface {
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
     @JsonProperty("Other_reason_to_be_represented")
@@ -224,7 +224,7 @@ public class Crm14DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Cant_present_own_case")
     public boolean cant_present_own_case;
     @JsonProperty("Charges_brought")
-    public List<Crm14ChargesBroughtModel> charges_brought;
+    public Crm14Charges charges;
     @JsonProperty("Welsh_corr_flag")
     public boolean welsh_corr_flag;
     @JsonProperty("Datestamp_usn")
@@ -744,7 +744,36 @@ public class Crm14DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Summary")
     public boolean summary;
 
-    Crm14PartnerDetailsModel partnerDetails;
-    Crm14FundingDecisionModel subformFundingDecision;
-    Crm14ExtensionCrm15AnnexModel extensionCrm15Details;
+    @JsonProperty("Hide_crm15")
+    public boolean hide_crm15;
+    @JsonProperty("Child_benefit_crm15_paid_every")
+    public String child_benefit_crm15_paid_every;
+    @JsonProperty("Freezing_order_crm15")
+    public String freezing_order_crm15;
+    @JsonProperty("Incapacity_benefit_crm15_paid_every")
+    public String incapacity_benefit_crm15_paid_every;
+    @JsonProperty("Jsa_crm15_paid_every")
+    public String jsa_crm15_paid_every;
+    @JsonProperty("Tax_credit_crm15_paid_every")
+    public String tax_credit_crm15_paid_every;
+    @JsonProperty("Universal_credit_crm15_paid_every")
+    public String universal_credit_crm15_paid_every;
+    @JsonProperty("Other_benefits_crm15_paid_every")
+    public String other_benefits_crm15_paid_every;
+    @JsonProperty("State_pension_crm15_paid_every")
+    public String state_pension_crm15_paid_every;
+    @JsonProperty("Child_benefit_crm15")
+    public int child_benefit_crm15;
+    @JsonProperty("Tax_credit_crm15")
+    public int tax_credit_crm15;
+    @JsonProperty("Other_income_crm15")
+    public String other_income_crm15;
+    @JsonProperty("How_pay_bills_crm15")
+    public String how_pay_bills_crm15;
+    @JsonProperty("Disablement_benefit_crm15_paid_every")
+    public String disablement_benefit_crm15_paid_every;
+    @JsonProperty("Universal_credit_crm15")
+    public int universal_credit_crm15;
+    @JsonProperty("Other_benefits_crm15_details")
+    public String other_benefits_crm15_details;
 }
