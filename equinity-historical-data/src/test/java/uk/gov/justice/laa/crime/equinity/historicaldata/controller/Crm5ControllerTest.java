@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
@@ -54,23 +54,23 @@ public class Crm5ControllerTest {
     @Test
     void getApplicationTest_WhenGivenExistingUsnThenReturnValidResponse() {
         Long usnTest = 5001604L;
-        ResponseEntity<CRM5DetailsDTO> result = controller.getApplication(usnTest, ACCEPTED_PROFILE_TYPES);
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, ACCEPTED_PROFILE_TYPES);
 
         softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(CRM5DetailsDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
+        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(result.getBody().getFormDetails().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
     }
 
     @Test
     void getApplicationTest_WhenGivenExistingUsnWithNoProfileAcceptedTypesThenReturnValidResponse() {
         Long usnTest = 5001604L;
-        ResponseEntity<CRM5DetailsDTO> result = controller.getApplication(usnTest, null);
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
 
         softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(CRM5DetailsDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
+        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(result.getBody().getFormDetails().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
     }
 
     @Test

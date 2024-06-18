@@ -3,10 +3,16 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 
 @Mapper(componentModel = "spring")
 public interface Crm5Mapper {
+    @Mapping(target="formDetails", source="formDetails")
+    @Mapping(target="evidenceFiles", source="evidenceFiles")
+    Crm5FormDTO getDTOFromModel(Crm5Model model);
+
     @Mapping(target="detailsOfWorkCompleted", source="fd_details_of_work")
     @Mapping(target="detailsOfApplication", source="fd_additional_work")
     @Mapping(target="statementOfCase", source="description_of_case")
@@ -117,5 +123,5 @@ public interface Crm5Mapper {
     @Mapping(target="solicitor.certification.date", source="certification_sol_date")
     @Mapping(target="solicitor.certification.name", source="certification_sol_name")
     @Mapping(target="officeUseOnly.decision", source="decision")
-    CRM5DetailsDTO getEntityFromModel(Crm5DetailsModel crm5DetailsModel);
+    CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
 }
