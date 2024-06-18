@@ -26,7 +26,7 @@ public class Crm14Controller implements Crm14InterfaceApi{
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 usn, CRM_TYPE_14, profileAcceptedTypes
         );
-        Crm14DetailsModel crm14FileDetails = (Crm14DetailsModel) crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO).getFormDetails();
+        Crm14DetailsModel crm14FileDetails = (Crm14DetailsModel) crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO).getFormDetails();
 
         return ResponseEntity.ok(mapper.getDTOFromModel(crm14FileDetails));
     }
