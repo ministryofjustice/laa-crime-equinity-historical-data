@@ -1,6 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -40,4 +41,21 @@ public class EquinityExceptionResponseHandler {
     ) {
         return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).body(exception.getMessage());
     }
+
+    @ExceptionHandler(JSONException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleJsonException(
+            JSONException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was a problem reading CRM image file. " + exception.getMessage());
+    }
+
+    @ExceptionHandler(ClassCastException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleClassCastException(
+            ClassCastException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was a problem reading CRM image file. " + exception.getMessage());
+    }
+
 }

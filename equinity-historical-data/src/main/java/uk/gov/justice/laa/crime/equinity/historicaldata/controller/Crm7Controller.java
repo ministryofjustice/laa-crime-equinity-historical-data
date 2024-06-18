@@ -26,7 +26,7 @@ public class Crm7Controller implements Crm7InterfaceApi {
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 usn, CRM_TYPE_7, profileAcceptedTypes
         );
-        Crm7DetailsModel crm7FileDetails = (Crm7DetailsModel) crmFileService.getCrmImageFile(crmFormDetailsCriteriaDTO).getFormDetails();
+        Crm7DetailsModel crm7FileDetails = (Crm7DetailsModel) crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO).getFormDetails();
 
         return ResponseEntity.ok(mapper.getDTOFromModel(crm7FileDetails));
     }

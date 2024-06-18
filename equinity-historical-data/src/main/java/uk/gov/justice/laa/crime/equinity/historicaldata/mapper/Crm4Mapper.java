@@ -3,10 +3,16 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
 
 @Mapper(componentModel = "spring")
-public interface Crm4Mapper {
+public interface Crm4Mapper extends CrmEvidenceFilesMapper {
+
+    @Mapping(target="formDetails", source="formDetails")
+    @Mapping(target="evidenceFiles", source="evidenceFiles")
+    Crm4FormDTO getDTOFromModel(Crm4Model model);
 
     @Mapping(target="greaterValue", source="applyingge100")
     @Mapping(target="postMortemExamination", source="post_mortem_app")

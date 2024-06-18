@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -27,12 +28,19 @@ public class CrmFileService {
     public static final int CRM_TYPE_7 = 5;
     public static final int CRM_TYPE_14 = 6;
     public static final int CRM_TYPE_15 = 7;
+    private static final String CHAR_NULL = "\u0000";
+    private static final String CHAR_EMPTY = "";
+    private static final String CRM_FORM_DATA = "fd:formdata";
+    private static final String CRM_PRINT_INFO = "printinfo";
+    private static final String CRM_SCHEMA = "schema";
+    private static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
+    private static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
 
     private final TaskImageFilesRepository taskImageFilesRepository;
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
 
-    private static Class<? extends CrmFileModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
+    private static Class<? extends CrmFormModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
         return switch (type) {
             case CRM_TYPE_4 -> Crm4Model.class;
             case CRM_TYPE_5 -> Crm5Model.class;
@@ -42,33 +50,42 @@ public class CrmFileService {
         };
     }
 
-    public <T extends CrmFileModelInterface> T getCrmImageFile(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+    public <T extends CrmFormModelInterface> T getCrmFormData(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
-        return convertCrmFormJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
+
+        // Format sanity checks and conversions
+        crmFileJsonObject.put(CRM_LINKED_EVIDENCE, convertCrmFormLinkedAttachments(crmFileJsonObject));
+
+        return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
     }
 
-    private JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
+    public JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
         TaskImageFilesModel task = (TaskImageFilesModel) taskImageFilesRepository.findOne(
                 crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
             )
             .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
 
         // Collect and clean content
-        String odfImageContentString = new String(task.getCrmFile(), StandardCharsets.UTF_8)
-                .replaceAll("\u0000", "");
+        String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.UTF_8)
+            .replaceAll(CHAR_NULL, CHAR_EMPTY);
 
+        return convertCrmFileContentToJson(crmFormFileContent);
+    }
+
+    private JSONObject convertCrmFileContentToJson(String crmImageFile) throws JSONException {
         // Extract eForm data content
-        JSONObject crmFileJsonObject = (JSONObject) XML.toJSONObject(odfImageContentString)
-                .get("fd:formdata");
+        JSONObject crmFileJsonObject = XML.toJSONObject(crmImageFile)
+                .getJSONObject(CRM_FORM_DATA);
 
         // Cleanup eForm data by removing unused fields
-        crmFileJsonObject.remove("printinfo");
-        crmFileJsonObject.remove("schema");
+        crmFileJsonObject.remove(CRM_PRINT_INFO);
+        crmFileJsonObject.remove(CRM_SCHEMA);
+
         return crmFileJsonObject;
     }
 
-    public <T extends CrmFileModelInterface> T convertCrmFormJsonToModel(JSONObject crmFileJsonObject, CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws NotEnoughSearchParametersException, JSONException {
-        CrmFileModelInterface crmFormData;
+    public <T extends CrmFormModelInterface> T convertCrmFileJsonToModel(JSONObject crmFileJsonObject, CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws NotEnoughSearchParametersException, JSONException {
+        CrmFormModelInterface crmFormData;
 
         try {
             crmFormData = jsonObjectMapper.readValue(
@@ -82,9 +99,31 @@ public class CrmFileService {
         return (T) crmFormData;
     }
 
-    // TODO (): Delete this, once we have all CRM Form Files available for data-mapping
-    public JSONObject getCrmFormJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
-        return getCrmFileJson(crmFormDetailsCriteriaDTO);
+    public JSONObject convertCrmFormLinkedAttachments(JSONObject crmFileJsonObject) {
+        JSONObject linkedAttachments;
+
+        if (!crmFileJsonObject.has(CRM_LINKED_EVIDENCE)) {
+            linkedAttachments = new JSONObject();
+            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, new JSONArray());
+            return linkedAttachments;
+        }
+
+        linkedAttachments = (JSONObject) crmFileJsonObject.get(CRM_LINKED_EVIDENCE);
+
+        if (!linkedAttachments.has(CRM_LINKED_EVIDENCE_FILES)) {
+            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, new JSONArray());
+            return linkedAttachments;
+        }
+
+        if (linkedAttachments.get(CRM_LINKED_EVIDENCE_FILES) instanceof JSONObject) {
+            log.warn("CRM eForm evidence files expected to be a list. Try converting into a list");
+
+            JSONArray linkedAttachmentArray = new JSONArray();
+            linkedAttachmentArray.put(linkedAttachments.get(CRM_LINKED_EVIDENCE_FILES));
+            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, linkedAttachmentArray);
+            return linkedAttachments;
+        }
+
+        return linkedAttachments;
     }
 }
-

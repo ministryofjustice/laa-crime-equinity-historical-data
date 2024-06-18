@@ -165,9 +165,9 @@ Crm4QuoteDTO:
     hourlyRate:
       type: number
       format: float
-    addtionalItemDesc:
+    additionalItemDesc:
       type: string
-    addtionalItemAmount:
+    additionalItemAmount:
       type: number
       format: float
     travelHours:

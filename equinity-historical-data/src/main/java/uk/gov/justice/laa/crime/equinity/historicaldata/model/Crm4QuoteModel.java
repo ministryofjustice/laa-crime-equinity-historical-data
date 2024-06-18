@@ -13,8 +13,8 @@ public class Crm4QuoteModel {
   private String costBasis;
   private Float preparationHours;
   private Float hourlyRate;
-  private String addtionalItemDesc;
-  private Float addtionalItemAmount;
+  private String additionalItemDesc;
+  private Float additionalItemAmount;
   private String travelHours;
   private Float travelHourlyRate;
   private Float quoteTotal;

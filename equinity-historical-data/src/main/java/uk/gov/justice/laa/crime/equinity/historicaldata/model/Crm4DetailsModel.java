@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
+public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Applyingge100")
     public boolean applyingge100;
     @JsonProperty("Post_mortem_app")
@@ -240,7 +240,7 @@ public class Crm4DetailsModel implements CrmFileDetailsModelInterface {
                     quote.setContactPhone(contactPhone);
                     quote.setCostBasis(costBasis);
                     quote.setPreparationHours(prepHrs);
-                    quote.setAddtionalItemAmount(addItmAmt);
+                    quote.setAdditionalItemAmount(addItmAmt);
                     quote.setTravelHours(trvlHrs);
                     quote.setTravelHourlyRate(trvlHrsRate);
                     quote.setQuoteTotal(qtTotal);

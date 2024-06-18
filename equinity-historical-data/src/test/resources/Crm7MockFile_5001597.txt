@@ -13,6 +13,14 @@
     "State":["INITIAL","INITIAL","INITIAL","INITIAL","PARTIAL","COMPLETE","PARTIAL","COMPLETE","INITIAL","PARTIAL","INITIAL","INITIAL","INITIAL","INITIAL","INITIAL","INITIAL","INITIAL","INITIAL","INITIAL","INITIAL"],"SectionName":["Genericfields","Standard_properties","Claim_properties","Select_office","Summary_of_claim","Solicitors_details","Case_details","Non_standard_fee_claim","Case_disposal","Claim_details","Pre_order_work","Schedule_of_time","Claim_for_costs","Disbursements","Claim_totals","Coversheet","Relevant_case_info","Furtherinfosection","Officeuseonly","Referral"]
     },
 "targetpath":"\\\\laa-uat\\OFServerForms\\CDS7_1.ofmx",
+"linkedAttachments": {
+    "linkedAttachment":
+      {
+        "fileName": "3968.att",
+        "savetype": "OFDAttachRef",
+        "name": "427193738.png"
+      }
+  },
 "version":1,"xmlns:fd":"urn:www-toplev-com:officeformsofd"
 
 }
