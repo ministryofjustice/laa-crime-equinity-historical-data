@@ -98,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Crm14DetailsDTO'
+                $ref: '#/components/schemas/Crm14FormDTO'
   ###
   # Archive
   ###
@@ -269,8 +269,13 @@ components:
           $ref: '#/components/schemas/CrmEvidenceFilesDTO'
 
     ## CRM 14
-    Crm14DetailsDTO:
-      $ref: "./schemas/crm14.yml#/Crm14DetailsDTO"
+    Crm14FormDTO:
+      type: object
+      properties:
+        formDetails:
+          $ref: "./schemas/crm14.yml#/Crm14DetailsDTO"
+        evidenceFiles:
+          $ref: '#/components/schemas/CrmEvidenceFilesDTO'
 
 #    ## Linked Attachments
     CrmEvidenceFilesDTO:

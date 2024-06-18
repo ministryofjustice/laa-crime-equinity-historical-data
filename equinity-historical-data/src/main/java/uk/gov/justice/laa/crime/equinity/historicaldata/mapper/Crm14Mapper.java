@@ -4,9 +4,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14Model;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
+
+    @Mapping(target="formDetails", source="formDetails")
+    @Mapping(target="evidenceFiles", source="evidenceFiles")
+    Crm14FormDTO getDTOFromModel(Crm14Model model);
     @Mapping(target="legalRepresentativeUse.dateStamp.usn", source="datestamp_usn")
     @Mapping(target="legalRepresentativeUse.dateStamp.date", source="datestamp_date")
     @Mapping(target="legalRepresentativeUse.dateStamp.time", source="datestamp_time")
@@ -29,7 +34,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
 
-    Crm14DetailsDTO getDTOFromModel(Crm14DetailsModel model);
+    Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
     @Mapping(target="applicationType", source="application_type")

@@ -16,7 +16,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
@@ -95,11 +95,11 @@ class Crm14ControllerTest {
 
         // Test with accepted types
         validUsnTests.keySet().forEach((usnToTest) -> {
-            ResponseEntity<Crm14DetailsDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
+            ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
 
             softly.assertThat(result.getBody()).isNotNull();
-            softly.assertThat(result.getBody()).isInstanceOf(Crm14DetailsDTO.class);
-            softly.assertThat(Objects.requireNonNull(result.getBody()).getLegalRepresentativeUse().getDateStamp().getUsn()).isEqualTo(usnToTest.intValue());
+            softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
+            softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getLegalRepresentativeUse().getDateStamp().getUsn()).isEqualTo(usnToTest.intValue());
             softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         });
     }
