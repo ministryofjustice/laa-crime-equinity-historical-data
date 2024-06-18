@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7SummaryOfClaimDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
@@ -102,14 +103,17 @@ class Crm7ControllerTest {
 
         // Test with accepted types
         validUsnTests.keySet().forEach((usnToTest) -> {
-            ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnToTest, ACCEPTED_PROFILE_TYPES);
+            ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usnToTest, ACCEPTED_PROFILE_TYPES);
 
             softly.assertThat(result.getBody()).isNotNull();
-            softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
-            softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnToTest.intValue());
-            softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
-            softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
-            softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
+            softly.assertThat(result.getBody()).isInstanceOf(Crm7FormDTO.class);
+
+            Crm7DetailsDTO crmFormDetails = Objects.requireNonNull(result.getBody()).getFormDetails();
+            softly.assertThat(crmFormDetails).isInstanceOf(Crm7DetailsDTO.class);
+            softly.assertThat(crmFormDetails.getUsn()).isEqualTo(usnToTest.intValue());
+            softly.assertThat(crmFormDetails.getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+            softly.assertThat(crmFormDetails.getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
+            softly.assertThat(crmFormDetails.getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
             softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         });
     }
@@ -120,14 +124,17 @@ class Crm7ControllerTest {
         String expectedClientFirstName = "James";
         String expectedClientSurname = "Bond";
 
-        ResponseEntity<Crm7DetailsDTO> result = controller.getApplicationCrm7(usnTest, null);
+        ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usnTest, null);
 
         softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm7DetailsDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getUsn()).isEqualTo(usnTest.intValue());
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
+        softly.assertThat(result.getBody()).isInstanceOf(Crm7FormDTO.class);
+
+        Crm7DetailsDTO crmFormDetails = Objects.requireNonNull(result.getBody()).getFormDetails();
+        softly.assertThat(crmFormDetails).isInstanceOf(Crm7DetailsDTO.class);
+        softly.assertThat(crmFormDetails.getUsn()).isEqualTo(usnTest.intValue());
+        softly.assertThat(crmFormDetails.getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+        softly.assertThat(crmFormDetails.getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
+        softly.assertThat(crmFormDetails.getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 

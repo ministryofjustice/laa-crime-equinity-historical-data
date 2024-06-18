@@ -4,12 +4,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7TimeSpentModel;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface Crm7Mapper extends CrmMapper {
+
+    @Mapping(target="formDetails", source="formDetails")
+    @Mapping(target="evidenceFiles", source="evidenceFiles")
+    Crm7FormDTO getDTOFromModel(Crm7Model model);
+
     @Mapping(target="usn", source="usn")
     @Mapping(target="summary", source="model")
     @Mapping(target="solicitorDetails", source="model")
@@ -25,7 +31,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="coversheet", source="coversheet_printed")
     @Mapping(target="caseInformation", source="model")
     @Mapping(target="decisionOfficeUseOnly", source="decision")
-    Crm7DetailsDTO getDTOFromModel(Crm7DetailsModel model);
+    Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")
     @Mapping(target="clientFirstName", source="client_forename")
