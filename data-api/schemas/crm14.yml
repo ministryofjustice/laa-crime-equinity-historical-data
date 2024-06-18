@@ -72,6 +72,21 @@ Crm14LegalRepUseDTO:
       type: string
     courtName:
       type: string
+    isPriorityCase:
+      type: string
+    priorityCaseType:
+      type: object
+      properties:
+        custody:
+          type: boolean
+        vulnerable:
+          type: boolean
+        youth:
+          type: boolean
+        lateApplication:
+          type: boolean
+        imminentHearing:
+          type: boolean
     dateOfTrial:
       type: string
       format: date-time
@@ -149,7 +164,7 @@ Crm14AboutYouPart2DTO:
     under18:
       type: string
     havePartner:
-      type: string
+      type: integer
     maritalStatus:
       type: string
 
@@ -158,10 +173,8 @@ Crm14APartnerDetailsDTO:
   properties:
     partnerDetails:
       $ref: "#/Crm14AboutYouDTO"
-    hasHomeAddress:
-      type: string
-    contactDetails:
-      $ref: "#/Crm14ContactDetailsDTO"
+    homeAddress:
+      $ref: "#/Crm14AddressDetailsDTO"
     coDefendant:
       type: string
     conflictOfInterest:
@@ -200,8 +213,59 @@ Crm14AboutInfoDTO:
     disabledDefinition:
       type: string
     ethnicity:
-      type: array
-      items: {}
+      type: object
+      properties:
+        white:
+          type: object
+          properties:
+            british:
+              type: boolean
+            irish:
+              type: boolean
+            whiteOther:
+              type: boolean
+        mixed:
+          type: object
+          properties:
+            whiteCaribbean:
+              type: boolean
+            whiteAfrican:
+              type: boolean
+            whiteAsian:
+              type: boolean
+            mixedOther:
+              type: boolean
+        asian:
+          type: object
+          properties:
+            indian:
+              type: boolean
+            pakistani:
+              type: boolean
+            bangladeshi:
+              type: boolean
+            asianOther:
+              type: boolean
+        black:
+          type: object
+          properties:
+            blackCaribbean:
+              type: boolean
+            blackAfrican:
+              type: boolean
+            blackOther:
+              type: boolean
+        other:
+          type: object
+          properties:
+            chinese:
+              type: boolean
+            gypsy:
+              type: boolean
+            other:
+              type: boolean
+            dontSay:
+              type: boolean
 
 Crm14LegalRepresentationDTO:
   type: object
@@ -228,6 +292,8 @@ Crm14LegalRepresentationDTO:
       type: string
     emailId:
       type: string
+    adminEmailId:
+      type: string
     declarationStatement:
       type: string
     declarationConfirm:
@@ -241,11 +307,49 @@ Crm14IncomeDTO:
   properties:
     receiveBenefits:
       type: string
-    selfBenefits:
-      type: array
-      items: {}
+    benefits:
+      $ref: "#/Crm14BenefitsDTO"
     proofBenefits:
       type: string
+
+Crm14BenefitSupportDTO:
+  type: object
+  properties:
+    incomeSupport:
+      type: boolean
+    esa:
+      type: boolean
+    statePension:
+      type: boolean
+    jsa:
+      type: boolean
+
+Crm14OtherChargesDTO:
+  type: object
+  properties:
+    you:
+      $ref: "#/Crm14OtherChargeDTO"
+    partner:
+      $ref: "#/Crm14OtherChargeDTO"
+
+Crm14OtherChargeDTO:
+  type: object
+  properties:
+    charges:
+      type: string
+    court:
+      type: string
+    nextHearing:
+      type: string
+      format: date-time
+
+Crm14BenefitsDTO:
+  type: object
+  properties:
+    you:
+      $ref: "#/Crm14BenefitSupportDTO"
+    partner:
+      $ref: "#/Crm14BenefitSupportDTO"
 
 Crm14InterestOfJusticePart1DTO:
   type: object
@@ -265,19 +369,7 @@ Crm14InterestOfJusticePart1DTO:
     otherCases:
       type: string
     otherCaseCharges:
-      type: string
-    otherCaseCourt:
-      type: string
-    otherCaseNextHearing:
-      type: string
-      format: date-time
-    otherCasePartnerCharges:
-      type: string
-    otherCasePartnerCourt:
-      type: string
-    otherCasePartnerNextHearing:
-      type: string
-      format: date-time
+      $ref: "#/Crm14OtherChargesDTO"
     laCourt:
       type: string
     laCourtNextHearing:
@@ -327,16 +419,18 @@ Crm14EvidencePart1DTO:
   type: object
   properties:
     remandedInCustody:
-      type: string
+      type: integer
     remandedDate:
       type: string
       format: date-time
     heardInMagistrateCourt:
-      type: string
+      type: integer
+    employed:
+      type: integer
     employmentCeased:
-      type: string
+      type: integer
     lostJobDuetoCustody:
-      type: string
+      type: integer
     lostJobDuetoCustodyDate:
       type: string
       format: date-time
