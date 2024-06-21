@@ -11,7 +11,7 @@ public class Crm4QuoteModel {
   private String expertName;
   private String contactPhone;
   private String costBasis;
-  private Float preparationHours;
+  private String preparationHours;
   private Float hourlyRate;
   private String additionalItemDesc;
   private Float additionalItemAmount;

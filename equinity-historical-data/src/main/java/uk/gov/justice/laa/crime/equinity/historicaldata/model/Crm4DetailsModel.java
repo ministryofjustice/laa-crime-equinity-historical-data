@@ -123,7 +123,7 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Q1_costbasis")
     public String q1_costbasis;
     @JsonProperty("Q1_hours")
-    public float q1_hours;
+    public String q1_hours;
     @JsonProperty("Q1_duration")
     public String q1_duration;
     @JsonProperty("Q1_hourlyrate")
@@ -150,7 +150,7 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Q2_costbasis")
     public String q2_costbasis;
     @JsonProperty("Q2_hours")
-    public float q2_hours;
+    public String q2_hours;
     @JsonProperty("Q2_duration")
     public String q2_duration;
     @JsonProperty("Q2_hourlyrate")
@@ -227,8 +227,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
                     String  contactPhone = (String) instanceMethod.invoke(this);
                     instanceMethod = this.getClass().getMethod("getQ"+i+"_costbasis");
                     String  costBasis = (String) instanceMethod.invoke(this);
-                    instanceMethod = this.getClass().getMethod("getQ"+i+"_hours");
-                    Float prepHrs = (Float) instanceMethod.invoke(this);
+                    instanceMethod = this.getClass().getMethod("getQ"+i+"_duration");
+                    String prepHrs = (String) instanceMethod.invoke(this);
                     instanceMethod = this.getClass().getMethod("getQ"+i+"_hourlyrate");
                     Float prepHrlyRate = (Float) instanceMethod.invoke(this);
                     instanceMethod = this.getClass().getMethod("getQ"+i+"_ae_description");
@@ -246,6 +246,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
                     quote.setContactPhone(contactPhone);
                     quote.setCostBasis(costBasis);
                     quote.setPreparationHours(prepHrs);
+                    quote.setHourlyRate(prepHrlyRate);
+                    quote.setAdditionalItemDesc(addItmDesc);
                     quote.setAdditionalItemAmount(addItmAmt);
                     quote.setTravelHours(trvlHrs);
                     quote.setTravelHourlyRate(trvlHrsRate);
