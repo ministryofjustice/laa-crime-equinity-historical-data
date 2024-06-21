@@ -55,7 +55,7 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="expenditureDetails.details.companyName", source = "company_name")
     @Mapping(target="expenditureDetails.details.statusExpert", source = "expert_type")
     @Mapping(target="expenditureDetails.details.postCodeExpert", source = "expert_postcode")
-    @Mapping(target="expenditureDetails.preparation.hours", source = "preparation_duration")
+    @Mapping(target="expenditureDetails.preparation.hours", source = "preparation_hrs")
     @Mapping(target="expenditureDetails.preparation.hourlyRate", source = "preparation_rate")
     @Mapping(target="expenditureDetails.preparation.total", source = "preparation_total")
     @Mapping(target="expenditureDetails.additionalExpenditure", source="additionalExpenditure.row")
