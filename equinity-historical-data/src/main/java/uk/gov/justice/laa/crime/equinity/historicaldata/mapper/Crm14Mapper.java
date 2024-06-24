@@ -3,7 +3,9 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14ChargesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14Model;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
@@ -32,7 +34,6 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "declarations", source = "model")
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
-
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
