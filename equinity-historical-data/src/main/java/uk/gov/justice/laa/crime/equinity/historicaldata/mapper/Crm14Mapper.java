@@ -205,9 +205,9 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="partnerEmployed", source = "partner_employed")
     Crm14EvidencePart1DTO getEvidencePart1DTOFromModel(Crm14DetailsModel model);
 
-    @Mapping(target="offenceDate1", source="offence_date_1")
-    @Mapping(target="offenceDate2", source="offence_date_2")
-    @Mapping(target="offenceDate3", source="offence_date_3")
+    @Mapping(target="offenceDateOn", source="offence_date_1")
+    @Mapping(target="offenceDateBetweenStart", source="offence_date_2")
+    @Mapping(target="offenceDateBetweenEnd", source="offence_date_3")
     @Mapping(target="charge", source="charge")
     @Mapping(target="whenOffence", source="offence_when")
     Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
