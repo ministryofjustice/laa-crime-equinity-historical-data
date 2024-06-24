@@ -92,14 +92,14 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Expert_postcode")
     public String expert_postcode;
 
-    @JsonProperty("Preparation_hrs")
-    public int preparation_hrs;
+    @JsonProperty("Preparation_duration")
+    public String preparation_duration;
     @JsonProperty("Preparation_rate")
     public int preparation_rate;
     @JsonProperty("Preparation_total")
     public int preparation_total;
-    @JsonProperty("Travel_no_of_hrs")
-    public int travel_no_of_hrs;
+    @JsonProperty("Travel_duration")
+    public String travel_duration;
     @JsonProperty("Travel_per_hr")
     public int travel_per_hr;
     @JsonProperty("Total_authority")
