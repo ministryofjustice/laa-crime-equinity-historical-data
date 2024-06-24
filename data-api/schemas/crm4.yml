@@ -109,6 +109,8 @@ Crm4FirmDTO:
       type: string
     firmAddress:
       type: string
+    firmDx:
+      type: string
     firmName:
       type: string
     firmPhone:
@@ -160,8 +162,9 @@ Crm4QuoteDTO:
     costBasis:
       type: string
     preparationHours:
-      type: number
-      format: float
+      type: string
+      format: time
+      description: only Time in 24 hrs format HH:MM:SS
     hourlyRate:
       type: number
       format: float
