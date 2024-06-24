@@ -3,8 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
@@ -178,8 +177,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="benefits.partner.jsa", source = "jsa_partner")
     Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
 
-
-    @Mapping(target="chargesBrought", expression = "java(null)")
+    @Mapping(target="chargesBrought", source="charges_brought.charges")
     @Mapping(target="offenceType", source = "offence_type")
     @Mapping(target="anyDefendants", source = "any_codefendants")
     @Mapping(target="defendantDetails", source = "codefendants_details")
@@ -207,6 +205,12 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="partnerEmployed", source = "partner_employed")
     Crm14EvidencePart1DTO getEvidencePart1DTOFromModel(Crm14DetailsModel model);
 
+    @Mapping(target="offenceDate1", source="offence_date_1")
+    @Mapping(target="offenceDate2", source="offence_date_2")
+    @Mapping(target="offenceDate3", source="offence_date_3")
+    @Mapping(target="charge", source="charge")
+    @Mapping(target="whenOffence", source="offence_when")
+    Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
 
 
     default String convertCaseType(Crm14DetailsModel model) {

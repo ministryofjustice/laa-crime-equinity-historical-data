@@ -224,7 +224,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Cant_present_own_case")
     public boolean cant_present_own_case;
     @JsonProperty("Charges_brought")
-    public Crm14Charges charges;
+    public Crm14ChargesBroughtModel charges_brought;
     @JsonProperty("Welsh_corr_flag")
     public boolean welsh_corr_flag;
     @JsonProperty("Datestamp_usn")

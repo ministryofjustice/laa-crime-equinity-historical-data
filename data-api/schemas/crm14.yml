@@ -355,7 +355,9 @@ Crm14InterestOfJusticePart1DTO:
   type: object
   properties:
     chargesBrought:
-      $ref: "#/Crm14ChargesBroughtDTO"
+      type: array
+      items:
+        $ref: "#/Crm14ChargesBroughtDTO"
     offenceType:
       type: string
     anyDefendants:
@@ -411,7 +413,13 @@ Crm14ChargesBroughtDTO:
       type: string
     whenOffence:
       type: string
-    offenceDate:
+    offenceDate1:
+      type: string
+      format: date-time
+    offenceDate2:
+      type: string
+      format: date-time
+    offenceDate3:
       type: string
       format: date-time
 

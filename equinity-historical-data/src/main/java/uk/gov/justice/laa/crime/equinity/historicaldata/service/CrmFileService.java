@@ -35,6 +35,11 @@ public class CrmFileService {
     private static final String CRM_SCHEMA = "schema";
     private static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
     private static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
+    private static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
+    private static final String CRM14_CHARGES = "row";
+    private static final String CRM14_VALUE = "14";
+    private static final String CRM_FORM_FAMILY_PATH = "familypath";
+    private static final String CRM_FORM_FIELD_DATA = "fielddata";
 
     private final TaskImageFilesRepository taskImageFilesRepository;
     private final ObjectMapper jsonObjectMapper;
@@ -52,8 +57,11 @@ public class CrmFileService {
 
     public <T extends CrmFormModelInterface> T getCrmFormData(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
-
         // Format sanity checks and conversions
+        String formType = (String)crmFileJsonObject.get(CRM_FORM_FAMILY_PATH);
+        if (formType.contains(CRM14_VALUE)) {
+            convertCrmFormChargesBrought(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA));
+        }
         crmFileJsonObject.put(CRM_LINKED_EVIDENCE, convertCrmFormLinkedAttachments(crmFileJsonObject));
 
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
@@ -125,5 +133,24 @@ public class CrmFileService {
         }
 
         return linkedAttachments;
+    }
+
+    public void convertCrmFormChargesBrought(JSONObject crmFileJsonObject) {
+        JSONObject chargesBrought;
+        if (!crmFileJsonObject.has(CRM14_CHARGES_BROUGHT)) {
+            chargesBrought = new JSONObject();
+            chargesBrought.put(CRM14_CHARGES_BROUGHT, new JSONArray());
+        }
+        chargesBrought = (JSONObject) crmFileJsonObject.get(CRM14_CHARGES_BROUGHT);
+
+        if (!chargesBrought.has(CRM14_CHARGES)) {
+            chargesBrought.put(CRM14_CHARGES, new JSONArray());
+        }
+        if (chargesBrought.get(CRM14_CHARGES) instanceof JSONObject) {
+            log.warn("CRM14 eForm Charges Brought to be a list. Try converting into a list");
+            JSONArray chargesBroughtArray = new JSONArray();
+            chargesBroughtArray.put(chargesBrought.get(CRM14_CHARGES));
+            chargesBrought.put(CRM14_CHARGES, chargesBroughtArray);
+        }
     }
 }

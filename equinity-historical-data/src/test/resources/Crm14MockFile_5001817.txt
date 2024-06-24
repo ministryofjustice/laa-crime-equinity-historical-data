@@ -1755,11 +1755,13 @@
     "Cant_present_own_case": true,
     "Subformfundingdecision_1-Means_test_result_magsorcfs": "",
     "Charges_brought": {
-        "row": {
+            "row": [
+                {
             "Offence_date_1": "2024-01-01T00:00:00",
             "Offence_when": "Before",
             "Charge": "xxx"
         }
+        ]
     },
     "Partner_child_benefit_paid_every": "",
     "Subformfundingdecision_4-Appropriate_officer_name": "",
