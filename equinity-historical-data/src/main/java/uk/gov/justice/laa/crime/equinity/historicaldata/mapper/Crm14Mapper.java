@@ -3,9 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14ChargesModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
@@ -13,6 +11,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm14FormDTO getDTOFromModel(Crm14Model model);
+    @Mapping(target="privateCompany", source="private_company")
+    @Mapping(target="partnerPrivateCompany", source="partner_private_company")
     @Mapping(target="legalRepresentativeUse.dateStamp.usn", source="datestamp_usn")
     @Mapping(target="legalRepresentativeUse.dateStamp.date", source="datestamp_date")
     @Mapping(target="legalRepresentativeUse.dateStamp.time", source="datestamp_time")
@@ -29,6 +29,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "evidencePart1", source = "model")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", source = "model")
+    @Mapping(target = "crm15Details", source="model")
     @Mapping(target = "legalRepresentationDetails", source = "model")
     @Mapping(target = "aboutInformation", source = "model")
     @Mapping(target = "declarations", source = "model")
@@ -213,6 +214,89 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="whenOffence", source="offence_when")
     Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
 
+
+    @Mapping(target="income1.selfEmployedNoOfBusinesses", source="self_employed_no_of_businesses")
+    @Mapping(target="income1.businessPartnerships", source="business_partnerships_no_of")
+    @Mapping(target="income1.privateCompanies", source="private_companies_no_of")
+    @Mapping(target="income1.selfAssessmentTaxReceived", source="self_assessment_tax_received")
+    @Mapping(target="income1.partnerSelfAssessmentTaxReceived", source="partner_self_assessment_tax_received")
+    @Mapping(target="income1.childBenefit", source="child_benefit_crm15")
+    @Mapping(target="income1.partnerChildBenefit", source="partner_child_benefit_crm15")
+    @Mapping(target="income1.allBusinesses.you", source="business_details.businesses")
+    @Mapping(target="income1.allBusinesses.partner", source="partner_business_details.businesses")
+
+
+    @Mapping(target="landProperty.ownProperty", source="own_property")
+    @Mapping(target="landProperty.partnerOwnProperty", source="partner_own_property")
+    @Mapping(target="landProperty.residentialProperties", source="properties_residential")
+    @Mapping(target="landProperty.commercialProperties", source="properties_commercial")
+    @Mapping(target="landProperty.piecesOfLand", source="pieces_of_land")
+    @Mapping(target="landProperty.partnerResidentialProperties", source="partner_properties_residential")
+    @Mapping(target="landProperty.partnerCommercialProperties", source="partner_properties_commercial")
+    @Mapping(target="landProperty.partnerPiecesOfLand", source="partner_pieces_of_land")
+    @Mapping(target="landProperty.jointResidentialProperties", source="joint_properties_residential")
+    @Mapping(target="landProperty.jointCommercialProperties", source="joint_properties_commercial")
+    @Mapping(target="landProperty.jointPiecesOfLand", source="joint_pieces_of_land")
+    @Mapping(target="landProperty.propertyList", source="land_and_property_table.properties")
+    Crm15DetailsDTO getCrm15IncomeDetailsDTOFromModel(Crm14DetailsModel chargesModel);
+
+    @Mapping(target="drawingsEvery", source="drawings_every")
+    @Mapping(target="previousFinancialsDisplay", source="previous_financials_display")
+    @Mapping(target="directorShareIncomeDisplay", source="directors_share_income_display")
+    @Mapping(target="tradingAddressLine3", source="trading_address_3")
+    @Mapping(target="tradingAddressLine2", source="trading_address_2")
+    @Mapping(target="tradingAddressLine1", source="trading_address_1")
+    @Mapping(target="profitEvery", source="profit_every")
+    @Mapping(target="businessWithOther", source="in_business_with_other")
+    @Mapping(target="businessWithName", source="in_business_with_name")
+    @Mapping(target="businessType", source="business_type")
+    @Mapping(target="businessOtherEmployees", source="business_other_employees")
+    @Mapping(target="turnover", source="turnover")
+    @Mapping(target="profit", source="profit")
+    @Mapping(target="businessNature", source="business_nature")
+    @Mapping(target="businessDetailsDisplay", source="business_details_display")
+    @Mapping(target="tradingAddressPostcode", source="trading_address_postcode")
+    @Mapping(target="tradingName", source="trading_name")
+    @Mapping(target="turnoverEvery", source="turnover_every")
+    @Mapping(target="shareSales", source="share_sales")
+    @Mapping(target="remuneration", source="remuneration")
+    @Mapping(target="tradingDetailsDisplay", source="trading_details_display")
+    @Mapping(target="percentProfits", source="percent_of_profits")
+    @Mapping(target="drawings", source="drawings")
+    @Mapping(target="businessEmployeesNo", source="business_no_of_employees")
+    @Mapping(target="businessTradingDate", source="business_trading_date")
+    Crm15BusinessesDTO getCrm15BusinessesDTOFromModel(Crm15BusinessDetailsModel businessesModel);
+
+
+    @Mapping(target="bedroomsResidentialProperty", source="residential_property_bedrooms")
+    @Mapping(target="propertyNotHomeAddress3", source="property_not_home_address_3")
+    @Mapping(target="propertyNotHomeAddress2", source="property_not_home_address_2")
+    @Mapping(target="propertyNotHomeAddress1", source="property_not_home_address_1")
+    @Mapping(target="percentOwned", source="percent_owned")
+    @Mapping(target="partnerPercentOwned", source="partner_percent_owned")
+    @Mapping(target="commercialPropertyUsedFor", source="commercial_property_used_for")
+    @Mapping(target="estimatedMarketValue", source="estimated_market_value")
+    @Mapping(target="usualHomeAddress", source="usual_home_address")
+    @Mapping(target="partnerUsualHomeAddress", source="partner_usual_home_address")
+    @Mapping(target="addressListedBelow", source="address_listed_below")
+    @Mapping(target="mortgageDisplay", source="mortgage_display")
+    @Mapping(target="otherOwnersName2", source="other_owners_name_2")
+    @Mapping(target="otherOwnersName1", source="other_owners_name_1")
+    @Mapping(target="otherOwnersRelationship1", source="other_owners_relationship_other_1")
+    @Mapping(target="otherOwnersRelationship2", source="other_owners_relationship_other_2")
+    @Mapping(target="residentialCommercialLandDetailsDisplay", source="residential_commercial_land_details_display")
+    @Mapping(target="mortgageToPay", source="mortgage_to_pay")
+    @Mapping(target="residentialPropertyType", source="residential_property_type")
+    @Mapping(target="landpAddressIndicatorDisplay", source="l_and_p_address_indicator_display")
+    @Mapping(target="ownershipDetailsDisplay", source="ownership_details_display")
+    @Mapping(target="otherOwnersRelationshipOther2", source="other_owners_relationship_other_2")
+    @Mapping(target="otherOwnersRelationshipOther1", source="other_owners_relationship_other_1")
+    @Mapping(target="landUse", source="land_use")
+    @Mapping(target="otherPropertyType", source="other_property_type")
+    @Mapping(target="type", source="type")
+    @Mapping(target="lAndpAddressDisplay", source="l_and_p_address_display")
+    @Mapping(target="propertyNotHomePostcode", source="property_not_home_postcode")
+    Crm15PropertyDTO getCrm15BusinessesDTOFromModel(Crm15PropertyDetailsModel propertyModel);
 
     default String convertCaseType(Crm14DetailsModel model) {
         if (model.summary) {
