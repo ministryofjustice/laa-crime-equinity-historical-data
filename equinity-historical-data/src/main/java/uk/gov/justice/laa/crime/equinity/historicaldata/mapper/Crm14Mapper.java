@@ -3,6 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14ChargesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14Model;
 
@@ -33,7 +34,6 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "declarations", source = "model")
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
-
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
@@ -178,8 +178,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="benefits.partner.jsa", source = "jsa_partner")
     Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
 
-
-    @Mapping(target="chargesBrought", expression = "java(null)")
+    @Mapping(target="chargesBrought", source="charges_brought.charges")
     @Mapping(target="offenceType", source = "offence_type")
     @Mapping(target="anyDefendants", source = "any_codefendants")
     @Mapping(target="defendantDetails", source = "codefendants_details")
@@ -207,6 +206,12 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="partnerEmployed", source = "partner_employed")
     Crm14EvidencePart1DTO getEvidencePart1DTOFromModel(Crm14DetailsModel model);
 
+    @Mapping(target="offenceDateOn", source="offence_date_1")
+    @Mapping(target="offenceDateBetweenStart", source="offence_date_2")
+    @Mapping(target="offenceDateBetweenEnd", source="offence_date_3")
+    @Mapping(target="charge", source="charge")
+    @Mapping(target="whenOffence", source="offence_when")
+    Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
 
 
     default String convertCaseType(Crm14DetailsModel model) {
