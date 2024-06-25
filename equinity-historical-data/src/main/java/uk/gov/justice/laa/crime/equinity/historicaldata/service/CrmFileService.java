@@ -37,8 +37,6 @@ public class CrmFileService {
     private static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
     private static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
     private static final String CRM14_CHARGES = "row";
-    private static final String CRM14_VALUE = "14";
-    private static final String CRM_FORM_FAMILY_PATH = "familypath";
     private static final String CRM_FORM_FIELD_DATA = "fielddata";
 
     private final TaskImageFilesRepository taskImageFilesRepository;
@@ -58,8 +56,7 @@ public class CrmFileService {
     public <T extends CrmFormModelInterface> T getCrmFormData(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
         // Format sanity checks and conversions
-        String formType = (String)crmFileJsonObject.get(CRM_FORM_FAMILY_PATH);
-        if (formType.contains(CRM14_VALUE)) {
+        if (crmFormDetailsCriteriaDTO.type() == CRM_TYPE_14){
             convertCrmFormChargesBrought(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA));
         }
         crmFileJsonObject.put(CRM_LINKED_EVIDENCE, convertCrmFormLinkedAttachments(crmFileJsonObject));
