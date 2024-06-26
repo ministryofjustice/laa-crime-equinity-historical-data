@@ -55,7 +55,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="dateClassOfWorkClosed", source="sc_date_class_of_work")
     @Mapping(target="numberDefendantsRepresented", source="sc_no_of_defendants")
     @Mapping(target="numberCourtAttendances", source="sc_no_of_court_attendances")
-    @Mapping(target="courtIdentifier", source="sc_court_identifier")
+    @Mapping(target="courtIdentifier", source="sc_court_indentifier")
     @Mapping(target="isYouthCourt", expression="java(convertToEnum(Crm7EqualOpportunitiesDTO.IsYouthCourtEnum.class, model.getSc_youth_court()))")
     Crm7EqualOpportunitiesDTO getSummaryEqualOpportunitiesDTOFromModel(Crm7DetailsModel model);
 
@@ -65,6 +65,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="profitCost", source="ctou_profit_costs_total")
     @Mapping(target="disbursements", source ="cfc_disb_grand_total_ou")
     @Mapping(target="travelCost", source="ctou_travel_costs_total")
+    @Mapping(target="waitingCost", source="ctou_waiting_costs_total")
     Crm7SummaryOfficeUseDTO getSummaryOfficeUseDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="firmName", source="firm_name")

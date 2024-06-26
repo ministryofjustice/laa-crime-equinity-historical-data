@@ -46,8 +46,8 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     public int sc_no_of_defendants;
     @JsonProperty("Sc_no_of_court_attendances")
     public int sc_no_of_court_attendances;
-    @JsonProperty("Sc_court_identifier")
-    public String sc_court_identifier;
+    @JsonProperty("Sc_court_indentifier")
+    public String sc_court_indentifier;
     @JsonProperty("Sc_youth_court") // Yes/No
     public String sc_youth_court;
     // Summary - Office Use
@@ -67,8 +67,8 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     public String client_name;
     @JsonProperty("Tlsubstate") // in crm5 too
     public String tlsubstate;
-    @JsonProperty("Sc_court_indentifier")
-    public String sc_court_indentifier;
+    @JsonProperty("Sc_court_identifier")
+    public String sc_court_identifier;
     /** *** **/
 
     // Solicitor Details

@@ -113,6 +113,9 @@ Crm7SummaryOfficeUseDTO:
     travelCost:
       type: number
       format: float
+    waitingCost:
+      type: number
+      format: float
 
 Crm7SolicitorDetailsDTO:
   type: object
