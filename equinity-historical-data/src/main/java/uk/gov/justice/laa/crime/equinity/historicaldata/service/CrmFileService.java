@@ -33,14 +33,14 @@ public class CrmFileService {
     private static final String CRM_FORM_DATA = "fd:formdata";
     private static final String CRM_PRINT_INFO = "printinfo";
     private static final String CRM_SCHEMA = "schema";
-    private static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
-    private static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
-    private static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
-    private static final String CRM14_ROW = "row";
-    private static final String CRM_FORM_FIELD_DATA = "fielddata";
-    private static final String CRM15_BUSINESS_DETAILS = "Business_details";
-    private static final String CRM15_PARTNER_BUSINESS_DETAILS = "Partner_business_details";
-    private static final String CRM15_LAND_PROPERTY_DETAILS = "Land_and_property_table";
+    public static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
+    public static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
+    public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
+    public static final String CRM14_ROW = "row";
+    public static final String CRM_FORM_FIELD_DATA = "fielddata";
+    public static final String CRM15_BUSINESS_DETAILS = "Business_details";
+    public static final String CRM15_PARTNER_BUSINESS_DETAILS = "Partner_business_details";
+    public static final String CRM15_LAND_PROPERTY_DETAILS = "Land_and_property_table";
 
 
     private final TaskImageFilesRepository taskImageFilesRepository;
@@ -66,8 +66,7 @@ public class CrmFileService {
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_BUSINESS_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_LAND_PROPERTY_DETAILS, CRM14_ROW);
         }
-        crmFileJsonObject.put(CRM_LINKED_EVIDENCE, convertCrmFormLinkedAttachments(crmFileJsonObject));
-
+        convertCrmFormObjectToArray(crmFileJsonObject, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
     }
 
@@ -111,52 +110,27 @@ public class CrmFileService {
         return (T) crmFormData;
     }
 
-    public JSONObject convertCrmFormLinkedAttachments(JSONObject crmFileJsonObject) {
-        JSONObject linkedAttachments;
-
-        if (!crmFileJsonObject.has(CRM_LINKED_EVIDENCE)) {
-            linkedAttachments = new JSONObject();
-            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, new JSONArray());
-            return linkedAttachments;
-        }
-
-        linkedAttachments = (JSONObject) crmFileJsonObject.get(CRM_LINKED_EVIDENCE);
-
-        if (!linkedAttachments.has(CRM_LINKED_EVIDENCE_FILES)) {
-            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, new JSONArray());
-            return linkedAttachments;
-        }
-
-        if (linkedAttachments.get(CRM_LINKED_EVIDENCE_FILES) instanceof JSONObject) {
-            log.warn("CRM eForm evidence files expected to be a list. Try converting into a list");
-
-            JSONArray linkedAttachmentArray = new JSONArray();
-            linkedAttachmentArray.put(linkedAttachments.get(CRM_LINKED_EVIDENCE_FILES));
-            linkedAttachments.put(CRM_LINKED_EVIDENCE_FILES, linkedAttachmentArray);
-            return linkedAttachments;
-        }
-
-        return linkedAttachments;
-    }
-
     public void convertCrmFormObjectToArray(JSONObject crmFileJsonObject, String jsonParentKey, String jsonChildKey) {
         JSONObject jsonParentObject;
         if (!crmFileJsonObject.has(jsonParentKey)) {
             jsonParentObject = new JSONObject();
-            jsonParentObject.put(jsonParentKey, new JSONArray());
+            jsonParentObject.put(jsonChildKey, new JSONArray());
+            crmFileJsonObject.put(jsonParentKey,jsonParentObject);
             return;
         }
         jsonParentObject = (JSONObject) crmFileJsonObject.get(jsonParentKey);
 
         if (!jsonParentObject.has(jsonChildKey)) {
             jsonParentObject.put(jsonChildKey, new JSONArray());
+            crmFileJsonObject.put(jsonParentKey,jsonParentObject);
             return;
         }
         if (jsonParentObject.get(jsonChildKey) instanceof JSONObject) {
-            log.warn("CRM form "+ jsonParentKey + " Charges Brought to be a list. Try converting into a list");
+            log.warn("CRM form {} :: {} to be a list. Try converting into a list",jsonParentKey,jsonChildKey  );
             JSONArray toArray = new JSONArray();
             toArray.put(jsonParentObject.get(jsonChildKey));
             jsonParentObject.put(jsonChildKey, toArray);
+            crmFileJsonObject.put(jsonParentKey,jsonParentObject);
         }
     }
 }
