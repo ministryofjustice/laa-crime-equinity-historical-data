@@ -153,10 +153,10 @@ public class CrmFileService {
             return;
         }
         if (jsonParentObject.get(jsonChildKey) instanceof JSONObject) {
-            log.warn("CRM14&15 eForm "+ jsonParentKey + " Charges Brought to be a list. Try converting into a list");
-            JSONArray chargesBroughtArray = new JSONArray();
-            chargesBroughtArray.put(jsonParentObject.get(jsonChildKey));
-            jsonParentObject.put(jsonChildKey, chargesBroughtArray);
+            log.warn("CRM form "+ jsonParentKey + " Charges Brought to be a list. Try converting into a list");
+            JSONArray toArray = new JSONArray();
+            toArray.put(jsonParentObject.get(jsonChildKey));
+            jsonParentObject.put(jsonChildKey, toArray);
         }
     }
 }
