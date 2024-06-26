@@ -4,7 +4,6 @@ import io.micrometer.core.instrument.util.IOUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -57,6 +56,7 @@ class CrmFileServiceTest {
         crmFileTestTypes.put(5001662L, CRM_TYPE_7);
         crmFileTestTypes.put(4808706L, CRM_TYPE_7);
         crmFileTestTypes.put(5001597L, CRM_TYPE_7);
+        crmFileTestTypes.put(5001669L, CRM_TYPE_14);
 
         crmFileTests =  new HashMap<>();
         crmFileTests.put(5001604L, String.format(TEST_FILES_PATH, "Crm5MockFile_5001604.txt"));
@@ -65,6 +65,7 @@ class CrmFileServiceTest {
         crmFileTests.put(4808706L, String.format(TEST_FILES_PATH, "Crm7MockFile_4808706.txt"));
         crmFileTests.put(5001662L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001662.txt"));
         crmFileTests.put(5001597L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001597.txt"));
+        crmFileTests.put(5001669L, String.format(TEST_FILES_PATH, "Crm14MockFile_5001669.txt"));
 
         crmFileTests.forEach((testUsn, testFile) -> {
             try {
@@ -154,19 +155,37 @@ class CrmFileServiceTest {
         // Test with accepted types
         linkedAttachmentTests.forEach((usnToTest, expectedAttachments) -> {
             int typeId = crmFileTestTypes.get(usnToTest);
-
-            // Execute
-            JSONObject result = crmFileService.convertCrmFormLinkedAttachments(
-                crmFileService.getCrmFileJson(
+            JSONObject result = crmFileService.getCrmFileJson(
                     new CrmFormDetailsCriteriaDTO(usnToTest, typeId, Integer.toString(typeId))
-                )
             );
-
+            // Execute
+            crmFileService.convertCrmFormObjectToArray(result,CRM_LINKED_EVIDENCE,CRM_LINKED_EVIDENCE_FILES);
             // Check
             softly.assertThat(result).isNotNull();
-            softly.assertThat(result.has("linkedAttachment")).isTrue();
-            softly.assertThat(result.get("linkedAttachment")).isInstanceOf(JSONArray.class);
-            softly.assertThat(result.getJSONArray("linkedAttachment").length()).isEqualTo(expectedAttachments);
+            softly.assertThat(result.has(CRM_LINKED_EVIDENCE)).isTrue();
+            softly.assertThat(result.get(CRM_LINKED_EVIDENCE)).isInstanceOf(JSONObject.class);
+            softly.assertThat(result.getJSONObject(CRM_LINKED_EVIDENCE).has(CRM_LINKED_EVIDENCE_FILES)).isTrue();
+            softly.assertThat(result.getJSONObject(CRM_LINKED_EVIDENCE).getJSONArray(CRM_LINKED_EVIDENCE_FILES).length()).isEqualTo(expectedAttachments);
         });
+    }
+    @Test
+    void getConvertCrmFormChargesBroughtTest_ShouldJSONArrayObject() {
+
+        // Test with accepted types
+        Long usnToTest = 5001669L;
+        int typeId = crmFileTestTypes.get(usnToTest);
+        JSONObject crmToTest = crmFileService.getCrmFileJson(
+                new CrmFormDetailsCriteriaDTO(usnToTest, typeId, Integer.toString(typeId))
+        );
+        JSONObject result = crmToTest.getJSONObject(CRM_FORM_FIELD_DATA);
+        // Execute
+        crmFileService.convertCrmFormObjectToArray(result,CRM14_CHARGES_BROUGHT,CRM14_ROW);
+        // Check
+        softly.assertThat(result).isNotNull();
+        softly.assertThat(result.has(CRM14_CHARGES_BROUGHT)).isTrue();
+        softly.assertThat(result.get(CRM14_CHARGES_BROUGHT)).isInstanceOf(JSONObject.class);
+        softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).has(CRM14_ROW)).isTrue();
+        softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).getJSONArray(CRM14_ROW).length()).isEqualTo(3);
+
     }
 }

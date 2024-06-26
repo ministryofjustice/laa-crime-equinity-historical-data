@@ -396,4 +396,11 @@ public class Crm14AdditionalDetails {
     public String subformfundingdecision_4_Official_sign_fullname;
     @JsonProperty("Subformfundingdecision_5-Case_number")
     public String subformfundingdecision_5_Case_number;
+    @JsonProperty("Business_details")
+    public Crm15BusinessesModel business_details;
+    @JsonProperty("Partner_business_details")
+    public Crm15BusinessesModel partner_business_details;
+    @JsonProperty("Land_and_property_table")
+    public Crm15PropertyModel land_and_property_table;
+
 }

@@ -1,6 +1,10 @@
 Crm14DetailsDTO:
   type: object
   properties:
+    privateCompany:
+      type: string
+    partnerPrivateCompany:
+      type: string
     legalRepresentativeUse:
       $ref: "#/CrmLegalRepDTO"
     aboutYouPart1:
@@ -19,6 +23,8 @@ Crm14DetailsDTO:
       $ref: "#/Crm14EvidencePart2DTO"
     income:
       $ref: "#/Crm14IncomeDTO"
+    crm15Details:
+      $ref: "#/Crm15DetailsDTO"
     legalRepresentationDetails:
       $ref: "#/Crm14LegalRepresentationDTO"
     aboutInformation:
@@ -457,3 +463,203 @@ Crm14EvidencePart2DTO:
       type: string
     providerNotes:
       type: string
+
+
+Crm15DetailsDTO:
+  type: object
+  properties:
+    income1:
+      $ref: "#/Crm15Income1DTO"
+    landProperty:
+      $ref: "#/Crm15LandPropertyDTO"
+
+Crm15LandPropertyDTO:
+  type: object
+  properties:
+    ownProperty:
+      type: string
+    partnerOwnProperty:
+      type: string
+    residentialProperties:
+      type: integer
+    commercialProperties:
+      type: integer
+    piecesOfLand:
+      type: integer
+    partnerResidentialProperties:
+      type: integer
+    partnerCommercialProperties:
+      type: integer
+    partnerPiecesOfLand:
+      type: integer
+    jointResidentialProperties:
+      type: integer
+    jointCommercialProperties:
+      type: integer
+    jointPiecesOfLand:
+      type: integer
+    propertyList:
+      type: array
+      items:
+        $ref: "#/Crm15PropertyDTO"
+
+Crm15PropertyDTO:
+  type: object
+  properties:
+    percentOwned:
+      type: number
+      format: float
+    partnerPercentOwned:
+      type: number
+      format: float
+    commercialPropertyUsedFor:
+      type: string
+    estimatedMarketValue:
+      type: number
+      format: float
+    bedroomsResidentialProperty:
+      type: integer
+    propertyNotHomeAddress3:
+      type: string
+    propertyNotHomeAddress2:
+      type: string
+    propertyNotHomeAddress1:
+      type: string
+    usualHomeAddress:
+      type: boolean
+    partnerUsualHomeAddress:
+      type: boolean
+    addressListedBelow:
+      type: boolean
+    lAndpAddressDisplay:
+      type: string
+    mortgageDisplay:
+      type: string
+    type:
+      type: string
+    otherOwnersName2:
+      type: string
+    otherOwnersName1:
+      type: string
+    otherOwnersRelationship1:
+      type: string
+    residentialCommercialLandDetailsDisplay:
+      type: string
+    mortgageToPay:
+      type: string
+    otherOwnersRelationship2:
+      type: string
+    residentialPropertyType:
+      type: string
+    landpAddressIndicatorDisplay:
+      type: string
+    ownershipDetailsDisplay:
+      type: string
+    otherOwnersRelationshipOther2:
+      type: string
+    otherOwnersRelationshipOther1:
+      type: string
+    landUse:
+      type: string
+    otherPropertyType:
+      type: string
+    propertyNotHomePostcode:
+      type: string
+
+
+
+
+Crm15Income1DTO:
+  type: object
+  properties:
+    selfEmployedNoOfBusinesses:
+      type: integer
+    businessPartnerships:
+      type: integer
+    privateCompanies:
+      type: integer
+    selfAssessmentTaxReceived:
+      type: string
+    partnerSelfAssessmentTaxReceived:
+      type: string
+    allBusinesses:
+      $ref: "#/Crm15AllBusinessesDTO"
+    childBenefit:
+      type: integer
+    partnerChildBenefit:
+      type: integer
+
+Crm15AllBusinessesDTO:
+  type: object
+  properties:
+    you:
+      type: array
+      items:
+        $ref: "#/Crm15BusinessesDTO"
+    partner:
+      type: array
+      items:
+        $ref: "#/Crm15BusinessesDTO"
+
+Crm15BusinessesDTO:
+  type: object
+  properties:
+    drawingsEvery:
+      type: string
+    tradingAddressLine3:
+      type: string
+    tradingAddressLine2:
+      type: string
+    tradingAddressLine1:
+      type: string
+    profitEvery:
+      type: string
+    businessWithOther:
+      type: string
+    businessWithName:
+      type: string
+    businessType:
+      type: string
+    businessOtherEmployees:
+      type: string
+    turnover:
+      type: number
+      format: float
+    profit:
+      type: number
+      format: float
+    businessNature:
+      type: string
+    businessDetailsDisplay:
+      type: string
+    tradingAddressPostcode:
+      type: string
+    directorShareIncomeDisplay:
+      type: string
+    tradingName:
+      type: string
+    turnoverEvery:
+      type: string
+    previousFinancialsDisplay:
+      type: string
+    shareSales:
+      type: number
+      format: float
+    remuneration:
+      type: number
+      format: float
+    tradingDetailsDisplay:
+      type: string
+    percentProfits:
+      type: number
+      format: float
+    drawings:
+      type: number
+      format: float
+    businessEmployeesNo:
+      type: number
+      format: float
+    businessTradingDate:
+      type: string
+      format: date-time
+

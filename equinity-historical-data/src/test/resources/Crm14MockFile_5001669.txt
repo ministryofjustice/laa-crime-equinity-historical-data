@@ -1650,6 +1650,35 @@
                 "Business_trading_date": "2015-01-01T00:00:00"
             }
         },
+        "Partner_business_details": {
+            "row": {
+                "Drawings_every": "Year",
+                "Trading_address_3": "Salford",
+                "Trading_address_2": "30 Sparkle Street",
+                "Trading_address_1": "Sparkle House",
+                "Profit_every": "Year",
+                "In_business_with_other": "Yes",
+                "In_business_with_name": "Sally Sparkle",
+                "Business_type": "Director / Shareholder",
+                "Business_other_employees": "Yes",
+                "Turnover": 115000,
+                "Profit": 85000,
+                "Business_nature": "Bespoke cakes",
+                "Business_details_display": "Bespoke cakes\r\n\r\nNumber of employees: 2\r\n\r\nStarted trading: 01/01/2015",
+                "Trading_address_postcode": "M40 1TB",
+                "Directors_share_income_display": "Director's salary:\r\n�0.00\r\n\r\nTotal income from share sales:\r\n�0.00",
+                "Trading_name": "Sparkles Cakes Limited",
+                "Turnover_every": "Year",
+                "Previous_financials_display": "Turnover:\r\n�115,000.00 per year\r\n\r\nDrawings:\r\n�12,500.00 per year\r\n\r\nProfit:\r\n�85,000.00 per year\r\n\r\nPercentage share\r\nof profit: 50%",
+                "Share_sales": 0,
+                "Remuneration": 0,
+                "Trading_details_display": "Sparkles Cakes Limited\r\n\r\nSparkle House\r\n30 Sparkle Street\r\nSalford\r\nM40 1TB",
+                "Percent_of_profits": 0.5,
+                "Drawings": 12500,
+                "Business_no_of_employees": 2,
+                "Business_trading_date": "2015-01-01T00:00:00"
+            }
+        },
         "Fc_eligible_for_assessment_result_inject": false,
         "Jsa": false,
         "Originator_tl_passwordneverexpires": 0,
