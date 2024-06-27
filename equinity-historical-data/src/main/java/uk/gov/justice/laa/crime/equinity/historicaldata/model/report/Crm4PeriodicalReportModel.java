@@ -44,19 +44,19 @@ public class Crm4PeriodicalReportModel {
     @Column(name="Expert Name")
     private String expertName;
     @Column(name="Quantity")
-    private Float quantity;
+    private Double quantity;
     @Column(name="Rate")
-    private Float rate;
+    private Double rate;
     @Column(name="Unit")
     private String unit;
     @Column(name="Total Cost")
-    private Float totalCost;
+    private Double totalCost;
     @Column(name="Additional Expenditure")
-    private Float additionalExpenditure;
+    private Double additionalExpenditure;
     @Column(name="Total Authority")
-    private Float totalAuthority;
+    private Double totalAuthority;
     @Column(name="Total Granted")
-    private Float totalGranted;
+    private Double totalGranted;
     @Column(name="Granting Caseworker")
     private String grantingCaseworker;
 

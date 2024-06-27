@@ -8,12 +8,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessResourceUsageException;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm4PeriodicalReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm4PeriodicalReportRepository;
 
@@ -21,17 +18,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("local")
-class Crm4PeriodicalReportServiceTest {
+class Crm4PeriodicalReportServiceMockTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
-    @Mock
+    @MockBean
     Crm4PeriodicalReportRepository reportRepository;
 
     @Autowired
@@ -65,10 +62,7 @@ class Crm4PeriodicalReportServiceTest {
         );
         expectedResponse.add(report);
 
-        when(reportRepository.getReport("fail", "fail"))
-                .thenThrow(Mockito.mock(InvalidDataAccessResourceUsageException.class));
-
-        when(reportRepository.getReport("mock", "mock"))
+        when(reportRepository.getReport(any(), any()))
                 .thenReturn(expectedResponse);
     }
 
@@ -78,26 +72,11 @@ class Crm4PeriodicalReportServiceTest {
     }
 
     @Test
-    void getReportWhenMockingSQLExceptionThenShouldReturnExceptionAndEnd() {
-        try {
-            reportService.getReport("fail", "fail");
-        } catch (InvalidDataAccessResourceUsageException e) {
-            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
-            // Test coverage using mocked data is covered in a separate test
-        }
-    }
+    void getReportWhenCalledMockedThenShouldReturnCSV() {
+        String results = reportService.getReport("2010-02-01", "2024-06-01");
 
-    @Test
-    void getReportWhenUsingSqlConnectionAndValidInputThenShouldReturnReportCSV() {
-        try {
-            String results = reportService.getReport("2010-02-01", "2024-06-01");
-
-            softly.assertThat(results).isNotEmpty();
-            softly.assertThat(results).startsWith(Crm4PeriodicalReportModel.exportHeaderToCSV());
-            softly.assertThat(results).contains("5001613");
-        } catch (InvalidDataAccessResourceUsageException e) {
-            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
-            // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
-        }
+        softly.assertThat(results).isNotEmpty();
+        softly.assertThat(results).startsWith(Crm4PeriodicalReportModel.exportHeaderToCSV());
+        softly.assertThat(results).contains("5001600");
     }
 }
