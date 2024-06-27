@@ -1,29 +1,3 @@
-spring:
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=MSSQLServer;
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        naming-strategy: uk.gov.justice.laa.crime.equinity.historicaldata.archive.config.DynamicSchemaNamingStrategy
-  h2:
-    console:
-      settings:
-        web-allow-others: false
-      enabled: false
-
-
-datasource:
-  archive:
-    table: CrmFormsArchiveView
-    catalog:
-    schema:
-
 server:
   port: 8089
   api:
