@@ -470,8 +470,73 @@ Crm15DetailsDTO:
   properties:
     income1:
       $ref: "#/Crm15Income1DTO"
+    outgoings:
+      $ref: "#/Crm15OutgoingsDTO"
     landProperty:
       $ref: "#/Crm15LandPropertyDTO"
+
+Crm15OutgoingsDTO:
+  type: object
+  properties:
+    usuallyLive:
+      type: string
+    mortgageRentAmount:
+      type: number
+      format: float
+    mortgageRentEvery:
+      type: string
+    annualCouncilTax:
+      type: number
+      format: float
+    councilTaxEvery:
+      type: integer
+    boardAndLodgings:
+      type: number
+      format: float
+    boardAndLodgingsEvery:
+      type: integer
+    foodBill:
+      type: number
+      format: float
+    foodBillEvery:
+      type: string
+    boardAndLodgingsLandlord:
+      type: string
+    boardAndLodgingsLandlordRelationship:
+      type: string
+    childCareCosts:
+      type: string
+    childCareCostsAmount:
+      type: number
+      format: float
+    childCareCostsEvery:
+      type: string
+    payMaintenance:
+      type: string
+    maintenanceAmount:
+      type: number
+      format: float
+    maintenanceAmountEvery:
+      type: string
+    contributeLegalAid:
+      type: string
+    legalAidContributionPaidEvery:
+      type: string
+    legalAidContributionRef:
+      type: string
+    legalAidContribution:
+      type: number
+      format: float
+    paid40PercentTax:
+      type: string
+    partnerPaid40PercentTax:
+      type: string
+    householdOutgoingsExceedIncome:
+      type: string
+    householdOutgoingsExceedIncomeHow:
+      type: string
+    indictable:
+      type: boolean
 
 Crm15LandPropertyDTO:
   type: object
