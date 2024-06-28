@@ -311,6 +311,20 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String child_benefit_paid_every;
     @JsonProperty("Mortgage_rent_calc")
     public int mortgage_rent_calc;
+    @JsonProperty("Mortgage_rent")
+    public double mortgage_rent;
+    @JsonProperty("Council_tax")
+    public double council_tax;
+    @JsonProperty("Board_and_lodgings")
+    public double board_and_lodgings;
+    @JsonProperty("Food_bill")
+    public double food_bill;
+    @JsonProperty("Childcare_costs_amount")
+    public double childcare_costs_amount;
+    @JsonProperty("Maintenance_amount")
+    public double maintenance_amount;
+    @JsonProperty("Legal_aid_contribution")
+    public double legal_aid_contribution;
     @JsonProperty("Land_calc_2")
     public int land_calc_2;
     @JsonProperty("Originator_jobtitle")
