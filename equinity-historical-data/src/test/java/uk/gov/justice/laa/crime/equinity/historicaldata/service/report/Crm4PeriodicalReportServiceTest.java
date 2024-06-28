@@ -94,7 +94,7 @@ class Crm4PeriodicalReportServiceTest {
 
             softly.assertThat(results).isNotEmpty();
             softly.assertThat(results).startsWith(Crm4PeriodicalReportModel.exportHeaderToCSV());
-            softly.assertThat(results).contains("5001613");
+            softly.assertThat(results).contains(",5001613,");
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class

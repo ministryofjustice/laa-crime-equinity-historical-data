@@ -77,6 +77,6 @@ class Crm4PeriodicalReportServiceMockTest {
 
         softly.assertThat(results).isNotEmpty();
         softly.assertThat(results).startsWith(Crm4PeriodicalReportModel.exportHeaderToCSV());
-        softly.assertThat(results).contains("5001600");
+        softly.assertThat(results).contains(",5001600,");
     }
 }
