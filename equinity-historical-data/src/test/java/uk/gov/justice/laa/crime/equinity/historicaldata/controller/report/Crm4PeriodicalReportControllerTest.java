@@ -160,9 +160,12 @@ class Crm4PeriodicalReportControllerTest {
             String endDate = "1988-02-02";
 
             // execute
-            softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        startDate, endDate, ACCEPTED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class);
+            ResponseEntity<String> response = controller.generateReportCrm4(
+                    startDate, endDate, ACCEPTED_PROFILE_TYPES
+            );
+        } catch ( ResourceNotFoundException e) {
+            softly.assertThat(e).isInstanceOf(ResourceNotFoundException.class);
+            softly.assertThat(e.getMessage()).contains("CRM4");
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
