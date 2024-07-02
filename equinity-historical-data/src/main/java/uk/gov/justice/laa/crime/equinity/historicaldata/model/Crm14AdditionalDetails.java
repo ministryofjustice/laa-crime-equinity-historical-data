@@ -14,11 +14,101 @@ import java.util.Date;
 @NoArgsConstructor
 public class Crm14AdditionalDetails {
 
+    @JsonProperty("stocks")
+    public int stocks;
+    @JsonProperty("Partner_stocks")
+    public int partner_stocks;
+    @JsonProperty("Joint_stocks")
+    public int joint_stocks;
+    @JsonProperty("Shares")
+    public int shares;
+    @JsonProperty("Partner_shares")
+    public int partner_shares;
+    @JsonProperty("Joint_shares")
+    public int joint_shares;
+    @JsonProperty("Peps")
+    public int peps;
+    @JsonProperty("Partner_peps")
+    public int partner_peps;
+    @JsonProperty("Joint_peps")
+    public int joint_peps;
+    @JsonProperty("Share_isa")
+    public int share_isa;
+    @JsonProperty("Partner_share_isa")
+    public int partner_share_isa;
+    @JsonProperty("Joint_share_isa")
+    public int joint_share_isa;
+    @JsonProperty("Unit_trust")
+    public int unit_trust;
+    @JsonProperty("Partner_unit_trust")
+    public int partner_unit_trust;
+    @JsonProperty("Joint_unit_trust")
+    public int joint_unit_trust;
+    @JsonProperty("Investment_bonds")
+    public int investment_bonds;
+    @JsonProperty("Partner_investment_bonds")
+    public int partner_investment_bonds;
+    @JsonProperty("Joint_investment_bonds")
+    public int joint_investment_bonds;
+    @JsonProperty("Other_lump_sum")
+    public int other_lump_sum;
+    @JsonProperty("Partner_other_lump_sum")
+    public int partner_other_lump_sum;
+    @JsonProperty("Joint_other_lump_sum")
+    public int joint_other_lump_sum;
+    @JsonProperty("National_savings_certificates_total_value")
+    public double national_savings_certificates_total_value;
+    @JsonProperty("Trust_fund_amount")
+    public double trust_fund_amount;
+    @JsonProperty("Trust_fund_dividend")
+    public double trust_fund_dividend;
+    @JsonProperty("Partner_Trust_fund_amount")
+    public double partner_Trust_fund_amount;
+    @JsonProperty("Partner_Trust_fund_dividend")
+    public double partner_Trust_fund_dividend;
+    @JsonProperty("Premium_bonds_holder_no")
+    public int premium_bonds_holder_no;
+    @JsonProperty("Partner_premium_bonds_holder_no")
+    public int partner_premium_bonds_holder_no;
+    @JsonProperty("Premium_bonds_total_value")
+    public double premium_bonds_total_value;
+    @JsonProperty("Bank_accounts_crm15")
+    public int bank_accounts_crm15;
+    @JsonProperty("Partner_bank_accounts_crm15")
+    public int partner_bank_accounts_crm15;
+    @JsonProperty("Joint_bank_accounts_crm15")
+    public int joint_bank_accounts_crm15;
+    @JsonProperty("Building_society_account_crm15")
+    public int building_society_account_crm15;
+    @JsonProperty("Partner_building_society_account_crm15")
+    public int partner_building_society_account_crm15;
+    @JsonProperty("Joint_building_society_account_crm15")
+    public int joint_building_society_account_crm15;
+    @JsonProperty("Cash_isa_crm15")
+    public int cash_isa_crm15;
+    @JsonProperty("Partner_cash_isa_crm15")
+    public int partner_cash_isa_crm15;
+    @JsonProperty("Joint_cash_isa_crm15")
+    public int joint_cash_isa_crm15;
+    @JsonProperty("National_savings_crm15")
+    public int national_savings_crm15;
+    @JsonProperty("Partner_national_savings_crm15")
+    public int partner_national_savings_crm15;
+    @JsonProperty("Joint_national_savings_crm15")
+    public int joint_national_savings_crm15;
+    @JsonProperty("Other_cash_investments_crm15")
+    public int other_cash_investments_crm15;
+    @JsonProperty("Partner_other_cash_investments_crm15")
+    public int partner_other_cash_investments_crm15;
+    @JsonProperty("Joint_other_cash_investments_crm15")
+    public int joint_other_cash_investments_crm15;
+
+
+
     @JsonProperty("Have_partner")
     public int have_partner;
     @JsonProperty("Partner_conflict_of_interest")
     public int partner_conflict_of_interest;
-
     @JsonProperty("Esa_partner")
     public boolean esa_partner;
     @JsonProperty("Partner_surname")
@@ -402,5 +492,13 @@ public class Crm14AdditionalDetails {
     public Crm15BusinessesModel partner_business_details;
     @JsonProperty("Land_and_property_table")
     public Crm15PropertyModel land_and_property_table;
+    @JsonProperty("Savings_certificates")
+    public Crm15SavingsCertificateModel savings_certificates;
+    @JsonProperty("Car_reg_table")
+    public Crm15CarRegModel car_reg_table;
+    @JsonProperty("Investments_table")
+    public Crm15InvestmentsModel investments_table;
+    @JsonProperty("Bank_accounts")
+    public Crm15BankAccountsModel bank_accounts;
 
 }
