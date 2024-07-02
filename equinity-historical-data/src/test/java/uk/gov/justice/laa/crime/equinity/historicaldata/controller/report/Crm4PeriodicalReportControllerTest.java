@@ -163,7 +163,7 @@ class Crm4PeriodicalReportControllerTest {
             ResponseEntity<String> response = controller.generateReportCrm4(
                     startDate, endDate, ACCEPTED_PROFILE_TYPES
             );
-        } catch ( ResourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             softly.assertThat(e).isInstanceOf(ResourceNotFoundException.class);
             softly.assertThat(e.getMessage()).contains("CRM4");
         } catch (InvalidDataAccessResourceUsageException e) {
