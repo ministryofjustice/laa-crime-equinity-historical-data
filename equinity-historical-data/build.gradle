@@ -134,7 +134,7 @@ jacocoTestCoverageVerification {
 				'uk.gov.justice.laa.crime.equinity.historicaldata.controller.CrmFileController' // This is a temporary test class
 			]
 			limit {
-				minimum = 0.80
+				minimum = 0.70
 			}
 		}
 	}

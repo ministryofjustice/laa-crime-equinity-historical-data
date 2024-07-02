@@ -160,7 +160,7 @@ class Crm4PeriodicalReportControllerTest {
             String endDate = "1988-02-02";
 
             // execute
-            ResponseEntity<String> response = controller.generateReportCrm4(
+            controller.generateReportCrm4(
                     startDate, endDate, ACCEPTED_PROFILE_TYPES
             );
         } catch (ResourceNotFoundException e) {
@@ -171,4 +171,6 @@ class Crm4PeriodicalReportControllerTest {
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
         }
     }
+
+
 }
