@@ -474,6 +474,8 @@ Crm15DetailsDTO:
       $ref: "#/Crm15OutgoingsDTO"
     landProperty:
       $ref: "#/Crm15LandPropertyDTO"
+    savings:
+      $ref: "#/Crm15SavingsDTO"
 
 Crm15OutgoingsDTO:
   type: object
@@ -727,4 +729,202 @@ Crm15BusinessesDTO:
     businessTradingDate:
       type: string
       format: date-time
+
+Crm15SavingsDTO:
+  type: object
+  properties:
+    numBankAccounts:
+        type: integer
+    numPartnerBankAccounts:
+      type: integer
+    numJointBankAccounts:
+      type: integer
+    numBuildingSocietyAccount:
+      type: integer
+    numPartnerBuildingSocietyAccount:
+      type: integer
+    numJointBuildingSocietyAccount:
+      type: integer
+    numCashIsa:
+      type: integer
+    numPartnerCashIsa:
+      type: integer
+    numJointCashIsa:
+      type: integer
+    numNationalSavings:
+      type: integer
+    numPartnerNationalSavings:
+      type: integer
+    numJointNationalSavings:
+      type: integer
+    numOtherCashInvestments:
+      type: integer
+    numPartnerOtherCashInvestments:
+      type: integer
+    numJointOtherCashInvestments:
+      type: integer
+    selfEmployedNoOfBusinesses:
+      type: integer
+    businessPartnerships:
+      type: integer
+    privateCompanies:
+      type: integer
+    selfAssessmentTaxReceived:
+      type: string
+    partnerSelfAssessmentTaxReceived:
+      type: string
+    bankAccounts:
+      type: array
+      items:
+        $ref: "#/Crm15BankAccountDTO"
+    premiumBonds:
+      type: string
+    partnerPremiumBonds:
+      type: string
+    nationalSavingsCert:
+      type: string
+    salaryPaidIntoAccount:
+      type: string
+    partnerSalaryPaidIntoAccount:
+      type: string
+    salaryAccount:
+      type: string
+    partnerSalaryAccount:
+      type: string
+    premiumBondsHolderNo:
+      type: integer
+    partnerPremiumBondsHolderNo:
+      type: integer
+    premiumBondsTotal:
+      type: number
+      format: float
+    partnerNationalSavingsCert:
+      type: string
+    savingCertificates:
+      type: array
+      items:
+        $ref: "#/Crm15SavingCertificateDTO"
+    nationalSavingsCertTotal:
+      type: number
+      format: float
+    stocks:
+      type: integer
+    partnerStocks:
+      type: integer
+    jointStocks:
+      type: integer
+    shares:
+      type: integer
+    partnerShares:
+      type: integer
+    jointShares:
+      type: integer
+    peps:
+      type: integer
+    partnerPeps:
+      type: integer
+    jointPeps:
+      type: integer
+    shareIsa:
+      type: integer
+    partnerShareIsa:
+      type: integer
+    jointShareIsa:
+      type: integer
+    unitTrust:
+      type: integer
+    partnerUnitTrust:
+      type: integer
+    jointUnitTrust:
+      type: integer
+    investmentBonds:
+      type: integer
+    partnerInvestmentBonds:
+      type: integer
+    jointInvestmentBonds:
+      type: integer
+    otherLumpSum:
+      type: integer
+    partnerOtherLumpSum:
+      type: integer
+    jointOtherLumpSum:
+      type: integer
+    investments:
+      type: array
+      items:
+        $ref: "#/Crm15InvestmentDTO"
+    trustFund:
+      type: string
+    partnerTrustFund:
+      type: string
+    trustFundAmount:
+      type: number
+      format: float
+    trustFundDividend:
+      type: number
+      format: float
+    partnerTrustFundAmount:
+      type: number
+      format: float
+    partnerTrustFundDividend:
+      type: number
+      format: float
+    freezingOrderCrm15:
+      type: string
+    partnerFreezingOrderCrm15:
+      type: string
+    ownCar:
+      type: string
+    carRegs:
+      type: array
+      items:
+        $ref: "#/Crm15CarRegistrationDTO"
+
+Crm15BankAccountDTO:
+  type: object
+  properties:
+    bank:
+      type: string
+    sortCode:
+      type: string
+    accountNumber:
+      type: integer
+    accountType:
+      type: string
+    balance:
+      type: number
+      format: float
+    overdrawn:
+      type: boolean
+    accountHolder:
+      type: string
+
+Crm15SavingCertificateDTO:
+  type: object
+  properties:
+    customerNumber:
+      type: string
+    certNumber:
+      type: string
+    youOrPartner:
+      type: string
+
+Crm15CarRegistrationDTO:
+  type: object
+  properties:
+    carRegNumber:
+      type: string
+
+Crm15InvestmentDTO:
+  type: object
+  properties:
+    investmentType:
+      type: string
+    investmentInfo:
+      type: string
+    investmentValue:
+      type: number
+      format: float
+    investmentHolder:
+      type: string
 
