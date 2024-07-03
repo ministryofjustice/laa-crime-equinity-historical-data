@@ -45,6 +45,8 @@ public class CrmFileService {
     public static final String CRM15_INVESTMENT_DETAILS ="Investments_table";
     public static final String CRM15_SAVINGS_CERT_DETAILS ="Savings_certificates";
     public static final String CRM15_BANK_ACCOUNTS_DETAILS ="Bank_accounts";
+    public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
+    public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
 
 
 
@@ -74,6 +76,8 @@ public class CrmFileService {
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_INVESTMENT_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_SAVINGS_CERT_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BANK_ACCOUNTS_DETAILS, CRM14_ROW);
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_EMPLOYMENT_DETAILS, CRM14_ROW);
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_EMPLOYMENT_DETAILS, CRM14_ROW);
         }
         convertCrmFormObjectToArray(crmFileJsonObject, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);

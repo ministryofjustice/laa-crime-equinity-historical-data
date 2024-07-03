@@ -215,6 +215,10 @@ public interface Crm14Mapper extends CrmMapper {
     Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
 
 
+
+    @Mapping(target="income1.employersCrm15", source="employers_crm15")
+    @Mapping(target="income1.allEmployers.you", source="employment_details.employers")
+    @Mapping(target="income1.allEmployers.partner", source="partner_employment_details.employers")
     @Mapping(target="income1.selfEmployedNoOfBusinesses", source="self_employed_no_of_businesses")
     @Mapping(target="income1.businessPartnerships", source="business_partnerships_no_of")
     @Mapping(target="income1.privateCompanies", source="private_companies_no_of")
@@ -224,6 +228,13 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="income1.partnerChildBenefit", source="partner_child_benefit_crm15")
     @Mapping(target="income1.allBusinesses.you", source="business_details.businesses")
     @Mapping(target="income1.allBusinesses.partner", source="partner_business_details.businesses")
+    @Mapping(target="income1.partnerSelfEmployedNoOfBusinesses", source="partner_self_employed_no_of_businesses")
+    @Mapping(target="income1.partnerBusinessPartnershipsNoOf", source="partner_business_partnerships_no_of")
+    @Mapping(target="income1.partnerPrivateCompaniesNoOf", source="partner_private_companies_no_of")
+    @Mapping(target="income1.taxLiability", source="tax_liability")
+    @Mapping(target="income1.taxLiabilityPaidEvery", source="tax_liability_paid_every")
+    @Mapping(target="income1.partnerTaxLiability", source="partner_tax_liability")
+    @Mapping(target="income1.partnerTaxLiabilityPaidEvery", source="partner_tax_liability_paid_every")
     @Mapping(target="landProperty.ownProperty", source="own_property")
     @Mapping(target="landProperty.partnerOwnProperty", source="partner_own_property")
     @Mapping(target="landProperty.residentialProperties", source="properties_residential")
@@ -324,6 +335,27 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="savings.ownCar", source="own_car")
     @Mapping(target="savings.carRegs", source="car_reg_table.cars")
     Crm15DetailsDTO getCrm15IncomeDetailsDTOFromModel(Crm14DetailsModel chargesModel);
+
+    @Mapping(target="salaryPaidEvery", source="salary_paid_every")
+    @Mapping(target="salary", source="salary")
+    @Mapping(target="salaryTax", source="salary_tax")
+    @Mapping(target="employersPostcode", source="employers_postcode")
+    @Mapping(target="otherDeductionPaidEvery", source="other_deduction_paid_every")
+    @Mapping(target="nameAndJobTitleDisplay", source="name_and_job_title_display")
+    @Mapping(target="otherDeduction", source="deductions_display")
+    @Mapping(target="salaryDisplay", source="salary_display")
+    @Mapping(target="employersAddressLine2", source="employers_address_2")
+    @Mapping(target="employersAddressLine3", source="employers_address_3")
+    @Mapping(target="incomeTax", source="income_tax")
+    @Mapping(target="nationalInsurance", source="national_insurance")
+    @Mapping(target="jobTitle", source="job_title")
+    @Mapping(target="incomeTaxPaidEvery", source="income_tax_paid_every")
+    @Mapping(target="employersName", source="employers_name")
+    @Mapping(target="employersAddressLine1", source="employers_address_1")
+    @Mapping(target="nationalInsurancePaidEvery", source="national_insurance_paid_every")
+    @Mapping(target="otherDeductionDetails", source="other_deduction_details")
+    @Mapping(target="addressDisplay", source="address_display")
+    Crm15EmployerDTO getCrm15EmployerDTOFromModel(Crm15EmployerDetailsModel employersModel);
 
     @Mapping(target="drawingsEvery", source="drawings_every")
     @Mapping(target="previousFinancialsDisplay", source="previous_financials_display")
