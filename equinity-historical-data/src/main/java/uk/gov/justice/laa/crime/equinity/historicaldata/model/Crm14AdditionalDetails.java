@@ -102,8 +102,16 @@ public class Crm14AdditionalDetails {
     public int partner_other_cash_investments_crm15;
     @JsonProperty("Joint_other_cash_investments_crm15")
     public int joint_other_cash_investments_crm15;
-
-
+    @JsonProperty("Employers_crm15")
+    public int employers_crm15;
+    @JsonProperty("Non_cash_benefit")
+    public String non_cash_benefit;
+    @JsonProperty("Partner_non_cash_benefit")
+    public String partner_non_cash_benefit;
+    @JsonProperty("Non_cash_benefit_value")
+    public double non_cash_benefit_value;
+    @JsonProperty("Partner_non_cash_benefit_value")
+    public double partner_non_cash_benefit_value;
 
     @JsonProperty("Have_partner")
     public int have_partner;
@@ -285,8 +293,6 @@ public class Crm14AdditionalDetails {
     public boolean partner_confirm_read;
     @JsonProperty("No_of_partner_accounts_calc")
     public int no_of_partner_accounts_calc;
-    @JsonProperty("Partner_non_cash_benefit")
-    public String partner_non_cash_benefit;
     @JsonProperty("Partner_other_case_court")
     public String partner_other_case_court;
     @JsonProperty("Partner_own_property")
@@ -325,6 +331,17 @@ public class Crm14AdditionalDetails {
     public String partner_receive_pension;
     @JsonProperty("Partner_wage_tax_calc")
     public int partner_wage_tax_calc;
+    @JsonProperty("partner_self_employed_no_of_businesses")
+    public int partner_self_employed_no_of_businesses;
+    @JsonProperty("partner_business_partnerships_no_of")
+    public int partner_business_partnerships_no_of;
+    @JsonProperty("partner_private_companies_no_of")
+    public int partner_private_companies_no_of;
+    @JsonProperty("tax_liability")
+    public double tax_liability;
+    @JsonProperty("partner_tax_liability")
+    public double partner_tax_liability;
+
 
     @JsonProperty("Subformfundingdecision_1-Overall_result_magsorcfs")
     public String subformfundingdecision_1_Overall_result_magsorcfs;
@@ -486,6 +503,10 @@ public class Crm14AdditionalDetails {
     public String subformfundingdecision_4_Official_sign_fullname;
     @JsonProperty("Subformfundingdecision_5-Case_number")
     public String subformfundingdecision_5_Case_number;
+    @JsonProperty("Employment_details")
+    public Crm15EmployersModel employment_details;
+    @JsonProperty("Partner_employment_details")
+    public Crm15EmployersModel partner_employment_details;
     @JsonProperty("Business_details")
     public Crm15BusinessesModel business_details;
     @JsonProperty("Partner_business_details")

@@ -470,6 +470,8 @@ Crm15DetailsDTO:
   properties:
     income1:
       $ref: "#/Crm15Income1DTO"
+    income2:
+      $ref: "#/Crm15Income2DTO"
     outgoings:
       $ref: "#/Crm15OutgoingsDTO"
     landProperty:
@@ -633,12 +635,13 @@ Crm15PropertyDTO:
     propertyNotHomePostcode:
       type: string
 
-
-
-
 Crm15Income1DTO:
   type: object
   properties:
+    employersCrm15:
+      type: integer
+    allEmployers:
+      $ref: "#/Crm15AllEmployersDTO"
     selfEmployedNoOfBusinesses:
       type: integer
     businessPartnerships:
@@ -649,12 +652,62 @@ Crm15Income1DTO:
       type: string
     partnerSelfAssessmentTaxReceived:
       type: string
+    partnerSelfEmployedNoOfBusinesses:
+      type: Integer
+    partnerBusinessPartnershipsNoOf:
+      type: Integer
+    partnerPrivateCompaniesNoOf:
+      type: Integer
+    taxLiability:
+      type: number
+      format: float
+    taxLiabilityPaidEvery:
+      type: string
+    partnerTaxLiability:
+      type: number
+      format: float
+    partnerTaxLiabilityPaidEvery:
+      type: string
     allBusinesses:
       $ref: "#/Crm15AllBusinessesDTO"
     childBenefit:
       type: integer
     partnerChildBenefit:
       type: integer
+    nonCashBenefit:
+      type: string
+    partnerNonCashBenefit:
+      type: string
+    nonCashBenefitValue:
+      type: number
+      format: float
+    partnerNonCashBenefitValue:
+      type: number
+      format: float
+
+Crm15Income2DTO:
+  type: object
+  properties:
+    employersCrm15:
+      type: integer
+    selfEmployedNoOfBusinesses:
+      type: integer
+    businessPartnerships:
+      type: integer
+    privateCompanies:
+
+Crm15AllEmployersDTO:
+  type: object
+  properties:
+    you:
+      type: array
+      items:
+        $ref: "#/Crm15EmployerDTO"
+    partner:
+      type: array
+      items:
+        $ref: "#/Crm15EmployerDTO"
+
 
 Crm15AllBusinessesDTO:
   type: object
@@ -729,6 +782,51 @@ Crm15BusinessesDTO:
     businessTradingDate:
       type: string
       format: date-time
+
+Crm15EmployerDTO:
+  type: object
+  properties:
+    employersName:
+      type: string
+    nameAndJobTitleDisplay:
+      type: string
+    addressDisplay:
+      type: string
+    employersAddressLine1:
+      type: string
+    employersAddressLine2:
+      type: string
+    employersAddressLine3:
+      type: string
+    employersPostcode:
+      type: string
+    jobTitle:
+      type: string
+    salary:
+      type: number
+      format: float
+    salaryDisplay:
+      type: string
+    salaryTax:
+      type: Integer
+    salaryPaidEvery:
+      type: string
+    incomeTax:
+      type: number
+      format: float
+    incomeTaxPaidEvery:
+      type: string
+    nationalInsurance:
+      type: number
+      format: float
+    nationalInsurancePaidEvery:
+      type: string
+    otherDeduction:
+      type: string
+    otherDeductionPaidEvery:
+      type: string
+    otherDeductionDetails:
+      type: string
 
 Crm15SavingsDTO:
   type: object
