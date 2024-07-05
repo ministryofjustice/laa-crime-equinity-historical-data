@@ -116,6 +116,7 @@ public interface Crm5Mapper {
     @Mapping(target="allCosts.anticipatedCosts.mileage.cost", source="ac_mileage_cost")
     @Mapping(target="allCosts.anticipatedCosts.otherDisbursement.cost", source="ac_other_cost")
     @Mapping(target="allCosts.anticipatedCosts.totalCost.cost", source="ac_total_costs")
+    @Mapping(target="allCosts.newLimitRequest.cost", source="new_limit_request")
     @Mapping(target="caseHistory.summary", source="ch_case_history")
     @Mapping(target="caseHistory.additionalInfo", source="ch_additional_info")
     @Mapping(target="solicitor.declaration.date", source="solicitor_sign_date")
