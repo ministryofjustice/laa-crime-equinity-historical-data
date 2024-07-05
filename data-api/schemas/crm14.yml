@@ -470,6 +470,8 @@ Crm15DetailsDTO:
   properties:
     income1:
       $ref: "#/Crm15Income1DTO"
+    income2:
+      $ref: "#/Crm15Income2DTO"
     outgoings:
       $ref: "#/Crm15OutgoingsDTO"
     landProperty:
