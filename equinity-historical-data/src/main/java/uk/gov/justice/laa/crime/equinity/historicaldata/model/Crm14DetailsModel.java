@@ -230,7 +230,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Datestamp_usn")
     public int datestamp_usn;
     @JsonProperty("Total_pension_paid_every")
-    public String total_pension_paid_every;
+    public int total_pension_paid_every;
     @JsonProperty("Firm_office")
     public String firm_office;
     @JsonProperty("Tlnewmessage")
@@ -777,9 +777,9 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("State_pension_crm15_paid_every")
     public String state_pension_crm15_paid_every;
     @JsonProperty("Child_benefit_crm15")
-    public int child_benefit_crm15;
+    public double child_benefit_crm15;
     @JsonProperty("Tax_credit_crm15")
-    public int tax_credit_crm15;
+    public double tax_credit_crm15;
     @JsonProperty("Other_income_crm15")
     public String other_income_crm15;
     @JsonProperty("How_pay_bills_crm15")
@@ -787,7 +787,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Disablement_benefit_crm15_paid_every")
     public String disablement_benefit_crm15_paid_every;
     @JsonProperty("Universal_credit_crm15")
-    public int universal_credit_crm15;
+    public double universal_credit_crm15;
     @JsonProperty("Other_benefits_crm15_details")
     public String other_benefits_crm15_details;
     @JsonProperty("Self_employed_no_of_businesses")
@@ -796,25 +796,23 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int business_partnerships_no_of;
     @JsonProperty("Private_companies_no_of")
     public int private_companies_no_of;
-
     @JsonProperty("Properties_residential")
     public int properties_residential;
     @JsonProperty("Properties_commercial")
     public int properties_commercial;
     @JsonProperty("Pieces_of_land")
     public int pieces_of_land;
-
     @JsonProperty("Partner_properties_residential")
     public int partner_properties_residential;
     @JsonProperty("Partner_properties_commercial")
     public int partner_properties_commercial;
     @JsonProperty("Partner_pieces_of_land")
     public int partner_pieces_of_land;
-
     @JsonProperty("Joint_properties_residential")
     public int joint_properties_residential;
     @JsonProperty("Joint_properties_commercial")
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
+
 }
