@@ -285,7 +285,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Ctd_waiting_time")
     public String ctd_waiting_time;
     @JsonProperty("Ou_new_limit_request")
-    public int ou_new_limit_request;
+    public double ou_new_limit_request;
     @JsonProperty("Ctd_preparation_time")
     public String ctd_preparation_time;
     @JsonProperty("Ctd_waiting_time_cost")
@@ -433,7 +433,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Client_surname")
     public String client_surname;
     @JsonProperty("New_limit_request")
-    public int new_limit_request;
+    public double new_limit_request;
     @JsonProperty("Ac_total_costs")
     public int ac_total_costs;
     @JsonProperty("Tlreadonly")
