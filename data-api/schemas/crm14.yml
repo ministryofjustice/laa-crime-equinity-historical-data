@@ -653,11 +653,11 @@ Crm15Income1DTO:
     partnerSelfAssessmentTaxReceived:
       type: string
     partnerSelfEmployedNoOfBusinesses:
-      type: Integer
+      type: integer
     partnerBusinessPartnershipsNoOf:
-      type: Integer
+      type: integer
     partnerPrivateCompaniesNoOf:
-      type: Integer
+      type: integer
     taxLiability:
       type: number
       format: float
@@ -688,13 +688,187 @@ Crm15Income1DTO:
 Crm15Income2DTO:
   type: object
   properties:
-    employersCrm15:
+    receivingBenefits2:
+      type: string
+    partnerReceivingBenefits2:
+      type: string
+    statePensionCrm15:
+      type: number
+      format: float
+    statePensionCrm15PaidEvery:
+      type: string
+    partnerStatePensionCrm15:
+      type: number
+      format: float
+    partnerStatePensionCrm15PaidEvery:
+      type: string
+    childBenefitCrm15:
+      type: number
+      format: float
+    childBenefitCrm15PaidEvery:
+      type: string
+    partnerChildBenefitCrm15:
+      type: number
+      format: float
+    partnerChildBenefitCrm15PaidEvery:
+      type: string
+    taxCreditCrm15:
+      type: number
+      format: float
+    taxCreditCrm15PaidEvery:
+      type: string
+    partnerTaxCreditCrm15:
+      type: number
+      format: float
+    partnerTaxCreditCrm15PaidEvery:
+      type: string
+    universalCreditCrm15:
+      type: number
+      format: float
+    universalCreditCrm15PaidEvery:
+      type: string
+    partnerUniversalCreditCrm15:
+      type: number
+      format: float
+    partnerUniversalCreditCrm15PaidEvery:
+      type: string
+    incapacityBenefitCrm15:
+      type: number
+      format: float
+    incapacityBenefitCrm15PaidEvery:
+      type: string
+    partnerIncapacityBenefitCrm15:
+      type: number
+      format: float
+    partnerIncapacityBenefitCrm15PaidEvery:
+      type: string
+    disablementBenefitCrm15:
+      type: number
+      format: float
+    disablementBenefitCrm15PaidEvery:
+      type: string
+    partnerDisablementBenefitCrm15:
+      type: number
+      format: float
+    partnerDisablementBenefitCrm15PaidEvery:
+      type: string
+    jsaCrm15:
+      type: number
+      format: float
+    jsaCrm15PaidEvery:
+      type: string
+    partnerJsaCrm15:
+      type: number
+      format: float
+    partnerJsaCrm15PaidEvery:
+      type: string
+    otherBenefitsCrm15:
+      type: number
+      format: float
+    otherBenefitsCrm15PaidEvery:
+      type: string
+    otherBenefitsCrm15Details:
+      type: string
+    partnerOtherBenefitsCrm15:
       type: integer
-    selfEmployedNoOfBusinesses:
+    partnerOtherBenefitsCrm15PaidEvery:
+      type: string
+    partnerOtherBenefitsCrm15Details:
+      type: string
+    receivePension:
+      type: string
+    partnerReceivePension:
+      type: string
+    totalPension:
+      type: number
+      format: float
+    partnerTotalPension:
+      type: number
+      format: float
+    totalPensionPaidEvery:
       type: integer
-    businessPartnerships:
+    partnerTotalPensionPaidEvery:
       type: integer
-    privateCompanies:
+    year1:
+      type: integer
+    year2to4:
+      type: integer
+    year5to7:
+      type: integer
+    year8to10:
+      type: integer
+    year11to12:
+      type: integer
+    year13to15:
+      type: integer
+    year16to18:
+      type: integer
+    receiveMaintenancePayments:
+      type: string
+    maintenancePayment:
+      type: number
+      format: float
+    maintenancePaymentPaidEvery:
+      type: string
+    partnerReceiveMaintenancePayments:
+      type: string
+    partnerMaintenance:
+      type: number
+      format: float
+    partnerMaintenancePaymentPaidEvery:
+      type: string
+    receiveInterest:
+      type: string
+    interest:
+      type: number
+      format: float
+    interestPaidEvery:
+      type: string
+    partnerReceiveInterest:
+      type: string
+    partnerInterest:
+      type: number
+      format: float
+    partnerInterestPaidEvery:
+      type: string
+    incomeFromOtherSources:
+      type: string
+    partnerIncomeFromOtherSources:
+      type: string
+    studentLoan:
+      type: boolean
+    familyRent:
+      type: boolean
+    otherRent:
+      type: boolean
+    otherFinancialSupport:
+      type: boolean
+    otherIncomeSourceFreetext:
+      type: string
+    totalAmountReceived:
+      type: number
+      format: float
+    totalAmountReceivedEvery:
+      type: string
+    partnerStudentLoan:
+      type: boolean
+    partnerFamilyRent:
+      type: boolean
+    partnerOtherRent:
+      type: boolean
+    partnerOtherFinancialSupport:
+      type: boolean
+    partnerOtherIncomeSourceFreetext:
+      type: string
+    partnerTotalAmountReceived:
+      type: number
+      format: float
+    partnerTotalAmountReceivedEvery:
+      type: string
+    prevAnswersNoOtherIncome:
+      type: string
+    howPayBillsCrm15:
+      type: string
 
 Crm15AllEmployersDTO:
   type: object
@@ -808,7 +982,7 @@ Crm15EmployerDTO:
     salaryDisplay:
       type: string
     salaryTax:
-      type: Integer
+      type: integer
     salaryPaidEvery:
       type: string
     incomeTax:
@@ -832,7 +1006,7 @@ Crm15SavingsDTO:
   type: object
   properties:
     numBankAccounts:
-        type: integer
+      type: integer
     numPartnerBankAccounts:
       type: integer
     numJointBankAccounts:

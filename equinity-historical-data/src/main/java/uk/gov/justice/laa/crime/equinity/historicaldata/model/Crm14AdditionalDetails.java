@@ -112,6 +112,76 @@ public class Crm14AdditionalDetails {
     public double non_cash_benefit_value;
     @JsonProperty("Partner_non_cash_benefit_value")
     public double partner_non_cash_benefit_value;
+    @JsonProperty("State_pension_crm15")
+    public double state_pension_crm15 ;
+    @JsonProperty("Partner_state_pension_crm15")
+    public double partner_state_pension_crm15 ;
+    @JsonProperty("Partner_universal_credit_crm15")
+    public double partner_universal_credit_crm15 ;
+    @JsonProperty("Incapacity_benefit_crm15")
+    public double incapacity_benefit_crm15 ;
+    @JsonProperty("Partner_incapacity_benefit_crm15")
+    public double partner_incapacity_benefit_crm15 ;
+    @JsonProperty("Disablement_benefit_crm15")
+    public double disablement_benefit_crm15 ;
+    @JsonProperty("Partner_disablement_benefit_crm15")
+    public double partner_disablement_benefit_crm15 ;
+    @JsonProperty("Jsa_crm15")
+    public double jsa_crm15 ;
+    @JsonProperty("Partner_jsa_crm15")
+    public double partner_jsa_crm15 ;
+    @JsonProperty("Other_benefits_crm15")
+    public double other_benefits_crm15 ;
+    @JsonProperty("Partner_other_benefits_crm15")
+    public double partner_other_benefits_crm15 ;
+    @JsonProperty("Total_pension")
+    public double total_pension ;
+    @JsonProperty("Partner_total_pension")
+    public double partner_total_pension ;
+    @JsonProperty("Year_1")
+    public int year_1;
+    @JsonProperty("Year_2_to_4")
+    public int year_2_to_4;
+    @JsonProperty("Year_5_to_7")
+    public int year_5_to_7;
+    @JsonProperty("Year_8_to_10")
+    public int year_8_to_10;
+    @JsonProperty("Year_11_to_12")
+    public int year_11_to_12;
+    @JsonProperty("Year_13_to_15")
+    public int year_13_to_15;
+    @JsonProperty("Year_16_to_18")
+    public int year_16_to_18;
+    @JsonProperty("Partner_receive_maintenance_payments")
+    private String partner_receive_maintenance_payments;
+    @JsonProperty("Partner_maintenance")
+    public double partner_maintenance;
+    @JsonProperty("Partner_maintenance_payment_paid_every")
+    private String partner_maintenance_payment_paid_every;
+    @JsonProperty("Interest")
+    public double interest;
+    @JsonProperty("Partner_receive_interest")
+    private String partner_receive_interest;
+    @JsonProperty("Partner_interest")
+    public double partner_interest;
+    @JsonProperty("Partner_interest_paid_every")
+    private String partner_interest_paid_every;
+    @JsonProperty("Total_amount_received")
+    public double total_amount_received;
+    @JsonProperty("Partner_student_loan")
+    private boolean partner_student_loan;
+    @JsonProperty("Partner_family_rent")
+    private boolean partner_family_rent;
+    @JsonProperty("Partner_other_rent")
+    private boolean partner_other_rent;
+    @JsonProperty("Partner_other_financial_support")
+    private boolean partner_other_financial_support;
+    @JsonProperty("Partner_other_income_source_freetext")
+    private String partner_other_income_source_freetext;
+    @JsonProperty("Partner_total_amount_received")
+    public double partner_total_amount_received;
+    @JsonProperty("Partner_total_amount_received_every")
+    private String partner_total_amount_received_every;
 
     @JsonProperty("Have_partner")
     public int have_partner;
@@ -131,10 +201,6 @@ public class Crm14AdditionalDetails {
     public Date partner_date_of_birth;
     @JsonProperty("Partner_jsa_crm15_paid_every")
     public String partner_jsa_crm15_paid_every;
-    @JsonProperty("Partner_maintenance_payment_paid_every")
-    public String partner_maintenance_payment_paid_every;
-    @JsonProperty("Partner_other_rent")
-    public boolean partner_other_rent;
     @JsonProperty("Partner_income_rental")
     public boolean partner_income_rental;
     @JsonProperty("Partner_child_benefit_crm15_paid_every")
@@ -145,8 +211,6 @@ public class Crm14AdditionalDetails {
     public String partner_wage_paid_every;
     @JsonProperty("Partner_maintenance_payment_calc")
     public int partner_maintenance_payment_calc;
-    @JsonProperty("Partner_interest_paid_every")
-    public String partner_interest_paid_every;
     @JsonProperty("Partner_calc")
     public int partner_calc;
     @JsonProperty("Partner_other_income_checkbox_count")
@@ -172,15 +236,13 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Partner_other_case_next_hearing")
     public Date partner_other_case_next_hearing;
     @JsonProperty("Partner_child_benefit_crm15")
-    public int partner_child_benefit_crm15;
-    @JsonProperty("Partner_receive_maintenance_payments")
-    public String partner_receive_maintenance_payments;
+    public double partner_child_benefit_crm15;
     @JsonProperty("Partner_paid_40_percent_tax")
     public String partner_paid_40_percent_tax;
     @JsonProperty("Partner_other_income_source")
     public String partner_other_income_source;
     @JsonProperty("Partner_total_pension_paid_every")
-    public String partner_total_pension_paid_every;
+    public int partner_total_pension_paid_every;
     @JsonProperty("Partner_tax_credit_crm15_paid_every")
     public String partner_tax_credit_crm15_paid_every;
     @JsonProperty("Partner_pensions_calc")
@@ -189,8 +251,6 @@ public class Crm14AdditionalDetails {
     public String partner_trust_fund;
     @JsonProperty("Partner_maintenance_calc")
     public int partner_maintenance_calc;
-    @JsonProperty("Partner_other_financial_support")
-    public boolean partner_other_financial_support;
     @JsonProperty("State_pension_partner")
     public boolean state_pension_partner;
     @JsonProperty("Partner_salary_paid_into_account")
@@ -229,8 +289,6 @@ public class Crm14AdditionalDetails {
     public int partner_other_benefits_calc;
     @JsonProperty("Partner_forenames")
     public String partner_forenames;
-    @JsonProperty("Partner_student_loan")
-    public boolean partner_student_loan;
     @JsonProperty("Partner_salary_account")
     public String partner_salary_account;
     @JsonProperty("Dwp_check_partner_dob")
@@ -259,8 +317,6 @@ public class Crm14AdditionalDetails {
     public int partner_income_from_other_source_calc;
     @JsonProperty("Partner_income_student_grant")
     public boolean partner_income_student_grant;
-    @JsonProperty("Partner_family_rent")
-    public boolean partner_family_rent;
     @JsonProperty("Partner_title")
     public String partner_title;
     @JsonProperty("Dwp_check_partner_surname")
@@ -273,8 +329,6 @@ public class Crm14AdditionalDetails {
     public int partner_needed_calc;
     @JsonProperty("Partner_other_names")
     public String partner_other_names;
-    @JsonProperty("Partner_other_income_source_freetext")
-    public String partner_other_income_source_freetext;
     @JsonProperty("Dwp_check_partner_dateofaward")
     public Date dwp_check_partner_dateofaward;
     @JsonProperty("Partner_other_benefits_paid_every")
@@ -285,8 +339,6 @@ public class Crm14AdditionalDetails {
     public String partner_maintenance_paid_every;
     @JsonProperty("Partner_wage_tax")
     public String partner_wage_tax;
-    @JsonProperty("Partner_receive_interest")
-    public String partner_receive_interest;
     @JsonProperty("Partner_sign_fullname")
     public String partner_sign_fullname;
     @JsonProperty("Partner_confirm_read")
@@ -313,8 +365,6 @@ public class Crm14AdditionalDetails {
     public String partner_other_income_crm15;
     @JsonProperty("Partner_other_income_paid_every")
     public String partner_other_income_paid_every;
-    @JsonProperty("Partner_total_amount_received_every")
-    public String partner_total_amount_received_every;
     @JsonProperty("Partner_arc")
     public String partner_arc;
     @JsonProperty("Partner_employed")
@@ -324,7 +374,7 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Partner_child_benefit_calc")
     public int partner_child_benefit_calc;
     @JsonProperty("Partner_tax_credit_crm15")
-    public int partner_tax_credit_crm15;
+    public double partner_tax_credit_crm15;
     @JsonProperty("Partner_maintenance_payment")
     public int partner_maintenance_payment;
     @JsonProperty("Partner_receive_pension")
@@ -521,5 +571,4 @@ public class Crm14AdditionalDetails {
     public Crm15InvestmentsModel investments_table;
     @JsonProperty("Bank_accounts")
     public Crm15BankAccountsModel bank_accounts;
-
 }
