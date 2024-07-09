@@ -20,6 +20,7 @@ configurations {
 		resolutionStrategy {
 			// Included in spring-boot-starter-web:3.2.4. Need new version to fix vulnerability
 			force "org.springframework:spring-web:$versions.springWeb"
+			force "org.apache.tomcat.embed:tomcat-embed-core:10.1.25"
 		}
 	}
 }
