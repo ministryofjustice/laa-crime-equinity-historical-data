@@ -5,7 +5,7 @@ plugins {
 
 def versions = [
 		springdocVersion       		: '1.8.0',
-		springStarter		  		: '3.2.5',
+		springStarter		  		: '3.2.7',
 		springWeb					: '6.2.4',
 		springSecurity		  	 	: '6.2.4',
 		logback						: '1.5.6',
@@ -19,6 +19,7 @@ configurations {
 	all {
 		resolutionStrategy {
 			// Included in spring-boot-starter-web:3.2.4. Need new version to fix vulnerability
+			force "org.apache.tomcat.embed:tomcat-embed-core:10.1.25"
 			force "org.springframework:spring-web:$versions.springWeb"
 		}
 	}
@@ -30,6 +31,7 @@ dependencies {
 	// Spring
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+	implementation "org.apache.tomcat.embed:tomcat-embed-core:10.1.25"
 
 	// Logs
 	implementation "ch.qos.logback:logback-core:$versions.logback"
