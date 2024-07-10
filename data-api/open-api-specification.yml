@@ -116,7 +116,7 @@ paths:
         '200':
           description: 'Success'
           content:
-            text/csv:
+            application/octet-stream:
               schema:
                 type: string
         '400':
@@ -127,7 +127,31 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
-
+  /api/internal/v1/equinity/report/crm5/{decisionFrom}/{decisionTo}:
+    get:
+      tags:
+        - ReportCrm5
+      summary: 'CRM5 Periodical Report'
+      operationId: 'generateReportCrm5'
+      parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
+        - $ref: '#/components/parameters/reportDecisionFrom'
+        - $ref: '#/components/parameters/reportDecisionTo'
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+        '400':
+          description: 'Bad request'
+        '403':
+          description: 'Unauthorized'
+        '404':
+          description: 'Not found'
+        '500':
+          description: 'Internal server error'
   ###
   # Archive
   ###
