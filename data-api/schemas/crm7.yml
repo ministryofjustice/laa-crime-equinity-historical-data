@@ -309,6 +309,14 @@ Crm7ScheduleOfTimeSpentDTO:
       type: array
       items:
         $ref: "#/Crm7ScheduleTimeTableDTO"
+    timeTotals:
+      $ref: "#/Crm7ScheduleOfTimeCostTableDTO"
+    costTotals:
+      $ref: "#/Crm7ScheduleOfTimeCostTableDTO"
+    totals:
+      $ref: "#/Crm7ScheduleOfTimeTotalsDTO"
+    officeUse:
+      $ref: "#/Crm7ScheduleOfTimeTotalsDTO"
     laaAdjustments:
       type: array
       items:
@@ -367,21 +375,7 @@ Crm7ScheduleAdjustmentsTableDTO:
       format: float
     comments:
       type: string
-
-Crm7ClaimOfCostsDTO:
-  type: object
-  properties:
-    timeTotals:
-      $ref: "#/Crm7ClaimOfCostsTableDTO"
-    costTotals:
-      $ref: "#/Crm7ClaimOfCostsTableDTO"
-    totals:
-      $ref: "#/Crm7ClaimOfCostsTotalsDTO"
-    officeUse:
-      $ref: "#/Crm7ClaimOfCostsTotalsDTO"
-    lettersAndPhoneCalls:
-      $ref: "#/Crm7CommunicationsDTO"
-Crm7ClaimOfCostsTableDTO:
+Crm7ScheduleOfTimeCostTableDTO:
   type: object
   properties:
     travel:
@@ -399,7 +393,7 @@ Crm7ClaimOfCostsTableDTO:
     advocacy:
       type: string
       description: "format hh:mm:ss for time and 00.00 for currency"
-Crm7ClaimOfCostsTotalsDTO:
+Crm7ScheduleOfTimeTotalsDTO:
   type: object
   properties:
     basic:
@@ -410,6 +404,12 @@ Crm7ClaimOfCostsTotalsDTO:
       type: number
       format: float
       description: "Total Claim"
+
+Crm7ClaimOfCostsDTO:
+  type: object
+  properties:
+    lettersAndPhoneCalls:
+      $ref: "#/Crm7CommunicationsDTO"
 Crm7CommunicationsDTO:
   type: object
   properties:

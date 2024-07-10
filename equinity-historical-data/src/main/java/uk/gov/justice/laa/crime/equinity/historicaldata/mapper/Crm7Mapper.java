@@ -131,6 +131,10 @@ public interface Crm7Mapper extends CrmMapper {
 
     @Mapping(target="schedule", source="schedule")
     @Mapping(target="laaAdjustments", source="schedule")
+    @Mapping(target="timeTotals", expression="java(getScheduleTimesDTOFromModel(model))")
+    @Mapping(target="costTotals", expression="java(getScheduleCostsDTOFromModel(model))")
+    @Mapping(target="totals", expression="java(getScehduleTotalsDTOFromModel(model))")
+    @Mapping(target="officeUse", expression="java(getScheduleOfficeUseTotalsDTOFromModel(model))")
     Crm7ScheduleOfTimeSpentDTO getScheduleOfTimeSpentDTOFromModel(Crm7DetailsModel model);
 
     List<Crm7ScheduleTimeTableDTO> getTimeSpentScheduleTableDTOFromModel(List<Crm7TimeSpentModel> schedule);
@@ -159,10 +163,6 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="comments", source="assessment_cw")
     Crm7ScheduleAdjustmentsTableDTO getTimeSpentAdjustmentsDTOFromModel(Crm7TimeSpentModel schedule);
 
-    @Mapping(target="timeTotals", expression="java(getClaimOfCostsTimesDTOFromModel(model))")
-    @Mapping(target="costTotals", expression="java(getClaimOfCostsCostsDTOFromModel(model))")
-    @Mapping(target="totals", expression="java(getClaimOfCostTotalsDTOFromModel(model))")
-    @Mapping(target="officeUse", expression="java(getClaimOfCostOfficeUseTotalsDTOFromModel(model))")
     @Mapping(target="lettersAndPhoneCalls", source="model")
     Crm7ClaimOfCostsDTO getClaimOfCostsDTOFromModel(Crm7DetailsModel model);
 
@@ -171,22 +171,22 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="attendance", source="total_attendance_time_display")
     @Mapping(target="preparation", source="total_preparation_time_display")
     @Mapping(target="advocacy", source="total_advocacy_time")
-    Crm7ClaimOfCostsTableDTO getClaimOfCostsTimesDTOFromModel(Crm7DetailsModel model);
+    Crm7ScheduleOfTimeCostTableDTO getScheduleTimesDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="travel", source="total_travel_costs")
     @Mapping(target="waiting", source="total_waiting_costs")
     @Mapping(target="attendance", source="total_attendance_costs")
     @Mapping(target="preparation", source="total_preparation_costs")
     @Mapping(target="advocacy", source="total_advocacy_costs")
-    Crm7ClaimOfCostsTableDTO getClaimOfCostsCostsDTOFromModel(Crm7DetailsModel model);
+    Crm7ScheduleOfTimeCostTableDTO getScheduleCostsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="basic", source="total_basic_claim")
     @Mapping(target="total", source="total_claim")
-    Crm7ClaimOfCostsTotalsDTO getClaimOfCostTotalsDTOFromModel(Crm7DetailsModel model);
+    Crm7ScheduleOfTimeTotalsDTO getScehduleTotalsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="basic", source="cw_total_basic_claim")
     @Mapping(target="total", source="cw_total_claim")
-    Crm7ClaimOfCostsTotalsDTO getClaimOfCostOfficeUseTotalsDTOFromModel(Crm7DetailsModel model);
+    Crm7ScheduleOfTimeTotalsDTO getScheduleOfficeUseTotalsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="totals", expression="java(getClaimOfCostCommunicationsTotalsDTOFromModel(model))")
     @Mapping(target="officeOnly", expression="java(getClaimOfCostCommunicationsOfficeDTOFromModel(model))")
