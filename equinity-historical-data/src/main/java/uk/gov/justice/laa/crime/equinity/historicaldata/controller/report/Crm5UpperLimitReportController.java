@@ -21,7 +21,7 @@ public class Crm5UpperLimitReportController implements ReportCrm5Api {
     public ResponseEntity<String> generateReportCrm5(
             String decisionFrom, String decisionTo, String profileAcceptedTypes) {
         ReportInputsUtil.checkInputs(decisionFrom, decisionTo,
-                profileAcceptedTypes, String.valueOf(CRM_TYPE_5)
+                profileAcceptedTypes, CRM_TYPE_5
         );
 
         return ResponseEntity.ok(

@@ -29,7 +29,7 @@ public class Crm5UpperLimitReportService {
             );
         }
 
-        log.info("CRM4 Periodical report generated with {} records", report.size());
+        log.info("CRM5 Upper Limit Report generated with {} records", report.size());
         return exportToCSV(report);
     }
 

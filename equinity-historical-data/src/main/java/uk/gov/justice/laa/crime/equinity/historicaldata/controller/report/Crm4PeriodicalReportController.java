@@ -21,7 +21,7 @@ public class Crm4PeriodicalReportController implements ReportCrm4Api {
     public ResponseEntity<String> generateReportCrm4(
             String decisionFrom, String decisionTo, String profileAcceptedTypes) {
         ReportInputsUtil.checkInputs(decisionFrom, decisionTo,
-                profileAcceptedTypes, String.valueOf(CRM_TYPE_4)
+                profileAcceptedTypes, CRM_TYPE_4
         );
 
         return ResponseEntity.ok(

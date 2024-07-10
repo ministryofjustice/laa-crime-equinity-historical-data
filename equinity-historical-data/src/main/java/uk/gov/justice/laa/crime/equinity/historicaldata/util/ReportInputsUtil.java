@@ -10,9 +10,9 @@ import java.time.LocalDate;
 @UtilityClass
 public class ReportInputsUtil {
     public static void checkInputs(String dateFrom, String dateTo,
-                                   String profileAcceptedTypes, String requiredType) throws DateRangeConstraintViolationException, ResourceNotFoundException {
+                                   String profileAcceptedTypes, int requiredType) throws DateRangeConstraintViolationException, ResourceNotFoundException {
         checkDateRange(dateFrom, dateTo);
-        checkTypeIsAcceptedByProfile(requiredType, profileAcceptedTypes);
+        checkTypeIsAcceptedByProfile(String.valueOf(requiredType), profileAcceptedTypes);
     }
 
     private static void checkDateRange(String dateFrom, String dateTo) throws DateRangeConstraintViolationException {

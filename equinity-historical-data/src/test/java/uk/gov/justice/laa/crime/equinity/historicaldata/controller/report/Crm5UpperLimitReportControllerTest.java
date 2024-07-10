@@ -30,18 +30,18 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("local")
 class Crm5UpperLimitReportControllerTest {
-    private List<String> testInvalidFormatDates;
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
     private static final String DENIED_PROFILE_TYPES = "2,9";
+    private List<String> testInvalidFormatDates;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
 
     @Mock
-    Crm5UpperLimitReportService reportService;
+    private Crm5UpperLimitReportService reportService;
 
     @Autowired
-    Crm5UpperLimitReportController controller;
+    private Crm5UpperLimitReportController controller;
 
 
     @BeforeAll
@@ -61,7 +61,6 @@ class Crm5UpperLimitReportControllerTest {
     void generateReportCrm5Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException() {
         String expectedMessage = "must match";
         String validDate = "2050-01-01";
-
 
         // execute
         testInvalidFormatDates.forEach(dateToTest ->
@@ -171,6 +170,4 @@ class Crm5UpperLimitReportControllerTest {
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
         }
     }
-
-
 }
