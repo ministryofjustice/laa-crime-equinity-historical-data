@@ -86,7 +86,7 @@ jobs:
           mask-password: true
 
       - name: Setup Snyk Monitor checks for Docker image vulnerabilities
-        uses: snyk/actions/docker@a1346e4eaf761d462da22c34c681dc06849b6851
+        uses: snyk/actions/docker@dad21f44fadb6fbcd8d89d8b602d6ac761fe4c86
         continue-on-error: true # To make sure that further actions are called (e.g. monitor or SARIF upload)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
