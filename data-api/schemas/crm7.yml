@@ -387,6 +387,12 @@ Crm7ScheduleOfTimeCostTableDTO:
     attendance:
       type: string
       description: "format hh:mm:ss for time and 00.00 for currency"
+    attendanceCounsel:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
+    attendanceNoCounsel:
+      type: string
+      description: "format hh:mm:ss for time and 00.00 for currency"
     preparation:
       type: string
       description: "format hh:mm:ss for time and 00.00 for currency"
