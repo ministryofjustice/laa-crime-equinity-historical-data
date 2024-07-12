@@ -169,6 +169,8 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="travel", source="total_travel_time_display")
     @Mapping(target="waiting", source="total_waiting_time_display")
     @Mapping(target="attendance", source="total_attendance_time_display")
+    @Mapping(target="attendanceCounsel", source="total_attendance_time_counsel")
+    @Mapping(target="attendanceNoCounsel", source="total_attendance_time_no_counsel")
     @Mapping(target="preparation", source="total_preparation_time_display")
     @Mapping(target="advocacy", source="total_advocacy_time")
     Crm7ScheduleOfTimeCostTableDTO getScheduleTimesDTOFromModel(Crm7DetailsModel model);
@@ -176,6 +178,8 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="travel", source="total_travel_costs")
     @Mapping(target="waiting", source="total_waiting_costs")
     @Mapping(target="attendance", source="total_attendance_costs")
+    @Mapping(target="attendanceCounsel", source="total_attendance_costs_counsel")
+    @Mapping(target="attendanceNoCounsel", source="total_attendance_costs_no_counsel")
     @Mapping(target="preparation", source="total_preparation_costs")
     @Mapping(target="advocacy", source="total_advocacy_costs")
     Crm7ScheduleOfTimeCostTableDTO getScheduleCostsDTOFromModel(Crm7DetailsModel model);
