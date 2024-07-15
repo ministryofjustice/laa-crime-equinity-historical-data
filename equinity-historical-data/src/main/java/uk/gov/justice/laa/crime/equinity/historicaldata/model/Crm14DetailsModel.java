@@ -31,6 +31,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String why_not_rep_same_solicitor_reasons;
     @JsonProperty("Under_18")
     public String under_18;
+    @JsonProperty("Charged_with_adult")
+    public String charged_with_adult;
     @JsonProperty("Proceedings_already_concluded")
     public String proceedings_already_concluded;
     @JsonProperty("Fc_eligible_for_assessment_result_inject")
@@ -73,8 +75,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public boolean witness_trace;
     @JsonProperty("Tlautonumber")
     public int tlautonumber;
-    @JsonProperty("Charged_with_adult")
-    public String charged_with_adult;
     @JsonProperty("Dwp_check_result")
     public String dwp_check_result;
     @JsonProperty("Legal_rep_declaration")

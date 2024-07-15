@@ -82,6 +82,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "homeAddressType", source = "home_address_type")
     @Mapping(target = "relationshipToHomeOwner", source = "relationship_to_home_owner")
     @Mapping(target = "under18", source = "under_18")
+    @Mapping(target = "chargedWithAdult", source = "charged_with_adult")
     @Mapping(target = "havePartner", source = "have_partner")
     @Mapping(target = "maritalStatus", source="marital_status_2")
     Crm14AboutYouPart2DTO getAboutYouPart2DTOFromModel(Crm14DetailsModel model);
