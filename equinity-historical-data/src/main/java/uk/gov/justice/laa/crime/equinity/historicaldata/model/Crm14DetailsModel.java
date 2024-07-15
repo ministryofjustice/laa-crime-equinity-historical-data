@@ -33,6 +33,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String under_18;
     @JsonProperty("Charged_with_adult")
     public String charged_with_adult;
+    @JsonProperty("Date_of_separation")
+    public String date_of_separation;
     @JsonProperty("Proceedings_already_concluded")
     public String proceedings_already_concluded;
     @JsonProperty("Fc_eligible_for_assessment_result_inject")
@@ -371,6 +373,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int priority_case_calc;
     @JsonProperty("Date_of_trial")
     public Date date_of_trial;
+    @JsonProperty("Appeal_lodged_date")
+    public Date appeal_lodged_date;
     @JsonProperty("Has_errors")
     public boolean has_errors;
     @JsonProperty("Ni_number")

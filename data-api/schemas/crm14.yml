@@ -96,6 +96,9 @@ Crm14LegalRepUseDTO:
     dateOfTrial:
       type: string
       format: date-time
+    appealLodgedDate:
+      type: string
+      format: date-time
 
 Crm14AboutYouPart1DTO:
   type: object
@@ -169,10 +172,15 @@ Crm14AboutYouPart2DTO:
       type: string
     under18:
       type: string
+    chargedWithAdult:
+        type: string
     havePartner:
       type: integer
     maritalStatus:
       type: string
+    dateOfSeparation:
+      type: string
+      format: date-time
 
 Crm14APartnerDetailsDTO:
   type: object

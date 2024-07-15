@@ -50,6 +50,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="priorityCaseType.lateApplication", source="late_application_cc")
     @Mapping(target="priorityCaseType.imminentHearing", source="hearing_date_imminent")
     @Mapping(target="dateOfTrial", source="date_of_trial")
+    @Mapping(target="appealLodgedDate", source="appeal_lodged_date")
     Crm14LegalRepUseDTO getLegalUseRepDTOFromModel(Crm14DetailsModel model);
 
     @Mapping(target="title", source="title")
@@ -85,6 +86,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "chargedWithAdult", source = "charged_with_adult")
     @Mapping(target = "havePartner", source = "have_partner")
     @Mapping(target = "maritalStatus", source="marital_status_2")
+    @Mapping(target = "dateOfSeparation", source = "date_of_separation")
     Crm14AboutYouPart2DTO getAboutYouPart2DTOFromModel(Crm14DetailsModel model);
     @Mapping(target = "applicantFullName", source="user_signed_name")
     @Mapping(target = "applicantSignedDate", source="user_signed_date")
