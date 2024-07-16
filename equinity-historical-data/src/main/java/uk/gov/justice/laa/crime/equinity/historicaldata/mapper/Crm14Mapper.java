@@ -36,8 +36,11 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
+
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
+    @Mapping(target="prevAppUsn", source="prev_app_usn")
+    @Mapping(target="prevAppMaat", source="prev_app_maat")
     @Mapping(target="applicationType", source="application_type")
     @Mapping(target="meansTested", source="means_tested")
     @Mapping(target="caseType", expression="java(convertCaseType(model))")

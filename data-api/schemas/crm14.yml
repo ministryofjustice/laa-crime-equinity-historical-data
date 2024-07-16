@@ -68,6 +68,10 @@ Crm14LegalRepUseDTO:
       type: integer
     urn:
       type: string
+    prevAppUsn:
+      type: integer
+    prevAppMaat:
+      type: integer
     applicationType:
       type: string
     meansTested:

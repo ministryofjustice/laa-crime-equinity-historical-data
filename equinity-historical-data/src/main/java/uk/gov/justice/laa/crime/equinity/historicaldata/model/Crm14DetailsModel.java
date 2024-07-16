@@ -331,6 +331,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int land_calc_2;
     @JsonProperty("Originator_jobtitle")
     public String originator_jobtitle;
+    @JsonProperty("Prev_app_usn")
+    public String prev_app_usn;
     @JsonProperty("Prev_app_maat")
     public String prev_app_maat;
     @JsonProperty("Legal_rep_declaration_2")
