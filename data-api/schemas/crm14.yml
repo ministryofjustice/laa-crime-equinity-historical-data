@@ -68,6 +68,10 @@ Crm14LegalRepUseDTO:
       type: integer
     urn:
       type: string
+    prevAppUsn:
+      type: integer
+    prevAppMaat:
+      type: integer
     applicationType:
       type: string
     meansTested:
@@ -94,6 +98,9 @@ Crm14LegalRepUseDTO:
         imminentHearing:
           type: boolean
     dateOfTrial:
+      type: string
+      format: date-time
+    appealLodgedDate:
       type: string
       format: date-time
 
@@ -169,10 +176,15 @@ Crm14AboutYouPart2DTO:
       type: string
     under18:
       type: string
+    chargedWithAdult:
+        type: string
     havePartner:
       type: integer
     maritalStatus:
       type: string
+    dateOfSeparation:
+      type: string
+      format: date-time
 
 Crm14APartnerDetailsDTO:
   type: object
@@ -181,6 +193,8 @@ Crm14APartnerDetailsDTO:
       $ref: "#/Crm14AboutYouDTO"
     homeAddress:
       $ref: "#/Crm14AddressDetailsDTO"
+    witnessTrace:
+      type: string
     coDefendant:
       type: string
     conflictOfInterest:

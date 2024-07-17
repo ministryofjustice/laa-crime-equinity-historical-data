@@ -31,6 +31,10 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String why_not_rep_same_solicitor_reasons;
     @JsonProperty("Under_18")
     public String under_18;
+    @JsonProperty("Charged_with_adult")
+    public String charged_with_adult;
+    @JsonProperty("Date_of_separation")
+    public String date_of_separation;
     @JsonProperty("Proceedings_already_concluded")
     public String proceedings_already_concluded;
     @JsonProperty("Fc_eligible_for_assessment_result_inject")
@@ -73,8 +77,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public boolean witness_trace;
     @JsonProperty("Tlautonumber")
     public int tlautonumber;
-    @JsonProperty("Charged_with_adult")
-    public String charged_with_adult;
     @JsonProperty("Dwp_check_result")
     public String dwp_check_result;
     @JsonProperty("Legal_rep_declaration")
@@ -329,6 +331,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int land_calc_2;
     @JsonProperty("Originator_jobtitle")
     public String originator_jobtitle;
+    @JsonProperty("Prev_app_usn")
+    public String prev_app_usn;
     @JsonProperty("Prev_app_maat")
     public String prev_app_maat;
     @JsonProperty("Legal_rep_declaration_2")
@@ -371,6 +375,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int priority_case_calc;
     @JsonProperty("Date_of_trial")
     public Date date_of_trial;
+    @JsonProperty("Appeal_lodged_date")
+    public Date appeal_lodged_date;
     @JsonProperty("Has_errors")
     public boolean has_errors;
     @JsonProperty("Ni_number")

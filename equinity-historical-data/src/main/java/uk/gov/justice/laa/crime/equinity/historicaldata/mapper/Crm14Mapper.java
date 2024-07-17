@@ -36,8 +36,11 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
+
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
+    @Mapping(target="prevAppUsn", source="prev_app_usn")
+    @Mapping(target="prevAppMaat", source="prev_app_maat")
     @Mapping(target="applicationType", source="application_type")
     @Mapping(target="meansTested", source="means_tested")
     @Mapping(target="caseType", expression="java(convertCaseType(model))")
@@ -50,6 +53,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="priorityCaseType.lateApplication", source="late_application_cc")
     @Mapping(target="priorityCaseType.imminentHearing", source="hearing_date_imminent")
     @Mapping(target="dateOfTrial", source="date_of_trial")
+    @Mapping(target="appealLodgedDate", source="appeal_lodged_date")
     Crm14LegalRepUseDTO getLegalUseRepDTOFromModel(Crm14DetailsModel model);
 
     @Mapping(target="title", source="title")
@@ -82,8 +86,10 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "homeAddressType", source = "home_address_type")
     @Mapping(target = "relationshipToHomeOwner", source = "relationship_to_home_owner")
     @Mapping(target = "under18", source = "under_18")
+    @Mapping(target = "chargedWithAdult", source = "charged_with_adult")
     @Mapping(target = "havePartner", source = "have_partner")
     @Mapping(target = "maritalStatus", source="marital_status_2")
+    @Mapping(target = "dateOfSeparation", source = "date_of_separation")
     Crm14AboutYouPart2DTO getAboutYouPart2DTOFromModel(Crm14DetailsModel model);
     @Mapping(target = "applicantFullName", source="user_signed_name")
     @Mapping(target = "applicantSignedDate", source="user_signed_date")
@@ -150,6 +156,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="homeAddress.addressLine2", source = "partner_usual_address_2")
     @Mapping(target="homeAddress.addressLine3", source = "partner_usual_address_3")
     @Mapping(target="homeAddress.postCode", source = "partner_usual_postcode")
+    @Mapping(target="witnessTrace", source = "witness_trace")
     @Mapping(target="coDefendant", source = "any_codefendants")
     @Mapping(target="partnerDifferentHome", source = "partner_different_home")
     @Mapping(target="conflictOfInterest", source = "partner_conflict_of_interest")
