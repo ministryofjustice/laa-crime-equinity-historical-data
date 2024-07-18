@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -814,5 +815,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
+
+    public Map<String, String> allFilesKeys;
 
 }

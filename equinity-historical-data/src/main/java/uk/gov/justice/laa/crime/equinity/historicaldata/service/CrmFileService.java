@@ -47,6 +47,7 @@ public class CrmFileService {
     public static final String CRM15_BANK_ACCOUNTS_DETAILS ="Bank_accounts";
     public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
+    public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
 
 
 
@@ -78,6 +79,7 @@ public class CrmFileService {
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BANK_ACCOUNTS_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_EMPLOYMENT_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_EMPLOYMENT_DETAILS, CRM14_ROW);
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_NEW_ATTACHMENTS, CRM14_ROW);
         }
         convertCrmFormObjectToArray(crmFileJsonObject, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
