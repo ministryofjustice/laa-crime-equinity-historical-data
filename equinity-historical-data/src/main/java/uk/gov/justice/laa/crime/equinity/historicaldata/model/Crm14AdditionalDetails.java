@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class was created to contain all fields.
@@ -571,4 +572,8 @@ public class Crm14AdditionalDetails {
     public Crm15InvestmentsModel investments_table;
     @JsonProperty("Bank_accounts")
     public Crm15BankAccountsModel bank_accounts;
+    @JsonProperty("Tblnewattachments")
+    public Crm15TblNewAttachmentsModel all_new_attachments;
+
+    public List<Crm14AttachmentModel> processedAttachments;
 }

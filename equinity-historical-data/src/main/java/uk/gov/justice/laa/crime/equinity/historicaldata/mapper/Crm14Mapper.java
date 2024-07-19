@@ -27,6 +27,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "interestOfJusticePart1",  source = "model")
     @Mapping(target = "interestOfJusticePart2",  source = "model")
     @Mapping(target = "evidencePart1", source = "model")
+    @Mapping(target = "evidencePart2.newAttachments", source="all_new_attachments.newAttachmentDetails")
+    @Mapping(target = "evidencePart2.processedAttachments", source="processedAttachments")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", source = "model")
     @Mapping(target = "crm15Details", source="model")
@@ -36,7 +38,6 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
-
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
     @Mapping(target="prevAppUsn", source="prev_app_usn")
@@ -522,6 +523,39 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="overdrawn", source="overdrawn")
     @Mapping(target="balance", source="balance")
     Crm15BankAccountDTO getInvestmentDTOFromModel(Crm15BankAccountDetailsModel bankAccModel);
+
+
+    @Mapping(target="fileSizeMb", source="file_size_mb")
+    @Mapping(target="fileName", source="filename")
+    @Mapping(target="fileSizeBytes", source="file_size_bytes")
+    @Mapping(target="status", source="status")
+    @Mapping(target="dtSubmitted", source="dtsubmitted")
+    @Mapping(target="evidenceType", source="evidence_type")
+    @Mapping(target="caseworkerNotes", source="caseworker_notes")
+    @Mapping(target="providerNotes", source="provider_notes")
+    @Mapping(target="attachmentStoreId", source="attachment_store_id")
+    @Mapping(target="providerFirmId", source="provider_firm_id")
+    @Mapping(target="key", expression = "java(null)")
+    Crm14EvidenceDTO getCrm14NewAttachmentsFromModel(Crm15TblNewAttachmentsDetailsModel newAttachModel);
+
+    @Mapping(target="fileSizeMb", expression = "java(null)")
+    @Mapping(target="fileName", source="fileName")
+    @Mapping(target="fileSizeBytes", source="fileSize")
+    @Mapping(target="status", source="status")
+    @Mapping(target="dtSubmitted", source="submitted")
+    @Mapping(target="evidenceType", source="evidenceType")
+    @Mapping(target="caseworkerNotes", source="caseworkerNotes")
+    @Mapping(target="providerNotes", source="providerNotes")
+    @Mapping(target="attachmentStoreId", source="attachmentId")
+    @Mapping(target="providerFirmId", source="providerFirmId")
+    @Mapping(target="key", expression = "java(assignFileKey(processAttachModel))")
+    Crm14EvidenceDTO getCrm14ProcessAttachmentsFromModel(Crm14AttachmentModel processAttachModel);
+    default String assignFileKey(Crm14AttachmentModel processAttachModel) {
+        if (null != processAttachModel.getAttachmentId()){
+            return "att_"+processAttachModel.getAttachmentId()+".att";
+        }
+        return null;
+    }
     default String convertCaseType(Crm14DetailsModel model) {
         if (model.summary) {
             return "Summary-Only";
@@ -538,7 +572,6 @@ public interface Crm14Mapper extends CrmMapper {
         } else if (model.appeal_no_changes) {
             return "Appeal to Crown Court and no changes";
         }
-
         return "Unknown";
     }
 }
