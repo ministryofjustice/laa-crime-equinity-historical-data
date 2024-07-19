@@ -12,16 +12,16 @@ public class ReportInputsUtil {
     public static void checkInputs(String dateFrom, String dateTo,
                                    String profileAcceptedTypes, int requiredType) throws DateRangeConstraintViolationException, ResourceNotFoundException {
         checkDateRange(dateFrom, dateTo);
-        checkTypeIsAcceptedByProfile(String.valueOf(requiredType), profileAcceptedTypes);
+        checkTypeIsAcceptedByProfile(requiredType, profileAcceptedTypes);
     }
 
-    private static void checkDateRange(String dateFrom, String dateTo) throws DateRangeConstraintViolationException {
+    public static void checkDateRange(String dateFrom, String dateTo) throws DateRangeConstraintViolationException {
         LocalDate checkDateFrom = DateUtil.convertStringToLocalDate(dateFrom);
         LocalDate  checkDateTo = DateUtil.convertStringToLocalDate(dateTo);
         DateUtil.checkDateRangeIsValid(checkDateFrom, checkDateTo);
     }
 
-    private static void checkTypeIsAcceptedByProfile(String requiredType, @Nullable String types) throws ResourceNotFoundException {
+    public static void checkTypeIsAcceptedByProfile(Integer requiredType, @Nullable String types) throws ResourceNotFoundException {
         if (types == null) return;
 
         if (!types.contains(String.valueOf(requiredType))) {

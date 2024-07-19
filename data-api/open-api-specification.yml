@@ -397,7 +397,7 @@ components:
       pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
       example: '2019-04-13'
     ParamFilterByFlag:
-      type: number
+      type: integer
       minimum: 0
       maximum: 1
       example: '0|1'
