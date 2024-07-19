@@ -20,7 +20,7 @@ Crm14DetailsDTO:
     evidencePart1:
       $ref: "#/Crm14EvidencePart1DTO"
     evidencePart2:
-      $ref: "#/Crm14EvidencePart2DTO"
+      $ref: "#/Crm14AllEvidenceDTO"
     income:
       $ref: "#/Crm14IncomeDTO"
     crm15Details:
@@ -177,7 +177,7 @@ Crm14AboutYouPart2DTO:
     under18:
       type: string
     chargedWithAdult:
-        type: string
+      type: string
     havePartner:
       type: integer
     maritalStatus:
@@ -363,6 +363,48 @@ Crm14OtherChargeDTO:
       type: string
       format: date-time
 
+Crm14AllEvidenceDTO:
+  type: object
+  properties:
+    processedAttachments:
+      type: array
+      items:
+        $ref: "#/Crm14EvidenceDTO"
+    newAttachments:
+      type: array
+      items:
+        $ref: "#/Crm14EvidenceDTO"
+
+
+Crm14EvidenceDTO:
+  type: object
+  properties:
+    evidenceType:
+      type: string
+    key:
+      type: string
+    fileName:
+      type: string
+    fileSizeBytes:
+      type: number
+      format: float
+    status:
+      type: string
+    dtSubmitted:
+      type: string
+    fileSizeMb:
+      type: number
+      format: float
+    caseworkerNotes:
+      type: string
+    providerNotes:
+      type: string
+    attachmentStoreId:
+      type: string
+    providerFirmId:
+      type: integer
+
+
 Crm14BenefitsDTO:
   type: object
   properties:
@@ -463,19 +505,6 @@ Crm14EvidencePart1DTO:
       type: string
       format: date-time
     partnerEmployed:
-      type: string
-
-Crm14EvidencePart2DTO:
-  type: object
-  properties:
-    fileName:
-      type: string
-    fileSize:
-      type: number
-      format: float
-    evidenceType:
-      type: string
-    providerNotes:
       type: string
 
 
