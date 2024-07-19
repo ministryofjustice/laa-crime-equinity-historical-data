@@ -152,6 +152,91 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
+  /api/internal/v1/equinity/report/crm14/:
+    get:
+      tags:
+        - ReportCrm14
+      summary: 'CRM14 Summary Report'
+      operationId: 'generateReportCrm14'
+      parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
+        - name: filterByDecision
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: decisionFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: decisionTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: filterBySubmit
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: submittedFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: submittedTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: filterByCreation
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: createdFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: createdTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: filterByLastSubmit
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: lastSubmittedFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: lastSubmittedTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - $ref: '#/components/parameters/reportState'
+
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+        '400':
+          description: 'Bad request'
+        '403':
+          description: 'Unauthorized'
+        '404':
+          description: 'Not found'
+        '500':
+          description: 'Internal server error'
   ###
   # Archive
   ###
@@ -233,25 +318,19 @@ components:
       in: query
       required: false
       schema:
-        type: string
-        pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
-        example: '2023-01-31'
+        $ref: '#/components/schemas/ParamFilterByDate'
     searchSubmittedFrom:
       name: submittedFrom
       in: query
       required: false
       schema:
-        type: string
-        pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
-        example: '2019-03-18'
+        $ref: '#/components/schemas/ParamFilterByDate'
     searchSubmittedTo:
       name: submittedTo
       in: query
       required: false
       schema:
-        type: string
-        pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
-        example: '2019-04-13'
+        $ref: '#/components/schemas/ParamFilterByDate'
     searchProviderAccount:
       name: providerAccount
       in: query
@@ -294,19 +373,35 @@ components:
       in: path
       required: true
       schema:
-        type: string
-        pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
-        example: '2019-03-18'
+        $ref: '#/components/schemas/ParamFilterByDate'
     reportDecisionTo:
       name: decisionTo
       in: path
       required: true
       schema:
+        $ref: '#/components/schemas/ParamFilterByDate'
+    reportState:
+      name: state
+      in: query
+      required: false
+      schema:
         type: string
-        pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
-        example: '2019-04-13'
+        minLength: 2
+        maxLength: 40
+        default: All
+        example: All
 
   schemas:
+    ParamFilterByDate:
+      type: string
+      pattern: "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$"
+      example: '2019-04-13'
+    ParamFilterByFlag:
+      type: number
+      minimum: 0
+      maximum: 1
+      example: '0|1'
+
     ## Search
     SearchResultDTO:
       $ref: "./schemas/search.yml#/SearchResultDTO"
