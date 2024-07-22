@@ -53,23 +53,6 @@ class Crm14CaseSummaryReportControllerTest {
     /**
      * Date Format input checks
      **/
-    @Test
-    void generateReportCrm14Test_WhenDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() {
-        String expectedMessage = "No data found";
-        String validDate = "2050-01-01";
-
-        // execute
-        testInvalidFormatDates.forEach(dateToTest ->
-            softly.assertThatThrownBy(() -> controller.generateReportCrm14(
-                    1, validDate, validDate,
-                    0, validDate, validDate,
-                    0, validDate, validDate,
-                    0, validDate, validDate,
-                    ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining(expectedMessage)
-        );
-    }
 
     @Test
     void generateReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
@@ -221,7 +204,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenNonExistingValidDecisionDatesAreGivenThenReturnResourceNotFoundException() {
+    void generateReportCrm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() {
         try {
             String startDate = "1988-02-01";
             String endDate = "1988-02-02";
