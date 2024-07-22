@@ -27,7 +27,6 @@ public class CrmFileService {
     public static final int CRM_TYPE_5 = 4;
     public static final int CRM_TYPE_7 = 5;
     public static final int CRM_TYPE_14 = 6;
-    public static final int CRM_TYPE_15 = 7;
     private static final String CHAR_NULL = "\u0000";
     private static final String CHAR_EMPTY = "";
     private static final String CRM_FORM_DATA = "fd:formdata";
