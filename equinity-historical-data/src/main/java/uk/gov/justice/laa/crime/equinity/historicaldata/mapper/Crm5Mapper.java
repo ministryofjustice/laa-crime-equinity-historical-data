@@ -8,7 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 
 @Mapper(componentModel = "spring")
-public interface Crm5Mapper {
+public interface Crm5Mapper extends CrmMapper{
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm5FormDTO getDTOFromModel(Crm5Model model);
@@ -100,7 +100,7 @@ public interface Crm5Mapper {
     @Mapping(target="allCosts.accruedCosts.totalCost.cost", source="ctd_total_costs")
     @Mapping(target="allCosts.anticipatedCosts.attendance.time", source="ac_attendance_time")
     @Mapping(target="allCosts.anticipatedCosts.attendance.cost", source="ac_attendance_time_cost")
-    @Mapping(target="allCosts.anticipatedCosts.preparation.time", source="ac_preparation_time")
+    @Mapping(target ="allCosts.anticipatedCosts.preparation.time", source = "ac_preparation_time", qualifiedByName = "convertToTimeSpentString")
     @Mapping(target="allCosts.anticipatedCosts.preparation.cost", source="ac_preparation_time_cost")
     @Mapping(target="allCosts.anticipatedCosts.advocacy.time", source="ac_advocacy_time")
     @Mapping(target="allCosts.anticipatedCosts.advocacy.cost", source="ac_advocacy_time_cost")

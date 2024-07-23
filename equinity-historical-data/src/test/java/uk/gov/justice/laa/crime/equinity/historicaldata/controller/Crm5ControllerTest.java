@@ -19,8 +19,11 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesMode
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
@@ -41,6 +44,8 @@ public class Crm5ControllerTest {
 
     @Autowired
     Crm5Controller controller;
+
+    Map<Long, String> validUsnTests;
 
     @Test
     void getApplication_TaskNotFound() {
@@ -82,16 +87,47 @@ public class Crm5ControllerTest {
                 .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
 
+    @Test
+    void getApplicationTest_WhenGivenExistingUsnWithAcPreparationTimeFormatThenReturnValidResponse() {
+        Long usnTest = 5001604L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("00:15:00");    }
+
+    @Test
+    void getApplicationTest_WhenGivenExistingUsnWithAcPreparationDateTimeFormatThenReturnValidResponse() {
+        Long usnTest = 5001716L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001716L);
+        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("10:00:00");    }
+
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML
-        FileInputStream fis = new FileInputStream("src/test/resources/Crm5MockFile_5001604.txt");
-        JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-        byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-        TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setUSN(5001604L);
-        taskModel.setTypeId(CRM_TYPE_5);
-        taskModel.setCrmFile(fileDataByte);
-        taskImageFilesRepository.save(taskModel);
+        validUsnTests = new HashMap<>();
+        validUsnTests.put(5001604L, "src/test/resources/Crm5MockFile_5001604.txt");
+        validUsnTests.put(5001716L, "src/test/resources/Crm5MockFile_5001716.txt");
+
+        validUsnTests.forEach((testUsn, testFile) -> {
+            // Mocking good XML
+            try {
+                FileInputStream fis = new FileInputStream(testFile);
+                JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+                byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
+                TaskImageFilesModel taskModel = new TaskImageFilesModel();
+                taskModel.setUSN(testUsn);
+                taskModel.setTypeId(CRM_TYPE_5);
+                taskModel.setCrmFile(fileDataByte);
+                taskImageFilesRepository.save(taskModel);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
