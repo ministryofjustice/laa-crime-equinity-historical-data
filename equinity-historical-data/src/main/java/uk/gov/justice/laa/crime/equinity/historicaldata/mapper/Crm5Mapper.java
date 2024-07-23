@@ -127,11 +127,13 @@ public interface Crm5Mapper {
     CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
 
     default String processAcPreparationTime(Crm5DetailsModel crm5DetailsModel) {
-        if (null != crm5DetailsModel.getAc_preparation_time()) {
-            if (crm5DetailsModel.getAc_preparation_time().length() > 8) {
-                return crm5DetailsModel.getAc_preparation_time().substring(crm5DetailsModel.getAc_preparation_time().length() -8);
+        String prepTime = crm5DetailsModel.getAc_preparation_time();
+        if (null != prepTime) {
+            int len = prepTime.length();
+            if (len > 8) {
+                return prepTime.substring(len - 8);
             }else {
-                return crm5DetailsModel.getAc_preparation_time();
+                return prepTime;
             }
         }
         return null;
