@@ -1821,7 +1821,7 @@
 "Originator_tl_neverpermanentlyremove": 0,
 "Ac_letters": 2,
 "Additional_text": "",
-"Ac_preparation_time": "00:15:00",
+"Ac_preparation_time": "1899-12-31T10:00:00",
 "Aa_given_at_police_station": false,
 "Total_partfilled": 0,
 "Referral_reason_sol": "",

@@ -82,6 +82,16 @@ public class Crm5ControllerTest {
                 .hasMessageContaining("Task with USN").hasMessageContaining("not found");
     }
 
+    @Test
+    void getApplicationTest_WhenGivenExistingUsnButAcPreparationDateTimeFormatThenReturnTimeAsString() {
+        Long usnTest = 5001604L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("10:00:00");    }
+
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML

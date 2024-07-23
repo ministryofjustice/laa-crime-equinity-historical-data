@@ -100,7 +100,7 @@ public interface Crm5Mapper {
     @Mapping(target="allCosts.accruedCosts.totalCost.cost", source="ctd_total_costs")
     @Mapping(target="allCosts.anticipatedCosts.attendance.time", source="ac_attendance_time")
     @Mapping(target="allCosts.anticipatedCosts.attendance.cost", source="ac_attendance_time_cost")
-    @Mapping(target="allCosts.anticipatedCosts.preparation.time", source="ac_preparation_time")
+    @Mapping(target="allCosts.anticipatedCosts.preparation.time", expression="java(processAcPreparationTime(crm5DetailsModel))")
     @Mapping(target="allCosts.anticipatedCosts.preparation.cost", source="ac_preparation_time_cost")
     @Mapping(target="allCosts.anticipatedCosts.advocacy.time", source="ac_advocacy_time")
     @Mapping(target="allCosts.anticipatedCosts.advocacy.cost", source="ac_advocacy_time_cost")
@@ -125,4 +125,15 @@ public interface Crm5Mapper {
     @Mapping(target="solicitor.certification.name", source="certification_sol_name")
     @Mapping(target="officeUseOnly.decision", source="decision")
     CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
+
+    default String processAcPreparationTime(Crm5DetailsModel crm5DetailsModel) {
+        if (null != crm5DetailsModel.getAc_preparation_time()) {
+            if (crm5DetailsModel.getAc_preparation_time().length() > 8) {
+                return crm5DetailsModel.getAc_preparation_time().substring(crm5DetailsModel.getAc_preparation_time().length() -8);
+            }else {
+                return crm5DetailsModel.getAc_preparation_time();
+            }
+        }
+        return null;
+    }
 }
