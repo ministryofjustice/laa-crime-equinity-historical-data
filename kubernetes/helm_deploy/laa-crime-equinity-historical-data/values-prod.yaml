@@ -23,5 +23,5 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
-    nginx.ingress.kubernetes.io/proxy-body-size: "16m"
+    nginx.ingress.kubernetes.io/proxy-body-size: 16m
 
