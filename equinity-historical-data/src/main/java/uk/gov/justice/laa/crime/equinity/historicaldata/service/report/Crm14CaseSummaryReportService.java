@@ -10,6 +10,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -19,6 +20,10 @@ import java.util.List;
 public class Crm14CaseSummaryReportService {
 
     private final Crm14CaseSummaryReportRepository reportRepository;
+
+    public static String getCSVFileName() {
+        return String.format("Report_CRM14_CaseSummary_%s.csv", LocalDate.now());
+    }
 
     @Transactional
     public String getReport(Crm14CaseSummaryReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {

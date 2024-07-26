@@ -149,7 +149,7 @@ class Crm14CaseSummaryReportControllerTest {
             String endDate = "2024-06-01";
 
             // execute
-            ResponseEntity<String> response = controller.generateReportCrm14(
+            ResponseEntity<byte[]> response = controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
@@ -172,7 +172,7 @@ class Crm14CaseSummaryReportControllerTest {
             String endDate = "2024-06-01";
 
             // execute
-            ResponseEntity<String> response = controller.generateReportCrm14(
+            ResponseEntity<byte[]> response = controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,

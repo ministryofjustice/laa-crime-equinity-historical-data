@@ -2,6 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.controller.report;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.Crm14CaseSummaryReportCriteriaDTO;
@@ -15,7 +16,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
     private final Crm14CaseSummaryReportService reportService;
 
     @Override
-    public ResponseEntity<String> generateReportCrm14(
+    public ResponseEntity<byte[]> generateReportCrm14(
             Integer filterByDecision, String decisionFrom, String decisionTo,
             Integer filterBySubmit, String submittedFrom, String submittedTo,
             Integer filterByCreation, String createdFrom, String createdTo,
@@ -30,7 +31,15 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
                 state, profileAcceptedTypes
         );
 
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, getResponseHeaderFilename())
+            .body(reportService.getReport(criteria).getBytes());
+    }
 
-        return ResponseEntity.ok(reportService.getReport(criteria));
+    private static String getResponseHeaderFilename() {
+        return String.format(
+            "attachment; filename=\"%s\"",
+            Crm14CaseSummaryReportService.getCSVFileName()
+        );
     }
 }

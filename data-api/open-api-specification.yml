@@ -229,6 +229,7 @@ paths:
             application/octet-stream:
               schema:
                 type: string
+                format: byte
         '400':
           description: 'Bad request'
         '403':
