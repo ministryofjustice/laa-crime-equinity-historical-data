@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service.report;
 
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class Crm14CaseSummaryReportService {
+
     private final Crm14CaseSummaryReportRepository reportRepository;
 
     @Transactional
@@ -37,7 +39,9 @@ public class Crm14CaseSummaryReportService {
         }
 
         log.info("CRM14 Case Summary Report generated with {} records", report.size());
-        return exportToCSV(report);
+        String reportInCSV = exportToCSV(report);
+        log.info("CRM14 Case Summary Report exported to CSV format");
+        return reportInCSV;
     }
 
     private String exportToCSV(List<Crm14CaseSummaryReportModel> report) {
