@@ -29,7 +29,7 @@ class Crm14AttachmentServiceTest {
 
     @BeforeAll
     void preTest() throws IOException {
-        Crm14AttachmentModel attachModel = new Crm14AttachmentModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,"Accepted","BANK_STATEMENTS",
+        Crm14AttachmentModel attachModel = new Crm14AttachmentModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
                 "3x monthly statements","",341);
         attachmentStoreRepository.save(attachModel);
     }

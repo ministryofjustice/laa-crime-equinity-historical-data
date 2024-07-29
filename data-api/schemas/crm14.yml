@@ -392,6 +392,8 @@ Crm14EvidenceDTO:
       type: string
     dtSubmitted:
       type: string
+    dtProcessed:
+      type: string
     fileSizeMb:
       type: number
       format: float
