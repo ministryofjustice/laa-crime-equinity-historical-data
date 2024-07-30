@@ -1,14 +1,16 @@
 plugins {
 	id 'jacoco'
 	id 'org.sonarqube' version '4.0.0.2929'
+	id "io.sentry.jvm.gradle" version "4.10.0"
 }
 
 def versions = [
-		springdocVersion       		: '1.8.0',
-		springStarter		  		: '3.2.7',
+		springdocVersion			: '1.8.0',
+		springStarter				: '3.2.7',
 		springWeb					: '6.2.4',
-		springSecurity		  	 	: '6.2.4',
+		springSecurity				: '6.2.4',
 		logback						: '1.5.6',
+		sentryVersion				: '8.0.0-alpha.4',
 ]
 
 configurations {
@@ -21,6 +23,15 @@ configurations {
 			// Included in spring-boot-starter-web:3.2.4. Need new version to fix vulnerability
 			force "org.apache.tomcat.embed:tomcat-embed-core:10.1.25"
 			force "org.springframework:spring-web:$versions.springWeb"
+		}
+	}
+}
+
+dependencyManagement {
+	dependencies {
+		dependencySet(group: 'io.sentry', version: versions.sentryVersion) {
+			entry 'sentry-spring-boot-starter'
+			entry 'sentry-logback'
 		}
 	}
 }
@@ -53,6 +64,10 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
 
+	// Sentry
+	implementation platform("io.sentry:sentry-bom:$versions.sentryVersion")
+	implementation "io.sentry:sentry-logback"
+	implementation "io.sentry:sentry-spring-boot-starter-jakarta:$versions.sentryVersion"
 
 	// Annotations
 	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"

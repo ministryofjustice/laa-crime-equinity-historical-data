@@ -28,6 +28,8 @@ env:
       secretKeyRef:
         name: equinity-historical-data-oauth-client-secret
         key: equinity-historical-data-oauth-client-secret
+  - name: SENTRY_DSN
+    value: {{ .Values.sentry_dsn }}
   - name: DB_DEBUG
     value: {{ .Values.database.debug | quote }}
   - name: DB_NAME
