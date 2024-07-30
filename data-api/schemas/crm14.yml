@@ -329,7 +329,78 @@ Crm14IncomeDTO:
       type: string
     benefits:
       $ref: "#/Crm14BenefitsDTO"
+    allIncomes:
+      $ref: "#/Crm14AllIncomesDTO"
     proofBenefits:
+      type: string
+    freezingOrder:
+      type: string
+    ownLandOrProperty:
+      type: string
+    savingsOrInvestments:
+      type: string
+
+Crm14AllIncomesDTO:
+  type: object
+  properties:
+    you:
+      $ref: "#/Crm14IncomeSourceDTO"
+    partner:
+      $ref: "#/Crm14IncomeSourceDTO"
+
+Crm14IncomeSourceDTO:
+  type: object
+  properties:
+    wageCalc:
+      type: number
+      format: float
+    wagePaidEvery:
+      type: string
+    wageTax:
+      type: string
+    childBenefit:
+      type: number
+      format: float
+    childBenefitPaidEvery:
+      type: string
+    taxCreditsAmount:
+      type: number
+      format: float
+    taxCreditsPaidEvery:
+      type: string
+    universalCredit:
+      type: number
+      format: float
+    universalCreditPaidEvery:
+      type: string
+    otherBenefitsCalc:
+      type: number
+      format: float
+    otherBenefitsPaidEvery:
+      type: string
+    maintenancePayment:
+      type: number
+      format: float
+    maintenancePaymentPaidEvery:
+      type: string
+    pensionsCalc:
+      type: number
+      format: float
+    pensionsPaidEvery:
+      type: string
+    studentLoan:
+      type: boolean
+    otherIncomeFriendsFamily:
+      type: boolean
+    otherIncomeMaintenance:
+      type: boolean
+    otherIncomeRentFromFamily:
+      type: boolean
+    otherIncomeRental:
+      type: boolean
+    otherFinancialSupport:
+      type: boolean
+    otherIncomeSourceFreetext:
       type: string
 
 Crm14BenefitSupportDTO:
