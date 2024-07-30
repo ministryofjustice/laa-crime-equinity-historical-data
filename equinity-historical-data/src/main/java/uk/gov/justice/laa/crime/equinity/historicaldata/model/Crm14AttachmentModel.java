@@ -32,6 +32,9 @@ public class Crm14AttachmentModel {
     @Column(name = "Submitted")
     private Date submitted;
 
+    @Column(name = "Processed")
+    private Date processed;
+
     @Column(name = "Status")
     private String status;
 
