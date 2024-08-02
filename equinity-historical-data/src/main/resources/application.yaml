@@ -46,3 +46,20 @@ management:
     web:
       exposure:
         include: health,info,metrics
+
+sentry:
+  debug: off
+  dsn: ${SENTRY_DSN}
+  # With a sample rate of 1, all traffic will be sent to Sentry
+  traces-sample-rate: 0.50
+  environment: ${HOST_ENV}
+  release: 1.0.0
+  servername: aws-eks-container
+  send-default-pii: true
+  attach-stacktrace: true
+  # With a sample rate of 1, all traffic will be sent to Sentry
+  sample-rate: 0.80
+  logging:
+    minimum-event-level: warn
+    minimum-breadcrumb-level: info
+  in-app-includes: uk.gov.justice.laa.crime.equinity.historicaldata

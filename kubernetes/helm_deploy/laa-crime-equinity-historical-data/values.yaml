@@ -137,3 +137,4 @@ tolerations: []
 
 affinity: {}
 
+sentry_dsn: https://597d73d6f550accd71bb4d61c3679eac@o345774.ingest.us.sentry.io/4507690126540800
