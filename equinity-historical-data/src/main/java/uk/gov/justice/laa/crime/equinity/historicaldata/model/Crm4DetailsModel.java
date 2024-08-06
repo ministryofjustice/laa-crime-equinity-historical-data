@@ -252,8 +252,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
                     quote.setTravelHours(trvlHrs);
                     quote.setTravelHourlyRate(trvlHrsRate);
                     quote.setQuoteTotal(qtTotal);
-                } catch (NoSuchMethodException|IllegalAccessException |InvocationTargetException e) {
-                    log.error("eForm CRM4 unable to call quote Method:: urn="+urn, e.getMessage());
+                } catch (NoSuchMethodException|IllegalAccessException|InvocationTargetException e) {
+                    log.error("eForm CRM4 unable to call quote Method:: urn={} :: {}", urn, e.getMessage());
                 }
                 allQuotes.add(quote);
             }

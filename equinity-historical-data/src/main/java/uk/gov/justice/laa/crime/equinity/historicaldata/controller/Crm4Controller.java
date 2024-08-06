@@ -1,5 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
+import io.sentry.Sentry;
+import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +25,16 @@ public class Crm4Controller implements Crm4InterfaceApi {
 
     @Override
     public ResponseEntity<Crm4FormDTO> getApplicationCrm4(Long usn, String profileAcceptedTypes) {
-            log.info("eForm CRM4 details request received :: usn=[{}]", usn);
-            CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                    usn, CRM_TYPE_4, profileAcceptedTypes
-            );
-            Crm4Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
-            crmFormData.getFormDetails().setAllQuotes();
+        String logMessage = String.format("eForm CRM4 details request received :: usn=[%s]", usn);
+        log.info(logMessage);
+        // TODO (EMP-182): This is only to count how many requests are received. Review to replace once other metric systems are introduced
+        Sentry.captureMessage(logMessage, SentryLevel.INFO);
 
-            return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crmFormData));
+        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
+                usn, CRM_TYPE_4, profileAcceptedTypes
+        );
+        Crm4Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
+        crmFormData.getFormDetails().setAllQuotes();
+        return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crmFormData));
     }
 }

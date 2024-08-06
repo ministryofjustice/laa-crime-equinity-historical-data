@@ -2,6 +2,8 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.json.JSONException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class EquinityExceptionResponseHandler {
+    private static final Logger log = LoggerFactory.getLogger(EquinityExceptionResponseHandler.class);
+
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleResourceNotFoundException(
@@ -47,7 +51,9 @@ public class EquinityExceptionResponseHandler {
     public ResponseEntity<String> handleJsonException(
             JSONException exception
     ) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was a problem reading CRM image file. " + exception.getMessage());
+        String logMessage = String.format("There was a problem reading CRM image file. %s :: %s ", exception.getClass(), exception.getMessage());
+        log.error(logMessage);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
     }
 
     @ExceptionHandler(ClassCastException.class)
@@ -55,7 +61,8 @@ public class EquinityExceptionResponseHandler {
     public ResponseEntity<String> handleClassCastException(
             ClassCastException exception
     ) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was a problem reading CRM image file. " + exception.getMessage());
+        String logMessage = String.format("There was a problem reading CRM image file. %s :: %s ", exception.getClass(), exception.getMessage());
+        log.error(logMessage);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
     }
-
 }

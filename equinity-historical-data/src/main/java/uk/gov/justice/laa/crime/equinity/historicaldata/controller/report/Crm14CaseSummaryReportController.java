@@ -1,5 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller.report;
 
+import io.sentry.Sentry;
+import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +32,11 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
                 filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
                 state, profileAcceptedTypes
         );
+
+        String logMessage = String.format("eForm CRM14 report request received :: [%s]", criteria);
+        log.info(logMessage);
+        // TODO (EMP-182): This is only to count how many requests are received. Review to replace once other metric systems are introduced
+        Sentry.captureMessage(logMessage, SentryLevel.INFO);
 
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, getResponseHeaderFilename())
