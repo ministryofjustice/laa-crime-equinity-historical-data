@@ -3,7 +3,6 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
@@ -32,7 +31,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "evidencePart2.processedAttachments", source="processedAttachments")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", source = "model")
-    @Mapping(source = ".", target = "hasCrm15", qualifiedByName = "hasCrm15")
+    @Mapping(target = "hasCrm15", source = "hasCrm15")
     @Mapping(target = "crm15Details", source="model")
     @Mapping(target = "legalRepresentationDetails", source = "model")
     @Mapping(target = "aboutInformation", source = "model")
@@ -625,12 +624,6 @@ public interface Crm14Mapper extends CrmMapper {
             return "att_"+processAttachModel.getAttachmentId()+".att";
         }
         return null;
-    }
-    @Named("hasCrm15")
-    default boolean hasCrm15(Crm14DetailsModel model) {
-        if (StringUtils.isNotEmpty(model.getPrivate_company()) && model.getPrivate_company().equalsIgnoreCase("Yes"))
-            return true;
-        else return StringUtils.isNotEmpty(model.getPartner_private_company()) && model.getPartner_private_company().equalsIgnoreCase("Yes");
     }
     default boolean billsPayedOptions(String how_pay_bills, int option) {
         boolean opted= false;
