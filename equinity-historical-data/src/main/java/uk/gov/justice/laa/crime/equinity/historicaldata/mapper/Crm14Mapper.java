@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
@@ -11,8 +12,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm14FormDTO getDTOFromModel(Crm14Model model);
-    @Mapping(target="privateCompany", source="private_company")
-    @Mapping(target="partnerPrivateCompany", source="partner_private_company")
+
     @Mapping(target="legalRepresentativeUse.dateStamp.usn", source="datestamp_usn")
     @Mapping(target="legalRepresentativeUse.dateStamp.date", source="datestamp_date")
     @Mapping(target="legalRepresentativeUse.dateStamp.time", source="datestamp_time")
@@ -31,6 +31,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "evidencePart2.processedAttachments", source="processedAttachments")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", source = "model")
+    @Mapping(target = "hasCrm15", source = "hasCrm15")
     @Mapping(target = "crm15Details", source="model")
     @Mapping(target = "legalRepresentationDetails", source = "model")
     @Mapping(target = "aboutInformation", source = "model")
@@ -177,6 +178,8 @@ public interface Crm14Mapper extends CrmMapper {
 
     @Mapping(target="receiveBenefits", source = "receive_benefits")
     @Mapping(target="proofBenefits", source = "do_you_have_proof")
+    @Mapping(target="privateCompany", source="private_company")
+    @Mapping(target="partnerPrivateCompany", source="partner_private_company")
     @Mapping(target="benefits.you.incomeSupport", source = "income_support")
     @Mapping(target="benefits.you.esa", source = "esa")
     @Mapping(target="benefits.you.statePension", source = "state_pension")
@@ -189,6 +192,11 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="freezingOrder", source = "freezing_order")
     @Mapping(target="ownLandOrProperty", source = "own_land_or_property")
     @Mapping(target="savingsOrInvestments", source = "savings_or_investments")
+    @Mapping(target="noMoneySleepingAtFriend", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 1))" )
+    @Mapping(target="noMoneyStayingWithFamily", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 2))" )
+    @Mapping(target="homeless", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 3))" )
+    @Mapping(target="remandedInCustody", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 4))" )
+    @Mapping(target="howPayBillsText", source="how_pay_bills_freetext")
     Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
 
     @Mapping(target="you.wageCalc", source="wage_calc")
@@ -206,6 +214,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="you.maintenancePaymentPaidEvery", source="maintenance_payment_paid_every")
     @Mapping(target="you.pensionsCalc", source="pensions_calc")
     @Mapping(target="you.pensionsPaidEvery", source="pensions_paid_every")
+    @Mapping(target="you.otherIncomeCalc", source="other_income_calc")
+    @Mapping(target="you.otherIncomePaidEvery", source="other_income_paid_every")
     @Mapping(target="you.studentLoan", source="student_loan")
     @Mapping(target="you.otherIncomeFriendsFamily", source="other_income_friends_family")
     @Mapping(target="you.otherIncomeMaintenance", source="other_income_maintenance")
@@ -229,7 +239,13 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="partner.maintenancePaymentPaidEvery", source="partner_maintenance_payment_paid_every")
     @Mapping(target="partner.pensionsCalc", source="partner_pensions_calc")
     @Mapping(target="partner.pensionsPaidEvery", source="partner_pensions_paid_every")
+    @Mapping(target="partner.otherIncomeCalc", source="partner_other_income_calc")
+    @Mapping(target="partner.otherIncomePaidEvery", source="partner_other_income_paid_every")
     @Mapping(target="partner.studentLoan", source="partner_student_loan")
+    @Mapping(target="partner.otherIncomeFriendsFamily", source="partner_income_friends_family")
+    @Mapping(target="partner.otherIncomeMaintenance", source="partner_income_maintenance")
+    @Mapping(target="partner.otherIncomeRentFromFamily", source="partner_other_rent")
+    @Mapping(target="partner.otherIncomeRental", source="partner_income_rental")
     @Mapping(target="partner.otherFinancialSupport", source="partner_other_financial_support")
     @Mapping(target="partner.otherIncomeSourceFreetext", source="partner_other_income_source_freetext")
     Crm14AllIncomesDTO getAllIncomeDTOFromModel(Crm14DetailsModel model);
@@ -609,6 +625,35 @@ public interface Crm14Mapper extends CrmMapper {
         }
         return null;
     }
+    default boolean billsPayedOptions(String how_pay_bills, int option) {
+        boolean opted= false;
+        if (StringUtils.isNotEmpty(how_pay_bills)) {
+            switch (option) {
+                case 1:
+                    if (how_pay_bills.contains("Sleeping on friend's sofa - no money received")) {
+                        opted = true;
+                    }
+                    break;
+                case 2:
+                    if (how_pay_bills.contains("Staying with family - no money received")) {
+                        opted = true;
+                    }
+                    break;
+                case 3:
+                    if (how_pay_bills.contains("Living on the streets/homeless")) {
+                        opted = true;
+                    }
+                    break;
+                case 4:
+                    if (how_pay_bills.contains("Remanded in custody for more than 3 months")) {
+                        opted = true;
+                    }
+                    break;
+            }
+        }
+        return opted;
+    }
+
     default String convertCaseType(Crm14DetailsModel model) {
         if (model.summary) {
             return "Summary-Only";
