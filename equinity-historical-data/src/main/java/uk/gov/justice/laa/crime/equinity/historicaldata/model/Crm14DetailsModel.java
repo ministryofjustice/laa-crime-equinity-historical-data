@@ -820,8 +820,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
-    public boolean hasCrm15;
-    public boolean hasCrm15() {
+    public boolean crm15;
+    public boolean isCrm15() {
         if (StringUtils.isNotEmpty(this.getPrivate_company()) && this.getPrivate_company().equalsIgnoreCase("Yes"))
             return true;
         else return StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes");
