@@ -1,10 +1,6 @@
 Crm14DetailsDTO:
   type: object
   properties:
-    privateCompany:
-      type: string
-    partnerPrivateCompany:
-      type: string
     legalRepresentativeUse:
       $ref: "#/CrmLegalRepDTO"
     aboutYouPart1:
@@ -23,6 +19,8 @@ Crm14DetailsDTO:
       $ref: "#/Crm14AllEvidenceDTO"
     income:
       $ref: "#/Crm14IncomeDTO"
+    hasCrm15:
+      type: boolean
     crm15Details:
       $ref: "#/Crm15DetailsDTO"
     legalRepresentationDetails:
@@ -327,6 +325,10 @@ Crm14IncomeDTO:
   properties:
     receiveBenefits:
       type: string
+    privateCompany:
+      type: string
+    partnerPrivateCompany:
+      type: string
     benefits:
       $ref: "#/Crm14BenefitsDTO"
     allIncomes:
@@ -339,6 +341,16 @@ Crm14IncomeDTO:
       type: string
     savingsOrInvestments:
       type: string
+    howPayBillsText:
+      type: string
+    noMoneySleepingAtFriend:
+      type: boolean
+    noMoneyStayingWithFamily:
+      type: boolean
+    homeless:
+      type: boolean
+    remandedInCustody:
+      type: boolean
 
 Crm14AllIncomesDTO:
   type: object
@@ -387,6 +399,11 @@ Crm14IncomeSourceDTO:
       type: number
       format: float
     pensionsPaidEvery:
+      type: string
+    otherIncomeCalc:
+      type: number
+      format: float
+    otherIncomePaidEvery:
       type: string
     studentLoan:
       type: boolean
