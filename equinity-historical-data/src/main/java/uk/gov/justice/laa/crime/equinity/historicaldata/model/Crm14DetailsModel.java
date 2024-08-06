@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -763,7 +764,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int employment_ceased_3_months;
     @JsonProperty("Summary")
     public boolean summary;
-
     @JsonProperty("Hide_crm15")
     public boolean hide_crm15;
     @JsonProperty("Child_benefit_crm15_paid_every")
@@ -820,5 +820,10 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
-
+    public boolean hasCrm15;
+    public boolean hasCrm15() {
+        if (StringUtils.isNotEmpty(this.getPrivate_company()) && this.getPrivate_company().equalsIgnoreCase("Yes"))
+            return true;
+        else return StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes");
+    }
 }

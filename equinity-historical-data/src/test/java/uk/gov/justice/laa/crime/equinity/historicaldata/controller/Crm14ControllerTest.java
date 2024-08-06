@@ -132,6 +132,19 @@ class Crm14ControllerTest {
     }
 
     @Test
+    void getApplication_Crm14Test_HowBills() {
+        Long usnToTest = 5001669L;
+        // Test with accepted types
+        ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getIncome().getNoMoneySleepingAtFriend()).isEqualTo(true);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getIncome().getHomeless()).isEqualTo(true);
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    }
+
+    @Test
     void getApplication_Crm14Test_ProcessedAttachments() {
         Long usnToTest = 5001817L;
         // Test with accepted types
