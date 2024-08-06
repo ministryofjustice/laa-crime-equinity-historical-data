@@ -22,17 +22,16 @@ public class SearchController implements SearchApi {
             String profileAcceptedTypes, String usn, Integer type, String client,
             String clientDoB, String submittedFrom, String submittedTo,
             String providerAccount, Integer page, Integer pageSize) {
-        Sentry.captureMessage(
-            String.format("Sentry :: eForm search request received :: usn=[%s] type=[%d] client=[%s] submittedFrom=[%s] submittedTo=[%s] provider=[%s] page=[%d] pageSize=[%d] ",
-                usn, type, client, submittedFrom, submittedTo, providerAccount, page, pageSize),
-            SentryLevel.INFO
-        );
-        log.info("Log :: eForm search request received :: usn=[{}] type=[{}] client=[{}] submittedFrom=[{}] submittedTo=[{}] provider=[{}] page=[{}] pageSize=[{}] ",
-                usn, type, client, submittedFrom, submittedTo, providerAccount, page, pageSize);
+
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
                 usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize,
                 profileAcceptedTypes
         );
+
+        String logMessage = String.format("eForm search request received :: %s ", crmFormSearchCriteriaDTO);
+        log.info(logMessage);
+        // TODO (EMP-182): This is only to count how many requests are received. Review to replace once other metric systems are introduced
+        Sentry.captureMessage(logMessage, SentryLevel.INFO);
 
         return ResponseEntity.ok(
                 searchService.searchAllByCriteria(crmFormSearchCriteriaDTO)

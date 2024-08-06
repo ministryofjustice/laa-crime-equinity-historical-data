@@ -33,16 +33,16 @@ public record CrmFormSearchCriteriaDTO(
 
     @Override
     public String toString() {
-        return "CrmFormSearchCriteriaDTO{" +
-                "usn='" + usn + '\'' +
-                ", type='" + type + '\'' +
-                ", client='" + client + '\'' +
-                ", clientDoB='" + clientDoB + '\'' +
-                ", submittedFrom='" + submittedFrom + '\'' +
-                ", submittedTo='" + submittedTo + '\'' +
-                ", providerAccount='" + providerAccount + '\'' +
+        return "CrmFormSearchCriteriaDTO { " +
+                "usn='" + usn + "'" +
+                ", type='" + type + "'" +
+                ", client='" + client + "'" +
+                ", clientDoB='" + clientDoB + "'" +
+                ", submittedFrom='" + submittedFrom + "'" +
+                ", submittedTo='" + submittedTo + "'" +
+                ", providerAccount='" + providerAccount + "'" +
                 ", page=" + page +
                 ", pageSize=" + pageSize +
-                '}';
+            " }";
     }
 }

@@ -53,21 +53,21 @@ public record Crm14CaseSummaryReportCriteriaDTO(
 
     @Override
     public String toString() {
-        return "Crm14CaseSummaryReportCriteriaDTO{" +
-                "filterByDecision='" + filterByDecision + '\'' +
-                ", decisionFrom='" + decisionFrom + '\'' +
-                ", decisionTo='" + decisionTo + '\'' +
-                ", filterBySubmit='" + filterBySubmit + '\'' +
-                ", submittedFrom='" + submittedFrom + '\'' +
-                ", submittedTo='" + submittedTo + '\'' +
-                ", filterByCreation='" + filterByCreation + '\'' +
-                ", createdFrom='" + createdFrom + '\'' +
-                ", createdTo='" + createdTo + '\'' +
-                ", filterByLastSubmit='" + filterByLastSubmit + '\'' +
-                ", lastSubmittedFrom='" + lastSubmittedFrom + '\'' +
-                ", lastSubmittedTo='" + lastSubmittedTo + '\'' +
-                ", state='" + state + '\'' +
-                ", profileAcceptedTypes='" + profileAcceptedTypes + '\'' +
+        return "Crm14CaseSummaryReportCriteriaDTO { " +
+                "filterByDecision='" + filterByDecision + "'" +
+                ", decisionFrom='" + decisionFrom + "'" +
+                ", decisionTo='" + decisionTo + "'" +
+                ", filterBySubmit='" + filterBySubmit + "'" +
+                ", submittedFrom='" + submittedFrom + "'" +
+                ", submittedTo='" + submittedTo + "'" +
+                ", filterByCreation='" + filterByCreation + "'" +
+                ", createdFrom='" + createdFrom + "'" +
+                ", createdTo='" + createdTo + "'" +
+                ", filterByLastSubmit='" + filterByLastSubmit + "'" +
+                ", lastSubmittedFrom='" + lastSubmittedFrom + "'" +
+                ", lastSubmittedTo='" + lastSubmittedTo + "'" +
+                ", state='" + state + "'" +
+                ", profileAcceptedTypes='" + profileAcceptedTypes + "'" +
             '}';
     }
 }

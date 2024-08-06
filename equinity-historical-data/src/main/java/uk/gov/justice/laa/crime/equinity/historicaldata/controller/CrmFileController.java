@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
@@ -21,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/internal/v1/equinity/crm-file")
+@Slf4j
 public class CrmFileController {
     private final CrmFileService crmFileService;
 
@@ -40,6 +42,9 @@ public class CrmFileController {
         )
     )
     public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId) {
+        String logMessage = String.format("eForm CRM4 details request received :: usn=[%s]", taskId);
+        log.info(logMessage);
+
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 taskId, null, null
         );

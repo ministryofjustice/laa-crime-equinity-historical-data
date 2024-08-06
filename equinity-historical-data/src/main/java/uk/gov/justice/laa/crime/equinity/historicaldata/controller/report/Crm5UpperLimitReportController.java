@@ -1,5 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller.report;
 
+import io.sentry.Sentry;
+import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,15 @@ public class Crm5UpperLimitReportController implements ReportCrm5Api {
     @Override
     public ResponseEntity<String> generateReportCrm5(
             String decisionFrom, String decisionTo, String profileAcceptedTypes) {
+
         ReportInputsUtil.checkInputs(decisionFrom, decisionTo,
                 profileAcceptedTypes, CRM_TYPE_5
         );
+
+        String logMessage = String.format("eForm CRM5 report request received :: decision between [%s] and [%s}", decisionFrom, decisionTo);
+        log.info(logMessage);
+        // TODO (EMP-182): This is only to count how many requests are received. Review to replace once other metric systems are introduced
+        Sentry.captureMessage(logMessage, SentryLevel.INFO);
 
         return ResponseEntity.ok(
             reportService.getReport(decisionFrom, decisionTo)
