@@ -31,7 +31,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "evidencePart2.processedAttachments", source="processedAttachments")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", source = "model")
-    @Mapping(target = "hasCrm15", source = "hasCrm15")
+    @Mapping(target = "hasCrm15", expression="java(model.hasCrm15())")
     @Mapping(target = "crm15Details", source="model")
     @Mapping(target = "legalRepresentationDetails", source = "model")
     @Mapping(target = "aboutInformation", source = "model")
