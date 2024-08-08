@@ -11,7 +11,7 @@ This is a Java based Spring Boot application hosted on [MOJ Cloud Platform](http
 Clone Repository
 
 ```sh
-git clone git@github.com:ministryofjustice/laa-crime-equinity-hitorical-data.git
+git clone git@github.com:ministryofjustice/laa-crime-equinity-historical-data.git
 
 cd laa-crime-equinity-historical-data
 ```
