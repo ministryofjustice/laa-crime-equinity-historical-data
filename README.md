@@ -8,6 +8,7 @@ This is a Java based Spring Boot application hosted on [MOJ Cloud Platform](http
 
 ## Application Set up
 
+
 Clone Repository
 
 ```sh
@@ -35,6 +36,8 @@ docker-compose up
 
 laa-crime-equinity-historical-data application will be running on http://localhost:8089
 
+[Crime Apps repository template guide](https://dsdmoj.atlassian.net/wiki/x/IADGAwE)
+
 ### Filling docker-compose.override.yml
 
 In order to run docker image on local, a `docker-compose.override.yml` file is required. This file will contain sensible data and therefore is not available on git. However, a template is provided.
@@ -50,6 +53,8 @@ Application can run locally (java or docker) connecting to the RDS database via 
 ### How to connect to a database tunnel
 
 Connection to a database needs to be done from a tunnel. This tunnel is done from a pod that will serve a bridge between our local connection and the RDS on cloud platform.
+
+[Crime Apps guide to local RDS connections](https://dsdmoj.atlassian.net/wiki/x/n4BLAAE)
 
 See example below:
 
@@ -141,7 +146,7 @@ The swagger link can be found from [here](https://dsdmoj.atlassian.net/wiki/x/SQ
 - Logs on [Kibana](https://kibana.cloud-platform.service.justice.gov.uk)
 - Alerts on [Sentry](https://ministryofjustice.sentry.io/projects/laa-crime-equinity-historical-data/?project=4507690126540800)
 
-
+[Crime Apps guide on logging and metrics](https://dsdmoj.atlassian.net/wiki/x/ToHjBQE)
 
 ## Kubernetes 
 
