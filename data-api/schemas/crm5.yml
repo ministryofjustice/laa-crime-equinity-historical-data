@@ -38,7 +38,7 @@ CRM5DetailsDTO:
     Solicitor:
       $ref: '#/Crm5SolicitorDTO'
     OfficeUseOnly:
-      $ref: '#/Crm5DecisionDTO'
+      $ref: '#/Crm5OfficialUseDTO'
     StatementOfCase:
       type: string
     DetailsOfWorkCompleted:
@@ -328,11 +328,30 @@ Crm5NameAndDateDTO:
       format: date-time
     name:
       type: string
+Crm5OfficialUseDTO:
+  properties:
+    qualityControl:
+      $ref: '#/Crm5DecisionDTO'
+    authority:
+      $ref: '#/Crm5AuthorityDTO'
 Crm5DecisionDTO:
   properties:
     decision:
       type: string
       description: Grant, Part Grant, Reject, Refer For ICA
+    decisionReason:
+      type: string
+Crm5AuthorityDTO:
+  properties:
+    newLimitRequest:
+      type: string
+    upperLimitExtended:
+      type: string
+    signedAuth:
+      type: string
+    signedAuthDate:
+      type: string
+      format: date-time
 Crm5LaaAdviceAssistanceDTO:
   properties:
     providedAdvice:
