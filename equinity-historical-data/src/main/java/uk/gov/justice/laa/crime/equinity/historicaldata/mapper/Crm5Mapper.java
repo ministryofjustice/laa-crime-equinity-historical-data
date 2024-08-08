@@ -123,6 +123,11 @@ public interface Crm5Mapper extends CrmMapper{
     @Mapping(target="solicitor.declaration.name", source="solicitor_sign_forename")
     @Mapping(target="solicitor.certification.date", source="certification_sol_date")
     @Mapping(target="solicitor.certification.name", source="certification_sol_name")
-    @Mapping(target="officeUseOnly.decision", source="decision")
+    @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
+    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
+    @Mapping(target="officeUseOnly.authority.newLimitRequest", source="new_limit_request")
+    @Mapping(target="officeUseOnly.authority.upperLimitExtended", source="ou_upper_limit_extended")
+    @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
+    @Mapping(target="officeUseOnly.authority.signedAuthDate", source="ou_signed_auth_date")
     CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
 }
