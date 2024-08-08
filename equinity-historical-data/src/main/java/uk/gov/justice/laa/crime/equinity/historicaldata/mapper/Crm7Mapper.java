@@ -30,7 +30,11 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="claimTotals", source="model")
     @Mapping(target="coversheet", source="coversheet_printed")
     @Mapping(target="caseInformation", source="model")
-    @Mapping(target="decisionOfficeUseOnly", source="decision")
+    @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
+    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
+    @Mapping(target="officeUseOnly.qualityControl.destructionDate", source="destruction_date")
+    @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
+    @Mapping(target="officeUseOnly.authority.signedAuthDate", source="ou_signed_auth_date")
     Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")

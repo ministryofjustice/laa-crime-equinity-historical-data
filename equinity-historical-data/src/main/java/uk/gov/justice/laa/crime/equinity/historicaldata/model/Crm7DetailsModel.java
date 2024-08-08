@@ -705,4 +705,8 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     public int voucherrequired_count;
     @JsonProperty("Match_carried_out") // in crm5 too
     public boolean match_carried_out;
+    @JsonProperty("Destruction_date")
+    public LocalDate destruction_date;
+    @JsonProperty("Ou_signed_auth_date") // in CRM5 too
+    public LocalDate ou_signed_auth_date;
 }

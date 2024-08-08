@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7OfficialUseDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7SummaryOfClaimDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
@@ -144,5 +145,18 @@ class Crm7ControllerTest {
         softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, DENIED_PROFILE_TYPES))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+    }
+    @Test
+    void getApplicationCrm7Test_OfficialUseResponse() {
+        Long usnTest = 5001662L;
+        ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usnTest, null);
+
+        Crm7DetailsDTO crmFormDetails = Objects.requireNonNull(result.getBody()).getFormDetails();
+        softly.assertThat(crmFormDetails).isInstanceOf(Crm7DetailsDTO.class);
+        softly.assertThat(crmFormDetails.getUsn()).isEqualTo(usnTest.intValue());
+        softly.assertThat(crmFormDetails.getOfficeUseOnly()).isInstanceOf(Crm7OfficialUseDTO.class);
+        softly.assertThat(crmFormDetails.getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("PG");
+        softly.assertThat(crmFormDetails.getOfficeUseOnly().getAuthority().getSignedAuth()).isNotNull();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }
