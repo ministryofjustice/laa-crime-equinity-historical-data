@@ -106,6 +106,18 @@ public class Crm5ControllerTest {
         softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001716L);
         softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("10:00:00");    }
+    @Test
+    void getApplicationTest_OfficialUseResponse() {
+        Long usnTest = 5001604L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(result.getBody().getFormDetails().getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("G");
+        softly.assertThat(result.getBody().getFormDetails().getOfficeUseOnly().getAuthority().getSignedAuthDate()).isNotNull();
+    }
+
 
     @BeforeAll
     void preTest() throws IOException {

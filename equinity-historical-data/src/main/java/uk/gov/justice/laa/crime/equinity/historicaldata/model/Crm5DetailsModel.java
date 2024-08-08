@@ -550,4 +550,6 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     public String sd_address_county;
     @JsonProperty("Submitter_user_id")
     public String submitter_user_id;
+    @JsonProperty("Ou_signed_auth_date")
+    public Date ou_signed_auth_date;
 }
