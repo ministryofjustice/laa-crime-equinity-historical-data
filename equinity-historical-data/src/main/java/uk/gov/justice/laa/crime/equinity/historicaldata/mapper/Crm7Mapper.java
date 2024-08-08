@@ -30,11 +30,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="claimTotals", source="model")
     @Mapping(target="coversheet", source="coversheet_printed")
     @Mapping(target="caseInformation", source="model")
-    @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
-    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
-    @Mapping(target="officeUseOnly.qualityControl.destructionDate", source="destruction_date")
-    @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
-    @Mapping(target="officeUseOnly.authority.signedAuthDate", source="ou_signed_auth_date")
+    @Mapping(target="officeUseOnly", source="model")
     Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")
@@ -308,4 +304,14 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="name", source="solicitor_sign_name")
     @Mapping(target="date", source="solicitor_sign_date")
     Crm7CaseInformationSolicitorDTO getCaseInformationSolicitorDTOFromModel(Crm7DetailsModel model);
+    @Mapping(target="qualityControl", source="model")
+    @Mapping(target="authority", source="model")
+    Crm7OfficialUseDTO getOfficialUseDTOFromModel(Crm7DetailsModel model);
+    @Mapping(target="decision", source="decision_original")
+    @Mapping(target="decisionReason", source="full_grant_notes")
+    @Mapping(target="destructionDate", source="destruction_date")
+    Crm7DecisionDTO getDecisionDTOFromModel(Crm7DetailsModel model);
+    @Mapping(target="signedAuth", source="ou_signed_auth")
+    @Mapping(target="signedAuthDate", source="ou_signed_auth_date")
+    Crm7AuthorityDTO getAuthorityDTOFromModel(Crm7DetailsModel model);
 }
