@@ -32,9 +32,8 @@ Crm7DetailsDTO:
     #          $ref: '#/Crm7CoversheetDTO'
     caseInformation:
       $ref: "#/Crm7CaseInformationDTO"
-    decisionOfficeUseOnly:
-      type: string
-#      $ref: "#/Crm7DecisionOfficeUseOnlyDTO"
+    officeUseOnly:
+      $ref: "#/Crm7OfficialUseDTO"
 
 Crm7SummaryOfClaimDTO:
   type: object
@@ -552,8 +551,27 @@ Crm7CaseInformationSolicitorDTO:
     date:
       type: string
 
-#Crm7DecisionOfficeUseOnlyDTO:
-#  type: object
-#  properties:
-#    decision:
-#      type: string
+
+Crm7OfficialUseDTO:
+  properties:
+    qualityControl:
+      $ref: '#/Crm7DecisionDTO'
+    authority:
+      $ref: '#/Crm7AuthorityDTO'
+Crm7DecisionDTO:
+  properties:
+    decision:
+      type: string
+      description: Grant, Part Grant, Reject, Refer For ICA
+    decisionReason:
+      type: string
+    destructionDate:
+      type: string
+      format: date-time
+Crm7AuthorityDTO:
+  properties:
+    signedAuth:
+      type: string
+    signedAuthDate:
+      type: string
+      format: date-time
