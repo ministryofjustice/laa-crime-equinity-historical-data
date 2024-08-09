@@ -2,6 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.annotation.Timed;
 import io.sentry.Sentry;
 import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,7 @@ public class CrmFileService {
         };
     }
 
+    @Timed("laa_crime_equiniti_historic_data_view_crmForm_details")
     public <T extends CrmFormModelInterface> T getCrmFormData(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
         // Format sanity checks and conversions

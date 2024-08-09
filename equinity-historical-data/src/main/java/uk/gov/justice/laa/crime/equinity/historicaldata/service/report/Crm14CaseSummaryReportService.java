@@ -1,6 +1,7 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service.report;
 
 
+import io.micrometer.core.annotation.Timed;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class Crm14CaseSummaryReportService {
     }
 
     @Transactional
+    @Timed("laa_crime_equiniti_historic_data_report_crm14_generate")
     public String getReport(Crm14CaseSummaryReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {
         log.info("Generating CRM14 Case Summary Report for :: {} ", reportCriteria);
         List< Crm14CaseSummaryReportModel> report = reportRepository.getReport(
@@ -49,6 +51,7 @@ public class Crm14CaseSummaryReportService {
         return reportInCSV;
     }
 
+    @Timed("laa_crime_equiniti_historic_data_report_crm14_convertToCSV")
     private String exportToCSV(List<Crm14CaseSummaryReportModel> report) {
         return report.stream()
                 .map(Crm14CaseSummaryReportModel::exportToCSV)

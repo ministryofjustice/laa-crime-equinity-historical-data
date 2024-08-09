@@ -11,6 +11,8 @@ def versions = [
 		springSecurity				: '6.2.4',
 		logback						: '1.5.6',
 		sentryVersion				: '8.0.0-alpha.4',
+		micrometerio 				: '1.3.2', // '1.1.3',
+		prometheus 					: '1.13.2', //'1.11.2'
 ]
 
 configurations {
@@ -25,6 +27,10 @@ configurations {
 			force "org.springframework:spring-web:$versions.springWeb"
 		}
 	}
+}
+
+project.ext {
+	jaxbTargetDir = file("src/main/java")
 }
 
 dependencyManagement {
@@ -68,6 +74,12 @@ dependencies {
 	implementation platform("io.sentry:sentry-bom:$versions.sentryVersion")
 	implementation "io.sentry:sentry-logback"
 	implementation "io.sentry:sentry-spring-boot-starter-jakarta:$versions.sentryVersion"
+
+	// Metrics
+	implementation "io.micrometer:micrometer-tracing-bom:$versions.micrometerio"
+	implementation "io.micrometer:micrometer-tracing-bridge-brave:$versions.micrometerio"
+	implementation "io.micrometer:micrometer-registry-prometheus:$versions.prometheus"
+
 
 	// Annotations
 	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"

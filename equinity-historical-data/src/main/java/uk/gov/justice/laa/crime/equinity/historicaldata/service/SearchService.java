@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ public class SearchService {
     private final CrmFormSearchCriteria crmFormSearchCriteria;
     private final CrmFormsViewMapper searchResultsMapper;
 
+    @Timed("laa_crime_equiniti_historic_data_search")
     public SearchResultDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         log.info("Sending paged request. Search criteria :: {}", crmFormSearchCriteriaDTO);
         return convertResults(searchPageByCriteria(crmFormSearchCriteriaDTO));
