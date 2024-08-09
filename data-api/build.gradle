@@ -11,10 +11,10 @@ def versions = [
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
-//    implementation "org.apache.tomcat.embed:tomcat-embed-core:10.1.25"
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.0-M22'
 
 
-    implementation 'org.springframework.data:spring-data-commons:3.2.5'
+    implementation "org.springframework.data:spring-data-commons:$versions.springStarter"
     implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
