@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service.report;
 
+import io.micrometer.core.annotation.Timed;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ public class Crm5UpperLimitReportService {
     private final Crm5UpperLimitReportRepository reportRepository;
 
     @Transactional
+    @Timed("laa_crime_equiniti_historic_data_report_crm5_generate")
     public String getReport(String startDate, String endDate) throws ResourceNotFoundException {
         log.info("Generating CRM5 Upper Limit Report between :: {} and {}", startDate, endDate);
         List< Crm5UpperLimitReportModel> report = reportRepository.getReport(startDate, endDate);

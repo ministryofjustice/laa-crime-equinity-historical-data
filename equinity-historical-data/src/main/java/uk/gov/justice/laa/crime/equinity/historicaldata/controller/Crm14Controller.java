@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
+import io.micrometer.core.annotation.Timed;
 import io.sentry.Sentry;
 import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class Crm14Controller implements Crm14InterfaceApi{
     private final Crm14Mapper mapper;
 
     @Override
+    @Timed("laa_crime_equiniti_historic_data_view_crm14_details")
     public ResponseEntity<Crm14FormDTO> getApplicationCrm14(Long usn, String profileAcceptedTypes) {
         String logMessage = String.format("eForm CRM14 details request received :: usn=[%s]", usn);
         log.info(logMessage);

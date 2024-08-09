@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.service.report;
 
+import io.micrometer.core.annotation.Timed;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ public class Crm4PeriodicalReportService {
     private final Crm4PeriodicalReportRepository reportRepository;
 
     @Transactional
+    @Timed("laa_crime_equiniti_historic_data_report_crm4_generate")
     public String getReport(String startDate, String endDate) throws ResourceNotFoundException {
         log.info("Generating CRM4 Periodical Report between :: {} and {}", startDate, endDate);
         List<Crm4PeriodicalReportModel> report = reportRepository.getReport(startDate, endDate);

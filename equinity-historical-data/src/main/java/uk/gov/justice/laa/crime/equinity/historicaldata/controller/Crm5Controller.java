@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
+import io.micrometer.core.annotation.Timed;
 import io.sentry.Sentry;
 import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class Crm5Controller implements Crm5InterfaceApi {
 
 
     @Override
+    @Timed("laa_crime_equiniti_historic_data_view_crm5_details")
     public ResponseEntity<Crm5FormDTO> getApplication(Long usn, String profileAcceptedTypes) {
         String logMessage = String.format("eForm CRM5 details request received :: usn=[%s]", usn);
         log.info(logMessage);
