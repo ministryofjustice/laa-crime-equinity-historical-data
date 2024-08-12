@@ -13,7 +13,7 @@ def versions = [
 		mapStruct					: '1.5.5.Final',
 		openAPI						: '2.6.0',
 		sentryVersion				: '7.13.0',
-		micrometerio 				: '1.3.2',
+		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
 ]
 
