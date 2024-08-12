@@ -20,6 +20,17 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+springdoc:
+  packagesToScan: uk.gov.justice.laa.crime.equinity.historicaldata
+  show-actuator: true
+  api-docs:
+    path: /equinity-historical-data
+    enabled: false
+  swagger-ui:
+    path: /open-api/docs.html
+    enabled: false
+    operationsSorter: method
+
 datasource:
   archive:
     table: CrmFormsView
