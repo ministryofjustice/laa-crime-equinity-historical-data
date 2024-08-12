@@ -23,14 +23,12 @@ spring:
 springdoc:
   packagesToScan: uk.gov.justice.laa.crime.equinity.historicaldata
   show-actuator: true
-  use-management-port: true
   api-docs:
     path: /api-docs
     enabled: false
   swagger-ui:
     path: /swagger-ui
     enabled: false
-    operationsSorter: method
 
 datasource:
   archive:
