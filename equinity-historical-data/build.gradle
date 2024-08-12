@@ -28,7 +28,7 @@ configurations {
 			// with known vulnerabilities, and the version to use as a fix
 			// This will still need to be included manually under the dependencies section
 			// This will only ensure the override of the bundled version
-			force 'org.apache.tomcat.embed:tomcat-embed-core:11.0.0-M22'
+			force 'org.apache.tomcat.embed:tomcat-embed-core:10.1.25'
 			force 'io.netty:netty-codec-http:4.1.108.Final'
 			force "org.springframework:spring-web:$versions.springWeb"
 		}
@@ -51,7 +51,7 @@ dependencies {
 	// Spring
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
-	implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.0-M22'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.25'
 
 	// Logs
 	implementation "ch.qos.logback:logback-core:$versions.logback"
