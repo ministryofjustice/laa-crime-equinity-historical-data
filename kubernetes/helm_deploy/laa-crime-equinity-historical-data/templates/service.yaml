@@ -13,12 +13,12 @@ spec:
   ports:
     - name: http
       port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
     {{- if not (eq (toString .Values.actuator.port) "http") }}
     - name: actuator
       port: {{ .Values.actuator.port }}
-      targetPort: actuator
+      targetPort: {{ .Values.actuator.port }}
       protocol: TCP
       {{- end }}
   selector:
