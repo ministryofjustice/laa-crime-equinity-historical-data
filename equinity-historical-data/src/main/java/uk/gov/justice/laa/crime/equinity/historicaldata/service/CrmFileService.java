@@ -3,8 +3,6 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.core.annotation.Timed;
-import io.sentry.Sentry;
-import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -144,10 +142,7 @@ public class CrmFileService {
             return;
         }
         if (jsonParentObject.get(jsonChildKey) instanceof JSONObject) {
-            String logMessage = String.format("CRM form [%s] :: [%s] to be a list. Try converting into a list", jsonParentKey, jsonChildKey);
-            log.info(logMessage);
-            // TODO (EMP-182): This is only to count how many times this happens. Review to replace once other metric systems are introduced
-            Sentry.captureMessage(logMessage, SentryLevel.INFO);
+            log.info("CRM form [{}] :: [{}] to be a list. Try converting into a list", jsonParentKey, jsonChildKey);
 
             JSONArray toArray = new JSONArray();
             toArray.put(jsonParentObject.get(jsonChildKey));

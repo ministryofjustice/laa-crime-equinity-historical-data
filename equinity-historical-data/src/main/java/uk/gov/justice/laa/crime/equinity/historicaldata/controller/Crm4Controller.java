@@ -1,8 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller;
 
 import io.micrometer.core.annotation.Timed;
-import io.sentry.Sentry;
-import io.sentry.SentryLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +25,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
     @Override
     @Timed("laa_crime_equiniti_historic_data_view_crm4_details")
     public ResponseEntity<Crm4FormDTO> getApplicationCrm4(Long usn, String profileAcceptedTypes) {
-        String logMessage = String.format("eForm CRM4 details request received :: usn=[%s]", usn);
-        log.info(logMessage);
-        // TODO (EMP-182): This is only to count how many requests are received. Review to replace once other metric systems are introduced
-        Sentry.captureMessage(logMessage, SentryLevel.INFO);
+        log.info("eForm CRM4 details request received :: usn=[{}]", usn);
 
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
                 usn, CRM_TYPE_4, profileAcceptedTypes
