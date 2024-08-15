@@ -48,6 +48,7 @@ public class CrmFileService {
     public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
+    public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
 
 
 
@@ -68,8 +69,13 @@ public class CrmFileService {
     @Timed("laa_crime_equiniti_historic_data_view_crmForm_details")
     public <T extends CrmFormModelInterface> T getCrmFormData(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
+
         // Format sanity checks and conversions
-        if (crmFormDetailsCriteriaDTO.type() == CRM_TYPE_14){
+        if (CRM_TYPE_4 == crmFormDetailsCriteriaDTO.type()){
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_ADDITIONAL_EXPENDITURE, CRM14_ROW);
+        }
+
+        if ( CRM_TYPE_14 == crmFormDetailsCriteriaDTO.type() ){
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_CHARGES_BROUGHT, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BUSINESS_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_BUSINESS_DETAILS, CRM14_ROW);

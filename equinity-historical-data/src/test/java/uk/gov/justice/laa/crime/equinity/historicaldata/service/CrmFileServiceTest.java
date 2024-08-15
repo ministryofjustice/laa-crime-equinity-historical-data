@@ -48,7 +48,7 @@ class CrmFileServiceTest {
 
 
     @BeforeAll
-    void preTest() throws IOException {
+    void preTest() {
         crmFileTestTypes = new HashMap<>();
         crmFileTestTypes.put(5001912L, CRM_TYPE_4);
         crmFileTestTypes.put(5001604L, CRM_TYPE_5);
@@ -62,6 +62,7 @@ class CrmFileServiceTest {
         crmFileTests.put(5001604L, String.format(TEST_FILES_PATH, "Crm5MockFile_5001604.txt"));
         crmFileTests.put(11L, String.format(TEST_FILES_PATH, "Crm5MockOFDFile_WrongFormat.txt"));
         crmFileTests.put(5001912L, String.format(TEST_FILES_PATH, "Crm4MockFile_5001912.txt"));
+        crmFileTests.put(492914L, String.format(TEST_FILES_PATH, "Crm4MockFile_492914.txt"));
         crmFileTests.put(4808706L, String.format(TEST_FILES_PATH, "Crm7MockFile_4808706.txt"));
         crmFileTests.put(5001662L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001662.txt"));
         crmFileTests.put(5001597L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001597.txt"));
