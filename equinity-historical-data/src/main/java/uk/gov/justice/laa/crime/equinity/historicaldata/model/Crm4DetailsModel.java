@@ -205,6 +205,36 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Ai_text")
     public String ai_text;
 
+    @JsonProperty("Expenditure_orderedbycourt")
+    public String expenditure_orderedbycourt;
+    @JsonProperty("Dna_cost")
+    public float dna_cost;
+    @JsonProperty("Accomm_basis")
+    public String accomm_basis;
+    @JsonProperty("Transcription_no_of_mins")
+    public float transcription_no_of_mins;
+    @JsonProperty("Transcription_cost_per_min")
+    public float transcription_cost_per_min;
+    @JsonProperty("Transcription_total")
+    public float transcription_total;
+    @JsonProperty("Photocopy_no_of_pages")
+    public float photocopy_no_of_pages;
+    @JsonProperty("Photocopy_cost_per_page")
+    public float photocopy_cost_per_page;
+    @JsonProperty("Photocopy_total")
+    public float photocopy_total;
+    @JsonProperty("Translator_no_of_words")
+    public float translator_no_of_words;
+    @JsonProperty("Translator_per_thou_words")
+    public float translator_per_thou_words;
+    @JsonProperty("Translator_total_cost")
+    public float translator_total_cost;
+    @JsonProperty("Other_quantity")
+    public float other_quantity;
+    @JsonProperty("Other_rate")
+    public float other_rate;
+    @JsonProperty("Other_total")
+    public float other_total;
     @JsonProperty("Solicitor_declaration")
     public boolean solicitor_declaration;
     @JsonProperty("Solicitor_sign_date")

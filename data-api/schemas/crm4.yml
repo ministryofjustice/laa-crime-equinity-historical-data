@@ -26,6 +26,18 @@ Crm4ExpenditureDetailsDTO:
       $ref: '#/Crm4ExpenDetailsDTO'
     Preparation:
       $ref: '#/Crm4PreparationDetailsDTO'
+    DnaReport:
+      $ref: '#/Crm4DNAReportDTO'
+    Accommodation:
+      $ref: '#/Crm4AccommodationDTO'
+    Transcription:
+      $ref: '#/Crm4TranscriptionDTO'
+    Photocopying:
+      $ref: '#/Crm4PhotocopyingDTO'
+    Translator:
+      $ref: '#/Crm4TranslatorDTO'
+    Other:
+      $ref: '#/Crm4OtherDTO'
     AdditionalExpenditure:
       type: array
       items:
@@ -69,6 +81,8 @@ Crm4ExpenDetailsDTO:
       type: string
     priorAuthority:
       type: string
+    courtOrderedReport:
+      type: string
     expertName:
       type: string
     companyName:
@@ -77,6 +91,61 @@ Crm4ExpenDetailsDTO:
       type: string
     postCodeExpert:
       type: string
+Crm4DNAReportDTO:
+  type: object
+  properties:
+    dnaCost:
+      type: number
+      format: float
+Crm4AccommodationDTO:
+  type: object
+  properties:
+    costBasis:
+      type: string
+Crm4PhotocopyingDTO:
+  type: object
+  properties:
+    numPages:
+      type: integer
+    costPerPage:
+      type: number
+      format: float
+    total:
+      type: number
+      format: float
+Crm4TranscriptionDTO:
+  type: object
+  properties:
+    numMin:
+      type: integer
+    costPerMin:
+      type: number
+      format: float
+    total:
+      type: number
+      format: float
+Crm4TranslatorDTO:
+  type: object
+  properties:
+    numWords:
+      type: integer
+    costPerWord:
+      type: number
+      format: float
+    total:
+      type: number
+      format: float
+Crm4OtherDTO:
+  type: object
+  properties:
+    quantity:
+      type: integer
+    rate:
+      type: number
+      format: float
+    total:
+      type: number
+      format: float
 Crm4PreparationDetailsDTO:
   type: object
   properties:
@@ -85,9 +154,11 @@ Crm4PreparationDetailsDTO:
       format: time
       description: only Time in 24 hrs format HH:MM
     hourlyRate:
-      type: integer
+      type: number
+      format: float
     total:
-      type: integer
+      type: number
+      format: float
 Crm4CaseDetailsDTO:
   type: object
   properties:
