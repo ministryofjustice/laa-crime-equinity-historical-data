@@ -29,6 +29,7 @@ public class CrmFileService {
     public static final int CRM_TYPE_7 = 5;
     public static final int CRM_TYPE_14 = 6;
     private static final String CHAR_NULL = "\u0000";
+    private static final String CHAR_HYPHEN ="\u2010";
     private static final String CHAR_EMPTY = "";
     private static final String CRM_FORM_DATA = "fd:formdata";
     private static final String CRM_PRINT_INFO = "printinfo";
@@ -101,7 +102,7 @@ public class CrmFileService {
         // Collect and clean content
         String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.UTF_8)
             .replaceAll(CHAR_NULL, CHAR_EMPTY);
-
+        crmFormFileContent = crmFormFileContent.replaceAll(CHAR_HYPHEN,CHAR_EMPTY); // replacing hyphen unicode with empty space to remove malformed xml error
         return convertCrmFileContentToJson(crmFormFileContent);
     }
 
