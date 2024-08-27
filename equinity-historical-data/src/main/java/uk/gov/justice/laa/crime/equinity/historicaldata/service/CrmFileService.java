@@ -51,6 +51,8 @@ public class CrmFileService {
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
     public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
+    public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
+    public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
 
 
 
@@ -75,6 +77,8 @@ public class CrmFileService {
         // Format sanity checks and conversions
         if (CRM_TYPE_4 == crmFormDetailsCriteriaDTO.type()){
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_ADDITIONAL_EXPENDITURE, CRM14_ROW);
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE, CRM14_ROW);
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_RELATED_SUBMISSIONS, CRM14_ROW);
         }
 
         if ( CRM_TYPE_14 == crmFormDetailsCriteriaDTO.type() ){
