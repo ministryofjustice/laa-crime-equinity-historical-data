@@ -2,10 +2,14 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4AuthorisedExpenditureDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4RelatedSubmissionDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4AuthorisedExpenditureModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4SubmissionModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm4Mapper extends CrmEvidenceFilesMapper {
@@ -78,22 +82,73 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="expenditureDetails.travel.rate", source = "travel_per_hr")
     @Mapping(target="expenditureDetails.travel.total", source = "travel_cost_total")
     @Mapping(target="expenditureDetails.authority", source = "total_authority")
-
     @Mapping(target="alternativeQuotes.alternativeQuote", source = "obtained_alt_quotes")
     @Mapping(target="alternativeQuotes.reason", source = "no_alt_quote_reasons")
     @Mapping(target="alternativeQuotes.numberOfQuotes", source = "quotes_number")
     @Mapping(target="alternativeQuotes.quotes", source = "allQuotes")
-
-
     @Mapping(target="priorAuthorityDetails.authorityDetails", source = "authority_sought")
     @Mapping(target="priorAuthorityDetails.prosecutionSummary", source = "prosecution_case_summary")
     @Mapping(target="priorAuthorityDetails.defenceMitigation", source = "defence_summary")
     @Mapping(target="priorAuthorityDetails.qcDetails", source = "qc_without_junior_details")
-
     @Mapping(target="solicitor.declaration", source="solicitor_declaration")
     @Mapping(target="solicitor.certification.date", source="solicitor_sign_date")
     @Mapping(target="solicitor.certification.name", source="solicitorname")
-    @Mapping(target="officeUseOnly.decision", source = "tlstatename")
-
+    @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
+    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
+    @Mapping(target="officeUseOnly.preparation.requested.hours", source="preparation_hrs")
+    @Mapping(target="officeUseOnly.preparation.requested.hourlyRate", source="preparation_rate")
+    @Mapping(target="officeUseOnly.preparation.requested.total", source="preparation_total")
+    @Mapping(target="officeUseOnly.preparation.authorised.hours", source="cw_preparation_hrs")
+    @Mapping(target="officeUseOnly.preparation.authorised.hourlyRate", source="cw_preparation_rate")
+    @Mapping(target="officeUseOnly.preparation.authorised.total", source="cw_preparation_total")
+    @Mapping(target="officeUseOnly.dnaReport.requested.dnaCost", source = "dna_cost")
+    @Mapping(target="officeUseOnly.dnaReport.authorised.dnaCost", source = "cw_dna_cost")
+    @Mapping(target="officeUseOnly.accommodation.costBasis", source = "accomm_basis")
+    @Mapping(target="officeUseOnly.transcription.requested.numMin", source="transcription_no_of_mins")
+    @Mapping(target="officeUseOnly.transcription.requested.costPerMin", source="transcription_cost_per_min")
+    @Mapping(target="officeUseOnly.transcription.requested.total", source="transcription_total")
+    @Mapping(target="officeUseOnly.transcription.authorised.numMin", source="cw_transcription_no_of_mins")
+    @Mapping(target="officeUseOnly.transcription.authorised.costPerMin", source="cw_transcription_cost_per_min")
+    @Mapping(target="officeUseOnly.transcription.authorised.total", source="cw_transcription_total")
+    @Mapping(target="officeUseOnly.translator.requested.numWords", source="translator_no_of_words")
+    @Mapping(target="officeUseOnly.translator.requested.costPerWord", source="translator_per_thou_words")
+    @Mapping(target="officeUseOnly.translator.requested.total", source="translator_total_cost")
+    @Mapping(target="officeUseOnly.translator.authorised.numWords", source="cw_translator_no_of_words")
+    @Mapping(target="officeUseOnly.translator.authorised.costPerWord", source="cw_translator_per_thou_words")
+    @Mapping(target="officeUseOnly.translator.authorised.total", source="cw_translator_total_cost")
+    @Mapping(target="officeUseOnly.photocopying.requested.numPages", source="photocopy_no_of_pages")
+    @Mapping(target="officeUseOnly.photocopying.requested.costPerPage", source="photocopy_cost_per_page")
+    @Mapping(target="officeUseOnly.photocopying.requested.total", source="photocopy_total")
+    @Mapping(target="officeUseOnly.photocopying.authorised.numPages", source="cw_photocopy_no_of_pages")
+    @Mapping(target="officeUseOnly.photocopying.authorised.costPerPage", source="cw_photocopy_cost_per_page")
+    @Mapping(target="officeUseOnly.photocopying.authorised.total", source="cw_photocopy_total")
+    @Mapping(target="officeUseOnly.additionalExpenditure", source="authorisedAdditionalExpenditure.expenditure")
+    @Mapping(target="officeUseOnly.travel.requested.hours", source="travel_no_of_hrs")
+    @Mapping(target="officeUseOnly.travel.requested.rate", source="travel_per_hr")
+    @Mapping(target="officeUseOnly.travel.requested.total", source="travel_cost_total")
+    @Mapping(target="officeUseOnly.travel.authorised.hours", source="cw_travel_no_of_hrs")
+    @Mapping(target="officeUseOnly.travel.authorised.rate", source="cw_travel_per_hr")
+    @Mapping(target="officeUseOnly.travel.authorised.total", source="cw_travel_cost_total")
+    @Mapping(target="officeUseOnly.authority.allowedAmount", source="amount_allowed")
+    @Mapping(target="officeUseOnly.authority.destructionDate", source="destruction_date")
+    @Mapping(target="officeUseOnly.authority.signedAuth", source="signed_authority")
+    @Mapping(target="officeUseOnly.relatedSubmissions", source="relatedSubmissions.submissions")
     Crm4DetailsDTO    getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
+    @Mapping(target="usn", source="usn")
+    @Mapping(target="clientName", source="clientname")
+    @Mapping(target="state", source="state")
+    @Mapping(target="formType", source="formtype")
+    @Mapping(target="dtSubmitted", source="datesubmitted")
+    @Mapping(target="decision", source="decision")
+    Crm4RelatedSubmissionDTO getCrm4RelatedSubmissionsFromModel(Crm4SubmissionModel cr4RelatedSubmissionModel);
+
+    @Mapping(target="description", source="description")
+    @Mapping(target="justification", source="justification")
+    @Mapping(target="rate", source="rate")
+    @Mapping(target="quantity", source="quantity")
+    @Mapping(target="total", source="total")
+    @Mapping(target="authorisedTotal", source="total_cw")
+    @Mapping(target="authorisedQuantity", source="quantity_cw")
+    @Mapping(target="authorisedRate", source="rate_cw")
+    Crm4AuthorisedExpenditureDTO getCrm4RelatedSubmissionsFromModel(Crm4AuthorisedExpenditureModel authorisedExpenditureModel);
 }

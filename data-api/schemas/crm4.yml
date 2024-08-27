@@ -18,7 +18,7 @@ Crm4DetailsDTO:
     Solicitor:
       $ref: '#/Crm4SolicitorDTO'
     OfficeUseOnly:
-      $ref: '#/Crm4DecisionDTO'
+      $ref: '#/Crm4OfficialUseDTO'
 Crm4ExpenditureDetailsDTO:
   type: object
   properties:
@@ -73,6 +73,43 @@ Crm4ExpenditureDTO:
       type: integer
     total:
       type: integer
+
+Crm4AuthorisedExpenditureDTO:
+  type: object
+  properties:
+    description:
+      type: string
+    justification:
+      type: string
+    quantity:
+      type: integer
+    rate:
+      type: integer
+    total:
+      type: integer
+    authorisedQuantity:
+      type: integer
+    authorisedRate:
+      type: integer
+    authorisedTotal:
+      type: integer
+
+Crm4RelatedSubmissionDTO:
+  type: object
+  properties:
+    usn:
+      type: integer
+    clientName:
+      type: string
+    state:
+      type: string
+    formType:
+      type: string
+    dtSubmitted:
+      type: string
+      format: date-time
+    decision:
+      type: string
 
 Crm4ExpenDetailsDTO:
   type: object
@@ -327,3 +364,73 @@ Crm4DecisionDTO:
     decision:
       type: string
       description: Grant, Part Grant, Reject, Refer For ICA
+    decisionReason:
+      type: string
+Crm4AuthorityTO:
+  properties:
+    allowedAmount:
+      type: number
+      format: float
+    destructionDate:
+      type: string
+      format: date-time
+    signedAuth:
+      type: string
+Crm4OfficialUseDTO:
+  properties:
+    QualityControl:
+      $ref: '#/Crm4DecisionDTO'
+    Preparation:
+      type: object
+      properties:
+        requested:
+          $ref: '#/Crm4PreparationDetailsDTO'
+        authorised:
+          $ref: '#/Crm4PreparationDetailsDTO'
+    DnaReport:
+      type: object
+      properties:
+        requested:
+          $ref: '#/Crm4DNAReportDTO'
+        authorised:
+          $ref: '#/Crm4DNAReportDTO'
+    Accommodation:
+      $ref: '#/Crm4AccommodationDTO'
+    Transcription:
+      type: object
+      properties:
+        requested:
+          $ref: '#/Crm4TranscriptionDTO'
+        authorised:
+          $ref: '#/Crm4TranscriptionDTO'
+    Photocopying:
+      type: object
+      properties:
+        requested:
+          $ref: '#/Crm4PhotocopyingDTO'
+        authorised:
+          $ref: '#/Crm4PhotocopyingDTO'
+    Translator:
+      type: object
+      properties:
+        requested:
+          $ref: '#/Crm4TranslatorDTO'
+        authorised:
+          $ref: '#/Crm4TranslatorDTO'
+    Travel:
+      type: object
+      properties:
+        requested:
+          $ref: '#/Crm4TravelDTO'
+        authorised:
+          $ref: '#/Crm4TravelDTO'
+    AdditionalExpenditure:
+      type: array
+      items:
+        $ref: '#/Crm4AuthorisedExpenditureDTO'
+    Authority:
+      $ref: '#/Crm4AuthorityTO'
+    RelatedSubmissions:
+      type: array
+      items:
+        $ref: '#/Crm4RelatedSubmissionDTO'
