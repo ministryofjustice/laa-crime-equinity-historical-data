@@ -99,6 +99,8 @@ Crm5ClientDTO:
       type: string
     maritalStatus:
       type: string
+    clientNfa:
+      type: boolean
     dateOfBirth:
       type: string
       format: date-time
