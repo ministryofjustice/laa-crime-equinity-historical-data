@@ -330,9 +330,9 @@ Crm5NameAndDateDTO:
       type: string
 Crm5OfficialUseDTO:
   properties:
-    qualityControl:
+    QualityControl:
       $ref: '#/Crm5DecisionDTO'
-    authority:
+    Authority:
       $ref: '#/Crm5AuthorityDTO'
 Crm5DecisionDTO:
   properties:
