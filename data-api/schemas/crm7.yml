@@ -32,7 +32,7 @@ Crm7DetailsDTO:
     #          $ref: '#/Crm7CoversheetDTO'
     caseInformation:
       $ref: "#/Crm7CaseInformationDTO"
-    officeUseOnly:
+    OfficeUseOnly:
       $ref: "#/Crm7OfficialUseDTO"
 
 Crm7SummaryOfClaimDTO:
@@ -554,9 +554,9 @@ Crm7CaseInformationSolicitorDTO:
 
 Crm7OfficialUseDTO:
   properties:
-    qualityControl:
+    QualityControl:
       $ref: '#/Crm7DecisionDTO'
-    authority:
+    Authority:
       $ref: '#/Crm7AuthorityDTO'
 Crm7DecisionDTO:
   properties:
