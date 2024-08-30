@@ -44,6 +44,7 @@ public interface Crm5Mapper extends CrmMapper{
     @Mapping(target="clientDetails.middleName", expression = "java(null)")
     @Mapping(target="clientDetails.surname", source="client_surname")
     @Mapping(target="clientDetails.maritalStatus", source="client_marital_status")
+    @Mapping(target="clientDetails.clientNfa", source="client_nfa")
     @Mapping(target="clientDetails.dateOfBirth", source="client_dob")
     @Mapping(target="clientDetails.address.postcode", source="client_address_postcode")
     @Mapping(target="clientDetails.address.addressLine1", source="client_address_line1")
