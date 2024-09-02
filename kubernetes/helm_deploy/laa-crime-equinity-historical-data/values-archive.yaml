@@ -19,7 +19,7 @@ database:
 ingress:
   enabled: true
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: "laa-crime-equinity-historical-data-ingress-laa-crime-equinity-historical-data-prod-green"
+    external-dns.alpha.kubernetes.io/set-identifier: "laa-crime-equinity-historical-data-ingress-laa-crime-equinity-historical-data-archive-green"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
