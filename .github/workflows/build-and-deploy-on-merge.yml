@@ -73,7 +73,6 @@ jobs:
       packages: write
     needs:
       - build
-      - test
       - capture-repo-info
     uses: ./.github/workflows/_deploy-to.yml
     with:
