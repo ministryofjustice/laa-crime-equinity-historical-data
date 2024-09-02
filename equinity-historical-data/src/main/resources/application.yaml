@@ -30,12 +30,6 @@ springdoc:
     path: /swagger-ui
     enabled: false
 
-datasource:
-  archive:
-    table: CrmFormsView
-    catalog: eq_archive
-    schema: dbo
-
 server:
   port: 8089
   api:

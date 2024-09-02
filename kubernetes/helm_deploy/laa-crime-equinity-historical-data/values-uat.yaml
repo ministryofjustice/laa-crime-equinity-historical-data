@@ -15,7 +15,6 @@ service:
   environment: "uat"
 
 database:
-  debug: true
   name: "eq_uat"
 
 ingress:

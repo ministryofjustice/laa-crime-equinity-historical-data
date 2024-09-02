@@ -238,41 +238,6 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
-  ###
-  # Archive
-  ###
-  /api/internal/v1/equinity/archive/search/:
-    get:
-      tags:
-        - Search Archive
-      summary: 'Search Archive for CRM forms'
-      operationId: 'doSearchArchiveBy'
-      parameters:
-        - $ref: '#/components/parameters/profileAcceptedTypes'
-        - $ref: '#/components/parameters/searchUsn'
-        - $ref: '#/components/parameters/searchType'
-        - $ref: '#/components/parameters/searchClient'
-        - $ref: '#/components/parameters/searchClientDoB'
-        - $ref: '#/components/parameters/searchSubmittedFrom'
-        - $ref: '#/components/parameters/searchSubmittedTo'
-        - $ref: '#/components/parameters/searchProviderAccount'
-        - $ref: '#/components/parameters/searchPage'
-        - $ref: '#/components/parameters/searchPageSize'
-      responses:
-        '200':
-          description: 'Success'
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SearchResultDTO"
-        '400':
-          description: 'Bad request'
-        '403':
-          description: 'Unauthorized'
-        '404':
-          description: 'Not found'
-        '500':
-          description: 'Internal server error'
 
 components:
   parameters:
