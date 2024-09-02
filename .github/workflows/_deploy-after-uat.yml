@@ -51,6 +51,21 @@ jobs:
       app_name: ${{ needs.capture-repo-info.outputs.app_name }}
     secrets: inherit
 
+  deploy-archive:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    needs:
+      - deploy-prod
+      - capture-repo-info
+    uses: ./.github/workflows/_deploy-to.yml
+    with:
+      environment: "archive"
+      repo_name: ${{ needs.capture-repo-info.outputs.repo_name }}
+      app_name: ${{ needs.capture-repo-info.outputs.app_name }}
+    secrets: inherit
+
   snyk-monitor:
     permissions:
       id-token: write
