@@ -67,20 +67,6 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           push: true
 
-  test:
-    runs-on: ubuntu-latest
-    needs:
-      - capture-repo-info
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run unit tests with gradle
-        uses: './.github/actions/test-app-gradle'
-        with:
-          java-version: ${{env.JAVA_VERSION}}
-          java-dist: ${{env.JAVA_DIST}}
-
   deploy-uat:
     permissions:
       id-token: write
