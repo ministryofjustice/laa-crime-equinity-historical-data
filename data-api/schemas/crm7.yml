@@ -50,6 +50,7 @@ Crm7SummaryOfClaimDTO:
       type: integer
     representationOrderNumber:
       type: integer
+      format: int64
     representationOrderDate:
       type: string
     representationOrderSubmitMode:

@@ -76,4 +76,14 @@ public class EquinityExceptionResponseHandler {
         log.error(logMessage);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleGenericException(
+            Exception exception
+    ) {
+        String logMessage = String.format("There was an unexpected problem with the database. %s :: %s ", exception.getClass(), exception.getMessage());
+        log.error(logMessage);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
+    }
 }
