@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.exception;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import jakarta.validation.ConstraintViolationException;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -62,6 +63,16 @@ public class EquinityExceptionResponseHandler {
             ClassCastException exception
     ) {
         String logMessage = String.format("There was a problem reading CRM image file. %s :: %s ", exception.getClass(), exception.getMessage());
+        log.error(logMessage);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
+    }
+
+    @ExceptionHandler(SQLServerException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleSQLServerException(
+            SQLServerException exception
+    ) {
+        String logMessage = String.format("There was an unexpected problem with the database. %s :: %s ", exception.getClass(), exception.getMessage());
         log.error(logMessage);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
     }
