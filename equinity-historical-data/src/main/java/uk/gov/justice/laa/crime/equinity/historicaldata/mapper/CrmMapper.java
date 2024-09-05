@@ -8,6 +8,10 @@ public interface CrmMapper {
         return (s == null || s.isEmpty()) ? null : Integer.parseInt(s);
     }
 
+    default Long emptyLongToNull(String s) {
+        return (s == null || s.isEmpty()) ? null : Long.parseLong(s);
+    }
+
     default Float emptyFloatToNull(String s) {
         return (s == null || s.isEmpty()) ? null : Float.parseFloat(s);
     }
