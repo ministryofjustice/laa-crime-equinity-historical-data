@@ -448,7 +448,7 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Cp_rbba_category")
     public String cp_rbba_category;
     @JsonProperty("Cp_rbba_category_cw")
-    public float cp_rbba_category_cw;
+    public String cp_rbba_category_cw;
     @JsonProperty("Cp_rbba_category_before_qc")
     public String cp_rbba_category_before_qc;
     @JsonProperty("Sd_address_postcode") // in CRM5 too
