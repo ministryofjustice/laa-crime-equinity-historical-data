@@ -54,6 +54,8 @@ public class CrmFileService {
     public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
     public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
 
+    public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
+
 
 
     private final TaskImageFilesRepository taskImageFilesRepository;
@@ -93,6 +95,7 @@ public class CrmFileService {
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_EMPLOYMENT_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_EMPLOYMENT_DETAILS, CRM14_ROW);
             convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_NEW_ATTACHMENTS, CRM14_ROW);
+            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_MESSAGE_HISTORY, CRM14_ROW);
         }
         convertCrmFormObjectToArray(crmFileJsonObject, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
