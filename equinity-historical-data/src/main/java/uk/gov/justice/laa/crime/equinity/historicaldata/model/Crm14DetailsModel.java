@@ -826,7 +826,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
-    public Crm14FundingDecisionsModel fundingDecisions;
+    public List<Crm14FundDecisionModel> fundingDecisions;
 
     public boolean hasCrm15() {
         if (StringUtils.isNotEmpty(this.getPrivate_company()) && this.getPrivate_company().equalsIgnoreCase("Yes"))
@@ -835,7 +835,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
             return StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes");
     }
 
-    public Crm14FundingDecisionsModel getFundingDecisions() {
+    public List<Crm14FundDecisionModel> getFundingDecisions() {
         if (!this.isSubformfundingdecision_1_subformisvisible()) {
             return null;
         }
@@ -907,8 +907,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
                 allDecisions.add(decision);
             }
         }
-        Crm14FundingDecisionsModel decisions= new Crm14FundingDecisionsModel();
-        decisions.setDecisions(allDecisions);
-        return decisions;
+        return allDecisions;
     }
 }

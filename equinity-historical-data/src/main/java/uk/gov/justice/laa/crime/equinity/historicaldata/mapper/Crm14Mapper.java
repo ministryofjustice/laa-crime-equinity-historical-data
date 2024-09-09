@@ -635,7 +635,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target ="messageHistory", source="messagehistory.messages")
     @Mapping(target ="returnProvider.returnReason", source = "return_reason")
     @Mapping(target ="returnProvider.returnReasonDetails", source = "return_reason_details")
-    @Mapping(target ="fundingDecisions", source="fundingDecisions.decisions")
+    @Mapping(target ="fundingDecisions", source="fundingDecisions")
     Crm14OfficialUseDTO getOfficialUseDTOFromModel(Crm14DetailsModel model);
     @Mapping(target ="senderDisplay", source = "sender_display")
     @Mapping(target ="message", source = "message")
