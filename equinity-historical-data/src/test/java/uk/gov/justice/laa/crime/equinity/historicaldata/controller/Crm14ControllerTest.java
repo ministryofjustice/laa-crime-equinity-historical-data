@@ -63,6 +63,8 @@ class Crm14ControllerTest {
         validUsnTests = new HashMap<>();
         validUsnTests.put(5001817L, "src/test/resources/Crm14MockFile_5001817.txt");
         validUsnTests.put(5001669L, "src/test/resources/Crm14MockFile_5001669.txt");
+        validUsnTests.put(1826833L, "src/test/resources/Crm14MockFile_1826833.txt");
+
         Crm14AttachmentModel attachModel = new Crm14AttachmentModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
                 "3x monthly statements","",341);
         attachmentStoreRepository.save(attachModel);
@@ -152,6 +154,28 @@ class Crm14ControllerTest {
         softly.assertThat(result.getBody()).isNotNull();
         softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getProcessedAttachments()).isNotEmpty();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    }
+    @Test
+    void getApplication_Crm14Test_FundingDecisions() {
+        Long usnToTest = 1826833L;
+        // Test with accepted types
+        ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getOfficeUseOnly().getFundingDecisions().get(0).getCaseNumber()).isEqualTo("061601049057");
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    }
+    @Test
+    void getApplication_Crm14Test_MessageHistory() {
+        Long usnToTest = 1826833L;
+        // Test with accepted types
+        ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getOfficeUseOnly().getMessageHistory().get(0).getSenderUniqueName()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }

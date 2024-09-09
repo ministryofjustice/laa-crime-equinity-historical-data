@@ -29,11 +29,117 @@ Crm14DetailsDTO:
       $ref: "#/Crm14AboutInfoDTO"
     declarations:
       $ref: "#/Crm14DeclarationsDTO"
+    officeUseOnly:
+      $ref: "#/Crm14OfficialUseDTO"
     privacyAgree:
       type: boolean
     submit:
       type: string
 
+Crm14OfficialUseDTO:
+  properties:
+    benefitCheck:
+      $ref: "#/Crm14BenefitResultDTO"
+    messageHistory:
+      type: array
+      items:
+        $ref: '#/Crm4MessageHistoryDTO'
+    returnProvider:
+      $ref: "#/Crm14ReturnProviderDTO"
+    fundingDecisions:
+      type: array
+      items:
+        $ref: '#/Crm4FundingDecisionDTO'
+
+Crm4MessageHistoryDTO:
+  type: object
+  properties:
+    senderDisplay:
+      type: string
+    message:
+      type: string
+    senderUniqueName:
+      type: string
+    date:
+      type: string
+
+Crm4FundingDecisionDTO:
+  type: object
+  properties:
+    maatNumber:
+      type: string
+    caseNumber:
+      type: string
+    justiceTest:
+      type: string
+    meansTestResultType:
+      type: string
+    officialSignName:
+      type: string
+    appropriateOfficerName:
+      type: string
+    justiceTestReasons:
+      type: string
+    overallResultMagsorcfs:
+      type: string
+    appropriateOfficerSignDate:
+      type: string
+      format: date-time
+    meansTestResultAppealtocc:
+      type: string
+    overallResultNonMeans:
+      type: string
+    meansTestResultMagsorcfs:
+      type: string
+    meansTestResultCc:
+      type: string
+    overallResultAppealtocc:
+      type: string
+    overallResultType:
+      type: string
+    overallResultCc:
+      type: string
+    officialSignDate:
+      type: string
+      format: date-time
+
+Crm14BenefitResultDTO:
+  type: object
+  properties:
+    dwpOverallCheck:
+      type: string
+    dwpResultReferTo:
+      type: string
+    dwpCheckSurname:
+      type: string
+    dwpCheckNino:
+      type: string
+    dwpCheckDob:
+      type: string
+      format: date-time
+    dwpCheckDateOfAward:
+      type: string
+      format: date-time
+    dwpCheckBenefitCheckToRepeat:
+      type: string
+    dwpCheckPartnerSurname:
+      type: string
+    dwpCheckPartnerNino:
+      type: string
+    dwpCheckPartnerDob:
+      type: string
+      format: date-time
+    dwpCheckPartnerDateOfAward:
+      type: string
+      format: date-time
+
+Crm14ReturnProviderDTO:
+  type: object
+  properties:
+    returnReason:
+      type: string
+    returnReasonDetails:
+      type: string
 
 CrmLegalRepDTO:
   type: object

@@ -36,6 +36,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "legalRepresentationDetails", source = "model")
     @Mapping(target = "aboutInformation", source = "model")
     @Mapping(target = "declarations", source = "model")
+    @Mapping(target = "officeUseOnly", source = "model")
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
@@ -619,6 +620,48 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="providerFirmId", source="providerFirmId")
     @Mapping(target="key", expression = "java(assignFileKey(processAttachModel))")
     Crm14EvidenceDTO getCrm14ProcessAttachmentsFromModel(Crm14AttachmentModel processAttachModel);
+
+    @Mapping(target ="benefitCheck.dwpResultReferTo", source = "who_dwp_checked")
+    @Mapping(target ="benefitCheck.dwpOverallCheck", source = "dwp_check_result")
+    @Mapping(target ="benefitCheck.dwpCheckDob", source = "dwp_check_dob")
+    @Mapping(target ="benefitCheck.dwpCheckSurname", source = "dwp_check_surname")
+    @Mapping(target ="benefitCheck.dwpCheckNino", source = "dwp_check_nino")
+    @Mapping(target ="benefitCheck.dwpCheckDateOfAward", source = "dwp_check_dateofaward")
+    @Mapping(target ="benefitCheck.dwpCheckBenefitCheckToRepeat", source = "dwp_check_benefitchecktorepeat")
+    @Mapping(target ="benefitCheck.dwpCheckPartnerNino", source = "dwp_check_partner_nino")
+    @Mapping(target ="benefitCheck.dwpCheckPartnerSurname", source = "dwp_check_partner_surname")
+    @Mapping(target ="benefitCheck.dwpCheckPartnerDob", source = "dwp_check_partner_dob")
+    @Mapping(target ="benefitCheck.dwpCheckPartnerDateOfAward", source = "dwp_check_partner_dateofaward")
+    @Mapping(target ="messageHistory", source="messagehistory.messages")
+    @Mapping(target ="returnProvider.returnReason", source = "return_reason")
+    @Mapping(target ="returnProvider.returnReasonDetails", source = "return_reason_details")
+    @Mapping(target ="fundingDecisions", source="fundingDecisions")
+    Crm14OfficialUseDTO getOfficialUseDTOFromModel(Crm14DetailsModel model);
+    @Mapping(target ="senderDisplay", source = "sender_display")
+    @Mapping(target ="message", source = "message")
+    @Mapping(target ="senderUniqueName", source = "sender_uniquename")
+    @Mapping(target ="date", source = "datetime")
+    Crm4MessageHistoryDTO getOfficialUseDTOFromModel(Crm14MessageModel model);
+    @Mapping(target ="maatNumber", source = "maatNumber")
+    @Mapping(target ="caseNumber", source = "caseNumber")
+    @Mapping(target ="justiceTest", source = "justiceTest")
+    @Mapping(target ="meansTestResultType", source = "meansTestResultType")
+    @Mapping(target ="officialSignName", source = "officialSignFullName")
+    @Mapping(target ="appropriateOfficerName", source = "appropriateOfficerName")
+    @Mapping(target ="justiceTestReasons", source = "justiceTestReasons")
+    @Mapping(target ="overallResultMagsorcfs", source = "overallResultMagsorcfs")
+    @Mapping(target ="appropriateOfficerSignDate", source = "appropriateOfficerSignDate")
+    @Mapping(target ="meansTestResultAppealtocc", source = "meansTestResultAppealToCc")
+    @Mapping(target ="overallResultNonMeans", source = "overallResultNonMeans")
+    @Mapping(target ="meansTestResultMagsorcfs", source = "meansTestResultMagsorcfs")
+    @Mapping(target ="meansTestResultCc", source = "meansTestResultCc")
+    @Mapping(target ="overallResultAppealtocc", source = "overallResultAppealToCc")
+    @Mapping(target ="overallResultType", source = "overallResultType")
+    @Mapping(target ="overallResultCc", source = "overallResultCc")
+    @Mapping(target ="officialSignDate", source = "officialSignDate")
+
+
+    Crm4FundingDecisionDTO getOfficialUseDTOFromModel(Crm14FundDecisionModel model);
     default String assignFileKey(Crm14AttachmentModel processAttachModel) {
         if (null != processAttachModel.getAttachmentId()){
             return "att_"+processAttachModel.getAttachmentId()+".att";
