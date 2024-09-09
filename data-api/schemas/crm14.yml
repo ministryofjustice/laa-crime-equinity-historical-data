@@ -1304,8 +1304,10 @@ Crm15SavingsDTO:
       type: string
     premiumBondsHolderNo:
       type: integer
+      format: int64
     partnerPremiumBondsHolderNo:
       type: integer
+      format: int64
     premiumBondsTotal:
       type: number
       format: float
@@ -1399,7 +1401,8 @@ Crm15BankAccountDTO:
     sortCode:
       type: string
     accountNumber:
-      type: integer
+      type: string
+      pattern: '[0-9]{0,20}'
     accountType:
       type: string
     balance:

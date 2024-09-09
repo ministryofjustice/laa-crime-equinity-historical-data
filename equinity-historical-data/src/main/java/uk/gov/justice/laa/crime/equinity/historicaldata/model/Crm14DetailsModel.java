@@ -163,7 +163,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("TLProjectName")
     public String tLProjectName;
     @JsonProperty("Datestamp_clientdob")
-    public Date datestamp_clientdob;
+    public String datestamp_clientdob;
     @JsonProperty("Home_address_type")
     public String home_address_type;
     @JsonProperty("Return_reason_details")
