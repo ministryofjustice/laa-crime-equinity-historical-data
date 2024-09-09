@@ -4,13 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmFormDetailsModelInterface {
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
@@ -820,9 +826,87 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
+    public List<Crm14FundDecisionModel> fundingDecisions;
+
     public boolean hasCrm15() {
         if (StringUtils.isNotEmpty(this.getPrivate_company()) && this.getPrivate_company().equalsIgnoreCase("Yes"))
             return true;
-        else return StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes");
+        else
+            return StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes");
+    }
+
+    public List<Crm14FundDecisionModel> getFundingDecisions() {
+        if (!this.isSubformfundingdecision_1_subformisvisible()) {
+            return null;
+        }
+        List<Crm14FundDecisionModel> allDecisions = new ArrayList<Crm14FundDecisionModel>();
+        for (int i = 1; i <= 5; i++) {
+            if (this.isSubformfundingdecision_1_subformisvisible()) {
+                Method instanceMethod;
+                Crm14FundDecisionModel decision = new Crm14FundDecisionModel();
+                try {
+                    instanceMethod = this.getClass().getMethod("isSubformfundingdecision_" + i + "_subformisvisible");
+                    boolean visible = (boolean) instanceMethod.invoke(this);
+                    if (visible) {
+                        decision.setSubFormVisible(visible);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_maat_number");
+                        String maatNumber = (String) instanceMethod.invoke(this);
+                        decision.setMaatNumber(maatNumber);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_case_number");
+                        String caseNumber = (String) instanceMethod.invoke(this);
+                        decision.setCaseNumber(caseNumber);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_justice_test");
+                        String justiceTest = (String) instanceMethod.invoke(this);
+                        decision.setJusticeTest(justiceTest);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_justice_test_reasons");
+                        String justiceTestReason = (String) instanceMethod.invoke(this);
+                        decision.setJusticeTestReasons(justiceTestReason);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_means_test_result_type");
+                        String meansResultType = (String) instanceMethod.invoke(this);
+                        decision.setMeansTestResultType(meansResultType);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_official_sign_fullname");
+                        String officialSignFullName = (String) instanceMethod.invoke(this);
+                        decision.setOfficialSignFullName(officialSignFullName);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_appropriate_officer_name");
+                        String officerName = (String) instanceMethod.invoke(this);
+                        decision.setAppropriateOfficerName(officerName);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_overall_result_magsorcfs");
+                        String resultMagsorcfs = (String) instanceMethod.invoke(this);
+                        decision.setOverallResultMagsorcfs(resultMagsorcfs);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_appropriate_officer_sign_date");
+                        Date officerSignDate = (Date) instanceMethod.invoke(this);
+                        decision.setAppropriateOfficerSignDate(officerSignDate);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_means_test_result_appealtocc");
+                        String resultAppealToCc = (String) instanceMethod.invoke(this);
+                        decision.setMeansTestResultAppealToCc(resultAppealToCc);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_overall_result_non_means");
+                        String resultNonMeans = (String) instanceMethod.invoke(this);
+                        decision.setOverallResultNonMeans(resultNonMeans);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_means_test_result_magsorcfs");
+                        String meansTestresultMagsorcfs = (String) instanceMethod.invoke(this);
+                        decision.setMeansTestResultMagsorcfs(meansTestresultMagsorcfs);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_means_test_result_cc");
+                        String meansTestResultCc = (String) instanceMethod.invoke(this);
+                        decision.setMeansTestResultCc(meansTestResultCc);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_overall_result_appealtocc");
+                        String overallResultAppealToCc = (String) instanceMethod.invoke(this);
+                        decision.setOverallResultAppealToCc(overallResultAppealToCc);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_overall_result_type");
+                        String overallResultType = (String) instanceMethod.invoke(this);
+                        decision.setOverallResultType(overallResultType);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_overall_result_cc");
+                        String overallResultCc = (String) instanceMethod.invoke(this);
+                        decision.setOverallResultCc(overallResultCc);
+                        instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_official_sign_date");
+                        Date officialSignDate = (Date) instanceMethod.invoke(this);
+                        decision.setOfficialSignDate(officialSignDate);
+                    }
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    log.error("eForm CRM14 unable to call funding decision Method:: urn={} :: {}", urn, e.getMessage());
+                }
+                allDecisions.add(decision);
+            }
+        }
+        return allDecisions;
     }
 }
