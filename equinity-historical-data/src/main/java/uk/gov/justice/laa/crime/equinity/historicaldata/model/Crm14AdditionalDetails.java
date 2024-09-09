@@ -68,9 +68,9 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Partner_Trust_fund_dividend")
     public double partner_Trust_fund_dividend;
     @JsonProperty("Premium_bonds_holder_no")
-    public int premium_bonds_holder_no;
+    public Long premium_bonds_holder_no;
     @JsonProperty("Partner_premium_bonds_holder_no")
-    public int partner_premium_bonds_holder_no;
+    public Long partner_premium_bonds_holder_no;
     @JsonProperty("Premium_bonds_total_value")
     public double premium_bonds_total_value;
     @JsonProperty("Bank_accounts_crm15")

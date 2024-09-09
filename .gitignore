@@ -45,3 +45,4 @@ data-api/.openapi-generator/VERSION
 data-api/README.md
 data-api/**/generated/**/
 docker-compose.override.yml
+equinity-historical-data/src/main/resources/application-localprod.yaml
