@@ -900,11 +900,12 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
                         instanceMethod = this.getClass().getMethod("getSubformfundingdecision_" + i + "_official_sign_date");
                         Date officialSignDate = (Date) instanceMethod.invoke(this);
                         decision.setOfficialSignDate(officialSignDate);
+                        allDecisions.add(decision);
                     }
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     log.error("eForm CRM14 unable to call funding decision Method:: urn={} :: {}", urn, e.getMessage());
                 }
-                allDecisions.add(decision);
+
             }
         }
         return allDecisions;
