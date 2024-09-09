@@ -1916,7 +1916,7 @@
                     "Bank": "Speedy Bank",
                     "Sort_code_brancg": "Salford branch",
                     "Account_type": "Bank",
-                    "Account_number": 123456,
+                    "Account_number": 1734190484580,
                     "Overdrawn": true,
                     "Balance": -1000
                 },

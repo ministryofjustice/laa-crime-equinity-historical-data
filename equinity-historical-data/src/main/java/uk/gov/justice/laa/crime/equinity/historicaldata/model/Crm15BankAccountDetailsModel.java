@@ -18,7 +18,7 @@ public class Crm15BankAccountDetailsModel {
     @JsonProperty("Account_type")
     public String account_type;
     @JsonProperty("Account_number")
-    public int account_number;
+    public String account_number;
     @JsonProperty("Overdrawn")
     public boolean overdrawn;
     @JsonProperty("Balance")
