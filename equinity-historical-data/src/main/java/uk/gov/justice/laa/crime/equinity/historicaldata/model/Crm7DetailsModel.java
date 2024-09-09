@@ -109,6 +109,9 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     public String cd_wasted_cost_order;
     @JsonProperty("Cd_wasted_costs_order_details")
     public String cd_wasted_costs_order_details;
+    @JsonProperty("Cd_wasted_costs_order_net")
+    public String cd_wasted_costs_order_net;
+
     /** *** **/
 
     // Non Standard Fee Claim
