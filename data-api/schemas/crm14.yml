@@ -687,7 +687,7 @@ Crm14EvidencePart1DTO:
   type: object
   properties:
     remandedInCustody:
-      type: integer
+      type: boolean
     remandedDate:
       type: string
       format: date-time
