@@ -265,7 +265,7 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Land_calc_partner")
     public int land_calc_partner;
     @JsonProperty("Partner_involved_in_case")
-    public int partner_involved_in_case;
+    public String partner_involved_in_case;
     @JsonProperty("Jsa_partner")
     public boolean jsa_partner;
     @JsonProperty("Partner_sign_date")
@@ -309,7 +309,7 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Partner_premium_bonds")
     public String partner_premium_bonds;
     @JsonProperty("Partner_involvement")
-    public int partner_involvement;
+    public String partner_involvement;
     @JsonProperty("Partner_income_maintenance")
     public boolean partner_income_maintenance;
     @JsonProperty("Partner_wage_calc")

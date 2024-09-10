@@ -3,6 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
@@ -160,8 +161,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="homeAddress.addressLine2", source = "partner_usual_address_2")
     @Mapping(target="homeAddress.addressLine3", source = "partner_usual_address_3")
     @Mapping(target="homeAddress.postCode", source = "partner_usual_postcode")
-    @Mapping(target="witnessTrace", source = "witness_trace")
-    @Mapping(target="coDefendant", source = "any_codefendants")
+    @Mapping(target="coDefendant",  expression="java(emptyIntToNull(model.getPartner_involved_in_case()))")
+    @Mapping(target="partnerInvolvement", source = "partner_involvement" , qualifiedByName = "convertPartnerInvolved")
     @Mapping(target="partnerDifferentHome", source = "partner_different_home")
     @Mapping(target="conflictOfInterest", source = "partner_conflict_of_interest")
     Crm14APartnerDetailsDTO getPartnerDetailsDTOFromModel(Crm14DetailsModel model);
@@ -715,5 +716,16 @@ public interface Crm14Mapper extends CrmMapper {
             return "Appeal to Crown Court and no changes";
         }
         return "Unknown";
+    }
+    @Named("convertPartnerInvolved")
+    default String convertPartnerInvolved(String s) {
+        if  (s == null || s.isEmpty())
+            return null;
+        return switch (Integer.parseInt(s)) {
+            case 1 -> "Co-defendant";
+            case 2 -> "Prosecution witness";
+            case 3 -> "Victim";
+            default -> null;
+        };
     }
 }
