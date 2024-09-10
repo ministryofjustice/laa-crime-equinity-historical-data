@@ -286,6 +286,8 @@ Crm14AboutYouPart2DTO:
       type: integer
     maritalStatus:
       type: string
+    relationship:
+      type: string
     dateOfSeparation:
       type: string
       format: date-time
