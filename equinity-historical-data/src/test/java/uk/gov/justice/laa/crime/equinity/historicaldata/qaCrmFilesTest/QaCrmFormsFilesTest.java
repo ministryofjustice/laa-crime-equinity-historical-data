@@ -18,7 +18,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("local")
+@ActiveProfiles("localprod")
 class QaCrmFormsFilesTest {
 
     @InjectSoftAssertions
