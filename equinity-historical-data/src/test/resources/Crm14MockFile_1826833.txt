@@ -1660,7 +1660,7 @@
         "Pensions": 0,
         "Legal_aid_contribution_ref": "",
         "White_and_asian": false,
-        "Remanded_in_custody": 1,
+        "Remanded_in_custody": true,
         "Lose_livelihood_details": "Client will lose his home if imprisoned",
         "Originator_selfregistered": 0,
         "Committal": false,

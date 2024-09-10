@@ -107,7 +107,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("White_and_asian")
     public boolean white_and_asian;
     @JsonProperty("Remanded_in_custody")
-    public int remanded_in_custody;
+    public boolean remanded_in_custody;
     @JsonProperty("Lose_livelihood_details")
     public String lose_livelihood_details;
     @JsonProperty("Originator_selfregistered")
