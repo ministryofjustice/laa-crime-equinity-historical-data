@@ -9,9 +9,9 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
-    final static String partnerInvolved_opt1="Co-defendant";
-    final static String partnerInvolved_opt2="Prosecution witness";
-    final static String partnerInvolved_opt3="Victim";
+    final static String PARTNER_INVOLVED_OPT1="Co-defendant";
+    final static String PARTNER_INVOLVED_OPT2="Prosecution witness";
+    final static String PARTNER_INVOLVED_OPT3="Victim";
 
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
@@ -725,9 +725,9 @@ public interface Crm14Mapper extends CrmMapper {
         if  (s == null || s.isEmpty())
             return null;
         return switch (Integer.parseInt(s)) {
-            case 1 -> partnerInvolved_opt1;
-            case 2 -> partnerInvolved_opt2;
-            case 3 -> partnerInvolved_opt3;
+            case 1 -> PARTNER_INVOLVED_OPT1;
+            case 2 -> PARTNER_INVOLVED_OPT2;
+            case 3 -> PARTNER_INVOLVED_OPT3;
             default -> null;
         };
     }
