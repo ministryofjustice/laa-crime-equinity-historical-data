@@ -199,7 +199,7 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Partner_self_assessment_tax_received")
     public String partner_self_assessment_tax_received;
     @JsonProperty("Partner_date_of_birth")
-    public Date partner_date_of_birth;
+    public String partner_date_of_birth;
     @JsonProperty("Partner_jsa_crm15_paid_every")
     public String partner_jsa_crm15_paid_every;
     @JsonProperty("Partner_income_rental")

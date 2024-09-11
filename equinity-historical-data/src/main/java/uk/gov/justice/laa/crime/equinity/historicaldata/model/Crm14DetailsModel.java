@@ -125,7 +125,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Email")
     public String email;
     @JsonProperty("Date_of_birth")
-    public Date date_of_birth;
+    public String date_of_birth;
     @JsonProperty("Xsd_name")
     public String xsd_name;
     @JsonProperty("Solicitor_firm_dx")
