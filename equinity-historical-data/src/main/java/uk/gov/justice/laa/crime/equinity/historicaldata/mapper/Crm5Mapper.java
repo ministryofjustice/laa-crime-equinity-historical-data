@@ -22,7 +22,7 @@ public interface Crm5Mapper extends CrmMapper{
     @Mapping(target="appealedPrevDecisionDetails", source="appealed_prev_decision_details")
     @Mapping(target="urgencyReason", source="urgency_reason")
     @Mapping(target="firm.firmPhone", source="firm_phone")
-    @Mapping(target="firm.firmAddress", source="firm_office")
+    @Mapping(target="firm.firmAddress", source="firm_address")
     @Mapping(target="firm.firmName", source="firm_name")
     @Mapping(target="firm.firmSupplierNo", source="firm_supplier_no")
     @Mapping(target="firm.firmContactName", source="contact_name")

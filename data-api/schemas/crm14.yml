@@ -299,9 +299,9 @@ Crm14APartnerDetailsDTO:
       $ref: "#/Crm14AboutYouDTO"
     homeAddress:
       $ref: "#/Crm14AddressDetailsDTO"
-    witnessTrace:
-      type: string
     coDefendant:
+      type: integer
+    partnerInvolvement:
       type: string
     conflictOfInterest:
       type: integer

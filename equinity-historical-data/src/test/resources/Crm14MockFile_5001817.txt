@@ -1674,7 +1674,7 @@
     "Other_case_next_hearing": "2024-02-13T00:00:00",
     "Partner_jsa_crm15_paid_every": "",
     "Email": "TTR@gmail.com",
-    "Date_of_birth": "1986-01-01T00:00:00",
+    "Date_of_birth": "00:00:00",
     "Xsd_name": "CRM14_1_v0009.xsd",
     "Solicitor_firm_dx": "38500 SOUTHAMPTON 3",
     "Fc_route_to_nct_on_resubmission": false,
