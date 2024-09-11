@@ -16,10 +16,10 @@ import java.util.Objects;
 @UtilityClass
 @ConfigurationPropertiesScan
 public class DateUtil {
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    private static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
+    private static final String INVALID_FORMAT_NO_DATE_ONLY_ZERO_TIME = "00:00:00";
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
             .withLocale(Locale.UK);
-
-    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
 
     public static LocalDate convertStringToLocalDate(String dateToConvert) throws DateTimeParseException {
         if (Objects.isNull(dateToConvert)) return null;
@@ -39,8 +39,8 @@ public class DateUtil {
     public static Date convertStringToSimpleDate(String dateToConvert) throws ParseException {
         if (Objects.isNull(dateToConvert)) return null;
 
-        if (dateToConvert.equals("00:00:00")) return null;
-    
-        return dateFormatter.parse(dateToConvert);
+        if (dateToConvert.equals(INVALID_FORMAT_NO_DATE_ONLY_ZERO_TIME)) return null;
+
+        return new SimpleDateFormat(DATE_FORMAT_PATTERN, Locale.UK).parse(dateToConvert);
     }
 }
