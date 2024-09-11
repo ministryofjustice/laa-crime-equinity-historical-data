@@ -10,8 +10,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -78,5 +80,68 @@ class DateUtilTest {
         LocalDate convertedDate = DateUtil.convertStringToLocalDate(dateToTestSep);
         assert convertedDate != null;
         softly.assertThat(convertedDate.toString()).isEqualTo(expectedSep);
+    }
+
+    @Test
+    void convertStringToDate_WhenValidFormatThenReturnsSimpleDate() {
+        List<String> datesToTest = List.of(
+                "2024-02-29T00:00:00", "2024-02-29T09:10:21"
+        );
+        String expectedLeap = "2024-02-29";
+        String expectedLeapLong = "2024-02-29T00:00:00";
+
+        datesToTest.forEach(dateToTest -> {
+            Date convertedDate = null;
+            try {
+                convertedDate = DateUtil.convertStringToSimpleDate(dateToTest);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            assert convertedDate != null;
+            softly.assertThat(convertedDate).isEqualTo(expectedLeap);
+            softly.assertThat(convertedDate).isEqualTo(expectedLeapLong);
+        });
+    }
+
+    @Test
+    void convertStringToDate_WhenOutOfBoundDateValidFormatThenReturnsSimpleDateRolledOver() {
+        List<String> datesToTest = List.of(
+                "2024-02-30T00:00:00", "2024-02-30T11:03:10",
+                "2024-03-01T00:00:00", "2024-03-01T09:00:57"
+        );
+        String expectedLeap = "2024-03-01";
+        String expectedLeapLong = "2024-03-01T00:00:00";
+
+        datesToTest.forEach(dateToTest -> {
+            Date convertedDate = null;
+            try {
+                convertedDate = DateUtil.convertStringToSimpleDate(dateToTest);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            assert convertedDate != null;
+            softly.assertThat(convertedDate).isEqualTo(expectedLeap);
+            softly.assertThat(convertedDate).isEqualTo(expectedLeapLong);
+        });
+    }
+
+    @Test
+    void convertStringToDate_WhenNoDateOnlyTimeInvalidFormatThenReturnsSimpleDateRolledOver() {
+        List<String> datesToTest = List.of(
+                "00:00:00"
+        );
+
+        datesToTest.forEach(dateToTest -> {
+            Date convertedDate = null;
+            try {
+                convertedDate = DateUtil.convertStringToSimpleDate(dateToTest);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            softly.assertThat(convertedDate).isNull();
+        });
     }
 }

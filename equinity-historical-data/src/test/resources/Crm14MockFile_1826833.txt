@@ -1671,6 +1671,7 @@
         "Partner_jsa_crm15_paid_every": "",
         "Email": "",
         "Date_of_birth": "1986-03-25T00:00:00",
+        "Partner_date_of_birth": "00:00:00",
         "Xsd_name": "CRM14_1_v0008.xsd",
         "Solicitor_firm_dx": "22614 STOCKPORT 2",
         "Fc_route_to_nct_on_resubmission": false,
