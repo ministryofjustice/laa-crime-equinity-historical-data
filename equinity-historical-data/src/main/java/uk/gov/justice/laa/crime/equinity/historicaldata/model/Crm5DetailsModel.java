@@ -13,7 +13,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Fc_current_user")
     public String fc_current_user;
     @JsonProperty("Client_total_savings")
-    public int client_total_savings;
+    public Double client_total_savings;
     @JsonProperty("Client_address_line3")
     public String client_address_line3;
     @JsonProperty("Proceedings_prisonlaw")
@@ -21,7 +21,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Solicitor_sign_name")
     public String solicitor_sign_name;
     @JsonProperty("Ctd_mileage_cost")
-    public int ctd_mileage_cost;
+    public Double ctd_mileage_cost;
     @JsonProperty("Sd_address_postcode")
     public String sd_address_postcode;
     @JsonProperty("Aa_first_sol_no_claim")
@@ -39,7 +39,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Originator_tl_permanentlyremoved")
     public int originator_tl_permanentlyremoved;
     @JsonProperty("Id_attendance_allowance")
-    public int id_attendance_allowance;
+    public Double id_attendance_allowance;
     @JsonProperty("Appealed_prev_decision_details")
     public String appealed_prev_decision_details;
     @JsonProperty("TlStateName")
@@ -59,7 +59,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Tlmessage")
     public String tlmessage;
     @JsonProperty("Advocacy_threshold_income")
-    public int advocacy_threshold_income;
+    public Double advocacy_threshold_income;
     @JsonProperty("Originator_tl_dtlastfailedloginattempt")
     public Date originator_tl_dtlastfailedloginattempt;
     @JsonProperty("Fc_selected_eformsreviewer")
@@ -83,11 +83,11 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Tlautonumber")
     public int tlautonumber;
     @JsonProperty("Ac_advocacy_time_cost")
-    public int ac_advocacy_time_cost;
+    public Double ac_advocacy_time_cost;
     @JsonProperty("Fc_processingoffice")
     public String fc_processingoffice;
     @JsonProperty("Ctd_advocacy_costs")
-    public int ctd_advocacy_costs;
+    public Double ctd_advocacy_costs;
     @JsonProperty("Ctd_letters_partfilled")
     public int ctd_letters_partfilled;
     @JsonProperty("Tldateorig")
@@ -95,13 +95,13 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Provider_case_ref")
     public String provider_case_ref;
     @JsonProperty("Client_partner_savings")
-    public int client_partner_savings;
+    public Double client_partner_savings;
     @JsonProperty("Advocacy_threshold_inc")
-    public int advocacy_threshold_inc;
+    public Double advocacy_threshold_inc;
     @JsonProperty("Caf_court_funding_details")
     public String caf_court_funding_details;
     @JsonProperty("Id_ni_contributions")
-    public int id_ni_contributions;
+    public Double id_ni_contributions;
     @JsonProperty("Originator_tl_failedloginattemptcount")
     public int originator_tl_failedloginattemptcount;
     @JsonProperty("Fc_info_returned_flag")
@@ -137,7 +137,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Client_state_benefit")
     public String client_state_benefit;
     @JsonProperty("Ac_waiting_time_cost")
-    public int ac_waiting_time_cost;
+    public Double ac_waiting_time_cost;
     @JsonProperty("Show_client_under_18_question")
     public boolean show_client_under_18_question;
     @JsonProperty("Ac_phone_calls")
@@ -163,27 +163,27 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Originator_routemethod")
     public int originator_routemethod;
     @JsonProperty("Ac_travel_time_cost")
-    public int ac_travel_time_cost;
+    public Double ac_travel_time_cost;
     @JsonProperty("Originator_ntlogon")
     public String originator_ntlogon;
     @JsonProperty("Advocacy_threshold_0")
-    public int advocacy_threshold_0;
+    public Double advocacy_threshold_0;
     @JsonProperty("Advocacy_threshold_2")
-    public int advocacy_threshold_2;
+    public Double advocacy_threshold_2;
     @JsonProperty("Originator_routeoffline")
     public int originator_routeoffline;
     @JsonProperty("Originator_supervisor")
     public String originator_supervisor;
     @JsonProperty("Advocacy_threshold_1")
-    public int advocacy_threshold_1;
+    public Double advocacy_threshold_1;
     @JsonProperty("Lsc_region")
     public String lsc_region;
     @JsonProperty("Ctd_other_cost")
-    public int ctd_other_cost;
+    public Double ctd_other_cost;
     @JsonProperty("Ac_preparation_time_partfilled")
     public int ac_preparation_time_partfilled;
     @JsonProperty("Id_partner_weekly_income")
-    public int id_partner_weekly_income;
+    public Double id_partner_weekly_income;
     @JsonProperty("Firm_phone")
     public String firm_phone;
     @JsonProperty("Caf_client_has_cop_rep_order")
@@ -227,7 +227,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Client_marital_status")
     public String client_marital_status;
     @JsonProperty("Ac_attendance_time_cost")
-    public int ac_attendance_time_cost;
+    public Double ac_attendance_time_cost;
     @JsonProperty("Ac_waiting_time_partfilled")
     public int ac_waiting_time_partfilled;
     @JsonProperty("Criminal_proceeding")
@@ -249,7 +249,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Prison_law")
     public boolean prison_law;
     @JsonProperty("Id_client_weekly_income")
-    public int id_client_weekly_income;
+    public Double id_client_weekly_income;
     @JsonProperty("Fc_pg_options")
     public String fc_pg_options;
     @JsonProperty("TlTaskLastUpdated")
@@ -267,9 +267,9 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Originator_lscemailaddress")
     public String originator_lscemailaddress;
     @JsonProperty("Advice_threshold_base")
-    public int advice_threshold_base;
+    public Double advice_threshold_base;
     @JsonProperty("Id_partner_deductions")
-    public int id_partner_deductions;
+    public Double id_partner_deductions;
     @JsonProperty("Fc_decision")
     public String fc_decision;
     @JsonProperty("Tlsubstate")
@@ -281,17 +281,17 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Fc_testing")
     public boolean fc_testing;
     @JsonProperty("Id_total_weekly_income")
-    public int id_total_weekly_income;
+    public Double id_total_weekly_income;
     @JsonProperty("Ctd_waiting_time")
     public String ctd_waiting_time;
     @JsonProperty("Ou_new_limit_request")
-    public double ou_new_limit_request;
+    public Double ou_new_limit_request;
     @JsonProperty("Ctd_preparation_time")
     public String ctd_preparation_time;
     @JsonProperty("Ctd_waiting_time_cost")
-    public int ctd_waiting_time_cost;
+    public Double ctd_waiting_time_cost;
     @JsonProperty("Ac_letters_cost")
-    public int ac_letters_cost;
+    public Double ac_letters_cost;
     @JsonProperty("Ac_attendance_time")
     public String ac_attendance_time;
     @JsonProperty("Fc_qa_method")
@@ -299,7 +299,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Firm_office")
     public String firm_office;
     @JsonProperty("Advice_threshold_inc")
-    public int advice_threshold_inc;
+    public Double advice_threshold_inc;
     @JsonProperty("Proceedings_nexthearingdate")
     public Date proceedings_nexthearingdate;
     @JsonProperty("Tlnewmessage")
@@ -317,15 +317,15 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Originator_tl_googleid")
     public String originator_tl_googleid;
     @JsonProperty("Id_total_deductions")
-    public int id_total_deductions;
+    public Double id_total_deductions;
     @JsonProperty("Ctd_phone_calls_cost")
-    public int ctd_phone_calls_cost;
+    public Double ctd_phone_calls_cost;
     @JsonProperty("Client_ufn")
     public String client_ufn;
     @JsonProperty("Originator_type")
     public int originator_type;
     @JsonProperty("Id_dependants_16_plus_cost")
-    public int id_dependants_16_plus_cost;
+    public Double id_dependants_16_plus_cost;
     @JsonProperty("Ac_mileage_partfilled")
     public int ac_mileage_partfilled;
     @JsonProperty("Client_dependants")
@@ -345,19 +345,19 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Fc_current_user_type")
     public String fc_current_user_type;
     @JsonProperty("Client_savings")
-    public int client_savings;
+    public Double client_savings;
     @JsonProperty("Advice_threshold_0")
     public int advice_threshold_0;
     @JsonProperty("Ac_other_cost")
-    public int ac_other_cost;
+    public Double ac_other_cost;
     @JsonProperty("Ch_additional_info")
     public String ch_additional_info;
     @JsonProperty("Full_grant_notes")
     public String full_grant_notes;
     @JsonProperty("Advice_threshold_2")
-    public int advice_threshold_2;
+    public Double advice_threshold_2;
     @JsonProperty("Advice_threshold_1")
-    public int advice_threshold_1;
+    public Double advice_threshold_1;
     @JsonProperty("Caseworker")
     public String caseworker;
     @JsonProperty("Firm_address")
@@ -367,13 +367,13 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Originator_dtlastaccessed")
     public Date originator_dtlastaccessed;
     @JsonProperty("Ctd_preparation_costs")
-    public int ctd_preparation_costs;
+    public Double ctd_preparation_costs;
     @JsonProperty("TLActionsOnLine")
     public String tLActionsOnLine;
     @JsonProperty("Originator_tl_qn_answer_hash")
     public String originator_tl_qn_answer_hash;
     @JsonProperty("Id_income_tax")
-    public int id_income_tax;
+    public Double id_income_tax;
     @JsonProperty("Client_address_town")
     public String client_address_town;
     @JsonProperty("Client_name")
@@ -387,7 +387,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Ac_attendance_time_partfilled")
     public int ac_attendance_time_partfilled;
     @JsonProperty("Advice_threshold_income")
-    public int advice_threshold_income;
+    public Double advice_threshold_income;
     @JsonProperty("Sd_address_line_1")
     public String sd_address_line_1;
     @JsonProperty("Statement_of_case")
@@ -423,7 +423,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Tltaskstate")
     public int tltaskstate;
     @JsonProperty("Ctd_total_costs")
-    public int ctd_total_costs;
+    public Double ctd_total_costs;
     @JsonProperty("Statutory_charge")
     public String statutory_charge;
     @JsonProperty("Originator_jobtitle")
@@ -433,9 +433,9 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Client_surname")
     public String client_surname;
     @JsonProperty("New_limit_request")
-    public double new_limit_request;
+    public Double new_limit_request;
     @JsonProperty("Ac_total_costs")
-    public int ac_total_costs;
+    public Double ac_total_costs;
     @JsonProperty("Tlreadonly")
     public int tlreadonly;
     @JsonProperty("Ctd_preparation_partfilled")
@@ -449,7 +449,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Class_calc")
     public int class_calc;
     @JsonProperty("Ctd_attendance_cost")
-    public int ctd_attendance_cost;
+    public Double ctd_attendance_cost;
     @JsonProperty("Originator_uniquename")
     public String originator_uniquename;
     @JsonProperty("Originator_id")
@@ -469,7 +469,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Referral_reason_sol")
     public String referral_reason_sol;
     @JsonProperty("Ac_preparation_time_cost")
-    public int ac_preparation_time_cost;
+    public Double ac_preparation_time_cost;
     @JsonProperty("Criminal_investigation")
     public boolean criminal_investigation;
     @JsonProperty("Level_of_work")
@@ -481,9 +481,9 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Ctd_attendance_partfilled")
     public int ctd_attendance_partfilled;
     @JsonProperty("Id_total_weekly_disp_income")
-    public int id_total_weekly_disp_income;
+    public Double id_total_weekly_disp_income;
     @JsonProperty("Ac_mileage_cost")
-    public int ac_mileage_cost;
+    public Double ac_mileage_cost;
     @JsonProperty("Summary_case_history")
     public String summary_case_history;
     @JsonProperty("Ac_advocacy_time")
@@ -521,11 +521,11 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Ac_travel_time")
     public String ac_travel_time;
     @JsonProperty("Ctd_letters_cost")
-    public int ctd_letters_cost;
+    public Double ctd_letters_cost;
     @JsonProperty("Ou_upper_limit_extended")
-    public int ou_upper_limit_extended;
+    public Double ou_upper_limit_extended;
     @JsonProperty("Ctd_travel_time_costs")
-    public int ctd_travel_time_costs;
+    public Double ctd_travel_time_costs;
     @JsonProperty("Certification_sol_date")
     public Date certification_sol_date;
     @JsonProperty("Fc_cw_requesting")
@@ -535,7 +535,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Fc_return_info_to_cw")
     public boolean fc_return_info_to_cw;
     @JsonProperty("Id_dependants_under_16_cost")
-    public int id_dependants_under_16_cost;
+    public Double id_dependants_under_16_cost;
     @JsonProperty("Client_address_postcode")
     public String client_address_postcode;
     @JsonProperty("Match_carried_out")
@@ -545,7 +545,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Solicitorid")
     public String solicitorid;
     @JsonProperty("Ac_phone_calls_cost")
-    public int ac_phone_calls_cost;
+    public Double ac_phone_calls_cost;
     @JsonProperty("Sd_address_county")
     public String sd_address_county;
     @JsonProperty("Submitter_user_id")
