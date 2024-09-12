@@ -165,14 +165,14 @@ Crm5CapitalDTO:
       type: integer
       format: int32
     clientSavings:
-      type: integer
-      format: int32
+      type: number
+      format: float
     partnerSavings:
-      type: integer
-      format: int32
+      type: number
+      format: float
     totalSavings:
-      type: integer
-      format: int32
+      type: number
+      format: float
 Crm5IncomeDTO:
   type: object
   properties:
@@ -180,45 +180,45 @@ Crm5IncomeDTO:
       type: boolean
       description: Does client or partner get income support
     weeklyClientIncome:
-      type: integer
-      format: int32
+      type: number
+      format: float
     weeklyPartnerIncome:
-      type: integer
-      format: int32
+      type: number
+      format: float
     weeklyIncomeWithoutDeduction:
-      type: integer
-      format: int32
+      type: number
+      format: float
     incomeTaxDeductions:
-      type: integer
-      format: int32
+      type: number
+      format: float
     niDeductions:
-      type: integer
-      format: int32
+      type: number
+      format: float
     partnerDeductions:
-      type: integer
-      format: int32
+      type: number
+      format: float
     socialFundDeductions:
-      type: integer
-      format: int32
+      type: number
+      format: float
     dependantChildrenUnder15:
       type: integer
       format: int32
       description: Number of dependant children under 15 years
     deductionUnder15:
-      type: integer
-      format: int32
+      type: number
+      format: float
     dependantChildrenOver16:
       type: integer
       format: int32
     deductionOver16:
-      type: integer
-      format: int32
+      type: number
+      format: float
     totalDeductions:
-      type: integer
-      format: int32
+      type: number
+      format: float
     totalWeeklyIncome:
-      type: integer
-      format: int32
+      type: number
+      format: float
 Crm5AppealFundingDTO:
   type: object
   properties:
