@@ -4,11 +4,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
 
 @Mapper(componentModel = "spring")
-public interface Crm5Mapper extends CrmMapper{
+public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm5FormDTO getDTOFromModel(Crm5Model model);
@@ -130,5 +131,15 @@ public interface Crm5Mapper extends CrmMapper{
     @Mapping(target="officeUseOnly.authority.upperLimitExtended", source="ou_upper_limit_extended")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
     @Mapping(target="officeUseOnly.authority.signedAuthDate", source="ou_signed_auth_date")
+    @Mapping(target="standardProperties", source="crm5DetailsModel")
     CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
+
+    @Mapping(target = "usn", source = "usn")
+    @Mapping(target="dateReceived", source = "date_received")
+    @Mapping(target="timeReceived", source = "time_received")
+    @Mapping(target="submitterUserId", source = "submitter_user_id")
+    @Mapping(target="language", source = "submitter_language")
+    @Mapping(target="region", source = "lsc_region")
+    @Mapping(target="office", source = "lsc_accountoffice")
+    CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm5DetailsModel model);
 }
