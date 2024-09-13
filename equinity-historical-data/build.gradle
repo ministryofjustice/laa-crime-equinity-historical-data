@@ -32,6 +32,8 @@ configurations {
 			force 'io.netty:netty-codec-http:4.1.108.Final'
 			force "org.springframework:spring-web:$versions.springWeb"
 			force "org.springframework:spring-webmvc:$versions.springWeb"
+			force "org.springframework:spring-webflux:$versions.springWeb"
+
 		}
 	}
 }
@@ -53,6 +55,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
 	implementation "org.springframework:spring-webmvc:$versions.springWeb"
+	implementation "org.springframework:spring-webflux:$versions.springWeb"
 	implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.25'
 
 	// Logs
