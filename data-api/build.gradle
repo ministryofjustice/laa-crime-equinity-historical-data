@@ -5,7 +5,7 @@ plugins {
 apply plugin: "maven-publish"
 
 def versions = [
-        springStarter		  		: '3.3.3',
+        springStarter		  		: '3.3.2',
         springdocVersion       		: '1.8.0'
 ]
 
