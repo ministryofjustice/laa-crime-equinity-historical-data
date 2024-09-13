@@ -16,7 +16,7 @@ def versions = [
 		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
 		tomcatEmbed 				: '10.1.25',
-		json 					: '20240303',
+		json 						: '20240303',
 		nettyCodec 					: '4.1.108.Final',
 ]
 
