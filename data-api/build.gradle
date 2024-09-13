@@ -5,10 +5,10 @@ plugins {
 apply plugin: "maven-publish"
 
 def versions = [
-        springStarter		  		: '3.3.3',
-        springdocVersion       		: '1.8.0',
-        springWeb					: '6.1.13',
-        tomcatEmbed                 :  '10.1.25',
+        springStarter               : '3.3.3',
+        springdoc                   : '1.8.0',
+        springWeb                   : '6.1.13',
+        tomcatEmbed                 : '10.1.25',
 ]
 
 dependencies {
@@ -19,7 +19,7 @@ dependencies {
 
 
     implementation "org.springframework.data:spring-data-commons:$versions.springStarter"
-    implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"
+    implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'

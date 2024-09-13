@@ -5,17 +5,19 @@ plugins {
 }
 
 def versions = [
-		springdocVersion			: '1.8.0',
-		springStarter				: '3.3.3',
-		springWeb					: '6.1.13',
-		springSecurity				: '6.3.0',
-		logback						: '1.5.6',
-		mapStruct					: '1.6.0.RC1',
-		openAPI						: '2.6.0',
-		sentryVersion				: '8.0.0-alpha.4',
+		springdoc 					: '1.8.0',
+		springStarter 				: '3.3.3',
+		springWeb 					: '6.1.13',
+		springSecurity 				: '6.3.0',
+		logback 					: '1.5.6',
+		mapStruct 					: '1.6.0.RC1',
+		openAPI 					: '2.6.0',
+		sentry 						: '8.0.0-alpha.4',
 		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
-		tomcatEmbed                 : '10.1.25',
+		tomcatEmbed 				: '10.1.25',
+		json 					: '20240303',
+		nettyCodec 					: '4.1.108.Final',
 ]
 
 configurations {
@@ -30,7 +32,7 @@ configurations {
 			// This will still need to be included manually under the dependencies section
 			// This will only ensure the override of the bundled version
 			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
-			force 'io.netty:netty-codec-http:4.1.108.Final'
+			force "io.netty:netty-codec-http:$versions.nettyCodec"
 			force "org.springframework:spring-web:$versions.springWeb"
 			force "org.springframework:spring-webmvc:$versions.springWeb"
 			force "org.springframework:spring-webflux:$versions.springWeb"
@@ -42,7 +44,7 @@ configurations {
 
 dependencyManagement {
 	dependencies {
-		dependencySet(group: 'io.sentry', version: versions.sentryVersion) {
+		dependencySet(group: 'io.sentry', version: versions.sentry) {
 			entry 'sentry-spring-boot-starter'
 			entry 'sentry-logback'
 		}
@@ -74,16 +76,16 @@ dependencies {
 	implementation "org.springframework.security:spring-security-config:$versions.springSecurity"
 	implementation "org.springframework.boot:spring-boot-starter-security:$versions.springStarter"
 
-	implementation "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
-	implementation 'io.netty:netty-codec-http:4.1.108.Final'
+//	implementation "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
+	implementation "io.netty:netty-codec-http:$versions.nettyCodec"
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
 
 	// Sentry
-	implementation platform("io.sentry:sentry-bom:$versions.sentryVersion")
-	implementation "io.sentry:sentry-logback:$versions.sentryVersion"
-	implementation "io.sentry:sentry-spring-boot-starter-jakarta:$versions.sentryVersion"
+	implementation platform("io.sentry:sentry-bom:$versions.sentry")
+	implementation "io.sentry:sentry-logback:$versions.sentry"
+	implementation "io.sentry:sentry-spring-boot-starter-jakarta:$versions.sentry"
 
 	// Metrics
 	implementation "io.micrometer:micrometer-tracing-bom:$versions.micrometerio"
@@ -92,17 +94,15 @@ dependencies {
 
 
 	// Annotations
-	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"
+	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
-	implementation 'org.json:json:20240303'
+	implementation "org.json:json:$versions.json"
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	implementation "org.mapstruct:mapstruct:1.6.0.RC1"
-//	implementation "org.mapstruct:mapstruct:$versions.mapStruct"
-	annotationProcessor "org.mapstruct:mapstruct-processor:1.6.0.RC1"
-//	annotationProcessor "org.mapstruct:mapstruct-processor:$versions.mapStruct"
+	implementation "org.mapstruct:mapstruct:$versions.mapStruct"
+	annotationProcessor "org.mapstruct:mapstruct-processor:$versions.mapStruct"
 
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$versions.springStarter"
 
