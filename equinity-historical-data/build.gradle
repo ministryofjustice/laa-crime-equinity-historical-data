@@ -62,9 +62,12 @@ dependencies {
 
 	// Spring
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
-//	implementation "org.springframework:spring-web:$versions.springWeb"
-// 	implementation "org.springframework:spring-webmvc:$versions.springWeb"
-//	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+
+
+	implementation "org.springframework:spring-webmvc:$versions.springWeb"
+	implementation "org.springframework:spring-web:$versions.springWeb"
+
+	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
 	implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 
 
@@ -98,9 +101,9 @@ dependencies {
 
 	// Annotations
 	//Enable Swagger UI
-	implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$versions.openAPI"
+//	implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$versions.openAPI"
 //	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$versions.openAPI"
-//	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
+	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
 	implementation "org.json:json:$versions.json"
 

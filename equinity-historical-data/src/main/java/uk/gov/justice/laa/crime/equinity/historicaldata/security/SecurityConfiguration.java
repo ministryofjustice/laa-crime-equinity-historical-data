@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,13 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     @Value("${server.api.url-path}")
     private String API_REQUEST_PATH;
-    private final ApiClientAuthFilter authFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, ApiClientAuthFilter authFilter) throws Exception {
+
         return http
-//            .cors(AbstractHttpConfigurer::disable)
-//            .csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .formLogin(AbstractHttpConfigurer::disable)
             .securityMatcher("/**")
@@ -34,8 +35,10 @@ public class SecurityConfiguration {
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers(String.format("%s/**", API_REQUEST_PATH)).authenticated()
                 .anyRequest().denyAll()
+
             )
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+            .httpBasic(Customizer.withDefaults())
             .build();
     }
 }
