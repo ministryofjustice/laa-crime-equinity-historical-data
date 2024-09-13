@@ -72,17 +72,13 @@ dependencies {
 	implementation "ch.qos.logback:logback-core:$versions.logback"
 	implementation "ch.qos.logback:logback-classic:$versions.logback"
 
-
-	//Enable Swagger UI
-	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$versions.openAPI"
-
 	// Security (oAuth)
 	implementation "org.springframework.security:spring-security-core:$versions.springSecurity"
 	implementation "org.springframework.security:spring-security-web:$versions.springSecurity"
 	implementation "org.springframework.security:spring-security-config:$versions.springSecurity"
 	implementation "org.springframework.boot:spring-boot-starter-security:$versions.springStarter"
 
-//	implementation "org.springframework:spring-webflux:$versions.springWeb"
+	implementation "org.springframework:spring-webflux:$versions.springWeb"
 //	implementation "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
 	implementation "io.netty:netty-codec-http:$versions.nettyCodec"
 
@@ -101,7 +97,10 @@ dependencies {
 
 
 	// Annotations
-	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
+	//Enable Swagger UI
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$versions.openAPI"
+//	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$versions.openAPI"
+//	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
 	implementation "org.json:json:$versions.json"
 
