@@ -8,13 +8,14 @@ def versions = [
         springStarter		  		: '3.3.3',
         springdocVersion       		: '1.8.0',
         springWeb					: '6.1.13',
+        tomcatEmbed                 :  '10.1.25',
 ]
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
     implementation "org.springframework:spring-webmvc:$versions.springWeb"
     implementation "org.springframework:spring-webflux:$versions.springWeb"
-    implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.25'
+    implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 
 
     implementation "org.springframework.data:spring-data-commons:$versions.springStarter"
