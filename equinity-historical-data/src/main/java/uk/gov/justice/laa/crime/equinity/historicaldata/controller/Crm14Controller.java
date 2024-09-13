@@ -43,15 +43,6 @@ public class Crm14Controller implements Crm14InterfaceApi{
     }
 
     public void addProcessedAttachmentsToEvidence(Crm14Model crm14FormData, List<Crm14AttachmentModel> processedAttachments) {
-        /*if (CollectionUtils.isEmpty(processedAttachments)){
-            return;
-        }
-        /*
-        List<CrmEvidenceFileModel> files = crm14FormData.getEvidenceFiles().getFiles();
-        if (CollectionUtils.isEmpty(files)){
-            files = new ArrayList<>();
-        }
-        */
         for(Crm14AttachmentModel processedAttachment: processedAttachments){
             CrmEvidenceFileModel evidenceFileModel = new CrmEvidenceFileModel();
             evidenceFileModel.setKey("att_"+processedAttachment.getAttachmentId()+".att");
