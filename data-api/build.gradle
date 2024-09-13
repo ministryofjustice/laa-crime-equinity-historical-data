@@ -6,9 +6,12 @@ apply plugin: "maven-publish"
 
 def versions = [
         springStarter               : '3.3.3',
-        springdoc                   : '1.8.0',
         springWeb                   : '6.1.13',
+        springdoc                   : '1.8.0',
         tomcatEmbed                 : '10.1.25',
+        jacksonFaster               : '2.17.2',
+        jacksonNullable             : '0.2.6',
+        googleFirebugs              : '3.0.2'
 ]
 
 dependencies {
@@ -20,12 +23,12 @@ dependencies {
 
     implementation "org.springframework.data:spring-data-commons:$versions.springStarter"
     implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation "com.google.code.findbugs:jsr305:$versions.googleFirebugs"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$versions.jacksonFaster"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versions.jacksonFaster"
+    implementation "org.openapitools:jackson-databind-nullable:$versions.jacksonNullable"
     implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation "com.fasterxml.jackson.core:jackson-databind:$versions.jacksonFaster"
 }
 
 publishing {
