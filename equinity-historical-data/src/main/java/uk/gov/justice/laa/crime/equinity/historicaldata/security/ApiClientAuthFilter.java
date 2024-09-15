@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class ApiClientAuthFilter extends OncePerRequestFilter  {
+public class ApiClientAuthFilter extends OncePerRequestFilter {
     private final ApiClientAuthExtractor extractor;
 
     @Override
