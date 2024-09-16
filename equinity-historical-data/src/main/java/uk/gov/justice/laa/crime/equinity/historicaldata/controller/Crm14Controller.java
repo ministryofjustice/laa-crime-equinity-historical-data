@@ -11,7 +11,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormD
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm14Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14AttachmentModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFileModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
@@ -38,17 +37,8 @@ public class Crm14Controller implements Crm14InterfaceApi{
         Crm14Model crm14FormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
         List<Crm14AttachmentModel> attachments = crm14AttachmentService.getCrm14Attachments(usn);
         crm14FormData.getFormDetails().setProcessedAttachments(attachments);
-        addProcessedAttachmentsToEvidence(crm14FormData,attachments);
+        crm14FormData.addProcessedAttachmentsToEvidence(attachments);
         return ResponseEntity.ok(mapper.getDTOFromModel(crm14FormData));
     }
 
-    public void addProcessedAttachmentsToEvidence(Crm14Model crm14FormData, List<Crm14AttachmentModel> processedAttachments) {
-        for(Crm14AttachmentModel processedAttachment: processedAttachments){
-            CrmEvidenceFileModel evidenceFileModel = new CrmEvidenceFileModel();
-            evidenceFileModel.setKey("att_"+processedAttachment.getAttachmentId()+".att");
-            evidenceFileModel.setName(processedAttachment.getFileName());
-            evidenceFileModel.setType(processedAttachment.getEvidenceType());
-            crm14FormData.getEvidenceFiles().getFiles().add(evidenceFileModel);
-        }
-    }
 }
