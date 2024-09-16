@@ -60,7 +60,7 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="adviceAssistance.laaAdviceAssistance.providedAdvice",  source="aa_cds_provided_same_matter")
     @Mapping(target="adviceAssistance.laaAdviceAssistance.notes",  source="aa_cds_provided_same_matter_reason")
     @Mapping(target="capitalDetails.isUnder18", source="client_under_18")
-    @Mapping(target="capitalDetails.hasIncomeSupport",  expression = "java(null)")
+    @Mapping(target="capitalDetails.hasIncomeSupport",  source = "client_state_benefit")
     @Mapping(target="capitalDetails.numOfDependants", source="client_dependants")
     @Mapping(target="capitalDetails.clientSavings", source="client_savings")
     @Mapping(target="capitalDetails.partnerSavings", source="client_partner_savings")
