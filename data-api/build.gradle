@@ -7,6 +7,7 @@ apply plugin: "maven-publish"
 def versions = [
         springStarter               : '3.3.3',
         springWeb                   : '6.1.13',
+        springData                  : '3.3.4',
         springdoc                   : '1.8.0',
         tomcatEmbed                 : '10.1.25',
         jacksonFaster               : '2.17.2',
@@ -15,14 +16,16 @@ def versions = [
 ]
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
     implementation "org.springframework:spring-webmvc:$versions.springWeb"
-    implementation "org.springframework:spring-webflux:$versions.springWeb"
+    implementation "org.springframework:spring-web:$versions.springWeb"
+    implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
     implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 
+    implementation "org.springframework:spring-webflux:$versions.springWeb"
 
-    implementation "org.springframework.data:spring-data-commons:$versions.springStarter"
+    implementation "org.springframework.data:spring-data-commons:$versions.springData"
     implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
+
     implementation "com.google.code.findbugs:jsr305:$versions.googleFirebugs"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$versions.jacksonFaster"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versions.jacksonFaster"
