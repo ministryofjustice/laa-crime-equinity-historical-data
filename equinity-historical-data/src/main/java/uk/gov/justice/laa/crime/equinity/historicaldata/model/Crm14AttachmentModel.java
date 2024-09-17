@@ -22,6 +22,9 @@ public class Crm14AttachmentModel {
     @Id
     @Column(name = "AttachmentId" , updatable = false, nullable = false, unique=true)
     private String attachmentId;
+    public String getAttachmentId() {
+        return attachmentId.toLowerCase();
+    }
 
     @Column(name="Filename")
     private String fileName;
