@@ -110,7 +110,7 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Cd_wasted_costs_order_details")
     public String cd_wasted_costs_order_details;
     @JsonProperty("Cd_wasted_costs_order_net")
-    public String cd_wasted_costs_order_net;
+    public Float cd_wasted_costs_order_net;
 
     /** *** **/
 
@@ -256,7 +256,7 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Cfc_total_costs")
     public float cfc_total_costs;
     @JsonProperty("Cfc_sol_core_costs")
-    public float cfc_sol_core_costs;
+    public Float cfc_sol_core_costs;
     // Communications - Office
     // Letters
     @JsonProperty("Cfc_cw_no_of_letters")
@@ -280,7 +280,7 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Cfc_cw_total_costs")
     public float cfc_cw_total_costs;
     @JsonProperty("Cfc_cw_sol_core_costs")
-    public float cfc_cw_sol_core_costs;
+    public Float cfc_cw_sol_core_costs;
 
 
     @JsonProperty("Total_travel_time")
@@ -319,9 +319,9 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     // Claim of Costs
     // Total
     @JsonProperty("Ct_profit_costs_vat_rate")
-    public float ct_profit_costs_vat_rate;
+    public Float ct_profit_costs_vat_rate;
     @JsonProperty("Ct_profit_costs_total")
-    public String ct_profit_costs_total;
+    public Float ct_profit_costs_total;
     @JsonProperty("Ct_travel_costs_vat_rate")
     public float ct_travel_costs_vat_rate;
     @JsonProperty("Ct_travel_costs_total")
@@ -334,9 +334,9 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     public float ct_total;
     // Office
     @JsonProperty("Ctou_profit_costs_vat_rate")
-    public float ctou_profit_costs_vat_rate;
+    public Float ctou_profit_costs_vat_rate;
     @JsonProperty("Ctou_profit_costs_total")
-    public float ctou_profit_costs_total;
+    public Float ctou_profit_costs_total;
     @JsonProperty("Ctou_travel_costs_vat_rate")
     public float ctou_travel_costs_vat_rate;
     @JsonProperty("Ctou_travel_costs_total")
