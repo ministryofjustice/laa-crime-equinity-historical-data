@@ -85,7 +85,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="dateChargeLaid", source="cd_offence_date")
     @Mapping(target="indictmentAttachment", expression="java(convertToEnum(Crm7CaseDetailsDTO.IndictmentAttachmentEnum.class, model.getCd_indictment_attach_method()))")
     @Mapping(target="isWastedCostsCase", expression="java(convertToEnum(Crm7CaseDetailsDTO.IsWastedCostsCaseEnum.class, model.getCd_wasted_cost_order()))")
-    @Mapping(target="wastedCosts", expression="java(emptyFloatToNull(model.getCd_wasted_costs_order_net()))")
+    @Mapping(target="wastedCosts", source="cd_wasted_costs_order_net")
     @Mapping(target="orderDetails", source="cd_wasted_costs_order_details")
     Crm7CaseDetailsDTO getCaseDetailsDTOFromModel(Crm7DetailsModel model);
 
@@ -249,7 +249,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="total", source="cfc_disb_grand_total_ou")
     Crm7ClaimTotalCostDetailsDTO getDisbursementOfficeDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="deductions", expression="java(emptyFloatToNull(model.getCd_wasted_costs_order_net()))")
+    @Mapping(target="deductions", source="cd_wasted_costs_order_net")
     @Mapping(target="total", expression="java(getClaimTotalsCostDTOFromModel(model))")
     @Mapping(target="officeUse", expression="java(getClaimTotalsOfficeDTOFromModel(model))")
     Crm7ClaimTotalsDTO getClaimTotalsDTOFromModel(Crm7DetailsModel model);
@@ -260,7 +260,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="waiting", expression="java(getClaimTotalsCostWaitDTOFromModel(model))")
     Crm7ClaimTotalCostsDTO getClaimTotalsCostDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(emptyFloatToNull(model.getCfc_sol_core_costs()))")
+    @Mapping(target="net", source="cfc_sol_core_costs")
     @Mapping(target="vat", source="ct_profit_costs_vat_rate")
     @Mapping(target="total", source="ct_profit_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostProfitDTOFromModel(Crm7DetailsModel model);
@@ -281,7 +281,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="waiting", expression="java(getClaimTotalsOfficeWaitDTOFromModel(model))")
     Crm7ClaimTotalCostsDTO getClaimTotalsOfficeDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(emptyFloatToNull(model.getCfc_cw_sol_core_costs()))")
+    @Mapping(target="net", source="cfc_cw_sol_core_costs")
     @Mapping(target="vat", source="ctou_profit_costs_vat_rate")
     @Mapping(target="total", source="ctou_profit_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeProfitDTOFromModel(Crm7DetailsModel model);
