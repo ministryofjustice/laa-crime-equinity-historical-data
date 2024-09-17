@@ -106,6 +106,9 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="selection.radio1", source="cdsp_category_1_radio")
     @Mapping(target="selection.radio2", source="cdsp_category_2_radio")
     @Mapping(target="selection.radio3", source="cdsp_category_3_radio")
+    @Mapping(target="warrantOfArrestDate", source="cdsp_warrant_of_arrest_date")
+    @Mapping(target="guiltyPleaDate", source="cdsp_guilty_plea_date")
+    @Mapping(target="otherDetails", source="cdsp_other_details")
     Crm7CaseDisposalDTO getCaseDisposalDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="wasCounselAssigned", expression="java(convertToEnum(Crm7ClaimDetailsDTO.WasCounselAssignedEnum.class, model.getCounsel_instructed_assigned()))")

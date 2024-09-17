@@ -228,6 +228,12 @@ Crm7CaseDisposalDTO:
           type: boolean
         radio3:
           type: boolean
+    warrantOfArrestDate:
+      type: string
+    guiltyPleaDate:
+      type: string
+    otherDetails:
+      type: string
 
 Crm7ClaimDetailsDTO:
   type: object

@@ -152,6 +152,10 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Cdsp_category_3_radio")
     public boolean cdsp_category_3_radio;
 
+    @JsonProperty("Cdsp_warrant_of_arrest_date")
+    LocalDate cdsp_warrant_of_arrest_date;
+    @JsonProperty("Cdsp_guilty_plea_date")
+    LocalDate cdsp_guilty_plea_date;
     @JsonProperty("Cdsp_other_details")
     public String cdsp_other_details;
     /** *** **/
