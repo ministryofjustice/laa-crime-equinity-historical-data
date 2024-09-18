@@ -13,7 +13,9 @@ def versions = [
 		mapStruct 					: '1.6.0.RC1',
 		openAPI 					: '2.6.0',
 		openCSV 					: '5.9',
+		apacheCommons 				: '4.5.0-M2',
 		junit 						: '5.11.0',
+		xmlUnit 					: '2.10.0',
 		h2db 						: '2.3.232',
 		reactorTest 				: '3.6.10',
 		sentry 						: '7.13.0',
@@ -35,15 +37,15 @@ configurations {
 			// with known vulnerabilities, and the version to use as a fix
 			// This will still need to be included manually under the dependencies section
 			// This will only ensure the override of the bundled version
-			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
-			force "io.netty:netty-codec-http:$versions.nettyCodec"
-			force "org.springframework:spring-web:$versions.springWeb"
 			force "org.springframework:spring-webmvc:$versions.springWeb"
+			force "org.springframework:spring-web:$versions.springWeb"
 			force "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 			force "org.springframework:spring-webflux:$versions.springWeb"
-			force "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
-			force "org.xmlunit:xmlunit-core:2.10.0"
-
+			force "io.netty:netty-codec-http:$versions.nettyCodec"
+//			force "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
+			force "org.apache.commons:commons-collections4:$versions.apacheCommons"
+			force "org.xmlunit:xmlunit-core:$versions.xmlUnit"
 		}
 	}
 }
@@ -85,6 +87,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
 
+	implementation "org.apache.commons:commons-collections4:$versions.apacheCommons"
 	implementation "com.opencsv:opencsv:$versions.openCSV"
 
 	// Sentry
@@ -116,7 +119,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter:$versions.junit")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-	testImplementation "org.xmlunit:xmlunit-core:2.10.0"
+	testImplementation "org.xmlunit:xmlunit-core:$versions.xmlUnit"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
 	testImplementation "io.projectreactor:reactor-test:$versions.reactorTest"
 	testImplementation "com.h2database:h2:$versions.h2db"
@@ -136,7 +139,7 @@ test {
 }
 
 jacoco {
-	toolVersion = "0.8.8"
+	toolVersion = "0.8.12" // 0.8.8
 }
 
 tasks.named('test') {
@@ -154,10 +157,15 @@ jacocoTestReport {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
+					'**/config/**',
+					'**/exception/**',
+					'**/mapper/**',
+					'**/model/**',
+					'**/repository/**',
+					'**/security/**',
 					'**/entity/**',
 					'**/dto/**',
-					'**/generated/**',
-					'**/config/**'
+					'**/generated/**'
 			])
 		}))
 	}
@@ -167,6 +175,7 @@ jacocoTestCoverageVerification {
 	dependsOn jacocoTestReport
 	violationRules {
 		failOnViolation = true
+
 		rule {
 			element = 'CLASS'
 			excludes = [
@@ -175,10 +184,9 @@ jacocoTestCoverageVerification {
 				'uk.gov.justice.laa.crime.equinity.historicaldata.exception.*',
 				'uk.gov.justice.laa.crime.equinity.historicaldata.mapper.*',
 				'uk.gov.justice.laa.crime.equinity.historicaldata.model.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.repository.*',
 				'uk.gov.justice.laa.crime.equinity.historicaldata.security.*',
-				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.config.*',
-				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.mapper.*',
-				'uk.gov.justice.laa.crime.equinity.historicaldata.archive.model.*',
+				'uk.gov.justice.laa.crime.equinity.historicaldata.generated.*',
 				'uk.gov.justice.laa.crime.equinity.historicaldata.controller.CrmFileController' // This is a temporary test class
 			]
 			limit {
