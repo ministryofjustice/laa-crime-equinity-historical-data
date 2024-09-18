@@ -7,13 +7,12 @@ import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.config.Crm14CaseSummaryReportCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ReportCrm14Api;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
@@ -80,19 +79,30 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
             String profileAcceptedTypes,
             HttpServletResponse response
     ) throws IOException {
+        Crm14CaseSummaryReportCriteriaDTO criteria;
+        List<Crm14CaseSummaryReportModel> reportData;
+
+        try {
+            criteria = new Crm14CaseSummaryReportCriteriaDTO(
+                    filterByDecision, decisionFrom, decisionTo,
+                    filterBySubmit, submittedFrom, submittedTo,
+                    filterByCreation, createdFrom, createdTo,
+                    filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
+                    state, profileAcceptedTypes
+            );
+
+            log.info("eForm CRM14 report download request received :: [{}]", criteria);
+            reportData = reportService.getReportData(criteria);
+        } catch (UnauthorizedUserProfileException e) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            throw e;
+        } catch (ResourceNotFoundException e) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+            throw e;
+        }
+
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,  getResponseHeaderFilename());
-
-        Crm14CaseSummaryReportCriteriaDTO criteria = new Crm14CaseSummaryReportCriteriaDTO(
-            filterByDecision, decisionFrom, decisionTo,
-            filterBySubmit, submittedFrom, submittedTo,
-            filterByCreation, createdFrom, createdTo,
-            filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
-            state, profileAcceptedTypes
-        );
-
-        log.info("eForm CRM14 report download request received :: [{}]", criteria);
-        List<Crm14CaseSummaryReportModel> reportData = reportService.getReportData(criteria);
 
         CSVWriter writer = new CSVWriter(response.getWriter());
 

@@ -13,9 +13,11 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
 import java.io.IOException;
@@ -160,6 +162,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                 STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response
             );
 
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
@@ -180,6 +183,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                 0, startDate, endDate,
                 STATE_DEFAULT, null, response
             );
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
@@ -187,18 +191,27 @@ class Crm14CaseSummaryReportControllerDownloadTest {
     }
 
     @Test
-    void generateReportTest_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnResourceNotFoundException() {
-        String startDate = "2010-02-01";
-        String endDate = "2024-06-01";
+    void generateReportTest_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() throws IOException {
+        try {
+            String startDate = "2010-02-01";
+            String endDate = "2024-06-01";
 
-        // execute
-        softly.assertThatThrownBy(() -> controller.generateReport(
-                1, startDate, endDate,
-                0, startDate, endDate,
-                0, startDate, endDate,
-                0, startDate, endDate,
-                STATE_DEFAULT, DENIED_PROFILE_TYPES, response))
-            .isInstanceOf(ResourceNotFoundException.class);
+            // execute
+            controller.generateReport(
+                    1, startDate, endDate,
+                    0, startDate, endDate,
+                    0, startDate, endDate,
+                    0, startDate, endDate,
+                    STATE_DEFAULT, DENIED_PROFILE_TYPES, response
+            );
+        } catch (UnauthorizedUserProfileException e) {
+            softly.assertThat(e).isInstanceOf(UnauthorizedUserProfileException.class);
+            softly.assertThat(e.getMessage()).contains("User profile does not have privileges");
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        } catch (InvalidDataAccessResourceUsageException e) {
+            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
+            // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
+        }
     }
 
     @Test
@@ -219,6 +232,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
             softly.assertThat(e).isInstanceOf(ResourceNotFoundException.class);
             softly.assertThat(e.getMessage()).contains("CRM14");
             softly.assertThat(e.getMessage()).contains("No data found");
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class

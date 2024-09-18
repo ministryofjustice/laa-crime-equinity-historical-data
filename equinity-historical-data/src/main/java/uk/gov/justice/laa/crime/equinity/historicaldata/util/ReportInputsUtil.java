@@ -3,14 +3,14 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.util;
 import jakarta.annotation.Nullable;
 import lombok.experimental.UtilityClass;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 
 import java.time.LocalDate;
 
 @UtilityClass
 public class ReportInputsUtil {
     public static void checkInputs(String dateFrom, String dateTo,
-                                   String profileAcceptedTypes, int requiredType) throws DateRangeConstraintViolationException, ResourceNotFoundException {
+                                   String profileAcceptedTypes, int requiredType) throws DateRangeConstraintViolationException, UnauthorizedUserProfileException {
         checkDateRange(dateFrom, dateTo);
         checkTypeIsAcceptedByProfile(requiredType, profileAcceptedTypes);
     }
@@ -21,11 +21,13 @@ public class ReportInputsUtil {
         DateUtil.checkDateRangeIsValid(checkDateFrom, checkDateTo);
     }
 
-    public static void checkTypeIsAcceptedByProfile(Integer requiredType, @Nullable String types) throws ResourceNotFoundException {
+    public static void checkTypeIsAcceptedByProfile(Integer requiredType, @Nullable String types) throws UnauthorizedUserProfileException {
         if (types == null) return;
 
         if (!types.contains(String.valueOf(requiredType))) {
-            throw new ResourceNotFoundException("No data found. User profile does not have privileges to access requested data");
+            throw new UnauthorizedUserProfileException(
+                    String.format("Unauthorized. User profile does not have privileges to access requested report type [%d] ", requiredType)
+            );
         }
     }
 }
