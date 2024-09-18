@@ -112,7 +112,25 @@ public class Crm14CaseSummaryReportModel {
         );
     }
 
+    public String[] exportToCSVArray() {
+        return new String[] {
+            String.valueOf(usn), String.valueOf(createdDate),MAAT, String.valueOf(firstSubmittedDate), defendantName,
+            providerAccount, originatorName, queueType, queueName, queueSortOrder, court, caseworker, state,
+            String.valueOf(firstSentToNctDate), caseType, String.valueOf(lastReturnedToProviderDate), benefitCheckResult,
+            ioJDecision, meansTested, meansDecision, overallDecision, String.valueOf(decisionDate), providerName,
+            applicationType, isNewApplication, isCIFC, String.valueOf(fundingDecisionUpdateCount), isPriorityCase,
+            String.valueOf(submissionCount), String.valueOf(latestSubmissionDate), String.valueOf(returnDate1),
+            String.valueOf(resubmissionDate1), String.valueOf(returnDate2), String.valueOf(resubmissionDate2),
+            String.valueOf(returnDate3), String.valueOf(resubmissionDate3), String.valueOf(returnDate4),
+            String.valueOf(resubmissionDate4), String.valueOf(returnDate5), String.valueOf(resubmissionDate5)
+        };
+    }
+
     public static String exportHeaderToCSV() {
         return "Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,Provider Account,Originator,QueueType,QueueName,QueueSortOrder,Court,Caseworker,Stage,DTFirstSentToNct,CaseType,DTLastReturnedToProvider,BenefitCheckResult,IOJDecision,MeansTested,MeansDecision,OverallDecision,DTDecision,ProviderName,ApplicationType,IsNewApplication,IsCIFC,FundingDecisionUpdateCount,IsPriorityCase,SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2,ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5\n";
+    }
+
+    public static String[] exportHeaderToCSVArray() {
+        return new String[] {"Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,Provider Account,Originator,QueueType,QueueName,QueueSortOrder,Court,Caseworker,Stage,DTFirstSentToNct,CaseType,DTLastReturnedToProvider,BenefitCheckResult,IOJDecision,MeansTested,MeansDecision,OverallDecision,DTDecision,ProviderName,ApplicationType,IsNewApplication,IsCIFC,FundingDecisionUpdateCount,IsPriorityCase,SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2,ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5"};
     }
 }

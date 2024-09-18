@@ -12,10 +12,11 @@ def versions = [
 		logback 					: '1.5.6',
 		mapStruct 					: '1.6.0.RC1',
 		openAPI 					: '2.6.0',
+		openCSV 					: '5.9',
 		junit 						: '5.11.0',
 		h2db 						: '2.3.232',
 		reactorTest 				: '3.6.10',
-		sentry 						: '7.13.0', //''8.0.0-alpha.4',
+		sentry 						: '7.13.0',
 		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
 		tomcatEmbed 				: '10.1.25',
@@ -83,6 +84,8 @@ dependencies {
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
+
+	implementation "com.opencsv:opencsv:$versions.openCSV"
 
 	// Sentry
 	implementation platform("io.sentry:sentry-bom:$versions.sentry")
