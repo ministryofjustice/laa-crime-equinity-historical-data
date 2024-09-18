@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+// TODO (EMP-000): if download version can not be added to openapi specification, then remove the report implementation
 public class Crm14CaseSummaryReportController implements ReportCrm14Api {
     private final Crm14CaseSummaryReportService reportService;
 
@@ -101,6 +102,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
             throw e;
         }
 
+        // TODO (EMP-000): consider moving this logic to a CSV Writer helper class
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,  getResponseHeaderFilename());
 
@@ -117,6 +119,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
         writer.close();
     }
 
+    // TODO (EMP-000): consider moving this function to a CSV Writer helper class
     private static String getResponseHeaderFilename() {
         return String.format(
                 "attachment; filename=\"%s\"",
@@ -125,6 +128,8 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
     }
 
     @Override
+    @Deprecated
+    // TODO (EMP-000) consider removing this version (or find a way to add it to openapi specification)
     public ResponseEntity<byte[]> generateReportCrm14(
             Integer filterByDecision, String decisionFrom, String decisionTo,
             Integer filterBySubmit, String submittedFrom, String submittedTo,
