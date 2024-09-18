@@ -49,7 +49,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
             method = RequestMethod.GET,
             value = "/api/internal/v1/equinity/report/crm14/download/"
     )
-    void generateReport(
+    public void generateReport(
             @NotNull @Min(0) @Max(1)  @Valid @RequestParam(value = "filterByDecision", required = true)
             Integer filterByDecision,
             @NotNull @Pattern(regexp = "^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$")  @Valid @RequestParam(value = "decisionFrom", required = true)
