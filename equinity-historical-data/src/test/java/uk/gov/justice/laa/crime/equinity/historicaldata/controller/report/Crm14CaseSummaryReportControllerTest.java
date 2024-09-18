@@ -56,7 +56,7 @@ class Crm14CaseSummaryReportControllerTest {
      **/
 
     @Test
-    void generateReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
+    void generateReportCrm14Crm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
         String expectedMessage = "must match";
         String validDate = "2050-01-01";
 
@@ -123,7 +123,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
+    void generateReportCrm14Crm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
         String startDate = "2024-02-19";
         String endDate = "2024-02-09";
         String expectedMessage = "must not be after end date";
@@ -144,7 +144,7 @@ class Crm14CaseSummaryReportControllerTest {
      */
 
     @Test
-    void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
+    void generateReportCrm14Crm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
@@ -167,7 +167,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() {
+    void generateReportCrm14Crm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
@@ -190,7 +190,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
+    void generateReportCrm14Crm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
         String startDate = "2010-02-01";
         String endDate = "2024-06-01";
 
@@ -205,7 +205,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() {
+    void generateReportCrm14Crm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() {
         try {
             String startDate = "1988-02-01";
             String endDate = "1988-02-02";

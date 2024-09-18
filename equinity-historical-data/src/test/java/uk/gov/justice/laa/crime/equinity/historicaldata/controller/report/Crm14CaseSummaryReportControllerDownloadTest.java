@@ -60,13 +60,13 @@ class Crm14CaseSummaryReportControllerDownloadTest {
      **/
 
     @Test
-    void generateReportTest_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
+    void generateReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
         String expectedMessage = "must match";
         String validDate = "2050-01-01";
 
         // execute
         testInvalidFormatDates.forEach(dateToTest -> {
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                             1, dateToTest, dateToTest,
                             0, dateToTest, dateToTest,
                             0, dateToTest, dateToTest,
@@ -74,7 +74,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                             STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response))
                     .isInstanceOf(ConstraintViolationException.class)
                     .hasMessageContaining(expectedMessage);
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                             1, dateToTest, validDate,
                             0, validDate, validDate,
                             0, validDate, validDate,
@@ -82,7 +82,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                             STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response))
                     .isInstanceOf(ConstraintViolationException.class)
                     .hasMessageContaining(expectedMessage);
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                             1, validDate, dateToTest,
                             0, validDate, validDate,
                             0, validDate, validDate,
@@ -90,7 +90,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                             STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response))
                     .isInstanceOf(ConstraintViolationException.class)
                     .hasMessageContaining(expectedMessage);
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                                 1, validDate, validDate,
                                 0, dateToTest, validDate,
                                 0, validDate, validDate,
@@ -98,7 +98,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                                 STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage);
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                                 1, validDate, validDate,
                                 0, validDate, dateToTest,
                                 0, validDate, validDate,
@@ -106,7 +106,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                                 STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage);
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                                 1, validDate, validDate,
                                 0, dateToTest, validDate,
                                 0, validDate, validDate,
@@ -114,7 +114,7 @@ class Crm14CaseSummaryReportControllerDownloadTest {
                                 STATE_DEFAULT, ACCEPTED_PROFILE_TYPES, response))
                         .isInstanceOf(ConstraintViolationException.class)
                         .hasMessageContaining(expectedMessage);
-                softly.assertThatThrownBy(() -> controller.generateReport(
+                softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                                 1, validDate, validDate,
                                 0, validDate, validDate,
                                 0, dateToTest, validDate,
@@ -127,13 +127,13 @@ class Crm14CaseSummaryReportControllerDownloadTest {
     }
 
     @Test
-    void generateReportTest_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
+    void generateReportCrm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
         String startDate = "2024-02-19";
         String endDate = "2024-02-09";
         String expectedMessage = "must not be after end date";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReport(
+        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
@@ -148,13 +148,13 @@ class Crm14CaseSummaryReportControllerDownloadTest {
      */
 
     @Test
-    void generateReportTest_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() throws IOException {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() throws IOException {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
 
             // execute
-            controller.generateReport(
+            controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
@@ -170,13 +170,13 @@ class Crm14CaseSummaryReportControllerDownloadTest {
     }
 
     @Test
-    void generateReportTest_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() throws IOException {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() throws IOException {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
 
             // execute
-            controller.generateReport(
+            controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
@@ -191,13 +191,13 @@ class Crm14CaseSummaryReportControllerDownloadTest {
     }
 
     @Test
-    void generateReportTest_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() throws IOException {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() throws IOException {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
 
             // execute
-            controller.generateReport(
+            controller.generateReportCrm14(
                     1, startDate, endDate,
                     0, startDate, endDate,
                     0, startDate, endDate,
@@ -215,13 +215,13 @@ class Crm14CaseSummaryReportControllerDownloadTest {
     }
 
     @Test
-    void generateReportTest_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() throws IOException {
+    void generateReportCrm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() throws IOException {
         try {
             String startDate = "1988-02-01";
             String endDate = "1988-02-02";
 
             // execute
-            controller.generateReport(
+            controller.generateReportCrm14(
                     1, startDate, endDate,
                     0, startDate, endDate,
                     0, startDate, endDate,

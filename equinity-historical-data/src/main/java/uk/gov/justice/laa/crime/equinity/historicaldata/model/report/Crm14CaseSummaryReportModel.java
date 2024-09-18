@@ -100,7 +100,7 @@ public class Crm14CaseSummaryReportModel {
 
     public String exportToCSV() {
         return String.format(
-            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
             usn, createdDate,MAAT, firstSubmittedDate, defendantName, providerAccount,
             originatorName, queueType, queueName, queueSortOrder, court, caseworker, state,
             firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,
@@ -118,7 +118,7 @@ public class Crm14CaseSummaryReportModel {
     }
 
     public static String exportHeaderToCSV() {
-        return "Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,Provider Account,Originator,QueueType,QueueName,QueueSortOrder,Court,Caseworker,Stage,DTFirstSentToNct,CaseType,DTLastReturnedToProvider,BenefitCheckResult,IOJDecision,MeansTested,MeansDecision,OverallDecision,DTDecision,ProviderName,ApplicationType,IsNewApplication,IsCIFC,FundingDecisionUpdateCount,IsPriorityCase,SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2,ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5\n";
+        return "Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,Provider Account,Originator,QueueType,QueueName,QueueSortOrder,Court,Caseworker,Stage,DTFirstSentToNct,CaseType,DTLastReturnedToProvider,BenefitCheckResult,IOJDecision,MeansTested,MeansDecision,OverallDecision,DTDecision,ProviderName,ApplicationType,IsNewApplication,IsCIFC,FundingDecisionUpdateCount,IsPriorityCase,SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2,ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5";
     }
 
     // TODO (EMP-000): consider moving this conversion to a CSV Writer helper class
