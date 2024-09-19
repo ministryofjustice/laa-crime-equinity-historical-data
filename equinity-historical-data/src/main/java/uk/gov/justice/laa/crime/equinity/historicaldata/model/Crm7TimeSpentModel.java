@@ -21,15 +21,17 @@ public class Crm7TimeSpentModel {
     @JsonProperty("Time_total")
     public String time_total; // format 00:00:00
     @JsonProperty("Hearing_codes")
-    public float hearing_codes;
+    public String hearing_codes;
     @JsonProperty("Person_codes")
     public String person_codes;
     @JsonProperty("Rate")
-    public float rate;
+    public Float rate;
+    @JsonProperty("Basic_claim")
+    public Float basic_claim;
     @JsonProperty("Uplift")
-    public float uplift;
+    public Float uplift;
     @JsonProperty("Claim")
-    public float claim;
+    public Float claim;
 
     @JsonProperty("Cost_type_full_list")
     public String cost_type_full_list;
@@ -41,8 +43,7 @@ public class Crm7TimeSpentModel {
     public String time_display; // format 00:00:00
     @JsonProperty("Person_codes_options")
     public String person_codes_options;
-    @JsonProperty("Basic_claim")
-    public float basic_claim;
+
     /** *** **/
 
     // LAA Adjustments
