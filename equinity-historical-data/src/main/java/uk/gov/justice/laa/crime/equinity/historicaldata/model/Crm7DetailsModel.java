@@ -301,6 +301,10 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     /** **** **/
 
     // Disbursements
+
+    @JsonProperty("Db")
+    public Crm7DisbursementsModel disbursements;
+
     @JsonProperty("Cfc_disb_attach_method") // Post/DX
     public String cfc_disb_attach_method;
     // Totals

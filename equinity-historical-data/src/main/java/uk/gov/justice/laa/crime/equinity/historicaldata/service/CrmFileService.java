@@ -37,8 +37,12 @@ public class CrmFileService {
     private static final String CRM_SCHEMA = "schema";
     public static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
     public static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
+    public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
+    public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
+    public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
+    public static final String CRM7_DISBURSEMENTS ="Db";
     public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
-    public static final String CRM14_ROW = "row";
+    public static final String CRM_ROW = "row";
     public static final String CRM_FORM_FIELD_DATA = "fielddata";
     public static final String CRM15_BUSINESS_DETAILS = "Business_details";
     public static final String CRM15_PARTNER_BUSINESS_DETAILS = "Partner_business_details";
@@ -50,9 +54,7 @@ public class CrmFileService {
     public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
-    public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
-    public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
-    public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
+
 
     public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
 
@@ -76,29 +78,41 @@ public class CrmFileService {
     public <T extends CrmFormModelInterface> T getCrmFormData(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) {
         JSONObject crmFileJsonObject = getCrmFileJson(crmFormDetailsCriteriaDTO);
 
-        // Format sanity checks and conversions
-        if (CRM_TYPE_4 == crmFormDetailsCriteriaDTO.type()){
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_ADDITIONAL_EXPENDITURE, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_RELATED_SUBMISSIONS, CRM14_ROW);
+        formattingSanityCheckConversions(crmFormDetailsCriteriaDTO, crmFileJsonObject);
+
+        return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
+    }
+
+    /**
+     *  Format sanity checks and conversions
+     */
+    private void formattingSanityCheckConversions(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO, JSONObject crmFileJsonObject) {
+        switch (crmFormDetailsCriteriaDTO.type()) {
+            case CRM_TYPE_4:
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_ADDITIONAL_EXPENDITURE, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_RELATED_SUBMISSIONS, CRM_ROW);
+            break;
+            case CRM_TYPE_7:
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_DISBURSEMENTS, CRM_ROW);
+            break;
+            case CRM_TYPE_14:
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_CHARGES_BROUGHT, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BUSINESS_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_BUSINESS_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_CAR_REG_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_LAND_PROPERTY_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_INVESTMENT_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_SAVINGS_CERT_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BANK_ACCOUNTS_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_EMPLOYMENT_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_EMPLOYMENT_DETAILS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_NEW_ATTACHMENTS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_MESSAGE_HISTORY, CRM_ROW);
+            break;
         }
 
-        if ( CRM_TYPE_14 == crmFormDetailsCriteriaDTO.type() ){
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_CHARGES_BROUGHT, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BUSINESS_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_BUSINESS_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_CAR_REG_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_LAND_PROPERTY_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_INVESTMENT_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_SAVINGS_CERT_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BANK_ACCOUNTS_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_EMPLOYMENT_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_EMPLOYMENT_DETAILS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_NEW_ATTACHMENTS, CRM14_ROW);
-            convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_MESSAGE_HISTORY, CRM14_ROW);
-        }
         convertCrmFormObjectToArray(crmFileJsonObject, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
-        return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
     }
 
     public JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
