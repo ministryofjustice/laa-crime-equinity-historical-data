@@ -3,19 +3,25 @@ plugins {
 	id 'org.sonarqube' version '4.0.0.2929'
 	id "io.sentry.jvm.gradle" version "4.10.0"
 }
-
 def versions = [
-		springdocVersion			: '1.8.0',
-		springStarter				: '3.3.3',
-		springWeb					: '6.2.4',
-		springSecurity				: '6.3.0',
-		logback						: '1.5.6',
-		mapStruct					: '1.5.5.Final',
-		openAPI						: '2.6.0',
-		sentryVersion				: '7.13.0',
+		springStarter 				: '3.3.3',
+		springWeb 					: '6.1.13',
+		springSecurity 				: '6.3.3',
+		springdoc 					: '1.8.0',
+		json 						: '20240303',
+		logback 					: '1.5.6',
+		mapStruct 					: '1.6.0.RC1',
+		openAPI 					: '2.6.0',
+		junit 						: '5.11.0',
+		h2db 						: '2.3.232',
+		reactorTest 				: '3.6.10',
+		sentry 						: '7.13.0', //''8.0.0-alpha.4',
 		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
+		tomcatEmbed 				: '10.1.25',
+		nettyCodec 					: '4.1.108.Final',
 ]
+
 
 configurations {
 	compileOnly {
@@ -28,9 +34,15 @@ configurations {
 			// with known vulnerabilities, and the version to use as a fix
 			// This will still need to be included manually under the dependencies section
 			// This will only ensure the override of the bundled version
-			force 'org.apache.tomcat.embed:tomcat-embed-core:10.1.25'
-			force 'io.netty:netty-codec-http:4.1.108.Final'
+			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
+			force "io.netty:netty-codec-http:$versions.nettyCodec"
 			force "org.springframework:spring-web:$versions.springWeb"
+			force "org.springframework:spring-webmvc:$versions.springWeb"
+			force "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
+			force "org.springframework:spring-webflux:$versions.springWeb"
+			force "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
+			force "org.xmlunit:xmlunit-core:2.10.0"
+
 		}
 	}
 }
@@ -38,7 +50,7 @@ configurations {
 
 dependencyManagement {
 	dependencies {
-		dependencySet(group: 'io.sentry', version: versions.sentryVersion) {
+		dependencySet(group: 'io.sentry', version: versions.sentry) {
 			entry 'sentry-spring-boot-starter'
 			entry 'sentry-logback'
 		}
@@ -50,16 +62,15 @@ dependencies {
 
 	// Spring
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
+	implementation "org.springframework:spring-webmvc:$versions.springWeb"
+	implementation "org.springframework:spring-web:$versions.springWeb"
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
-	implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.25'
+	implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
+
 
 	// Logs
 	implementation "ch.qos.logback:logback-core:$versions.logback"
 	implementation "ch.qos.logback:logback-classic:$versions.logback"
-
-
-	//Enable Swagger UI
-	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$versions.openAPI"
 
 	// Security (oAuth)
 	implementation "org.springframework.security:spring-security-core:$versions.springSecurity"
@@ -67,16 +78,16 @@ dependencies {
 	implementation "org.springframework.security:spring-security-config:$versions.springSecurity"
 	implementation "org.springframework.boot:spring-boot-starter-security:$versions.springStarter"
 
-	implementation "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
-	implementation 'io.netty:netty-codec-http:4.1.108.Final'
+	implementation "org.springframework:spring-webflux:$versions.springWeb"
+	implementation "io.netty:netty-codec-http:$versions.nettyCodec"
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
 
 	// Sentry
-	implementation platform("io.sentry:sentry-bom:$versions.sentryVersion")
-	implementation "io.sentry:sentry-logback:$versions.sentryVersion"
-	implementation "io.sentry:sentry-spring-boot-starter-jakarta:$versions.sentryVersion"
+	implementation platform("io.sentry:sentry-bom:$versions.sentry")
+	implementation "io.sentry:sentry-logback:$versions.sentry"
+	implementation "io.sentry:sentry-spring-boot-starter-jakarta:$versions.sentry"
 
 	// Metrics
 	implementation "io.micrometer:micrometer-tracing-bom:$versions.micrometerio"
@@ -85,9 +96,10 @@ dependencies {
 
 
 	// Annotations
-	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdocVersion"
+	//Enable Swagger UI
+	implementation "org.springdoc:springdoc-openapi-ui:$versions.springdoc"
 	implementation 'com.microsoft.sqlserver:mssql-jdbc'
-	implementation 'org.json:json:20240303'
+	implementation "org.json:json:$versions.json"
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -98,12 +110,13 @@ dependencies {
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$versions.springStarter"
 
 	// If using JUnit Jupiter
-	testImplementation('org.junit.jupiter:junit-jupiter:5.11.0-M1')
+	testImplementation("org.junit.jupiter:junit-jupiter:$versions.junit")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+	testImplementation "org.xmlunit:xmlunit-core:2.10.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation "com.h2database:h2:2.2.224"
+	testImplementation "io.projectreactor:reactor-test:$versions.reactorTest"
+	testImplementation "com.h2database:h2:$versions.h2db"
 }
 
 jar {

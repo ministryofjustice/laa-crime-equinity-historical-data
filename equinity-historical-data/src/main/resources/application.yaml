@@ -15,7 +15,6 @@ spring:
         dialect: org.hibernate.dialect.SQLServerDialect
         format_sql: 'true'
     show-sql: ${DB_DEBUG}
-
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

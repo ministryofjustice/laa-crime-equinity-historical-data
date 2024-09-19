@@ -1,0 +1,19 @@
+CrmStandardPropertiesDTO:
+  properties:
+    usn:
+      type: integer
+      format: int32
+    dateReceived:
+      type: date
+    timeReceived:
+      type: string
+      format: time
+      description: only Time in 24 hrs format HH:MM
+    submitterUserId:
+      type: string
+    language:
+      type: string
+    region:
+      type: string
+    office:
+      type: string

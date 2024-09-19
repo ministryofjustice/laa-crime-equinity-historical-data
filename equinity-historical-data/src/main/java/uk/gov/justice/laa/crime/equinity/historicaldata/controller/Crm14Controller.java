@@ -37,6 +37,8 @@ public class Crm14Controller implements Crm14InterfaceApi{
         Crm14Model crm14FormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
         List<Crm14AttachmentModel> attachments = crm14AttachmentService.getCrm14Attachments(usn);
         crm14FormData.getFormDetails().setProcessedAttachments(attachments);
+        crm14FormData.addProcessedAttachmentsToEvidence(attachments);
         return ResponseEntity.ok(mapper.getDTOFromModel(crm14FormData));
     }
+
 }
