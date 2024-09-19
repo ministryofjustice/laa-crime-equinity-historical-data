@@ -254,15 +254,6 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="total", source="total")
     Crm7DisbursementTableDTO getDisbursementTableDTOFromModel(Crm7DisbursementModel model);
 
-    @Mapping(target="offenceDateOn", source="offence_date_1")
-    @Mapping(target="offenceDateBetweenStart", source="offence_date_2")
-    @Mapping(target="offenceDateBetweenEnd", source="offence_date_3")
-    @Mapping(target="charge", source="charge")
-    @Mapping(target="whenOffence", source="offence_when")
-    Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
-
-
-
     @Mapping(target="net", source="cfc_disb_total_net")
     @Mapping(target="vat", source="cfc_disb_total_vat")
     @Mapping(target="total", source="cfc_disb_grand_total")
