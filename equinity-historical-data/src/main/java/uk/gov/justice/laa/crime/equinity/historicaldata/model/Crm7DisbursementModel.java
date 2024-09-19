@@ -12,6 +12,8 @@ public class Crm7DisbursementModel {
     public String disbursement;
     @JsonProperty("Details")
     public String details;
+    @JsonProperty("Mileage")
+    public Integer mileage;
     @JsonProperty("Net")
     public Float net;
     @JsonProperty("Vat_rate")

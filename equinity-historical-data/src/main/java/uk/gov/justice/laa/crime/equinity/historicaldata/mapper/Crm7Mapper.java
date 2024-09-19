@@ -244,7 +244,7 @@ public interface Crm7Mapper extends CrmMapper {
 
     @Mapping(target="disbursement", source="disbursement")
     @Mapping(target="details", source="details")
-    @Mapping(target="miles", expression="java(null)")
+    @Mapping(target="miles", source="mileage")
     @Mapping(target="netValue", source="net")
     @Mapping(target="vatRate", source="vat_rate")
     @Mapping(target="vatValue", source="vat")
