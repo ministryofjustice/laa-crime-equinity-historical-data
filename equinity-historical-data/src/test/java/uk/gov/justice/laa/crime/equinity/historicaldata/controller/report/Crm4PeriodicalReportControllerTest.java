@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm4PeriodicalReportService;
 
 import java.util.List;
@@ -143,14 +144,14 @@ class Crm4PeriodicalReportControllerTest {
     }
 
     @Test
-    void generateReportCrm4Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnResourceNotFoundException() {
+    void generateReportCrm4Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
         String startDate = "2010-02-01";
         String endDate = "2024-06-01";
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateReportCrm4(
                         startDate, endDate, DENIED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class);
+                .isInstanceOf(UnauthorizedUserProfileException.class);
     }
 
     @Test

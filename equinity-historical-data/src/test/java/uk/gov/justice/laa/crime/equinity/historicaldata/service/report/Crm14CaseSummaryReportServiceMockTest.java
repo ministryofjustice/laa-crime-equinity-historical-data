@@ -3,10 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.service.report;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,10 +32,14 @@ class Crm14CaseSummaryReportServiceMockTest {
     @Autowired
     Crm14CaseSummaryReportService reportService;
 
+    List<Crm14CaseSummaryReportModel> mockedResponse;
+
     @BeforeAll
     void setup() {
-        List<Crm14CaseSummaryReportModel> expectedResponse = new ArrayList<>();
-        Crm14CaseSummaryReportModel report = new Crm14CaseSummaryReportModel(
+        mockedResponse = new ArrayList<>();
+
+        mockedResponse.add(
+            new Crm14CaseSummaryReportModel(
                 5012603L,
                 LocalDate.of(2017, 5, 6),
                 "7000011",
@@ -79,10 +80,11 @@ class Crm14CaseSummaryReportServiceMockTest {
                 null,
                 null,
                 null
+            )
         );
-        expectedResponse.add(report);
 
-        report = new Crm14CaseSummaryReportModel(
+        mockedResponse.add(
+            new Crm14CaseSummaryReportModel(
                 4004444L,
                 LocalDate.of(2017, 5, 6),
                 "4004004",
@@ -123,16 +125,35 @@ class Crm14CaseSummaryReportServiceMockTest {
                 null,
                 null,
                 null
+            )
         );
-        expectedResponse.add(report);
+    }
 
+    @BeforeEach
+    void setupTest() {
         when(reportRepository.getReport(any(), any(), any(), any(), any(), any(),any(), any(),any(),any(), any(),any(),any()))
-                .thenReturn(expectedResponse);
+                .thenReturn(mockedResponse);
     }
 
     @AfterAll
     void postTest() {
         softly.assertAll();
+    }
+
+    @Test
+    void getReportDataWhenCalledMockedThenShouldReturnList() {
+        Crm14CaseSummaryReportCriteriaDTO criteria = new Crm14CaseSummaryReportCriteriaDTO(
+                1, "2010-02-01", "2024-06-01",
+                0, "2010-02-01", "2024-06-01",
+                0, "2010-02-01", "2024-06-01",
+                0, "2010-02-01", "2024-06-01",
+                "All", null
+        );
+        List<Crm14CaseSummaryReportModel> results = reportService.getReportData(criteria);
+
+        softly.assertThat(results).isNotEmpty();
+        softly.assertThat(results.get(0).getUsn()).isEqualTo(5012603L);
+        softly.assertThat(results.get(1).getUsn()).isEqualTo(4004444L);
     }
 
     @Test
