@@ -5,6 +5,8 @@ Crm7DetailsDTO:
       type: integer
       schema:
         format: int64
+    claimProperties:
+      $ref: "#/Crm7ClaimPropertiesDTO"
     summary:
       $ref: "#/Crm7SummaryOfClaimDTO"
     solicitorDetails:
@@ -35,6 +37,21 @@ Crm7DetailsDTO:
     OfficeUseOnly:
       $ref: "#/Crm7OfficialUseDTO"
 
+Crm7ClaimPropertiesDTO:
+  type: object
+  properties:
+    category:
+      type: string
+      enum:
+        - "High risk"
+        - "Medium risk"
+        - "Low risk"
+    categoryCaseWorker:
+      type: string
+      enum:
+        - "High risk"
+        - "Medium risk"
+        - "Low risk"
 Crm7SummaryOfClaimDTO:
   type: object
   properties:
