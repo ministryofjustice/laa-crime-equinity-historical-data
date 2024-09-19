@@ -17,6 +17,7 @@ public interface Crm7Mapper extends CrmMapper {
     Crm7FormDTO getDTOFromModel(Crm7Model model);
 
     @Mapping(target="usn", source="usn")
+    @Mapping(target="claimProperties", source="model")
     @Mapping(target="summary", source="model")
     @Mapping(target="solicitorDetails", source="model")
     @Mapping(target="caseDetails", source="model")
@@ -32,6 +33,10 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="caseInformation", source="model")
     @Mapping(target="officeUseOnly", source="model")
     Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="category", expression="java(convertToEnum(Crm7ClaimPropertiesDTO.CategoryEnum.class, model.getCp_rbba_category()))")
+    @Mapping(target="categoryCaseWorker", expression="java(convertToEnum(Crm7ClaimPropertiesDTO.CategoryCaseWorkerEnum.class, model.getCp_rbba_category_cw()))")
+    Crm7ClaimPropertiesDTO getClaimPropertiesDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="clientSurname", source="client_surname")
     @Mapping(target="clientFirstName", source="client_forename")
