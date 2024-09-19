@@ -3,9 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7TimeSpentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
 import java.util.List;
 
@@ -236,11 +234,29 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="cost", source="cfc_cw_calls_costs")
     Crm7CommunicationsCostsTableDTO getClaimOfCostOfficeCallsDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="disbursements", expression="java(null)")
+    @Mapping(target="disbursements", source="disbursements.table")
     @Mapping(target="totals", expression="java(getDisbursementTotalsDTOFromModel(model))")
     @Mapping(target="invoiceAttachments", expression="java(convertToEnum(Crm7DisbursementDTO.InvoiceAttachmentsEnum.class, model.getCfc_disb_attach_method()))")
     @Mapping(target="officeUse", expression="java(getDisbursementOfficeDTOFromModel(model))")
     Crm7DisbursementDTO getDisbursementDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target="disbursement", source="disbursement")
+    @Mapping(target="details", source="details")
+    @Mapping(target="miles", expression="java(null)")
+    @Mapping(target="netValue", source="net")
+    @Mapping(target="vatRate", source="vat_rate")
+    @Mapping(target="vatValue", source="vat")
+    @Mapping(target="total", source="total")
+    Crm7DisbursementTableDTO getDisbursementTableDTOFromModel(Crm7DisbursementModel model);
+
+    @Mapping(target="offenceDateOn", source="offence_date_1")
+    @Mapping(target="offenceDateBetweenStart", source="offence_date_2")
+    @Mapping(target="offenceDateBetweenEnd", source="offence_date_3")
+    @Mapping(target="charge", source="charge")
+    @Mapping(target="whenOffence", source="offence_when")
+    Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
+
+
 
     @Mapping(target="net", source="cfc_disb_total_net")
     @Mapping(target="vat", source="cfc_disb_total_vat")

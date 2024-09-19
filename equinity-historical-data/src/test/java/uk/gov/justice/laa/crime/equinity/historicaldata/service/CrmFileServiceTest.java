@@ -180,13 +180,13 @@ class CrmFileServiceTest {
         );
         JSONObject result = crmToTest.getJSONObject(CRM_FORM_FIELD_DATA);
         // Execute
-        crmFileService.convertCrmFormObjectToArray(result,CRM14_CHARGES_BROUGHT,CRM14_ROW);
+        crmFileService.convertCrmFormObjectToArray(result,CRM14_CHARGES_BROUGHT, CRM_ROW);
         // Check
         softly.assertThat(result).isNotNull();
         softly.assertThat(result.has(CRM14_CHARGES_BROUGHT)).isTrue();
         softly.assertThat(result.get(CRM14_CHARGES_BROUGHT)).isInstanceOf(JSONObject.class);
-        softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).has(CRM14_ROW)).isTrue();
-        softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).getJSONArray(CRM14_ROW).length()).isEqualTo(3);
+        softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).has(CRM_ROW)).isTrue();
+        softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).getJSONArray(CRM_ROW).length()).isEqualTo(3);
 
     }
 }
