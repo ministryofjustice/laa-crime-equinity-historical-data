@@ -3,9 +3,10 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
-
-import java.util.List;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DisbursementModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7TimeSpentModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm7Mapper extends CrmMapper {
@@ -135,15 +136,13 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="dateReceivedByCourt", source="date_received")
     Crm7PreOrderWorkDTO getPreOrderWorkDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="schedule", source="schedule")
-    @Mapping(target="laaAdjustments", source="schedule")
+    @Mapping(target="schedule", source="schedule.timeSpent")
+    @Mapping(target="laaAdjustments", source="schedule.timeSpent")
     @Mapping(target="timeTotals", expression="java(getScheduleTimesDTOFromModel(model))")
     @Mapping(target="costTotals", expression="java(getScheduleCostsDTOFromModel(model))")
     @Mapping(target="totals", expression="java(getScehduleTotalsDTOFromModel(model))")
     @Mapping(target="officeUse", expression="java(getScheduleOfficeUseTotalsDTOFromModel(model))")
     Crm7ScheduleOfTimeSpentDTO getScheduleOfTimeSpentDTOFromModel(Crm7DetailsModel model);
-
-    List<Crm7ScheduleTimeTableDTO> getTimeSpentScheduleTableDTOFromModel(List<Crm7TimeSpentModel> schedule);
 
     @Mapping(target="line", source="line")
     @Mapping(target="feeEarnerInitials", source="fe_initials")
@@ -157,8 +156,6 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="uplift", source="uplift")
     @Mapping(target="claim", source="claim")
     Crm7ScheduleTimeTableDTO getTimeSpentScheduleDTOFromModel(Crm7TimeSpentModel schedule);
-
-    List<Crm7ScheduleAdjustmentsTableDTO> getTimeSpentAdjustmentsTableDTOFromModel(List<Crm7TimeSpentModel> schedule);
 
     @Mapping(target="line", source="line")
     @Mapping(target="time", source="time_total_cw")
