@@ -37,13 +37,15 @@ public class CrmFileService {
     private static final String CRM_SCHEMA = "schema";
     public static final String CRM_LINKED_EVIDENCE = "linkedAttachments";
     public static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
+    public static final String CRM_FORM_FIELD_DATA = "fielddata";
+    public static final String CRM_ROW = "row";
     public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
     public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
     public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
     public static final String CRM7_DISBURSEMENTS ="Db";
+    public static final String CRM7_SCHEDULE ="Schedule";
     public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
-    public static final String CRM_ROW = "row";
-    public static final String CRM_FORM_FIELD_DATA = "fielddata";
+    public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
     public static final String CRM15_BUSINESS_DETAILS = "Business_details";
     public static final String CRM15_PARTNER_BUSINESS_DETAILS = "Partner_business_details";
     public static final String CRM15_LAND_PROPERTY_DETAILS = "Land_and_property_table";
@@ -54,10 +56,6 @@ public class CrmFileService {
     public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
-
-
-    public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
-
 
 
     private final TaskImageFilesRepository taskImageFilesRepository;
@@ -94,6 +92,7 @@ public class CrmFileService {
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_RELATED_SUBMISSIONS, CRM_ROW);
             break;
             case CRM_TYPE_7:
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_DISBURSEMENTS, CRM_ROW);
             break;
             case CRM_TYPE_14:
