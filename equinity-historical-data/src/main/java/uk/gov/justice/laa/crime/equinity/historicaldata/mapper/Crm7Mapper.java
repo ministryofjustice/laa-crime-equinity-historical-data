@@ -39,7 +39,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="clientFirstName", source="client_forename")
     @Mapping(target="clientDateOfBirth", source="client_dob")
     @Mapping(target="ufn", source="client_ufn")
-    @Mapping(target="maatNumber", expression="java(emptyIntToNull(model.getMaat_number()))")
+    @Mapping(target="maatNumber", expression="java(emptyIntToNull(model.getMaat()))")
     @Mapping(target="representationOrderNumber", source="rep_order_no")
     @Mapping(target="representationOrderDate", source="rep_order_date")
     @Mapping(target="representationOrderSubmitMode", expression="java(convertToEnum(Crm7SummaryOfClaimDTO.RepresentationOrderSubmitModeEnum.class, model.getCp_rep_order_attach_method()))")
