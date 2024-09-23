@@ -3,10 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7DisbursementModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm7TimeSpentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 
 @Mapper(componentModel = "spring")
 public interface Crm7Mapper extends CrmMapper {
@@ -31,6 +28,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="coversheet", source="coversheet_printed")
     @Mapping(target="caseInformation", source="model")
     @Mapping(target="officeUseOnly", source="model")
+    @Mapping(target="standardProperties", source="model")
     Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="category", expression="java(convertToEnum(Crm7ClaimPropertiesDTO.CategoryEnum.class, model.getCp_rbba_category()))")
@@ -326,4 +324,13 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="signedAuth", source="ou_signed_auth")
     @Mapping(target="signedAuthDate", source="ou_signed_auth_date")
     Crm7AuthorityDTO getAuthorityDTOFromModel(Crm7DetailsModel model);
+
+    @Mapping(target = "usn", source = "usn")
+    @Mapping(target="dateReceived", source = "date_received")
+    @Mapping(target="timeReceived", source = "time_received")
+    @Mapping(target="submitterUserId", source = "submitter_user_id")
+    @Mapping(target="language", source = "submitter_language")
+    @Mapping(target="region", source = "lsc_region")
+    @Mapping(target="office", source = "lsc_accountoffice")
+    CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm7DetailsModel model);
 }
