@@ -6,6 +6,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4Author
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4RelatedSubmissionDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4AuthorisedExpenditureModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
@@ -133,6 +134,7 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="officeUseOnly.authority.destructionDate", source="destruction_date")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="signed_authority")
     @Mapping(target="officeUseOnly.relatedSubmissions", source="relatedSubmissions.submissions")
+    @Mapping(target="standardProperties", source="crm4DetailsModel")
     Crm4DetailsDTO    getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
     @Mapping(target="usn", source="usn")
     @Mapping(target="clientName", source="clientname")
@@ -151,4 +153,13 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="authorisedQuantity", source="quantity_cw")
     @Mapping(target="authorisedRate", source="rate_cw")
     Crm4AuthorisedExpenditureDTO getCrm4RelatedSubmissionsFromModel(Crm4AuthorisedExpenditureModel authorisedExpenditureModel);
+
+    @Mapping(target = "usn", source = "usn")
+    @Mapping(target="dateReceived", source = "date_received")
+    @Mapping(target="timeReceived", source = "time_received")
+    @Mapping(target="submitterUserId",expression = "java(null)")
+    @Mapping(target="language", expression = "java(null)")
+    @Mapping(target="region", source = "lsc_region")
+    @Mapping(target="office", source = "lsc_accountoffice")
+    CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm4DetailsModel model);
 }
