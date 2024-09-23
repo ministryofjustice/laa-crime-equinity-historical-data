@@ -36,7 +36,7 @@ public class Crm7TimeSpentModel {
     @JsonProperty("Cost_type_full_list")
     public String cost_type_full_list;
     @JsonProperty("Time_calc")
-    public float time_calc;
+    public Float time_calc;
     @JsonProperty("Hearing_codes_options")
     public String hearing_codes_options;
     @JsonProperty("Time_display")
@@ -50,13 +50,13 @@ public class Crm7TimeSpentModel {
     @JsonProperty("Time_total_cw")
     public String time_total_cw; // format 00:00:00
     @JsonProperty("Rate_cw")
-    public float rate_cw;
+    public Float rate_cw;
     @JsonProperty("Basic_cw")
-    public float basic_cw;
+    public Float basic_cw;
     @JsonProperty("Uplift_cw")
-    public float uplift_cw;
+    public Float uplift_cw;
     @JsonProperty("Claim_cw")
-    public float claim_cw;
+    public Float claim_cw;
     @JsonProperty("Assessment_cw")
     public String assessment_cw;
     /** *** **/
