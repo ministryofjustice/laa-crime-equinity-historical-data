@@ -19,6 +19,8 @@ Crm4DetailsDTO:
       $ref: '#/Crm4SolicitorDTO'
     OfficeUseOnly:
       $ref: '#/Crm4OfficialUseDTO'
+    StandardProperties:
+      $ref: "./crmStandardProperties.yml#/CrmStandardPropertiesDTO"
 Crm4ExpenditureDetailsDTO:
   type: object
   properties:
