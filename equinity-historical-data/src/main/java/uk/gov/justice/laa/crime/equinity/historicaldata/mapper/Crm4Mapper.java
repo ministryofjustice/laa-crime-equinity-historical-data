@@ -2,8 +2,15 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4AuthorisedExpenditureDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4RelatedSubmissionDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4AuthorisedExpenditureModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4SubmissionModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm4Mapper extends CrmEvidenceFilesMapper {
@@ -150,6 +157,8 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target = "usn", source = "usn")
     @Mapping(target="dateReceived", source = "date_received")
     @Mapping(target="timeReceived", source = "time_received")
+    @Mapping(target="submitterUserId",expression = "java(null)")
+    @Mapping(target="language", expression = "java(null)")
     @Mapping(target="region", source = "lsc_region")
     @Mapping(target="office", source = "lsc_accountoffice")
     CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm4DetailsModel model);
