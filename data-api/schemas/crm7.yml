@@ -37,7 +37,7 @@ Crm7DetailsDTO:
     OfficeUseOnly:
       $ref: "#/Crm7OfficialUseDTO"
       type: string
-    standardProperties:
+    StandardProperties:
       $ref: "./crmStandardProperties.yml#/CrmStandardPropertiesDTO"
 
 Crm7ClaimPropertiesDTO:
