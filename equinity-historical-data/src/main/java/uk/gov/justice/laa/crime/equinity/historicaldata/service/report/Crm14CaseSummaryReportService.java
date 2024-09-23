@@ -30,25 +30,33 @@ public class Crm14CaseSummaryReportService {
     @Timed("laa_crime_equiniti_historic_data_report_crm14_generate")
     public String getReport(Crm14CaseSummaryReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {
         log.info("Generating CRM14 Case Summary Report for :: {} ", reportCriteria);
-        List< Crm14CaseSummaryReportModel> report = reportRepository.getReport(
-            reportCriteria.filterByDecision(), reportCriteria.decisionFrom(), reportCriteria.decisionTo(),
-            reportCriteria.filterBySubmit(), reportCriteria.submittedFrom(), reportCriteria.submittedTo(),
-            reportCriteria.filterByCreation(), reportCriteria.createdFrom(), reportCriteria.createdTo(),
-            reportCriteria.state(),
-            reportCriteria.filterByLastSubmit(), reportCriteria.lastSubmittedFrom(), reportCriteria.lastSubmittedTo()
-        );
+        List< Crm14CaseSummaryReportModel> report = getReportData(reportCriteria);
 
-
-        if (report.isEmpty()) {
-            throw new ResourceNotFoundException(
-                String.format("No data found for CRM14 Case Summary Report for inputs %s ", reportCriteria)
-            );
-        }
-
-        log.info("CRM14 Case Summary Report generated with {} records", report.size());
         String reportInCSV = exportToCSV(report);
         log.info("CRM14 Case Summary Report exported to CSV format");
         return reportInCSV;
+    }
+
+    @Transactional
+    @Timed("laa_crime_equiniti_historic_data_report_crm14_get_data")
+    public List<Crm14CaseSummaryReportModel> getReportData(Crm14CaseSummaryReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {
+        log.info("Collecting data for CRM14 Case Summary Report with :: {} ", reportCriteria);
+        List<Crm14CaseSummaryReportModel> reportData = reportRepository.getReport(
+                reportCriteria.filterByDecision(), reportCriteria.decisionFrom(), reportCriteria.decisionTo(),
+                reportCriteria.filterBySubmit(), reportCriteria.submittedFrom(), reportCriteria.submittedTo(),
+                reportCriteria.filterByCreation(), reportCriteria.createdFrom(), reportCriteria.createdTo(),
+                reportCriteria.state(),
+                reportCriteria.filterByLastSubmit(), reportCriteria.lastSubmittedFrom(), reportCriteria.lastSubmittedTo()
+        );
+
+        if (reportData.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    String.format("No data found for CRM14 Case Summary Report for inputs %s ", reportCriteria)
+            );
+        }
+
+        log.info("CRM14 Case Summary Report generated with {} records", reportData.size());
+        return reportData;
     }
 
     @Timed("laa_crime_equiniti_historic_data_report_crm14_convertToCSV")

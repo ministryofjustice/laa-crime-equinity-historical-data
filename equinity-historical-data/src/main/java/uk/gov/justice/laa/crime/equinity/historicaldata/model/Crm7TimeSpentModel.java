@@ -21,41 +21,42 @@ public class Crm7TimeSpentModel {
     @JsonProperty("Time_total")
     public String time_total; // format 00:00:00
     @JsonProperty("Hearing_codes")
-    public float hearing_codes;
+    public String hearing_codes;
     @JsonProperty("Person_codes")
     public String person_codes;
     @JsonProperty("Rate")
-    public float rate;
+    public Float rate;
+    @JsonProperty("Basic_claim")
+    public Float basic_claim;
     @JsonProperty("Uplift")
-    public float uplift;
+    public Float uplift;
     @JsonProperty("Claim")
-    public float claim;
+    public Float claim;
 
     @JsonProperty("Cost_type_full_list")
     public String cost_type_full_list;
     @JsonProperty("Time_calc")
-    public float time_calc;
+    public Float time_calc;
     @JsonProperty("Hearing_codes_options")
     public String hearing_codes_options;
     @JsonProperty("Time_display")
     public String time_display; // format 00:00:00
     @JsonProperty("Person_codes_options")
     public String person_codes_options;
-    @JsonProperty("Basic_claim")
-    public float basic_claim;
+
     /** *** **/
 
     // LAA Adjustments
     @JsonProperty("Time_total_cw")
     public String time_total_cw; // format 00:00:00
     @JsonProperty("Rate_cw")
-    public float rate_cw;
+    public Float rate_cw;
     @JsonProperty("Basic_cw")
-    public float basic_cw;
+    public Float basic_cw;
     @JsonProperty("Uplift_cw")
-    public float uplift_cw;
+    public Float uplift_cw;
     @JsonProperty("Claim_cw")
-    public float claim_cw;
+    public Float claim_cw;
     @JsonProperty("Assessment_cw")
     public String assessment_cw;
     /** *** **/

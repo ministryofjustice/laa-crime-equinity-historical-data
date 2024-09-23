@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -198,8 +197,8 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
 
     /** *** **/
 
-    @JsonProperty("Schedule.Row")
-    List<Crm7TimeSpentModel> schedule;
+    @JsonProperty("Schedule")
+    Crm7ScheduleTimeSpentModel schedule;
 
     // Claim of Costs
     // Time
@@ -301,6 +300,10 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     /** **** **/
 
     // Disbursements
+
+    @JsonProperty("Db")
+    public Crm7DisbursementsModel disbursements;
+
     @JsonProperty("Cfc_disb_attach_method") // Post/DX
     public String cfc_disb_attach_method;
     // Totals

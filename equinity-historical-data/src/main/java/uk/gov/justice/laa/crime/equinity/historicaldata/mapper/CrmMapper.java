@@ -26,7 +26,7 @@ public interface CrmMapper {
 
     default <T extends Enum<T>> T convertToEnum(Class<T> enumClass, String s) {
         return (s == null || s.isEmpty()) ? null
-                : Enum.valueOf(enumClass, s.toUpperCase());
+            : Enum.valueOf(enumClass, s.toUpperCase().replace(" ", "_"));
     }
 
     @Named("convertToTimeSpentString")

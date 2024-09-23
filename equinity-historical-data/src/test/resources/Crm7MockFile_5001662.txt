@@ -1902,6 +1902,7 @@
         "Fc_processingofficeaddress": "Legal Aid Agency\nMockFakeName House\n1st Floor, 08 King Street\nNottingham\nMO1 2CK",
         "Date_received": "2023-04-18T00:00:00",
         "Voucherrequired_count": 0,
+        "Mileage": 50,
         "Fc_cw_requesting": "",
         "Cfc_cw_total_costs": 772.2,
         "Total_attendance_time_counsel": 12.02,
