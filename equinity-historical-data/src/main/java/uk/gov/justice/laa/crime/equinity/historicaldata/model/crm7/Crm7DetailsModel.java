@@ -1,8 +1,9 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
