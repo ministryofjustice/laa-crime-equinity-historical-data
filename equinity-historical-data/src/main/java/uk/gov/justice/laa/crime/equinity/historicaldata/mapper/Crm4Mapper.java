@@ -2,8 +2,17 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4AuthorisedExpenditureDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4RelatedSubmissionDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFurtherInformationDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4AuthorisedExpenditureModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4SubmissionModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInfoAttachmentsModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm4Mapper extends CrmEvidenceFilesMapper {
