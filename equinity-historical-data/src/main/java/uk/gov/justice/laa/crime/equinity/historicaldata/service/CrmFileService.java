@@ -16,6 +16,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearc
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.nio.charset.StandardCharsets;
