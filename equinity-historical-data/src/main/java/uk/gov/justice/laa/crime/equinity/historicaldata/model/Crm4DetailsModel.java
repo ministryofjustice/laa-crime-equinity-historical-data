@@ -15,6 +15,17 @@ import java.util.List;
 @NoArgsConstructor
 @Slf4j
 public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
+    @JsonProperty("Usn")
+    public Long usn;
+    @JsonProperty("Date_received")
+    public Date date_received;
+    @JsonProperty("Time_received")
+    public String time_received;
+    @JsonProperty("Lsc_region")
+    public String lsc_region;
+    @JsonProperty("Lsc_accountoffice")
+    public String lsc_accountoffice;
+
     @JsonProperty("Applyingge100")
     public boolean applyingge100;
     @JsonProperty("Post_mortem_app")
