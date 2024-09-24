@@ -19,6 +19,10 @@ Crm4DetailsDTO:
       $ref: '#/Crm4SolicitorDTO'
     OfficeUseOnly:
       $ref: '#/Crm4OfficialUseDTO'
+    FurtherInformation:
+      type: array
+      items:
+        $ref: "./crmFurtherInformation.yml#/CrmFurtherInformationDTO"
     StandardProperties:
       $ref: "./crmStandardProperties.yml#/CrmStandardPropertiesDTO"
 Crm4ExpenditureDetailsDTO:

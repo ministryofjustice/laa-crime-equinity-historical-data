@@ -126,6 +126,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
     public int cw_travel_cost_total;
     @JsonProperty("Ae")
     public Crm4AdditionalExpenditure additionalExpenditure;
+    @JsonProperty("Attachments")
+    public CrmFurtherInformationModel furtherInformationModel;
     @JsonProperty("Ae_cw")
     public Crm4AuthorisedAdditionalExpenditure authorisedAdditionalExpenditure;
     @JsonProperty("Relatedsubmissions")
