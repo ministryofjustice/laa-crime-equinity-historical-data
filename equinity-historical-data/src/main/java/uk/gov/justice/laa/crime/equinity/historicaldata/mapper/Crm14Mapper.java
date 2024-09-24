@@ -5,7 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {

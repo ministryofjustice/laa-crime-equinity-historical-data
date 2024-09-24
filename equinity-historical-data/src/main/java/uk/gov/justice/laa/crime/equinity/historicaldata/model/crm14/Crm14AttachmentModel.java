@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

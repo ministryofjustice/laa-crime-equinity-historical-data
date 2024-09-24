@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Crm14ChargesBroughtModel{
+public class Crm15CarRegModel {
     @JsonProperty("row")
-    public List<Crm14ChargesModel> charges;
+    public List<Crm15CarRegDetailsModel> cars;
 }
