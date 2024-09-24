@@ -29,10 +29,10 @@ public class Crm4Model implements CrmFormModelInterface {
             }
         }
     }
-    public String retrieveFileKey(String name) {
+    public String retrieveFileKey(String filename) {
         String fileKey= null;
         for(CrmEvidenceFileModel evidenceFiles: getEvidenceFiles().getFiles()) {
-        if (evidenceFiles.getName().equals(name)){
+        if (evidenceFiles.getName().equals(filename)){
             fileKey = evidenceFiles.getKey();
             break;
         }
