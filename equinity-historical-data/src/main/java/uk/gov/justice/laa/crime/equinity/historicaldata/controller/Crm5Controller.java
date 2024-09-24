@@ -9,7 +9,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCri
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm5InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;

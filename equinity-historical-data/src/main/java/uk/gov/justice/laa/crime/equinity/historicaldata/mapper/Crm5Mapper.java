@@ -6,8 +6,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5Detail
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5AllCostsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 
 @Mapper(componentModel = "spring")
 public interface Crm5Mapper extends CrmMapper {
