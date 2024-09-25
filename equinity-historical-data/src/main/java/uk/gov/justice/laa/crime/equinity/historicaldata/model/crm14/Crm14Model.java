@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFileModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
 
 import java.util.List;
 

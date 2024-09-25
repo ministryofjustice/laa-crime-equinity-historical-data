@@ -7,7 +7,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInter
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchPagingDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
 
 import java.util.List;
 
