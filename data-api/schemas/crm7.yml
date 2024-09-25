@@ -520,6 +520,8 @@ Crm7DisbursementTableDTO:
     total:
       type: number
       format: float
+    officeUse:
+      type: string
 
 Crm7ClaimTotalsDTO:
   type: object

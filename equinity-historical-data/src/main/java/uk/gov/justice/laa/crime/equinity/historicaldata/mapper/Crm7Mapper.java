@@ -250,6 +250,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="vatRate", source="vat_rate")
     @Mapping(target="vatValue", source="vat")
     @Mapping(target="total", source="total")
+    @Mapping(target="officeUse", source="summary_cw")
     Crm7DisbursementTableDTO getDisbursementTableDTOFromModel(Crm7DisbursementModel model);
 
     @Mapping(target="net", source="cfc_disb_total_net")

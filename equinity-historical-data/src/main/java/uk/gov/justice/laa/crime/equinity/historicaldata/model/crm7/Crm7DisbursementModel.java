@@ -22,6 +22,8 @@ public class Crm7DisbursementModel {
     public Float vat;
     @JsonProperty("Total")
     public Float total;
+    @JsonProperty("Summary_cw")
+    public String summary_cw;
     @JsonProperty("Voucherrequired")
     public Integer voucherRequired;
     @JsonProperty("Net_cw")
@@ -34,6 +36,4 @@ public class Crm7DisbursementModel {
     public Float total_cw;
     @JsonProperty("Reason_cw")
     public String reason_cw;
-    @JsonProperty("Summary_cw")
-    public String summary_cw;
 }
