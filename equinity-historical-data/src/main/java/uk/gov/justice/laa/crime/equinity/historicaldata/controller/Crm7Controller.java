@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm7InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm7Mapper;

@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.config;
+package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input;
 
 import jakarta.annotation.Nullable;
 import org.springframework.dao.InvalidDataAccessApiUsageException;

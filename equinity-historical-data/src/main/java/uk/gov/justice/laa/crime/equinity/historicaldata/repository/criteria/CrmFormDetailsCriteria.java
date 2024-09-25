@@ -1,9 +1,10 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.config;
+package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria;
 
 import jakarta.annotation.Nullable;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.domain.Specification;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
 
 import java.util.Arrays;
