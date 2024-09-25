@@ -7,10 +7,12 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4Detail
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4RelatedSubmissionDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFurtherInformationDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4AuthorisedExpenditureModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4SubmissionModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInfoAttachmentsModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm4Mapper extends CrmEvidenceFilesMapper {
@@ -134,6 +136,7 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="officeUseOnly.authority.destructionDate", source="destruction_date")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="signed_authority")
     @Mapping(target="officeUseOnly.relatedSubmissions", source="relatedSubmissions.submissions")
+    @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="crm4DetailsModel")
     Crm4DetailsDTO    getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
     @Mapping(target="usn", source="usn")
@@ -162,4 +165,15 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="region", source = "lsc_region")
     @Mapping(target="office", source = "lsc_accountoffice")
     CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm4DetailsModel model);
+
+
+    @Mapping(target = "name", source = "name")
+    @Mapping(target="originalFileName", source = "originalfilename")
+    @Mapping(target="attachedPersonId", source = "personid")
+    @Mapping(target="attachedPerson", source = "personname")
+    @Mapping(target="description",source = "description")
+    @Mapping(target="dateReceived", source = "dtreceived")
+    @Mapping(target="downloadFile", source = "retrieve")
+    @Mapping(target="key", source = "fileKey")
+    CrmFurtherInformationDTO getFurtherInformationFromModel(CrmFurtherInfoAttachmentsModel model);
 }
