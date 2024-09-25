@@ -3,7 +3,10 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7DisbursementModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7TimeSpentModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm7Mapper extends CrmMapper {

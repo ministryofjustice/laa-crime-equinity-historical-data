@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
