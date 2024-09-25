@@ -1,9 +1,12 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFileModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFilesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
 
 import java.util.List;
 
