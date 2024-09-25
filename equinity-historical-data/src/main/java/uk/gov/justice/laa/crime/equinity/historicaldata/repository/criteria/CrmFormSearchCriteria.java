@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.config;
+package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria;
 
 import jakarta.annotation.Nullable;
 import lombok.NoArgsConstructor;
@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +26,7 @@ public class CrmFormSearchCriteria {
         return PageRequest.of(page, pageSize);
     }
 
-    public Specification<CrmFormModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+    public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
             .where(byUsn(crmFormSearchCriteriaDTO.usn())
                 .and(byType(crmFormSearchCriteriaDTO.type()))
@@ -37,41 +39,41 @@ public class CrmFormSearchCriteria {
             );
     }
 
-    private Specification<CrmFormModelInterface> byUsn(@Nullable String usn) {
+    private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
         return (root, query, criteriaBuilder)
                 -> usn == null ? null : criteriaBuilder.like(root.get("USN"), String.format("%%%s%%", usn));
     }
 
-    private Specification<CrmFormModelInterface> byType(@Nullable Integer type) {
+    private Specification<CrmFormDataModelInterface> byType(@Nullable Integer type) {
         return (root, query, criteriaBuilder)
                 -> type == null ? null : criteriaBuilder.equal(root.get("typeId"), type);
     }
 
-    private Specification<CrmFormModelInterface> byClientName(@Nullable String clientName) {
+    private Specification<CrmFormDataModelInterface> byClientName(@Nullable String clientName) {
         return (root, query, criteriaBuilder)
                 -> clientName == null ? null : criteriaBuilder.like(root.get("clientName"), String.format("%%%s%%", clientName));
     }
 
-    private Specification<CrmFormModelInterface> byClientDoB(@Nullable String clientDOB) {
+    private Specification<CrmFormDataModelInterface> byClientDoB(@Nullable String clientDOB) {
         return null;
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
+    private Specification<CrmFormDataModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
         return (root, query, criteriaBuilder)
                 -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
     }
 
-    private Specification<CrmFormModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {
+    private Specification<CrmFormDataModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {
         return (root, query, criteriaBuilder)
                 -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
     }
 
-    private Specification<CrmFormModelInterface> byProviderAccount(@Nullable String providerAccount) {
+    private Specification<CrmFormDataModelInterface> byProviderAccount(@Nullable String providerAccount) {
         return (root, query, criteriaBuilder)
             -> providerAccount == null ? null : criteriaBuilder.like(root.get("providerAccount"), String.format("%%%s%%", providerAccount));
     }
 
-    private Specification<CrmFormModelInterface> byProfileAcceptedTypes(@Nullable String types) {
+    private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
         if (types == null) return null;
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));

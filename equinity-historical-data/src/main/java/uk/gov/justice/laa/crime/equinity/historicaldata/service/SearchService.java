@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormModelInterface;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteria;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormSearchCriteria;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormsViewMapper;
@@ -29,9 +29,9 @@ public class SearchService {
         return convertResults(searchPageByCriteria(crmFormSearchCriteriaDTO));
     }
 
-    private Page<CrmFormModelInterface> searchPageByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+    private Page<CrmFormDataModelInterface> searchPageByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
 
-        Page<CrmFormModelInterface> pagedResults = searchRepository.findAll(
+        Page<CrmFormDataModelInterface> pagedResults = searchRepository.findAll(
                 crmFormSearchCriteria.getSpecification(crmFormSearchCriteriaDTO),
                 crmFormSearchCriteria.getNextPageRequest(crmFormSearchCriteriaDTO)
         );
@@ -44,7 +44,7 @@ public class SearchService {
         return pagedResults;
     }
 
-    private SearchResultDTO convertResults(Page<CrmFormModelInterface> pagedResults) {
+    private SearchResultDTO convertResults(Page<CrmFormDataModelInterface> pagedResults) {
         log.info("Converting search results. Search criteria :: totalElements=[{}] pages=[{}]", pagedResults.getTotalElements(), pagedResults.getTotalPages());
         return searchResultsMapper.getDTOsFromModel(
                 pagedResults.stream()
