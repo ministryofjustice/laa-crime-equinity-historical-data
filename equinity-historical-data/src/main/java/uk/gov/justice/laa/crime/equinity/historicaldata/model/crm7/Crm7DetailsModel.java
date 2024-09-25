@@ -201,6 +201,9 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     @JsonProperty("Schedule")
     Crm7ScheduleTimeSpentModel schedule;
 
+    @JsonProperty("Schedule_cw")
+    Crm7ScheduleTimeSpentModel scheduleCw;
+
     // Claim of Costs
     // Time
     @JsonProperty("Total_travel_time_display")
