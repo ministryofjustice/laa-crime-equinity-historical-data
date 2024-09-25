@@ -138,7 +138,7 @@ public interface Crm7Mapper extends CrmMapper {
     Crm7PreOrderWorkDTO getPreOrderWorkDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="schedule", source="schedule.timeSpent")
-    @Mapping(target="laaAdjustments", source="schedule.timeSpent")
+    @Mapping(target="laaAdjustments", source="scheduleCw.timeSpent")
     @Mapping(target="timeTotals", expression="java(getScheduleTimesDTOFromModel(model))")
     @Mapping(target="costTotals", expression="java(getScheduleCostsDTOFromModel(model))")
     @Mapping(target="totals", expression="java(getScehduleTotalsDTOFromModel(model))")

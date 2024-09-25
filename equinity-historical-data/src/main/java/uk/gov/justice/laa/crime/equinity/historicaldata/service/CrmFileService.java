@@ -49,6 +49,7 @@ public class CrmFileService {
     public static final String CRM4_FURTHER_INFO_ATTACHMENT ="Attachments";
     public static final String CRM7_DISBURSEMENTS ="Db";
     public static final String CRM7_SCHEDULE ="Schedule";
+    public static final String CRM7_SCHEDULE_CW ="Schedule_cw";
     public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
     public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
     public static final String CRM15_BUSINESS_DETAILS = "Business_details";
@@ -99,6 +100,7 @@ public class CrmFileService {
             break;
             case CRM_TYPE_7:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE_CW, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_DISBURSEMENTS, CRM_ROW);
             break;
             case CRM_TYPE_14:
