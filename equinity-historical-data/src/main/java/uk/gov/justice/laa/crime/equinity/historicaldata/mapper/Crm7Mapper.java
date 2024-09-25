@@ -279,12 +279,12 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="total", source="ct_profit_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostProfitDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="total_travel_costs")
     @Mapping(target="vat", source="ct_travel_costs_vat_rate")
     @Mapping(target="total", source="ct_travel_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostTravelDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="total_waiting_costs")
     @Mapping(target="vat", source="ct_waiting_costs_vat_rate")
     @Mapping(target="total", source="ct_waiting_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostWaitDTOFromModel(Crm7DetailsModel model);
@@ -300,12 +300,12 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="total", source="ctou_profit_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeProfitDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="cw_total_travel_costs")
     @Mapping(target="vat", source="ctou_travel_costs_vat_rate")
     @Mapping(target="total", source="ctou_travel_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeTravelDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="cw_total_waiting_costs")
     @Mapping(target="vat", source="ctou_waiting_costs_vat_rate")
     @Mapping(target="total", source="ctou_waiting_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeWaitDTOFromModel(Crm7DetailsModel model);
