@@ -11,7 +11,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCrit
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormsViewMapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
 
 

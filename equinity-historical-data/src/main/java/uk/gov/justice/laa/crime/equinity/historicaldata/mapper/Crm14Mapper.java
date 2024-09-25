@@ -7,6 +7,7 @@ import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {

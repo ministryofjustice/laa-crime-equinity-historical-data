@@ -18,6 +18,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.nio.charset.StandardCharsets;
