@@ -10,7 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm14AttachmentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14AttachmentModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.AttachmentStoreRepository;
 
 import java.io.IOException;
