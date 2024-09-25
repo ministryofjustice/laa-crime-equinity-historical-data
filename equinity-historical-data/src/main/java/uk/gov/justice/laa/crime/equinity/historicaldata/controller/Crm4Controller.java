@@ -32,6 +32,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
         );
         Crm4Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
         crmFormData.getFormDetails().setAllQuotes();
+        crmFormData.addFileKeyToFurtherInfo(crmFormData.getFormDetails().getFurtherInformationModel().getAttachments());
         return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crmFormData));
     }
 }

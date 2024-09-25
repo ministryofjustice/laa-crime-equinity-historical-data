@@ -45,6 +45,7 @@ public class CrmFileService {
     public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
     public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
     public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
+    public static final String CRM4_FURTHER_INFO_ATTACHMENT ="Attachments";
     public static final String CRM7_DISBURSEMENTS ="Db";
     public static final String CRM7_SCHEDULE ="Schedule";
     public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
@@ -93,6 +94,7 @@ public class CrmFileService {
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_ADDITIONAL_EXPENDITURE, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_RELATED_SUBMISSIONS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_FURTHER_INFO_ATTACHMENT, CRM_ROW);
             break;
             case CRM_TYPE_7:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE, CRM_ROW);

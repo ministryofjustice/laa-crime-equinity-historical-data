@@ -22,8 +22,11 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesMode
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
@@ -44,17 +47,31 @@ class Crm4ControllerTest {
     @Autowired
     Crm4Controller controller;
 
+    Map<Long, String> validUsnTests;
+
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML
-        FileInputStream fis = new FileInputStream("src/test/resources/Crm4MockFile_5001912.txt");
-        JSONObject mockedCrm5Json = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-        byte[] fileDataByte = XML.toString(mockedCrm5Json).getBytes(StandardCharsets.UTF_8);
-        TaskImageFilesModel taskModel = new TaskImageFilesModel();
-        taskModel.setUSN(5001912L);
-        taskModel.setTypeId(CRM_TYPE_4);
-        taskModel.setCrmFile(fileDataByte);
-        taskImageFilesRepository.save(taskModel);
+        validUsnTests = new HashMap<>();
+        validUsnTests.put(5001912L, "src/test/resources/Crm4MockFile_5001912.txt");
+        validUsnTests.put(4795804L, "src/test/resources/Crm4MockFile_4795804.txt");
+
+        validUsnTests.forEach((testUsn, testFile) -> {
+            // Mocking good XML
+            try {
+                FileInputStream fis = new FileInputStream(testFile);
+                JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+                byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
+                TaskImageFilesModel taskModel = new TaskImageFilesModel();
+                taskModel.setUSN(testUsn);
+                taskModel.setTypeId(CRM_TYPE_4);
+                taskModel.setCrmFile(fileDataByte);
+                taskImageFilesRepository.save(taskModel);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     /**
@@ -108,6 +125,33 @@ class Crm4ControllerTest {
         softly.assertThat(result.getBody().getFormDetails()).isInstanceOf(Crm4DetailsDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getCaseDetails().getFirm().getUrn()).isEqualTo(urn);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getExpenditureDetails().getDetails()).isNotNull();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+
+    @Test
+    void getApplicationCrm4Test_WhenFurtherAttachments_With_FileAttachment_Contains_FileKeyForDownload() {
+        Long usnTest = 4795804L;
+        ResponseEntity<Crm4FormDTO> result = controller.getApplicationCrm4(usnTest, null);
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm4FormDTO.class);
+        softly.assertThat(result.getBody().getFormDetails()).isNotNull();
+        softly.assertThat(result.getBody().getFormDetails()).isInstanceOf(Crm4DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getFurtherInformation()).isNotEmpty();
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getFurtherInformation().size()).isEqualTo(3);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getFurtherInformation().get(0).getKey()).isNotNull();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+    @Test
+    void getApplicationCrm4Test_WhenFurtherAttachments_With_MessageAttachment_Contains_EmptyFileKey() {
+        Long usnTest = 4795804L;
+        ResponseEntity<Crm4FormDTO> result = controller.getApplicationCrm4(usnTest, null);
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm4FormDTO.class);
+        softly.assertThat(result.getBody().getFormDetails()).isNotNull();
+        softly.assertThat(result.getBody().getFormDetails()).isInstanceOf(Crm4DetailsDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getFurtherInformation()).isNotEmpty();
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getFurtherInformation().get(2).getKey()).isNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
