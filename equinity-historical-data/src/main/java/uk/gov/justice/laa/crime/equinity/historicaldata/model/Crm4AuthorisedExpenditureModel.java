@@ -11,9 +11,9 @@ public class Crm4AuthorisedExpenditureModel {
     @JsonProperty("Description")
     public String description;
     @JsonProperty("Rate_cw")
-    public int rate_cw;
+    public float rate_cw;
     @JsonProperty("Rate")
-    public int rate;
+    public float rate;
     @JsonProperty("Total")
     public int total;
     @JsonProperty("Quantity")
