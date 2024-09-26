@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -723,4 +724,6 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
     public LocalDate destruction_date;
     @JsonProperty("Ou_signed_auth_date") // in CRM5 too
     public LocalDate ou_signed_auth_date;
+    @JsonProperty("Attachments")
+    public CrmFurtherInformationModel furtherInformationModel;
 }

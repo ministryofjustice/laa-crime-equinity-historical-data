@@ -5,12 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm7InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm7Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFurtherInformationService;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
 
@@ -19,6 +20,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @Slf4j
 public class Crm7Controller implements Crm7InterfaceApi {
     private final CrmFileService crmFileService;
+    private final CrmFurtherInformationService crmFurtherInfoService;
     private final Crm7Mapper mapper;
 
     @Override
@@ -30,6 +32,7 @@ public class Crm7Controller implements Crm7InterfaceApi {
                 usn, CRM_TYPE_7, profileAcceptedTypes
         );
         Crm7Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
+        crmFurtherInfoService.addFileKeyToFurtherInfo(CRM_TYPE_7,crmFormData);
         return ResponseEntity.ok(mapper.getDTOFromModel(crmFormData));
     }
 }
