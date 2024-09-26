@@ -31,6 +31,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="coversheet", source="coversheet_printed")
     @Mapping(target="caseInformation", source="model")
     @Mapping(target="officeUseOnly", source="model")
+    @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="model")
     Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
 

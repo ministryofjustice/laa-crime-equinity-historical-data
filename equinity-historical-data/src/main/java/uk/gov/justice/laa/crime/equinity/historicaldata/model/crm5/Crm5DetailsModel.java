@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
 
 import java.util.Date;
 @Data
@@ -553,4 +554,6 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
     public String submitter_user_id;
     @JsonProperty("Ou_signed_auth_date")
     public Date ou_signed_auth_date;
+    @JsonProperty("Attachments")
+    public CrmFurtherInformationModel furtherInformationModel;
 }

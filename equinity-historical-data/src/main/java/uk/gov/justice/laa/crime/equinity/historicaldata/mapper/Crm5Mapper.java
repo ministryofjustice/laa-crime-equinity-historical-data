@@ -96,6 +96,7 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="officeUseOnly.authority.upperLimitExtended", source="ou_upper_limit_extended")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
     @Mapping(target="officeUseOnly.authority.signedAuthDate", source="ou_signed_auth_date")
+    @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="crm5DetailsModel")
     CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
 

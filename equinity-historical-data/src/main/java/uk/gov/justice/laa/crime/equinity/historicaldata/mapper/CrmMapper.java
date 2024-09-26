@@ -1,6 +1,9 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFurtherInformationDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInfoAttachmentsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.text.ParseException;
@@ -34,5 +37,16 @@ public interface CrmMapper {
         return (t == null || t.isEmpty()) ? null
                 : (t.length() > 8 ? t.substring(t.length() - 8) : t);
     }
+
+
+    @Mapping(target = "name", source = "name")
+    @Mapping(target="originalFileName", source = "originalfilename")
+    @Mapping(target="attachedPersonId", source = "personid")
+    @Mapping(target="attachedPerson", source = "personname")
+    @Mapping(target="description",source = "description")
+    @Mapping(target="dateReceived", source = "dtreceived")
+    @Mapping(target="downloadFile", source = "retrieve")
+    @Mapping(target="key", source = "fileKey")
+    CrmFurtherInformationDTO getFurtherInformationFromModel(CrmFurtherInfoAttachmentsModel model);
 }
 

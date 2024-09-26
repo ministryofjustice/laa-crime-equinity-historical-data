@@ -11,6 +11,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDT
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm4Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFurtherInformationService;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 
@@ -20,6 +21,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @Slf4j
 public class Crm4Controller implements Crm4InterfaceApi {
     private final CrmFileService crmFileService;
+    private final CrmFurtherInformationService crmFurtherInfoService;
     private final Crm4Mapper crm4Mapper;
 
     @Override
@@ -32,7 +34,7 @@ public class Crm4Controller implements Crm4InterfaceApi {
         );
         Crm4Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
         crmFormData.getFormDetails().setAllQuotes();
-        crmFormData.addFileKeyToFurtherInfo(crmFormData.getFormDetails().getFurtherInformationModel().getAttachments());
+        crmFurtherInfoService.addFileKeyToFurtherInfo(CRM_TYPE_4,crmFormData);
         return ResponseEntity.ok(crm4Mapper.getDTOFromModel(crmFormData));
     }
 }

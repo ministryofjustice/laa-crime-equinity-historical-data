@@ -45,6 +45,10 @@ CRM5DetailsDTO:
       type: string
     DetailsOfApplication:
       type: string
+    FurtherInformation:
+      type: array
+      items:
+        $ref: "./crmFurtherInformation.yml#/CrmFurtherInformationDTO"
     StandardProperties:
       $ref: "./crmStandardProperties.yml#/CrmStandardPropertiesDTO"
 Crm5AdviceAssistanceDTO:
