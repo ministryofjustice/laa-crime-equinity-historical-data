@@ -90,13 +90,15 @@ Crm4AuthorisedExpenditureDTO:
     quantity:
       type: integer
     rate:
-      type: integer
+      type: number
+      format: float
     total:
       type: integer
     authorisedQuantity:
       type: integer
     authorisedRate:
-      type: integer
+      type: number
+      format: float
     authorisedTotal:
       type: integer
 
