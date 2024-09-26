@@ -118,6 +118,11 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
 
     @JsonProperty("Total_authority")
     public int total_authority;
+    @JsonProperty("Inc_vat_declaration")
+    public boolean inc_vat_declaration;
+    @JsonProperty("Declaration_no_travel")
+    public boolean declaration_no_travel;
+
     @JsonProperty("Cw_travel_no_of_hrs")
     public String cw_travel_no_of_hrs;
     @JsonProperty("Cw_travel_per_hr")
