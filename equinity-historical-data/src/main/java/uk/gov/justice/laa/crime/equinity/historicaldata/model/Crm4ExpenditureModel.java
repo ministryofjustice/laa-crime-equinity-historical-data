@@ -12,7 +12,7 @@ public class Crm4ExpenditureModel{
     @JsonProperty("Rate")
     public int rate;
     @JsonProperty("Total")
-    public int total;
+    public float total;
     @JsonProperty("Quantity")
     public int quantity;
     @JsonProperty("Justification")
