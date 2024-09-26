@@ -76,7 +76,8 @@ Crm4ExpenditureDTO:
     quantity:
       type: integer
     rate:
-      type: integer
+      type: number
+      format: float
     total:
       type: integer
 
