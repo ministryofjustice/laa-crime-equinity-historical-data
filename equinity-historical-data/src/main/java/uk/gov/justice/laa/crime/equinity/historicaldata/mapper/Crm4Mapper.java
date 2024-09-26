@@ -84,7 +84,11 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="expenditureDetails.travel.hours", source = "travel_duration")
     @Mapping(target="expenditureDetails.travel.rate", source = "travel_per_hr")
     @Mapping(target="expenditureDetails.travel.total", source = "travel_cost_total")
-    @Mapping(target="expenditureDetails.authority", source = "total_authority")
+
+    @Mapping(target="expenditureDetails.authority.total", source = "total_authority")
+    @Mapping(target="expenditureDetails.authority.vatDeclaration", source = "inc_vat_declaration")
+    @Mapping(target="expenditureDetails.authority.travelDeclaration", source = "declaration_no_travel")
+
     @Mapping(target="alternativeQuotes.alternativeQuote", source = "obtained_alt_quotes")
     @Mapping(target="alternativeQuotes.reason", source = "no_alt_quote_reasons")
     @Mapping(target="alternativeQuotes.numberOfQuotes", source = "quotes_number")

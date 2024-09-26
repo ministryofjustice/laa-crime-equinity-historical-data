@@ -51,8 +51,7 @@ Crm4ExpenditureDetailsDTO:
     Travel:
       $ref: '#/Crm4TravelDTO'
     Authority:
-      type: number
-      format: float
+      $ref: '#/Crm4ExpenditureAuthorityDTO'
 
 Crm4TravelDTO:
   type: object
@@ -80,6 +79,17 @@ Crm4ExpenditureDTO:
       format: float
     total:
       type: integer
+
+Crm4ExpenditureAuthorityDTO:
+  type: object
+  properties:
+    total:
+      type: number
+      format: float
+    vatDeclaration:
+      type: boolean
+    travelDeclaration:
+      type: boolean
 
 Crm4AuthorisedExpenditureDTO:
   type: object
