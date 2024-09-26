@@ -1747,7 +1747,7 @@
 "Advice_threshold_inc": 100,
 "Tlnewmessage": "",
 "Solicitor_sign_forename": "MOCK_NAME_002",
-"Reason_details": "",
+"Reason_details": "Granted in full. Please note, this is a mock statement for testing purposes only.",
 "Ctd_phone_calls_partfilled": 0,
 "Ac_advocacy_time_partfilled": 0,
 "Ctd_travel_time": "12:15:00",

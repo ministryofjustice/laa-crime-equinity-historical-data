@@ -91,7 +91,7 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="solicitor.certification.date", source="certification_sol_date")
     @Mapping(target="solicitor.certification.name", source="certification_sol_name")
     @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
-    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
+    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="reason_details")
     @Mapping(target="officeUseOnly.authority.newLimitRequest", source="new_limit_request")
     @Mapping(target="officeUseOnly.authority.upperLimitExtended", source="ou_upper_limit_extended")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
