@@ -1,9 +1,11 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.model;
+package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -9,7 +9,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inpu
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm4InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm4Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFurtherInformationService;
 
