@@ -5,11 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModelInterface;
 
 import java.util.Date;
 @Data
 @NoArgsConstructor
-public class Crm5DetailsModel implements CrmFormDetailsModelInterface {
+public class Crm5DetailsModel implements CrmFormDetailsModelInterface, CrmFurtherInformationModelInterface {
     @JsonProperty("Proceedings_counsel_instructed")
     public String proceedings_counsel_instructed;
     @JsonProperty("Fc_current_user")

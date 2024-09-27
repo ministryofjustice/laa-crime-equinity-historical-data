@@ -33,7 +33,7 @@ public class Crm5Controller implements Crm5InterfaceApi {
                 usn, CRM_TYPE_5, profileAcceptedTypes
         );
         Crm5Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
-        crmFurtherInfoService.addFileKeyToFurtherInfo(CRM_TYPE_5,crmFormData);
+        crmFurtherInfoService.addFileKeyToFurtherInfo(crmFormData);
         return ResponseEntity.ok(crm5Mapper.getDTOFromModel(crmFormData));
     }
 }

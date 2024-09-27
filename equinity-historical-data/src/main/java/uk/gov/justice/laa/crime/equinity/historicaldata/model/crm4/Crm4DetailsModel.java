@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModelInterface;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,7 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class Crm4DetailsModel implements CrmFormDetailsModelInterface {
+public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurtherInformationModelInterface {
     @JsonProperty("Usn")
     public Long usn;
     @JsonProperty("Date_received")

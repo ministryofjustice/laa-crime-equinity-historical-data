@@ -32,7 +32,7 @@ public class Crm7Controller implements Crm7InterfaceApi {
                 usn, CRM_TYPE_7, profileAcceptedTypes
         );
         Crm7Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
-        crmFurtherInfoService.addFileKeyToFurtherInfo(CRM_TYPE_7,crmFormData);
+        crmFurtherInfoService.addFileKeyToFurtherInfo(crmFormData);
         return ResponseEntity.ok(mapper.getDTOFromModel(crmFormData));
     }
 }
