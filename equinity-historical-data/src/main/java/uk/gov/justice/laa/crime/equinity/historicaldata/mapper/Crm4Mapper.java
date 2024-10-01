@@ -99,7 +99,7 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="solicitor.certification.date", source="solicitor_sign_date")
     @Mapping(target="solicitor.certification.name", source="solicitorname")
     @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
-    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
+    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="reason_details")
     @Mapping(target="officeUseOnly.preparation.requested.hours", source="preparation_hrs")
     @Mapping(target="officeUseOnly.preparation.requested.hourlyRate", source="preparation_rate")
     @Mapping(target="officeUseOnly.preparation.requested.total", source="preparation_total")
