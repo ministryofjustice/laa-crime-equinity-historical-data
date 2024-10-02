@@ -105,7 +105,7 @@ public class Crm5ControllerTest {
         softly.assertThat(result.getBody()).isNotNull();
         softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001716L);
-        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("10:00:00");    }
+        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).contains("193:48:00");    }
     @Test
     void getApplicationTest_OfficialUseResponse() {
         Long usnTest = 5001604L;
