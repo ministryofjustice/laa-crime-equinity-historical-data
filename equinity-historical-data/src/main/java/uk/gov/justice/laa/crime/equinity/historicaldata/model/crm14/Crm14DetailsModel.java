@@ -832,8 +832,10 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public boolean hasCrm15() {
         if (StringUtils.isNotEmpty(this.getPrivate_company()) && this.getPrivate_company().equalsIgnoreCase("Yes"))
             return true;
+        else if (StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes"))
+            return true;
         else
-            return StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes");
+            return this.getEmployers_crm15() > 0;
     }
 
     public List<Crm14FundDecisionModel> getFundingDecisions() {
