@@ -2,10 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CRM5DetailsDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5AllCostsDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 
@@ -90,8 +87,7 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="solicitor.declaration.name", source="solicitor_sign_forename")
     @Mapping(target="solicitor.certification.date", source="certification_sol_date")
     @Mapping(target="solicitor.certification.name", source="certification_sol_name")
-    @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
-    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="reason_details")
+    @Mapping(target="officeUseOnly.qualityControl", source="crm5DetailsModel")
     @Mapping(target="officeUseOnly.authority.newLimitRequest", source="new_limit_request")
     @Mapping(target="officeUseOnly.authority.upperLimitExtended", source="ou_upper_limit_extended")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="ou_signed_auth")
@@ -139,6 +135,10 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="anticipatedCosts.totalCost.cost", source="ac_total_costs")
     @Mapping(target="newLimitRequest.cost", source="new_limit_request")
     Crm5AllCostsDTO getAllCostsFromModel(Crm5DetailsModel model);
+
+    @Mapping(target="decision", source="decision_original")
+    @Mapping(target="decisionReason", expression="java(convertDecisionReason(model))")
+    Crm5DecisionDTO getDecisionFromModel(Crm5DetailsModel model);
 
     @Mapping(target = "usn", source = "usn")
     @Mapping(target="dateReceived", source = "date_received")

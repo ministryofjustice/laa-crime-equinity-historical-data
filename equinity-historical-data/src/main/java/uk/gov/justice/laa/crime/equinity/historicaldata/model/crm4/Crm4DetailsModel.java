@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmDecisionReasonDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModelInterface;
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurtherInformationModelInterface {
+public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurtherInformationModelInterface, CrmDecisionReasonDetailsModelInterface {
     @JsonProperty("Usn")
     public Long usn;
     @JsonProperty("Date_received")

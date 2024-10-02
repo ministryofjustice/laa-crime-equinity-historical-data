@@ -323,7 +323,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="authority", source="model")
     Crm7OfficialUseDTO getOfficialUseDTOFromModel(Crm7DetailsModel model);
     @Mapping(target="decision", source="decision_original")
-    @Mapping(target="decisionReason", source="full_grant_notes")
+    @Mapping(target="decisionReason", expression="java(convertDecisionReason(model))")
     @Mapping(target="destructionDate", source="destruction_date")
     Crm7DecisionDTO getQualityControlDTOFromModel(Crm7DetailsModel model);
     @Mapping(target="signedAuth", source="ou_signed_auth")
