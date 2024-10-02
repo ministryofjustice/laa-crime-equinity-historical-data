@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller.report;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
@@ -13,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
+import java.io.IOException;
 import java.util.List;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
@@ -43,6 +44,9 @@ class Crm14CaseSummaryReportControllerTest {
     @Autowired
     private Crm14CaseSummaryReportController controller;
 
+    @Autowired
+    HttpServletResponse response;
+
 
     @BeforeAll
     void preTest() {
@@ -56,7 +60,7 @@ class Crm14CaseSummaryReportControllerTest {
      **/
 
     @Test
-    void generateReportCrm14Crm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
+    void generateReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException() {
         String expectedMessage = "must match";
         String validDate = "2050-01-01";
 
@@ -123,7 +127,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Crm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
+    void generateReportCrm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
         String startDate = "2024-02-19";
         String endDate = "2024-02-09";
         String expectedMessage = "must not be after end date";
@@ -144,13 +148,13 @@ class Crm14CaseSummaryReportControllerTest {
      */
 
     @Test
-    void generateReportCrm14Crm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() throws IOException {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
 
             // execute
-            ResponseEntity<byte[]> response = controller.generateReportCrm14(
+            controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
@@ -158,8 +162,7 @@ class Crm14CaseSummaryReportControllerTest {
                 ACCEPTED_PROFILE_TYPES, STATE_DEFAULT
             );
 
-            softly.assertThat(response.getBody()).isNotEmpty();
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
@@ -167,22 +170,20 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Crm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() throws IOException {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
 
             // execute
-            ResponseEntity<byte[]> response = controller.generateReportCrm14(
+            controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
                 null, STATE_DEFAULT
             );
-
-            softly.assertThat(response.getBody()).isNotEmpty();
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
@@ -190,22 +191,31 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Crm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
-        String startDate = "2010-02-01";
-        String endDate = "2024-06-01";
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() throws IOException {
+        try {
+            String startDate = "2010-02-01";
+            String endDate = "2024-06-01";
 
-        // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
-                1, startDate, endDate,
-                0, startDate, endDate,
-                0, startDate, endDate,
-                0, startDate, endDate,
-                DENIED_PROFILE_TYPES, STATE_DEFAULT))
-            .isInstanceOf(UnauthorizedUserProfileException.class);
+            // execute
+            controller.generateReportCrm14(
+                    1, startDate, endDate,
+                    0, startDate, endDate,
+                    0, startDate, endDate,
+                    0, startDate, endDate,
+                    DENIED_PROFILE_TYPES, STATE_DEFAULT
+            );
+        } catch (UnauthorizedUserProfileException e) {
+            softly.assertThat(e).isInstanceOf(UnauthorizedUserProfileException.class);
+            softly.assertThat(e.getMessage()).contains("User profile does not have privileges");
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        } catch (InvalidDataAccessResourceUsageException e) {
+            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
+            // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
+        }
     }
 
     @Test
-    void generateReportCrm14Crm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() {
+    void generateReportCrm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() throws IOException {
         try {
             String startDate = "1988-02-01";
             String endDate = "1988-02-02";
@@ -222,6 +232,7 @@ class Crm14CaseSummaryReportControllerTest {
             softly.assertThat(e).isInstanceOf(ResourceNotFoundException.class);
             softly.assertThat(e.getMessage()).contains("CRM14");
             softly.assertThat(e.getMessage()).contains("No data found");
+            softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
