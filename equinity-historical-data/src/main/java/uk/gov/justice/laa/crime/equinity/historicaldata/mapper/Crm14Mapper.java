@@ -111,7 +111,7 @@ public interface Crm14Mapper extends CrmMapper {
     Crm14DeclarationsDTO getDeclarationsDTOFromModel(Crm14DetailsModel model);
 
     @Mapping(target = "ethnicity.white.british", source="british")
-    @Mapping(target = "ethnicity.white.irish", source="british")
+    @Mapping(target = "ethnicity.white.irish", source="irish")
     @Mapping(target = "ethnicity.white.whiteOther", source="white_other")
     @Mapping(target = "ethnicity.mixed.whiteCaribbean", source="white_and_black_caribbean")
     @Mapping(target = "ethnicity.mixed.whiteAsian", source="white_and_asian")
