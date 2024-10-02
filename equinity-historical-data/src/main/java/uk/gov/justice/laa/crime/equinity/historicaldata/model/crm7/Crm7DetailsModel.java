@@ -3,6 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmDecisionReasonDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class Crm7DetailsModel implements CrmFormDetailsModelInterface {
+public class Crm7DetailsModel implements CrmFormDetailsModelInterface, CrmDecisionReasonDetailsModelInterface {
     @JsonProperty("Usn") // in crm5 too
     public Long usn;
 
