@@ -48,7 +48,7 @@ public class DateUtil {
         return new SimpleDateFormat(DATE_FORMAT_PATTERN, Locale.UK).parse(dateToConvert);
     }
 
-    public static String timeDifference(String startDateTime, String endDateTime, String format) {
+    public static String calculateTimeDifference(String startDateTime, String endDateTime, String format) {
         DateFormat dateFormat = new SimpleDateFormat(format);
         try {
             Date startDate = dateFormat.parse (startDateTime);
