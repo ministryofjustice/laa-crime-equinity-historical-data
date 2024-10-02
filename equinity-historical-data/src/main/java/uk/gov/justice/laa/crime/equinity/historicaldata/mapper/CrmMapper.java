@@ -35,12 +35,6 @@ public interface CrmMapper {
             : Enum.valueOf(enumClass, s.toUpperCase().replace(" ", "_"));
     }
 
-    @Named("convertToTimeSpentString")
-    default String convertToTimeSpentString(String t) {
-        return (t == null || t.isEmpty()) ? null
-                : (t.length() > 8 ? t.substring(t.length() - 8) : t);
-    }
-
     default String convertDecisionReason(CrmDecisionReasonDetailsModelInterface model) {
         return (model.getDecision_original().equals(DECISION_GRANTED)) ?
                 model.getFull_grant_notes() : model.getReason_details();
