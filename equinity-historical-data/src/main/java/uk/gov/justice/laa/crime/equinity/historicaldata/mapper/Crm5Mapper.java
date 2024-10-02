@@ -121,8 +121,7 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="anticipatedCosts.totalCost.cost", source="ac_total_costs")
     @Mapping(target="newLimitRequest.cost", source="new_limit_request")
     Crm5AllCostsDTO getAllCostsFromModel(Crm5DetailsModel model);
-    @Mapping(target="attendance.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_attendance_time()))")
-    @Mapping(target="attendance.cost", source="ctd_attendance_cost")
+    @Mapping(target="attendance",source="model")
     @Mapping(target="preparation.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_preparation_time()))")
     @Mapping(target="preparation.cost", source="ctd_preparation_costs")
     @Mapping(target="advocacy.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_advocacy_time()))")
@@ -140,6 +139,10 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="otherDisbursement.cost", source="ctd_other_cost")
     @Mapping(target="totalCost.cost", source="ctd_total_costs")
     Crm5AccruedCostsDTO getAccruedCostsFromModel(Crm5DetailsModel model);
+
+    @Mapping(target="time", expression="java(convertToTimeSpentString(model.getCtd_attendance_time()))")
+    @Mapping(target="cost", source="ctd_attendance_cost")
+    Crm5TimeCostDTO getAccruedAttendanceCostsFromModel(Crm5DetailsModel model);
 
     @Mapping(target="decision", source="decision_original")
     @Mapping(target="decisionReason", expression="java(convertDecisionReason(model))")
