@@ -203,7 +203,7 @@ sonar {
 		property "sonar.organization", "ministryofjustice"
 		property "sonar.projectKey", "ministryofjustice_laa-crime-equinity-historical-data"
 
-		property "sonar.exclusions", "**/entity/**.java , **/model/**.java , **/dto/**.java , **/config/**.java, **/jms/**.java,**/exception/**.java,**/handler/**.java,**/maatapi/**Client**.java,**/generated/**"
+		property "sonar.exclusions", "**/mapper/**.java , **/entity/**.java , **/model/**.java , **/dto/**.java , **/config/**.java, **/jms/**.java,**/exception/**.java,**/handler/**.java,**/maatapi/**Client**.java,**/generated/**"
 		property "sonar.coverage.exclusions", "**/EquinityHistoricalDataApplication.java"
 		property "sonar.coverage.jacoco.xmlReportPaths",
 				"${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
