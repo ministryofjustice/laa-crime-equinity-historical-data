@@ -21,6 +21,7 @@ import java.util.Objects;
 @Slf4j
 public class DateUtil {
     private static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
+    private static final String TIME_FORMAT = "HH:mm:ss";
     private static final String INVALID_FORMAT_NO_DATE_ONLY_ZERO_TIME = "00:00:00";
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
             .withLocale(Locale.UK);
@@ -51,11 +52,11 @@ public class DateUtil {
     public static String calculateTimeDifference(String startDateTime, String endDateTime, String format) {
         DateFormat dateFormat = new SimpleDateFormat(format);
         try {
-            Date startDate = dateFormat.parse (startDateTime);
-            Date endDate = dateFormat.parse (endDateTime);
+            Date startDate = dateFormat.parse(startDateTime);
+            Date endDate = dateFormat.parse(endDateTime);
             long timeDiff = endDate.getTime() - startDate.getTime();
             return DurationFormatUtils
-                    .formatDuration(timeDiff, "HH:mm:ss", true);
+                    .formatDuration(timeDiff, TIME_FORMAT, true);
         } catch (ParseException e) {
             log.error("error parsing endDatetime :: endDateTime={} :: {}", endDateTime, e.getMessage());
             return null;
