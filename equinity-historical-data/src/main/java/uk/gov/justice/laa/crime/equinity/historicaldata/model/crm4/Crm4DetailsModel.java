@@ -289,6 +289,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     public String tlstatename;
     @JsonProperty("Decision_original")
     public String decision_original;
+    @JsonProperty("Reason_details")
+    public String reason_details;
     @JsonProperty("Full_grant_notes")
     public String full_grant_notes;
     @JsonProperty("Preparation_hrs")
