@@ -1,13 +1,18 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 @Mapper(componentModel = "spring")
 public interface Crm5Mapper extends CrmMapper {
+    static final String DEFAULT_START_DATETIME="1899-12-30T00:00:00";
+    static final String ISO_DATE_PATTERN="yyyy-MM-dd'T'HH:mm:ss";
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm5FormDTO getDTOFromModel(Crm5Model model);
@@ -95,17 +100,15 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="crm5DetailsModel")
     CRM5DetailsDTO getDetailsDTOFromModel(Crm5DetailsModel crm5DetailsModel);
-
-
-    @Mapping(target="accruedCosts.attendance.time", source="ctd_attendance_time")
+    @Mapping(target="accruedCosts.attendance.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_attendance_time()))")
     @Mapping(target="accruedCosts.attendance.cost", source="ctd_attendance_cost")
-    @Mapping(target="accruedCosts.preparation.time", source="ctd_preparation_time")
+    @Mapping(target="accruedCosts.preparation.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_preparation_time()))")
     @Mapping(target="accruedCosts.preparation.cost", source="ctd_preparation_costs")
-    @Mapping(target="accruedCosts.advocacy.time", source="ctd_advocacy_time")
+    @Mapping(target="accruedCosts.advocacy.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_advocacy_time()))")
     @Mapping(target="accruedCosts.advocacy.cost", source="ctd_advocacy_costs")
-    @Mapping(target="accruedCosts.travel.time", source="ctd_travel_time")
+    @Mapping(target="accruedCosts.travel.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_travel_time()))")
     @Mapping(target="accruedCosts.travel.cost", source="ctd_travel_time_costs")
-    @Mapping(target="accruedCosts.waiting.time", source="ctd_waiting_time")
+    @Mapping(target="accruedCosts.waiting.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getCtd_waiting_time()))")
     @Mapping(target="accruedCosts.waiting.cost", source="ctd_waiting_time_cost")
     @Mapping(target="accruedCosts.letters.total", source="ctd_letters")
     @Mapping(target="accruedCosts.letters.cost", source="ctd_letters_cost")
@@ -115,15 +118,15 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="accruedCosts.mileage.cost", source="ctd_mileage_cost")
     @Mapping(target="accruedCosts.otherDisbursement.cost", source="ctd_other_cost")
     @Mapping(target="accruedCosts.totalCost.cost", source="ctd_total_costs")
-    @Mapping(target="anticipatedCosts.attendance.time", source="ac_attendance_time")
+    @Mapping(target="anticipatedCosts.attendance.time",  expression="java(convertToTimeSpentString(crm5DetailsModel.getAc_attendance_time()))")
     @Mapping(target="anticipatedCosts.attendance.cost", source="ac_attendance_time_cost")
     @Mapping(target="anticipatedCosts.preparation.time", source = "ac_preparation_time", qualifiedByName = "convertToTimeSpentString")
     @Mapping(target="anticipatedCosts.preparation.cost", source="ac_preparation_time_cost")
-    @Mapping(target="anticipatedCosts.advocacy.time", source="ac_advocacy_time")
+    @Mapping(target="anticipatedCosts.advocacy.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getAc_advocacy_time()))")
     @Mapping(target="anticipatedCosts.advocacy.cost", source="ac_advocacy_time_cost")
-    @Mapping(target="anticipatedCosts.travel.time", source="ac_travel_time")
+    @Mapping(target="anticipatedCosts.travel.time", source = "ac_travel_time", qualifiedByName = "convertToTimeSpentString")
     @Mapping(target="anticipatedCosts.travel.cost", source="ac_travel_time_cost")
-    @Mapping(target="anticipatedCosts.waiting.time", source="ac_waiting_time")
+    @Mapping(target="anticipatedCosts.waiting.time", expression="java(convertToTimeSpentString(crm5DetailsModel.getAc_waiting_time()))")
     @Mapping(target="anticipatedCosts.waiting.cost", source="ac_waiting_time_cost")
     @Mapping(target="anticipatedCosts.letters.total", source="ac_letters")
     @Mapping(target="anticipatedCosts.letters.cost", source="ac_letters_cost")
@@ -135,7 +138,6 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="anticipatedCosts.totalCost.cost", source="ac_total_costs")
     @Mapping(target="newLimitRequest.cost", source="new_limit_request")
     Crm5AllCostsDTO getAllCostsFromModel(Crm5DetailsModel model);
-
     @Mapping(target="decision", source="decision_original")
     @Mapping(target="decisionReason", expression="java(convertDecisionReason(model))")
     Crm5DecisionDTO getDecisionFromModel(Crm5DetailsModel model);
@@ -148,4 +150,16 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="region", source = "lsc_region")
     @Mapping(target="office", source = "lsc_accountoffice")
     CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm5DetailsModel model);
+
+    @Named("convertToTimeSpentString")
+    default String convertToTimeSpentString(String endDateTime){
+        if (StringUtils.isEmpty(endDateTime)){
+            return null;
+        }
+        if (endDateTime.length() > 8){
+            return DateUtil.calculateTimeDifference(DEFAULT_START_DATETIME,endDateTime,ISO_DATE_PATTERN);
+        } else {
+            return endDateTime;
+        }
+    }
 }
