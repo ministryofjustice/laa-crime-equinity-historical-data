@@ -24,6 +24,7 @@ public class CrmFormSearchCriteria {
     private static final String TYPE_ID_COL = "typeId";
     private static final String PROVIDER_ACCOUNT_COL = "providerAccount";
     private static final String CLIENT_NAME_COL = "clientName";
+    private static final String SEARCH_BY_CONTAINS_TEMPLATE = "%%%s%%";
 
 
     public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
@@ -50,7 +51,7 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
         return (root, query, criteriaBuilder)
-                -> usn == null ? null : criteriaBuilder.like(root.get(USN_COL), String.format("%%%s%%", usn));
+                -> usn == null ? null : criteriaBuilder.like(root.get(USN_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, usn));
     }
 
     private Specification<CrmFormDataModelInterface> byType(@Nullable Integer type) {
@@ -60,7 +61,7 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byClientName(@Nullable String clientName) {
         return (root, query, criteriaBuilder)
-                -> clientName == null ? null : criteriaBuilder.like(root.get(CLIENT_NAME_COL), String.format("%%%s%%", clientName));
+                -> clientName == null ? null : criteriaBuilder.like(root.get(CLIENT_NAME_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, clientName));
     }
 
     private Specification<CrmFormDataModelInterface> byClientDoB(@Nullable String clientDOB) {
@@ -79,7 +80,7 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byProviderAccount(@Nullable String providerAccount) {
         return (root, query, criteriaBuilder)
-            -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format("%%%s%%", providerAccount));
+            -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, providerAccount));
     }
 
     private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
