@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmDecisionReasonDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModelInterface;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class Crm7DetailsModel implements CrmFormDetailsModelInterface, CrmDecisionReasonDetailsModelInterface {
+public class Crm7DetailsModel implements CrmFormDetailsModelInterface, CrmFurtherInformationModelInterface, CrmDecisionReasonDetailsModelInterface {
     @JsonProperty("Usn") // in crm5 too
     public Long usn;
 
