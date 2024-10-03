@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.security;
+package uk.gov.justice.laa.crime.equinity.historicaldata.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

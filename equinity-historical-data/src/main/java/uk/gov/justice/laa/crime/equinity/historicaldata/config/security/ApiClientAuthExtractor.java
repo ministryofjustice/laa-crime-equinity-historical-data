@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.security;
+package uk.gov.justice.laa.crime.equinity.historicaldata.config.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
