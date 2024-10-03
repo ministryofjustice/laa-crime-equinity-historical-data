@@ -188,14 +188,18 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="proofBenefits", source = "do_you_have_proof")
     @Mapping(target="privateCompany", source="private_company")
     @Mapping(target="partnerPrivateCompany", source="partner_private_company")
+    @Mapping(target="haveIncomeOverThreshold", source="income_over_set_amount")
+
     @Mapping(target="benefits.you.incomeSupport", source = "income_support")
     @Mapping(target="benefits.you.esa", source = "esa")
     @Mapping(target="benefits.you.statePension", source = "state_pension")
     @Mapping(target="benefits.you.jsa", source = "jsa")
+
     @Mapping(target="benefits.partner.incomeSupport", source = "income_support_partner")
     @Mapping(target="benefits.partner.esa", source = "esa_partner")
     @Mapping(target="benefits.partner.statePension", source = "state_pension_partner")
     @Mapping(target="benefits.partner.jsa", source = "jsa_partner")
+
     @Mapping(target="allIncomes", source="model")
     @Mapping(target="freezingOrder", source = "freezing_order")
     @Mapping(target="ownLandOrProperty", source = "own_land_or_property")
