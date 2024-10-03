@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
 import java.io.IOException;
 
@@ -36,6 +38,8 @@ class Crm14CaseSummaryReportControllerFailedWriterTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
+    @Mock
+    private Crm14CaseSummaryReportService service;
 
     @Autowired
     @InjectMocks
