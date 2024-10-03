@@ -72,6 +72,7 @@ class Crm14CaseSummaryReportControllerFailedWriterTest {
             );
 
             softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            softly.assertThat(result).isNull();
         } catch (InvalidDataAccessResourceUsageException e) {
             softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
             // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
