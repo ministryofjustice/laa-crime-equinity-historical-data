@@ -14,6 +14,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class CsvWriterService {
+    static final String HEADER_CONTENT_TYPE_CSV = "text/csv";
+
     private final HttpServletResponse response;
 
 
@@ -29,7 +31,7 @@ public class CsvWriterService {
     }
 
     public void setupResponseHeaders(String csvFileName) {
-        response.setContentType("text/csv");
+        response.setContentType(HEADER_CONTENT_TYPE_CSV);
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, getResponseHeaderFilename(csvFileName));
     }
 
