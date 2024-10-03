@@ -103,7 +103,7 @@ public class Crm14CaseSummaryReportModel {
             "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
             usn, createdDate,MAAT, firstSubmittedDate, defendantName, providerAccount,
             originatorName, queueType, queueName, queueSortOrder, court,
-            caseworker.replace(",", ";"), state,
+            sanitiseField(caseworker), state,
             firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,
             ioJDecision, meansTested, meansDecision, overallDecision, decisionDate, providerName,
             applicationType, isNewApplication, isCIFC, fundingDecisionUpdateCount, isPriorityCase,
@@ -111,6 +111,12 @@ public class Crm14CaseSummaryReportModel {
             resubmissionDate2, returnDate3, resubmissionDate3, returnDate4, resubmissionDate4,
             returnDate5, resubmissionDate5
         );
+    }
+
+    private String sanitiseField(String text) {
+        if (text == null) return "";
+
+        return text.replaceAll(",", ";");
     }
 
     // TODO (EMP-000): consider moving this conversion to a CSV Writer helper class

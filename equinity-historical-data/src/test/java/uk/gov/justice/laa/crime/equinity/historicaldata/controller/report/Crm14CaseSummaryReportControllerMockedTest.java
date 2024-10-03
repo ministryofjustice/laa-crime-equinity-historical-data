@@ -28,7 +28,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@ActiveProfiles("local")
 class Crm14CaseSummaryReportControllerMockedTest {
     private static final String STATE_DEFAULT = "All";
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
