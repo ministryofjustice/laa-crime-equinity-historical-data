@@ -19,13 +19,19 @@ public class CrmFormSearchCriteria {
     @Value("${server.api.pageSize:20}")
     private Integer DEFAULT_PAGE_SIZE;
 
+    private static final String USN_COL = "USN";
+    private static final String SUBMITTED_DATE_COL = "submittedDate";
+    private static final String TYPE_ID_COL = "typeId";
+    private static final String PROVIDER_ACCOUNT_COL = "providerAccount";
+    private static final String CLIENT_NAME_COL = "clientName";
+
 
     public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         int DEFAULT_PAGE = 0;
         int page = (crmFormSearchCriteriaDTO.page() == null) ? DEFAULT_PAGE : crmFormSearchCriteriaDTO.page();
         int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE :  crmFormSearchCriteriaDTO.pageSize();
         return PageRequest.of(page, pageSize,
-                Sort.by("submittedDate").descending()
+                Sort.by(SUBMITTED_DATE_COL).descending()
         );
     }
 
@@ -44,17 +50,17 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
         return (root, query, criteriaBuilder)
-                -> usn == null ? null : criteriaBuilder.like(root.get("USN"), String.format("%%%s%%", usn));
+                -> usn == null ? null : criteriaBuilder.like(root.get(USN_COL), String.format("%%%s%%", usn));
     }
 
     private Specification<CrmFormDataModelInterface> byType(@Nullable Integer type) {
         return (root, query, criteriaBuilder)
-                -> type == null ? null : criteriaBuilder.equal(root.get("typeId"), type);
+                -> type == null ? null : criteriaBuilder.equal(root.get(TYPE_ID_COL), type);
     }
 
     private Specification<CrmFormDataModelInterface> byClientName(@Nullable String clientName) {
         return (root, query, criteriaBuilder)
-                -> clientName == null ? null : criteriaBuilder.like(root.get("clientName"), String.format("%%%s%%", clientName));
+                -> clientName == null ? null : criteriaBuilder.like(root.get(CLIENT_NAME_COL), String.format("%%%s%%", clientName));
     }
 
     private Specification<CrmFormDataModelInterface> byClientDoB(@Nullable String clientDOB) {
@@ -63,17 +69,17 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
         return (root, query, criteriaBuilder)
-                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get("submittedDate"), dateSubmittedFrom);
+                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get(SUBMITTED_DATE_COL), dateSubmittedFrom);
     }
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {
         return (root, query, criteriaBuilder)
-                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get("submittedDate"), dateSubmittedTo);
+                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get(SUBMITTED_DATE_COL), dateSubmittedTo);
     }
 
     private Specification<CrmFormDataModelInterface> byProviderAccount(@Nullable String providerAccount) {
         return (root, query, criteriaBuilder)
-            -> providerAccount == null ? null : criteriaBuilder.like(root.get("providerAccount"), String.format("%%%s%%", providerAccount));
+            -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format("%%%s%%", providerAccount));
     }
 
     private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
@@ -81,6 +87,6 @@ public class CrmFormSearchCriteria {
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));
         return (root, query, criteriaBuilder)
-                -> root.get("typeId").in(convertedTypes);
+                -> root.get(TYPE_ID_COL).in(convertedTypes);
     }
 }
