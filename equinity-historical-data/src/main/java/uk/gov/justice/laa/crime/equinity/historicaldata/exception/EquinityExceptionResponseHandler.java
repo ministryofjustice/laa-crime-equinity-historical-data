@@ -95,14 +95,4 @@ public class EquinityExceptionResponseHandler {
         log.error(logMessage);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
     }
-
-    @ExceptionHandler(CSVReportWriterIOException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleCSVReportWriterIOException(
-            CSVReportWriterIOException exception
-    ) {
-        String logMessage = String.format("There was an unexpected problem with the database. %s :: %s ", exception.getClass(), exception.getMessage());
-        log.error(logMessage);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
-    }
 }
