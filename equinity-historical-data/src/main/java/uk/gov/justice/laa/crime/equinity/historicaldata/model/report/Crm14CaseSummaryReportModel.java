@@ -116,7 +116,7 @@ public class Crm14CaseSummaryReportModel {
     private String sanitiseField(String text) {
         if (text == null) return "";
 
-        return text.replaceAll(",", ";");
+        return text.replace(",", ";");
     }
 
     // TODO (EMP-000): consider moving this conversion to a CSV Writer helper class

@@ -25,10 +25,10 @@ class CsvWriterServiceTest {
 
     @Test
     void getResponseHeaderFilename() {
-        String response = service.getResponseHeaderFilename("mockFile.csv");
+        String responseHeader = service.getResponseHeaderFilename("mockFile.csv");
 
-        softly.assertThat(response).contains("attachment");
-        softly.assertThat(response).contains("filename=\"mockFile.csv\"");
+        softly.assertThat(responseHeader).contains("attachment");
+        softly.assertThat(responseHeader).contains("filename=\"mockFile.csv\"");
     }
 
     @Test
