@@ -152,7 +152,9 @@ jacocoTestReport {
 
 	reports {
 		xml.required = true
+		xml.outputLocation = file("$project.buildDir/reports/jacoco/coverage.xml")
 		html.required = true
+		html.outputLocation = file("$project.buildDir/reports/jacoco/html")
 	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {

@@ -100,9 +100,10 @@ public class Crm14CaseSummaryReportModel {
 
     public String exportToCSV() {
         return String.format(
-            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
             usn, createdDate,MAAT, firstSubmittedDate, defendantName, providerAccount,
-            originatorName, queueType, queueName, queueSortOrder, court, caseworker, state,
+            originatorName, queueType, queueName, queueSortOrder, court,
+            caseworker.replace(",", ";"), state,
             firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,
             ioJDecision, meansTested, meansDecision, overallDecision, decisionDate, providerName,
             applicationType, isNewApplication, isCIFC, fundingDecisionUpdateCount, isPriorityCase,
