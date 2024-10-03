@@ -43,7 +43,6 @@ configurations {
 			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 			force "org.springframework:spring-webflux:$versions.springWeb"
 			force "io.netty:netty-codec-http:$versions.nettyCodec"
-//			force "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
 			force "org.apache.commons:commons-collections4:$versions.apacheCommons"
 			force "org.xmlunit:xmlunit-core:$versions.xmlUnit"
 		}
@@ -133,26 +132,28 @@ jar {
 	}
 }
 
+jacoco {
+	toolVersion = "0.8.12"
+}
+
 test {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
+	jacoco {
+		includeNoLocationClasses = true
+		excludes = ["jdk.internal.*"]
+	}
 }
 
-jacoco {
-	toolVersion = "0.8.12" // 0.8.8
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-	finalizedBy jacocoTestReport
-}
 
 jacocoTestReport {
 	dependsOn test
 
 	reports {
 		xml.required = true
+		xml.outputLocation = file("$project.buildDir/reports/jacoco/coverage.xml")
 		html.required = true
+		html.outputLocation = file("$project.buildDir/reports/jacoco/html")
 	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {

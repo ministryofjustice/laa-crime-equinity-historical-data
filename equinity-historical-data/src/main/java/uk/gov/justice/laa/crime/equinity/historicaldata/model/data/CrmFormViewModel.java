@@ -33,4 +33,6 @@ public class CrmFormViewModel implements CrmFormDataModelInterface {
     private String providerAccount;
     @Column(name="ProviderName")
     private String providerName;
+    @Column(name="LaaCaseRef")
+    private String laaCaseRef;
 }
