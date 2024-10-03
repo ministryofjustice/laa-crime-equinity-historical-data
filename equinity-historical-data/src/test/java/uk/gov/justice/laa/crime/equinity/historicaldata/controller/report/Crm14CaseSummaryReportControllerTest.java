@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
@@ -18,9 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
-import java.io.IOException;
 import java.util.List;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
@@ -37,9 +34,6 @@ class Crm14CaseSummaryReportControllerTest {
 
     @InjectSoftAssertions
     private SoftAssertions softly;
-
-    @Mock
-    private Crm14CaseSummaryReportService reportService;
 
     @Autowired
     private Crm14CaseSummaryReportController controller;
@@ -148,7 +142,7 @@ class Crm14CaseSummaryReportControllerTest {
      */
 
     @Test
-    void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() throws IOException {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
@@ -170,7 +164,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() throws IOException {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
@@ -191,7 +185,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() throws IOException {
+    void generateReportCrm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
         try {
             String startDate = "2010-02-01";
             String endDate = "2024-06-01";
@@ -215,7 +209,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() throws IOException {
+    void generateReportCrm14Test_WhenValidDecisionRangeWithNoDataIsGivenThenReturnResourceNotFoundException() {
         try {
             String startDate = "1988-02-01";
             String endDate = "1988-02-02";

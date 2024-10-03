@@ -4,7 +4,6 @@ import com.opencsv.CSVWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +12,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ReportCrm14Api;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14CaseSummaryReportCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
 import java.io.IOException;
@@ -24,6 +24,7 @@ import java.util.List;
 public class Crm14CaseSummaryReportController implements ReportCrm14Api {
     private final Crm14CaseSummaryReportService reportService;
     private final HttpServletResponse response;
+    private final CsvWriterService csvService;
 
 
     @Override
@@ -50,23 +51,20 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
             throw e;
         }
 
-        // TODO (EMP-000): consider moving this logic to a CSV Writer helper class
-        response.setContentType("text/csv");
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION,  getResponseHeaderFilename());
+        csvService.setupResponseHeaders(Crm14CaseSummaryReportService.getCSVFileName());
 
         try {
-
-            CSVWriter writer = new CSVWriter(response.getWriter(), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+            CSVWriter writer = csvService.open();
 
             // Write header to CSV file
-            writer.writeNext(Crm14CaseSummaryReportModel.exportHeaderToCSVArray());
+            csvService.writeLine(writer, Crm14CaseSummaryReportModel.exportHeaderToCSVArray());
 
             // Write data to CSV file
             for (Crm14CaseSummaryReportModel report : reportData) {
-                writer.writeNext(report.exportToCSVArray());
+                csvService.writeLine(writer, report.exportToCSVArray());
             }
 
-            writer.close();
+            csvService.close(writer);
         } catch (IOException e) {
             log.error("Something went wrong generating CRM14 report for given criteria [{}]. Error:: {}. StackTrace:: {}", criteria, e.getMessage(), e.getStackTrace());
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -75,13 +73,5 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
 
         response.setStatus(HttpStatus.OK.value());
         return null;
-    }
-
-    // TODO (EMP-000): consider moving this function to a CSV Writer helper class
-    private static String getResponseHeaderFilename() {
-        return String.format(
-                "attachment; filename=\"%s\"",
-                Crm14CaseSummaryReportService.getCSVFileName()
-        );
     }
 }
