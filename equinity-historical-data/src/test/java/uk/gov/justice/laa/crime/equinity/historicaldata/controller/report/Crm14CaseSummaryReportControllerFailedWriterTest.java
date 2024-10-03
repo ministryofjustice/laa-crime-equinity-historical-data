@@ -1,6 +1,5 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.controller.report;
 
-import com.opencsv.CSVWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
@@ -23,7 +22,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 
 @SpringBootTest
@@ -52,11 +50,9 @@ class Crm14CaseSummaryReportControllerFailedWriterTest {
 
     @BeforeEach
     void setup() throws IOException {
-        Mockito.doThrow(new IOException("mocked IOException"))
+        Mockito.doThrow(IOException.class)
             .when(csvService)
-            .close(any(CSVWriter.class));
-
-        when(csvService.open()).thenThrow(new IOException("mocked IOException"));
+            .close(any());
     }
 
 
