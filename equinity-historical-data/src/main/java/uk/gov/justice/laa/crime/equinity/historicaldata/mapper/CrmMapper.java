@@ -1,7 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFurtherInformationDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmDecisionReasonDetailsModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInfoAttachmentsModel;
@@ -33,12 +32,6 @@ public interface CrmMapper {
     default <T extends Enum<T>> T convertToEnum(Class<T> enumClass, String s) {
         return (s == null || s.isEmpty()) ? null
             : Enum.valueOf(enumClass, s.toUpperCase().replace(" ", "_"));
-    }
-
-    @Named("convertToTimeSpentString")
-    default String convertToTimeSpentString(String t) {
-        return (t == null || t.isEmpty()) ? null
-                : (t.length() > 8 ? t.substring(t.length() - 8) : t);
     }
 
     default String convertDecisionReason(CrmDecisionReasonDetailsModelInterface model) {
