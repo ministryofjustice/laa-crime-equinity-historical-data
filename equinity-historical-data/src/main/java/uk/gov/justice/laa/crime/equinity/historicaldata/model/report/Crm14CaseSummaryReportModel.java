@@ -100,9 +100,10 @@ public class Crm14CaseSummaryReportModel {
 
     public String exportToCSV() {
         return String.format(
-            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
             usn, createdDate,MAAT, firstSubmittedDate, defendantName, providerAccount,
-            originatorName, queueType, queueName, queueSortOrder, court, caseworker, state,
+            originatorName, queueType, queueName, queueSortOrder, court,
+            sanitiseField(caseworker), state,
             firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,
             ioJDecision, meansTested, meansDecision, overallDecision, decisionDate, providerName,
             applicationType, isNewApplication, isCIFC, fundingDecisionUpdateCount, isPriorityCase,
@@ -110,6 +111,10 @@ public class Crm14CaseSummaryReportModel {
             resubmissionDate2, returnDate3, resubmissionDate3, returnDate4, resubmissionDate4,
             returnDate5, resubmissionDate5
         );
+    }
+
+    private String sanitiseField(String text) {
+        return (text == null) ? "" : text.replace(",", ";");
     }
 
     // TODO (EMP-000): consider moving this conversion to a CSV Writer helper class
