@@ -1,4 +1,4 @@
-package uk.gov.justice.laa.crime.equinity.historicaldata.security;
+package uk.gov.justice.laa.crime.equinity.historicaldata.config.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
