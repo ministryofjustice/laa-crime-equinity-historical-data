@@ -43,7 +43,6 @@ configurations {
 			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 			force "org.springframework:spring-webflux:$versions.springWeb"
 			force "io.netty:netty-codec-http:$versions.nettyCodec"
-//			force "org.springframework.boot:spring-boot-starter-webflux:$versions.springStarter"
 			force "org.apache.commons:commons-collections4:$versions.apacheCommons"
 			force "org.xmlunit:xmlunit-core:$versions.xmlUnit"
 		}
@@ -134,7 +133,7 @@ jar {
 }
 
 jacoco {
-	toolVersion = "0.8.12" // 0.8.8 -> 0.8.12
+	toolVersion = "0.8.12"
 }
 
 test {
