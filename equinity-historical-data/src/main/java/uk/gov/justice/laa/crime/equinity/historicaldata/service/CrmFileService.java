@@ -10,11 +10,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteria;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.nio.charset.StandardCharsets;
@@ -42,8 +47,10 @@ public class CrmFileService {
     public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
     public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
     public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
+    public static final String CRM_FURTHER_INFO_ATTACHMENT ="Attachments";
     public static final String CRM7_DISBURSEMENTS ="Db";
     public static final String CRM7_SCHEDULE ="Schedule";
+    public static final String CRM7_SCHEDULE_CW ="Schedule_cw";
     public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
     public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
     public static final String CRM15_BUSINESS_DETAILS = "Business_details";
@@ -90,10 +97,15 @@ public class CrmFileService {
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_ADDITIONAL_EXPENDITURE, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM4_RELATED_SUBMISSIONS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
+            case CRM_TYPE_5:
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
             break;
             case CRM_TYPE_7:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE_CW, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_DISBURSEMENTS, CRM_ROW);
+                convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
             break;
             case CRM_TYPE_14:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_CHARGES_BROUGHT, CRM_ROW);

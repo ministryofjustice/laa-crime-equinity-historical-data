@@ -433,22 +433,33 @@ Crm14IncomeDTO:
   properties:
     receiveBenefits:
       type: string
+      description: "Q1"
     privateCompany:
       type: string
+      description: "Q3"
     partnerPrivateCompany:
       type: string
+      description: "Q3"
+    haveIncomeOverThreshold:
+      type: string
+      description: "Q4"
     benefits:
       $ref: "#/Crm14BenefitsDTO"
+      description: "Complements Q1"
     allIncomes:
       $ref: "#/Crm14AllIncomesDTO"
+      description: "Q5"
     proofBenefits:
       type: string
     freezingOrder:
       type: string
+      description: "Q6"
     ownLandOrProperty:
       type: string
+      description: "Q7"
     savingsOrInvestments:
       type: string
+      description: "Q8"
     howPayBillsText:
       type: string
     noMoneySleepingAtFriend:

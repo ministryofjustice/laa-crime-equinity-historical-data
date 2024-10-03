@@ -3,7 +3,10 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7DisbursementModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7TimeSpentModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm7Mapper extends CrmMapper {
@@ -28,6 +31,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="coversheet", source="coversheet_printed")
     @Mapping(target="caseInformation", source="model")
     @Mapping(target="officeUseOnly", source="model")
+    @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="model")
     Crm7DetailsDTO getDetailsDTOFromModel(Crm7DetailsModel model);
 
@@ -135,7 +139,7 @@ public interface Crm7Mapper extends CrmMapper {
     Crm7PreOrderWorkDTO getPreOrderWorkDTOFromModel(Crm7DetailsModel model);
 
     @Mapping(target="schedule", source="schedule.timeSpent")
-    @Mapping(target="laaAdjustments", source="schedule.timeSpent")
+    @Mapping(target="laaAdjustments", source="scheduleCw.timeSpent")
     @Mapping(target="timeTotals", expression="java(getScheduleTimesDTOFromModel(model))")
     @Mapping(target="costTotals", expression="java(getScheduleCostsDTOFromModel(model))")
     @Mapping(target="totals", expression="java(getScehduleTotalsDTOFromModel(model))")
@@ -247,6 +251,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="vatRate", source="vat_rate")
     @Mapping(target="vatValue", source="vat")
     @Mapping(target="total", source="total")
+    @Mapping(target="officeUse", source="summary_cw")
     Crm7DisbursementTableDTO getDisbursementTableDTOFromModel(Crm7DisbursementModel model);
 
     @Mapping(target="net", source="cfc_disb_total_net")
@@ -275,12 +280,12 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="total", source="ct_profit_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostProfitDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="total_travel_costs")
     @Mapping(target="vat", source="ct_travel_costs_vat_rate")
     @Mapping(target="total", source="ct_travel_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostTravelDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="total_waiting_costs")
     @Mapping(target="vat", source="ct_waiting_costs_vat_rate")
     @Mapping(target="total", source="ct_waiting_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsCostWaitDTOFromModel(Crm7DetailsModel model);
@@ -296,12 +301,12 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="total", source="ctou_profit_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeProfitDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="cw_total_travel_costs")
     @Mapping(target="vat", source="ctou_travel_costs_vat_rate")
     @Mapping(target="total", source="ctou_travel_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeTravelDTOFromModel(Crm7DetailsModel model);
 
-    @Mapping(target="net", expression="java(null)")
+    @Mapping(target="net", source="cw_total_waiting_costs")
     @Mapping(target="vat", source="ctou_waiting_costs_vat_rate")
     @Mapping(target="total", source="ctou_waiting_costs_total")
     Crm7ClaimTotalCostDetailsDTO getClaimTotalsOfficeWaitDTOFromModel(Crm7DetailsModel model);
@@ -318,7 +323,7 @@ public interface Crm7Mapper extends CrmMapper {
     @Mapping(target="authority", source="model")
     Crm7OfficialUseDTO getOfficialUseDTOFromModel(Crm7DetailsModel model);
     @Mapping(target="decision", source="decision_original")
-    @Mapping(target="decisionReason", source="full_grant_notes")
+    @Mapping(target="decisionReason", expression="java(convertDecisionReason(model))")
     @Mapping(target="destructionDate", source="destruction_date")
     Crm7DecisionDTO getQualityControlDTOFromModel(Crm7DetailsModel model);
     @Mapping(target="signedAuth", source="ou_signed_auth")

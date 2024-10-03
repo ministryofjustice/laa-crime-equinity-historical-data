@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
@@ -105,7 +105,7 @@ public class Crm5ControllerTest {
         softly.assertThat(result.getBody()).isNotNull();
         softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001716L);
-        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("10:00:00");    }
+        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("193:48:00");    }
     @Test
     void getApplicationTest_OfficialUseResponse() {
         Long usnTest = 5001604L;

@@ -1,12 +1,17 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
-import org.mapstruct.Named;
+import org.mapstruct.Mapping;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmFurtherInformationDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmDecisionReasonDetailsModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInfoAttachmentsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.text.ParseException;
 import java.util.Date;
 
 public interface CrmMapper {
+    String DECISION_GRANTED = "G";
+
     // Generic converters
     default Integer emptyIntToNull(String s) {
         return (s == null || s.isEmpty()) ? null : Integer.parseInt(s);
@@ -29,10 +34,19 @@ public interface CrmMapper {
             : Enum.valueOf(enumClass, s.toUpperCase().replace(" ", "_"));
     }
 
-    @Named("convertToTimeSpentString")
-    default String convertToTimeSpentString(String t) {
-        return (t == null || t.isEmpty()) ? null
-                : (t.length() > 8 ? t.substring(t.length() - 8) : t);
+    default String convertDecisionReason(CrmDecisionReasonDetailsModelInterface model) {
+        return (model.getDecision_original().equals(DECISION_GRANTED)) ?
+                model.getFull_grant_notes() : model.getReason_details();
     }
+
+    @Mapping(target = "name", source = "name")
+    @Mapping(target="originalFileName", source = "originalfilename")
+    @Mapping(target="attachedPersonId", source = "personid")
+    @Mapping(target="attachedPerson", source = "personname")
+    @Mapping(target="description",source = "description")
+    @Mapping(target="dateReceived", source = "dtreceived")
+    @Mapping(target="downloadFile", source = "retrieve")
+    @Mapping(target="key", source = "fileKey")
+    CrmFurtherInformationDTO getFurtherInformationFromModel(CrmFurtherInfoAttachmentsModel model);
 }
 

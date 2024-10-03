@@ -19,6 +19,10 @@ Crm4DetailsDTO:
       $ref: '#/Crm4SolicitorDTO'
     OfficeUseOnly:
       $ref: '#/Crm4OfficialUseDTO'
+    FurtherInformation:
+      type: array
+      items:
+        $ref: "./crmFurtherInformation.yml#/CrmFurtherInformationDTO"
     StandardProperties:
       $ref: "./crmStandardProperties.yml#/CrmStandardPropertiesDTO"
 Crm4ExpenditureDetailsDTO:
@@ -47,8 +51,7 @@ Crm4ExpenditureDetailsDTO:
     Travel:
       $ref: '#/Crm4TravelDTO'
     Authority:
-      type: number
-      format: float
+      $ref: '#/Crm4ExpenditureAuthorityDTO'
 
 Crm4TravelDTO:
   type: object
@@ -72,9 +75,21 @@ Crm4ExpenditureDTO:
     quantity:
       type: integer
     rate:
-      type: integer
+      type: number
+      format: float
     total:
       type: integer
+
+Crm4ExpenditureAuthorityDTO:
+  type: object
+  properties:
+    total:
+      type: number
+      format: float
+    vatDeclaration:
+      type: boolean
+    travelDeclaration:
+      type: boolean
 
 Crm4AuthorisedExpenditureDTO:
   type: object
@@ -86,13 +101,15 @@ Crm4AuthorisedExpenditureDTO:
     quantity:
       type: integer
     rate:
-      type: integer
+      type: number
+      format: float
     total:
       type: integer
     authorisedQuantity:
       type: integer
     authorisedRate:
-      type: integer
+      type: number
+      format: float
     authorisedTotal:
       type: integer
 

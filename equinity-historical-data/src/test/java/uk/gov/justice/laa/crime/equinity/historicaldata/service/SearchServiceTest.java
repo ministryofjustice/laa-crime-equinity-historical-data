@@ -10,11 +10,11 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormSearchCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormViewModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
 
 @SpringBootTest

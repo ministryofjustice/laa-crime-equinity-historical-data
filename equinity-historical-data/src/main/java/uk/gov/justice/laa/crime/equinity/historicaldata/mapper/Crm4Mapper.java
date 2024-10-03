@@ -2,15 +2,11 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4AuthorisedExpenditureDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4RelatedSubmissionDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.CrmStandardPropertiesDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4AuthorisedExpenditureModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm4SubmissionModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4AuthorisedExpenditureModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4SubmissionModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm4Mapper extends CrmEvidenceFilesMapper {
@@ -82,7 +78,11 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="expenditureDetails.travel.hours", source = "travel_duration")
     @Mapping(target="expenditureDetails.travel.rate", source = "travel_per_hr")
     @Mapping(target="expenditureDetails.travel.total", source = "travel_cost_total")
-    @Mapping(target="expenditureDetails.authority", source = "total_authority")
+
+    @Mapping(target="expenditureDetails.authority.total", source = "total_authority")
+    @Mapping(target="expenditureDetails.authority.vatDeclaration", source = "inc_vat_declaration")
+    @Mapping(target="expenditureDetails.authority.travelDeclaration", source = "declaration_no_travel")
+
     @Mapping(target="alternativeQuotes.alternativeQuote", source = "obtained_alt_quotes")
     @Mapping(target="alternativeQuotes.reason", source = "no_alt_quote_reasons")
     @Mapping(target="alternativeQuotes.numberOfQuotes", source = "quotes_number")
@@ -94,8 +94,8 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="solicitor.declaration", source="solicitor_declaration")
     @Mapping(target="solicitor.certification.date", source="solicitor_sign_date")
     @Mapping(target="solicitor.certification.name", source="solicitorname")
-    @Mapping(target="officeUseOnly.qualityControl.decision", source="decision_original")
-    @Mapping(target="officeUseOnly.qualityControl.decisionReason", source="full_grant_notes")
+
+    @Mapping(target="officeUseOnly.qualityControl", source="crm4DetailsModel")
     @Mapping(target="officeUseOnly.preparation.requested.hours", source="preparation_hrs")
     @Mapping(target="officeUseOnly.preparation.requested.hourlyRate", source="preparation_rate")
     @Mapping(target="officeUseOnly.preparation.requested.total", source="preparation_total")
@@ -134,8 +134,14 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="officeUseOnly.authority.destructionDate", source="destruction_date")
     @Mapping(target="officeUseOnly.authority.signedAuth", source="signed_authority")
     @Mapping(target="officeUseOnly.relatedSubmissions", source="relatedSubmissions.submissions")
+    @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="crm4DetailsModel")
-    Crm4DetailsDTO    getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
+    Crm4DetailsDTO getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
+
+    @Mapping(target="decision", source="decision_original")
+    @Mapping(target="decisionReason", expression="java(convertDecisionReason(crm4DetailsModel))")
+    Crm4DecisionDTO getDecisionFromModel(Crm4DetailsModel crm4DetailsModel);
+
     @Mapping(target="usn", source="usn")
     @Mapping(target="clientName", source="clientname")
     @Mapping(target="state", source="state")

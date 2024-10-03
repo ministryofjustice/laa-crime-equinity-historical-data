@@ -37,6 +37,10 @@ Crm7DetailsDTO:
     OfficeUseOnly:
       $ref: "#/Crm7OfficialUseDTO"
       type: string
+    FurtherInformation:
+      type: array
+      items:
+        $ref: "./crmFurtherInformation.yml#/CrmFurtherInformationDTO"
     StandardProperties:
       $ref: "./crmStandardProperties.yml#/CrmStandardPropertiesDTO"
 
@@ -520,6 +524,8 @@ Crm7DisbursementTableDTO:
     total:
       type: number
       format: float
+    officeUse:
+      type: string
 
 Crm7ClaimTotalsDTO:
   type: object

@@ -1,0 +1,19 @@
+CrmFurtherInformationDTO:
+  type: object
+  properties:
+    name:
+      type: string
+    description:
+      type: string
+    originalFileName:
+      type: string
+    dateReceived:
+      type: date
+    attachedPerson:
+      type: string
+    attachedPersonId:
+      type: string
+    downloadFile:
+      type: string
+    key:
+      type: string

@@ -14,9 +14,9 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.config.CrmFormDetailsCriteriaDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.Crm5DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.TaskImageFilesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 
 import java.io.FileInputStream;
