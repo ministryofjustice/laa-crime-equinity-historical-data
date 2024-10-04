@@ -1,18 +1,13 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
-import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 @Mapper(componentModel = "spring")
 public interface Crm5Mapper extends CrmMapper {
-    static final String DEFAULT_START_DATETIME="1899-12-30T00:00:00";
-    static final String ISO_DATE_PATTERN="yyyy-MM-dd'T'HH:mm:ss";
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm5FormDTO getDTOFromModel(Crm5Model model);
@@ -151,15 +146,5 @@ public interface Crm5Mapper extends CrmMapper {
     @Mapping(target="office", source = "lsc_accountoffice")
     CrmStandardPropertiesDTO getStandardPropertiesFromModel(Crm5DetailsModel model);
 
-    @Named("convertToTimeSpentString")
-    default String convertToTimeSpentString(String endDateTime){
-        if (StringUtils.isEmpty(endDateTime)){
-            return null;
-        }
-        if (endDateTime.length() > 8){
-            return DateUtil.calculateTimeDifference(DEFAULT_START_DATETIME,endDateTime,ISO_DATE_PATTERN);
-        } else {
-            return endDateTime;
-        }
-    }
+
 }
