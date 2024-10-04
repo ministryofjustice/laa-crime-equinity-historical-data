@@ -107,6 +107,8 @@ public class Crm14AdditionalDetails {
     public int joint_other_cash_investments_crm15;
     @JsonProperty("Employers_crm15")
     public int employers_crm15;
+    @JsonProperty("Partner_employer_crm15")
+    public int partner_employer_crm15;
     @JsonProperty("Non_cash_benefit")
     public String non_cash_benefit;
     @JsonProperty("Partner_non_cash_benefit")
