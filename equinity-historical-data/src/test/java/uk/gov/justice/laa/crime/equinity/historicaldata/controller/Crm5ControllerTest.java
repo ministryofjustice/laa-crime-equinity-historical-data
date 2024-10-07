@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
@@ -83,8 +84,8 @@ public class Crm5ControllerTest {
         Long usnTest = 5001604L;
 
         softly.assertThatThrownBy(() -> controller.getApplication(usnTest, DENIED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessageContaining("Unauthorized").hasMessageContaining("not have privileges");
     }
 
     @Test

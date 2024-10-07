@@ -16,6 +16,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
@@ -36,7 +37,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_4);
-    private static final String DENIED_PROFILE_TYPES = "9,19";
+    private static final String DENIED_PROFILE_TYPES = "7,9,19";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -160,7 +161,7 @@ class Crm4ControllerTest {
         Long usnTest = 5001912L;
 
         softly.assertThatThrownBy(() -> controller.getApplicationCrm4(usnTest, DENIED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessageContaining("Unauthorized").hasMessageContaining("User profile does not have privileges");
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7OfficialUseDTO;
@@ -37,7 +38,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm7ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_7);
-    private static final String DENIED_PROFILE_TYPES = "9,19";
+    private static final String DENIED_PROFILE_TYPES = "12,7,9";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -143,8 +144,8 @@ class Crm7ControllerTest {
     void getApplicationCrm7Test_WhenGivenExistingUsnButNotAcceptedTypesThenReturnTaskNotFoundException() {
         Long usnTest = 5001662L;
         softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, DENIED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessageContaining("Unauthorized").hasMessageContaining("not have privileges");
     }
     @Test
     void getApplicationCrm7Test_OfficialUseResponse() {

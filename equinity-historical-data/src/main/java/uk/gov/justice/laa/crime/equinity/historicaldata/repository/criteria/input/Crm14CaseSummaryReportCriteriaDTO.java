@@ -3,6 +3,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inp
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.ProfileAcceptedTypesUtil;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.ReportInputsUtil;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
@@ -20,7 +21,7 @@ public record Crm14CaseSummaryReportCriteriaDTO(
         @Nullable String profileAcceptedTypes
         ) {
     public Crm14CaseSummaryReportCriteriaDTO {
-        ReportInputsUtil.checkTypeIsAcceptedByProfile(CRM_TYPE_14, profileAcceptedTypes);
+        ProfileAcceptedTypesUtil.checkTypeIsAcceptedByProfile(CRM_TYPE_14, profileAcceptedTypes);
 
         boolean isdateRangeChecked = false;
 
