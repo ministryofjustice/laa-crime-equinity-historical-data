@@ -420,6 +420,10 @@ Crm14LegalRepresentationDTO:
       type: string
     adminEmailId:
       type: string
+    legalRepDeclaration1:
+      type: string
+    legalRepDeclaration2:
+      type: string
     declarationStatement:
       type: string
     declarationConfirm:
