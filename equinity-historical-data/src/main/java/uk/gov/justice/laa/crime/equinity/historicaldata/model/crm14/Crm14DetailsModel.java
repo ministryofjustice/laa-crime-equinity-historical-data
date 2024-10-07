@@ -343,8 +343,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String prev_app_usn;
     @JsonProperty("Prev_app_maat")
     public String prev_app_maat;
-    @JsonProperty("Legal_rep_declaration_1")
-    public String legal_rep_declaration_1;
     @JsonProperty("Legal_rep_declaration_2")
     public String legal_rep_declaration_2;
     @JsonProperty("Lost_job_due_to_custody")

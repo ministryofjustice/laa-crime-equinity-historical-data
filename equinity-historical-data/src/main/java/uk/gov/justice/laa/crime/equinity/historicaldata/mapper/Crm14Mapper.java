@@ -153,9 +153,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "fax", source="solicitor_fax")
     @Mapping(target = "emailId", source="solicitor_email")
     @Mapping(target = "adminEmailId", source="firm_administrator_email")
-    @Mapping(target = "legalRepDeclaration1", source="legal_rep_declaration_1")
     @Mapping(target = "legalRepDeclaration2", source="legal_rep_declaration_2")
-
     @Mapping(target = "declarationStatement", source="legal_rep_declaration")
     @Mapping(target = "declarationConfirm", source="legal_rep_declaration_confirm")
     @Mapping(target = "signDate", source="legal_rep_sign_date")
