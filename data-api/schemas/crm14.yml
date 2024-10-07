@@ -431,6 +431,8 @@ Crm14LegalRepresentationDTO:
       type: string
     adminEmailId:
       type: string
+    declarationStatement2:
+      type: string
     declarationStatement:
       type: string
     declarationConfirm:
