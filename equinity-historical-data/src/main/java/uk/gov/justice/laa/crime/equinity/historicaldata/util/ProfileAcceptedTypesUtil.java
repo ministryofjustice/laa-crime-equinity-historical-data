@@ -6,15 +6,17 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 
 @UtilityClass
 public class ProfileAcceptedTypesUtil {
-    public static void checkTypeIsAcceptedByProfile(Integer requiredType, @Nullable String types) throws UnauthorizedUserProfileException {
+    private static final String PROFILE_SEPARATOR = ",";
+
+    public static void checkTypeIsAcceptedByProfile(int requiredType, @Nullable String types) throws UnauthorizedUserProfileException {
         if (types == null) return;
 
-        for (String profile : types.split(",")) {
-            if (profile.equals(requiredType.toString())) return;
+        for (String profile : types.split(PROFILE_SEPARATOR)) {
+            if (profile.equals(String.valueOf(requiredType))) return;
         }
 
         throw new UnauthorizedUserProfileException(
-                String.format("Unauthorized. User profile does not have privileges to access requested report type [%d] ", requiredType)
+            String.format("Unauthorized. User profile does not have privileges to access requested report type [%d] ", requiredType)
         );
     }
 }
