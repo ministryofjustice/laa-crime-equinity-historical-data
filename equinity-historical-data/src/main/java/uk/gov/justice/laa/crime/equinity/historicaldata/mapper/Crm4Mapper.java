@@ -57,9 +57,9 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="expenditureDetails.details.companyName", source = "company_name")
     @Mapping(target="expenditureDetails.details.statusExpert", source = "expert_type")
     @Mapping(target="expenditureDetails.details.postCodeExpert", source = "expert_postcode")
-    @Mapping(target="expenditureDetails.preparation.hours", source = "preparation_duration")
-    @Mapping(target="expenditureDetails.preparation.hourlyRate", source = "preparation_rate")
-    @Mapping(target="expenditureDetails.preparation.total", source = "preparation_total")
+
+    @Mapping(target="expenditureDetails.preparation", source = "crm4DetailsModel")
+
     @Mapping(target="expenditureDetails.dnaReport.dnaCost", source = "dna_cost")
     @Mapping(target="expenditureDetails.accommodation.costBasis", source = "accomm_basis")
     @Mapping(target="expenditureDetails.transcription.numMin", source = "transcription_no_of_mins")
@@ -75,9 +75,8 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="expenditureDetails.other.rate", source = "other_rate")
     @Mapping(target="expenditureDetails.other.total", source = "other_total")
     @Mapping(target="expenditureDetails.additionalExpenditure", source="additionalExpenditure.row")
-    @Mapping(target="expenditureDetails.travel.hours", source = "travel_duration")
-    @Mapping(target="expenditureDetails.travel.rate", source = "travel_per_hr")
-    @Mapping(target="expenditureDetails.travel.total", source = "travel_cost_total")
+
+    @Mapping(target="expenditureDetails.travel", source = "crm4DetailsModel")
 
     @Mapping(target="expenditureDetails.authority.total", source = "total_authority")
     @Mapping(target="expenditureDetails.authority.vatDeclaration", source = "inc_vat_declaration")
@@ -96,10 +95,10 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="solicitor.certification.name", source="solicitorname")
 
     @Mapping(target="officeUseOnly.qualityControl", source="crm4DetailsModel")
-    @Mapping(target="officeUseOnly.preparation.requested.hours", source="preparation_hrs")
+    @Mapping(target="officeUseOnly.preparation.requested.hours", source="preparation_hrs", qualifiedByName="convertToTimeSpentString")
     @Mapping(target="officeUseOnly.preparation.requested.hourlyRate", source="preparation_rate")
     @Mapping(target="officeUseOnly.preparation.requested.total", source="preparation_total")
-    @Mapping(target="officeUseOnly.preparation.authorised.hours", source="cw_preparation_hrs")
+    @Mapping(target="officeUseOnly.preparation.authorised.hours", source="cw_preparation_hrs", qualifiedByName="convertToTimeSpentString")
     @Mapping(target="officeUseOnly.preparation.authorised.hourlyRate", source="cw_preparation_rate")
     @Mapping(target="officeUseOnly.preparation.authorised.total", source="cw_preparation_total")
     @Mapping(target="officeUseOnly.dnaReport.requested.dnaCost", source = "dna_cost")
@@ -124,10 +123,10 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="officeUseOnly.photocopying.authorised.costPerPage", source="cw_photocopy_cost_per_page")
     @Mapping(target="officeUseOnly.photocopying.authorised.total", source="cw_photocopy_total")
     @Mapping(target="officeUseOnly.additionalExpenditure", source="authorisedAdditionalExpenditure.expenditure")
-    @Mapping(target="officeUseOnly.travel.requested.hours", source="travel_no_of_hrs")
+    @Mapping(target="officeUseOnly.travel.requested.hours", source="travel_no_of_hrs", qualifiedByName="convertToTimeSpentString")
     @Mapping(target="officeUseOnly.travel.requested.rate", source="travel_per_hr")
     @Mapping(target="officeUseOnly.travel.requested.total", source="travel_cost_total")
-    @Mapping(target="officeUseOnly.travel.authorised.hours", source="cw_travel_no_of_hrs")
+    @Mapping(target="officeUseOnly.travel.authorised.hours", source="cw_travel_no_of_hrs", qualifiedByName="convertToTimeSpentString")
     @Mapping(target="officeUseOnly.travel.authorised.rate", source="cw_travel_per_hr")
     @Mapping(target="officeUseOnly.travel.authorised.total", source="cw_travel_cost_total")
     @Mapping(target="officeUseOnly.authority.allowedAmount", source="amount_allowed")
@@ -137,6 +136,17 @@ public interface Crm4Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="furtherInformation", source="furtherInformationModel.attachments")
     @Mapping(target="standardProperties", source="crm4DetailsModel")
     Crm4DetailsDTO getEntityFromModel(Crm4DetailsModel crm4DetailsModel);
+
+
+    @Mapping(target="hours", source = "preparation_duration", qualifiedByName="convertToTimeSpentString")
+    @Mapping(target="hourlyRate", source = "preparation_rate")
+    @Mapping(target="total", source = "preparation_total")
+    Crm4PreparationDetailsDTO getPreparationDetailsFromModel(Crm4DetailsModel crm4DetailsModel);
+
+    @Mapping(target="hours", source = "travel_duration", qualifiedByName="convertToTimeSpentString")
+    @Mapping(target="rate", source = "travel_per_hr")
+    @Mapping(target="total", source = "travel_cost_total")
+    Crm4TravelDTO getTravelDetailsFromModel(Crm4DetailsModel crm4DetailsModel);
 
     @Mapping(target="decision", source="decision_original")
     @Mapping(target="decisionReason", expression="java(convertDecisionReason(crm4DetailsModel))")

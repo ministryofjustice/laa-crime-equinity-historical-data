@@ -311,16 +311,27 @@ Crm14APartnerDetailsDTO:
 Crm14DeclarationsDTO:
   type: object
   properties:
+    isApplicantConfirmed:
+      type: boolean
+      description: "This is used to check of the applicant signed"
     applicantFullName:
       type: string
     applicantSignedDate:
       type: string
       format: date-time
+    isPartnerConfirmed:
+      type: boolean
+      description: "This is used to check if partner of the applicant signed"
     partnerFullName:
       type: string
     partnerSignedDate:
       type: string
       format: date-time
+    partnerReasonNotSigned:
+      type: string
+    isLegalRepConfirmed:
+      type: boolean
+      description: "This is used to check if legal representative signed"
     legalRepFullName:
       type: string
     legalRepSignedDate:

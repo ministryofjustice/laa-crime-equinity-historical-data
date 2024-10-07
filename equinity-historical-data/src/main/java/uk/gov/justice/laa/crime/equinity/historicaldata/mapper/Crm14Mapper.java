@@ -101,10 +101,15 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "relationship", source="marital_status_2")
     @Mapping(target = "dateOfSeparation", source = "date_of_separation")
     Crm14AboutYouPart2DTO getAboutYouPart2DTOFromModel(Crm14DetailsModel model);
+
+    @Mapping(target = "isApplicantConfirmed", source="applicant_confirm_read")
     @Mapping(target = "applicantFullName", source="user_signed_name")
     @Mapping(target = "applicantSignedDate", source="user_signed_date")
+    @Mapping(target = "isPartnerConfirmed", source="partner_confirm_read")
     @Mapping(target = "partnerFullName", source="partner_sign_fullname")
     @Mapping(target = "partnerSignedDate", source="partner_sign_date")
+    @Mapping(target = "partnerReasonNotSigned", source="why_partner_no_sign")
+    @Mapping(target = "isLegalRepConfirmed", source="legal_rep_declaration_confirm")
     @Mapping(target = "legalRepFullName", source="legal_rep_fullname")
     @Mapping(target = "legalRepSignedDate", source="legal_rep_sign_date")
     @Mapping(target = "legalRepAccountNum", source="legal_rep_laa_account")

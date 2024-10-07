@@ -110,13 +110,13 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Preparation_duration")
     public String preparation_duration;
     @JsonProperty("Preparation_rate")
-    public int preparation_rate;
+    public Float preparation_rate;
     @JsonProperty("Preparation_total")
-    public int preparation_total;
+    public Float preparation_total;
     @JsonProperty("Travel_duration")
     public String travel_duration;
     @JsonProperty("Travel_per_hr")
-    public int travel_per_hr;
+    public Float travel_per_hr;
     @JsonProperty("Travel_no_of_hrs")
     public String travel_no_of_hrs;
 
@@ -132,7 +132,7 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Cw_travel_per_hr")
     public int cw_travel_per_hr;
     @JsonProperty("Cw_travel_cost_total")
-    public int cw_travel_cost_total;
+    public Float cw_travel_cost_total;
     @JsonProperty("Ae")
     public Crm4AdditionalExpenditure additionalExpenditure;
     @JsonProperty("Attachments")
@@ -156,23 +156,23 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Q1_costbasis")
     public String q1_costbasis;
     @JsonProperty("Q1_hours")
-    public float q1_hours;
+    public Float q1_hours;
     @JsonProperty("Q1_duration")
     public String q1_duration;
     @JsonProperty("Q1_hourlyrate")
-    public float q1_hourlyrate;
+    public Float q1_hourlyrate;
     @JsonProperty("Travel_cost_total")
-    public float travel_cost_total;
+    public Float travel_cost_total;
     @JsonProperty("Q1_ae_description")
     public String q1_ae_description;
     @JsonProperty("Q1_ae_amount")
-    public float q1_ae_amount;
+    public Float q1_ae_amount;
     @JsonProperty("Q1_travelduration")
     public String q1_travelduration;
     @JsonProperty("Q1_travelrate")
-    public float q1_travelrate;
+    public Float q1_travelrate;
     @JsonProperty("Q1_total")
-    public float q1_total;
+    public Float q1_total;
     @JsonProperty("Q2_company")
     public String q2_company;
     @JsonProperty("Q2_expertname")
@@ -182,22 +182,22 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Q2_costbasis")
     public String q2_costbasis;
     @JsonProperty("Q2_hours")
-    public float q2_hours;
+    public Float q2_hours;
     @JsonProperty("Q2_duration")
     public String q2_duration;
     @JsonProperty("Q2_hourlyrate")
-    public float q2_hourlyrate;
+    public Float q2_hourlyrate;
 
     @JsonProperty("Q2_ae_description")
     public String q2_ae_description;
     @JsonProperty("Q2_ae_amount")
-    public float q2_ae_amount;
+    public Float q2_ae_amount;
     @JsonProperty("Q2_travelduration")
     public String q2_travelduration;
     @JsonProperty("Q2_travelrate")
-    public float q2_travelrate;
+    public Float q2_travelrate;
     @JsonProperty("Q2_total")
-    public float q2_total;
+    public Float q2_total;
     @JsonProperty("Q3_company")
     public String Q3_company;
     @JsonProperty("Q3_expertname")
@@ -207,21 +207,21 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Q3_costbasis")
     public String q3_costbasis;
     @JsonProperty("Q3_hours")
-    public float q3_hours;
+    public Float q3_hours;
     @JsonProperty("Q3_duration")
     public String q3_duration;
     @JsonProperty("Q3_hourlyrate")
-    public float q3_hourlyrate;
+    public Float q3_hourlyrate;
     @JsonProperty("Q3_ae_description")
     public String Q3_ae_description;
     @JsonProperty("Q3_ae_amount")
-    public float Q3_ae_amount;
+    public Float Q3_ae_amount;
     @JsonProperty("Q3_travelduration")
     public String Q3_travelduration;
     @JsonProperty("Q3_travelrate")
-    public float Q3_travelrate;
+    public Float Q3_travelrate;
     @JsonProperty("Q3_total")
-    public float Q3_total;
+    public Float Q3_total;
     @JsonProperty("Authority_sought")
     public String authority_sought;
     @JsonProperty("Prosecution_case_summary")
@@ -235,53 +235,53 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Expenditure_orderedbycourt")
     public String expenditure_orderedbycourt;
     @JsonProperty("Dna_cost")
-    public float dna_cost;
+    public Float dna_cost;
     @JsonProperty("Cw_dna_cost")
-    public float cw_dna_cost;
+    public Float cw_dna_cost;
     @JsonProperty("Accomm_basis")
     public String accomm_basis;
     @JsonProperty("Transcription_no_of_mins")
-    public float transcription_no_of_mins;
+    public Float transcription_no_of_mins;
     @JsonProperty("Transcription_cost_per_min")
-    public float transcription_cost_per_min;
+    public Float transcription_cost_per_min;
     @JsonProperty("Transcription_total")
-    public float transcription_total;
+    public Float transcription_total;
     @JsonProperty("Cw_transcription_no_of_mins")
-    public float cw_transcription_no_of_mins;
+    public Float cw_transcription_no_of_mins;
     @JsonProperty("Cw_transcription_cost_per_min")
-    public float cw_transcription_cost_per_min;
+    public Float cw_transcription_cost_per_min;
     @JsonProperty("Cw_transcription_total")
-    public float cw_transcription_total;
+    public Float cw_transcription_total;
     @JsonProperty("Cw_photocopy_no_of_pages")
-    public float cw_photocopy_no_of_pages;
+    public Float cw_photocopy_no_of_pages;
     @JsonProperty("Cw_photocopy_cost_per_page")
-    public float cw_photocopy_cost_per_page;
+    public Float cw_photocopy_cost_per_page;
     @JsonProperty("Cw_photocopy_total")
-    public float cw_photocopy_total;
+    public Float cw_photocopy_total;
     @JsonProperty("Photocopy_no_of_pages")
-    public float photocopy_no_of_pages;
+    public Float photocopy_no_of_pages;
     @JsonProperty("Photocopy_cost_per_page")
-    public float photocopy_cost_per_page;
+    public Float photocopy_cost_per_page;
     @JsonProperty("Photocopy_total")
-    public float photocopy_total;
+    public Float photocopy_total;
     @JsonProperty("Translator_no_of_words")
-    public float translator_no_of_words;
+    public Float translator_no_of_words;
     @JsonProperty("Translator_per_thou_words")
-    public float translator_per_thou_words;
+    public Float translator_per_thou_words;
     @JsonProperty("Translator_total_cost")
-    public float translator_total_cost;
+    public Float translator_total_cost;
     @JsonProperty("Cw_translator_no_of_words")
-    public float cw_translator_no_of_words;
+    public Float cw_translator_no_of_words;
     @JsonProperty("cw_translator_per_thou_words")
-    public float cw_translator_per_thou_words;
+    public Float cw_translator_per_thou_words;
     @JsonProperty("Cw_translator_total_cost")
-    public float cw_translator_total_cost;
+    public Float cw_translator_total_cost;
     @JsonProperty("Other_quantity")
-    public float other_quantity;
+    public Float other_quantity;
     @JsonProperty("Other_rate")
-    public float other_rate;
+    public Float other_rate;
     @JsonProperty("Other_total")
-    public float other_total;
+    public Float other_total;
     @JsonProperty("Solicitor_declaration")
     public boolean solicitor_declaration;
     @JsonProperty("Solicitor_sign_date")
@@ -299,11 +299,11 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Cw_preparation_hrs")
     public int cw_preparation_hrs;
     @JsonProperty("Cw_preparation_rate")
-    public int cw_preparation_rate;
+    public Float cw_preparation_rate;
     @JsonProperty("Cw_preparation_total")
-    public int cw_preparation_total;
+    public Float cw_preparation_total;
     @JsonProperty("Amount_allowed")
-    public float amount_allowed;
+    public Float amount_allowed;
     @JsonProperty("Destruction_date")
     public Date destruction_date;
     @JsonProperty("Signed_authority")

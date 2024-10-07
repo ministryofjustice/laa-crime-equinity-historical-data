@@ -10,9 +10,9 @@ public class Crm4ExpenditureModel{
     @JsonProperty("Description")
     public String description;
     @JsonProperty("Rate")
-    public int rate;
+    public Float rate;
     @JsonProperty("Total")
-    public float total;
+    public Float total;
     @JsonProperty("Quantity")
     public int quantity;
     @JsonProperty("Justification")
