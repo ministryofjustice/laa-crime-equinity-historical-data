@@ -396,6 +396,20 @@ public class Crm14AdditionalDetails {
     public Double tax_liability;
     @JsonProperty("partner_tax_liability")
     public Double partner_tax_liability;
+    @JsonProperty("Partner_wage_amount")
+    public float partner_wage_amount;
+    @JsonProperty("Partner_child_benefit")
+    public float partner_child_benefit;
+    @JsonProperty("Partner_tax_credits_amount")
+    public float partner_tax_credits_amount;
+    @JsonProperty("Partner_universal_credit")
+    public float partner_universal_credit;
+    @JsonProperty("Partner_other_benefits")
+    public float partner_other_benefits;
+    @JsonProperty("Partner_pensions")
+    public float partner_pensions;
+    @JsonProperty("Partner_other_income")
+    public float partner_other_income;
 
 
     @JsonProperty("Subformfundingdecision_1-Overall_result_magsorcfs")
