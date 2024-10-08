@@ -64,7 +64,9 @@ public class CrmFileService {
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
     public static final String HAS_CRM15_SECTION ="crm15Section";
-    public static final String CONTAINS_CRM15 ="crm15";
+    private static final String CONTAINS_CRM15 ="crm15";
+    private static final String FORM_SECTION_STATES ="SectionStates";
+    private static final String FORM_SECTION_NAMES ="SectionName";
 
 
     private final TaskImageFilesRepository taskImageFilesRepository;
@@ -172,11 +174,11 @@ public class CrmFileService {
 
 
     public void sectionsCheck(JSONObject crmFileJsonObject) {
-        JSONArray sectionsArray  = (JSONArray)((JSONObject)(crmFileJsonObject.getJSONObject("SectionStates"))).get("SectionName");
+        JSONArray sectionsArray  = (JSONArray)((JSONObject)(crmFileJsonObject.getJSONObject(FORM_SECTION_STATES))).get(FORM_SECTION_NAMES);
         boolean hasCrm15Section =false;
        if (sectionsArray != null) {
             for (int i=0;i<sectionsArray.length();i++){
-                if (sectionsArray.getString(i).contains(CONTAINS_CRM15)){
+                if (CONTAINS_CRM15.contains(sectionsArray.getString(i))){
                     hasCrm15Section =true;
                     break;
                 }
