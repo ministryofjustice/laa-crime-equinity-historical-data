@@ -26,7 +26,7 @@ import java.util.Map;
 public class CrmFileController {
     private final CrmFileService crmFileService;
 
-    @GetMapping(value= "/{usn}")
+    @GetMapping(value= "/{usn}/{type}")
     @Operation(description = "Search a specific Task by ID (USN) for its OFD Image file")
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "400",
@@ -41,13 +41,14 @@ public class CrmFileController {
                 schema = @Schema(implementation = ProblemDetail.class)
         )
     )
-    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId) {
+    public ResponseEntity<Map<String, Object>> getCrmFileByUsn(@PathVariable("usn") Long taskId, @PathVariable("type") int typeId) {
         String logMessage = String.format("eForm CRM4 details request received :: usn=[%s]", taskId);
         log.info(logMessage);
 
         CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                taskId, null, null
+                taskId, typeId, null
         );
+
         Map<String, Object> crmFileContents = crmFileService.getCrmFileJson(crmFormDetailsCriteriaDTO)
                 .toMap();
         return new ResponseEntity<>(crmFileContents, HttpStatus.OK);
