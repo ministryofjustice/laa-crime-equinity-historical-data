@@ -178,7 +178,7 @@ public class CrmFileService {
         boolean hasCrm15Section =false;
        if (sectionsArray != null) {
             for (int i=0;i<sectionsArray.length();i++){
-                if (CONTAINS_CRM15.contains(sectionsArray.getString(i))){
+                if (sectionsArray.getString(i).contains(CONTAINS_CRM15)){
                     hasCrm15Section =true;
                     break;
                 }
