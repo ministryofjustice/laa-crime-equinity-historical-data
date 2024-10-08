@@ -10,17 +10,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 
 import java.nio.charset.StandardCharsets;
 
@@ -63,6 +63,8 @@ public class CrmFileService {
     public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
     public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
+    public static final String HAS_CRM15_SECTION ="crm15Section";
+    public static final String CONTAINS_CRM15 ="crm15";
 
 
     private final TaskImageFilesRepository taskImageFilesRepository;
@@ -108,6 +110,7 @@ public class CrmFileService {
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
             break;
             case CRM_TYPE_14:
+                sectionsCheck(crmFileJsonObject);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_CHARGES_BROUGHT, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BUSINESS_DETAILS, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_BUSINESS_DETAILS, CRM_ROW);
@@ -165,6 +168,21 @@ public class CrmFileService {
         }
 
         return (T) crmFormData;
+    }
+
+
+    public void sectionsCheck(JSONObject crmFileJsonObject) {
+        JSONArray sectionsArray  = (JSONArray)((JSONObject)(crmFileJsonObject.getJSONObject("SectionStates"))).get("SectionName");
+        boolean hasCrm15Section =false;
+       if (sectionsArray != null) {
+            for (int i=0;i<sectionsArray.length();i++){
+                if (sectionsArray.getString(i).contains(CONTAINS_CRM15)){
+                    hasCrm15Section =true;
+                    break;
+                }
+            }
+        }
+        crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA).put(HAS_CRM15_SECTION, hasCrm15Section);
     }
 
     public void convertCrmFormObjectToArray(JSONObject crmFileJsonObject, String jsonParentKey, String jsonChildKey) {

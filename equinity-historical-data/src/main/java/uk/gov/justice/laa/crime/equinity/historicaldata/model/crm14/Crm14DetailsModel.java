@@ -842,6 +842,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Other_income")
     public float other_income;
 
+    public boolean crm15Section;
     public List<Crm14FundDecisionModel> fundingDecisions;
 
     public boolean hasCrm15() {
@@ -850,7 +851,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
         else if (StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes"))
             return true;
         else
-            return this.getEmployers_crm15() > 0 || this.getPartner_employer_crm15() > 0;
+            return Integer.sum(this.getEmployers_crm15(),this.getPartner_employer_crm15()) > 0 || isCrm15Section();
     }
 
     public List<Crm14FundDecisionModel> getFundingDecisions() {
