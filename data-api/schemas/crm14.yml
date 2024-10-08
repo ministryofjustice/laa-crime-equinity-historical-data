@@ -495,7 +495,7 @@ Crm14AllIncomesDTO:
 Crm14IncomeSourceDTO:
   type: object
   properties:
-    wage:
+    wageAmount:
       type: number
       format: float
     wagePaidEvery:

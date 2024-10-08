@@ -217,7 +217,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="howPayBillsText", source="how_pay_bills_freetext")
     Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
 
-    @Mapping(target="you.wage", source="wage_amount")
+    @Mapping(target="you.wageAmount", source="wage_amount")
     @Mapping(target="you.wagePaidEvery", source="wage_paid_every")
     @Mapping(target="you.wageTax", source="wage_tax")
     @Mapping(target="you.childBenefitAmount", source="child_benefit")
@@ -242,7 +242,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="you.otherFinancialSupport", source="other_financial_support")
     @Mapping(target="you.otherIncomeSourceFreetext", source="other_income_source_freetext")
 
-    @Mapping(target="partner.wage", source="partner_wage_amount")
+    @Mapping(target="partner.wageAmount", source="partner_wage_amount")
     @Mapping(target="partner.wagePaidEvery", source="partner_wage_paid_every")
     @Mapping(target="partner.wageTax", source="partner_wage_tax")
     @Mapping(target="partner.childBenefitAmount", source="partner_child_benefit")
