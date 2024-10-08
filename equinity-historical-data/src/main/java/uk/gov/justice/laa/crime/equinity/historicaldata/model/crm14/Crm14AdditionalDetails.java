@@ -592,6 +592,9 @@ public class Crm14AdditionalDetails {
     public String subformfundingdecision_4_official_sign_fullname;
     @JsonProperty("Subformfundingdecision_5-Case_number")
     public String subformfundingdecision_5_case_number;
+    @JsonProperty("Injection_count")
+    public Integer injection_count;
+
     @JsonProperty("Employment_details")
     public Crm15EmployersModel employment_details;
     @JsonProperty("Partner_employment_details")
