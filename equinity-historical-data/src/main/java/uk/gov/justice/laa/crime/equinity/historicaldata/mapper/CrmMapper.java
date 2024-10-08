@@ -44,7 +44,7 @@ public interface CrmMapper {
     }
 
     default Boolean convertIntegerToBoolean(Integer i) {
-        if (i == null) return false;
+        if (i == null) return null;
 
         return (i > 0);
     }
