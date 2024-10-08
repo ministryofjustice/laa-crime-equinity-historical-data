@@ -638,8 +638,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="key", expression = "java(assignFileKey(processAttachModel))")
     Crm14EvidenceDTO getCrm14ProcessAttachmentsFromModel(Crm14AttachmentModel processAttachModel);
 
-    @Mapping(target ="benefitCheck.dwpResultReferTo", source = "who_dwp_checked")
     @Mapping(target ="benefitCheck.dwpOverallCheck", source = "dwp_check_result")
+    @Mapping(target ="benefitCheck.dwpResultReferTo", source = "who_dwp_checked")
     @Mapping(target ="benefitCheck.dwpCheckDob", source = "dwp_check_dob")
     @Mapping(target ="benefitCheck.dwpCheckSurname", source = "dwp_check_surname")
     @Mapping(target ="benefitCheck.dwpCheckNino", source = "dwp_check_nino")
@@ -649,36 +649,45 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target ="benefitCheck.dwpCheckPartnerSurname", source = "dwp_check_partner_surname")
     @Mapping(target ="benefitCheck.dwpCheckPartnerDob", source = "dwp_check_partner_dob")
     @Mapping(target ="benefitCheck.dwpCheckPartnerDateOfAward", source = "dwp_check_partner_dateofaward")
+
     @Mapping(target ="messageHistory", source="messagehistory.messages")
+
     @Mapping(target ="returnProvider.returnReason", source = "return_reason")
     @Mapping(target ="returnProvider.returnReasonDetails", source = "return_reason_details")
+
     @Mapping(target ="fundingDecisions", source="fundingDecisions")
+    @Mapping(target ="fundingDecisionUpdatesCount", source="injection_count")
     Crm14OfficialUseDTO getOfficialUseDTOFromModel(Crm14DetailsModel model);
+
     @Mapping(target ="senderDisplay", source = "sender_display")
     @Mapping(target ="message", source = "message")
     @Mapping(target ="senderUniqueName", source = "sender_uniquename")
     @Mapping(target ="date", source = "datetime")
     Crm4MessageHistoryDTO getOfficialUseDTOFromModel(Crm14MessageModel model);
+
     @Mapping(target ="maatNumber", source = "maatNumber")
     @Mapping(target ="caseNumber", source = "caseNumber")
     @Mapping(target ="justiceTest", source = "justiceTest")
-    @Mapping(target ="meansTestResultType", source = "meansTestResultType")
-    @Mapping(target ="officialSignName", source = "officialSignFullName")
-    @Mapping(target ="appropriateOfficerName", source = "appropriateOfficerName")
     @Mapping(target ="justiceTestReasons", source = "justiceTestReasons")
-    @Mapping(target ="overallResultMagsorcfs", source = "overallResultMagsorcfs")
-    @Mapping(target ="appropriateOfficerSignDate", source = "appropriateOfficerSignDate")
-    @Mapping(target ="meansTestResultAppealtocc", source = "meansTestResultAppealToCc")
-    @Mapping(target ="overallResultNonMeans", source = "overallResultNonMeans")
-    @Mapping(target ="meansTestResultMagsorcfs", source = "meansTestResultMagsorcfs")
-    @Mapping(target ="meansTestResultCc", source = "meansTestResultCc")
-    @Mapping(target ="overallResultAppealtocc", source = "overallResultAppealToCc")
-    @Mapping(target ="overallResultType", source = "overallResultType")
-    @Mapping(target ="overallResultCc", source = "overallResultCc")
+    @Mapping(target ="officialSignName", source = "officialSignFullName")
     @Mapping(target ="officialSignDate", source = "officialSignDate")
 
+    @Mapping(target ="meansTestResultType", source = "meansTestResultType")
+    @Mapping(target ="meansTestResultMagsorcfs", source = "meansTestResultMagsorcfs")
+    @Mapping(target ="meansTestResultCc", source = "meansTestResultCc")
+    @Mapping(target ="meansTestResultAppealtocc", source = "meansTestResultAppealToCc")
+
+    @Mapping(target ="appropriateOfficerName", source = "appropriateOfficerName")
+    @Mapping(target ="appropriateOfficerSignDate", source = "appropriateOfficerSignDate")
+
+    @Mapping(target ="overallResultType", source = "overallResultType")
+    @Mapping(target ="overallResultMagsorcfs", source = "overallResultMagsorcfs")
+    @Mapping(target ="overallResultCc", source = "overallResultCc")
+    @Mapping(target ="overallResultAppealtocc", source = "overallResultAppealToCc")
+    @Mapping(target ="overallResultNonMeans", source = "overallResultNonMeans")
 
     Crm4FundingDecisionDTO getOfficialUseDTOFromModel(Crm14FundDecisionModel model);
+
     default String assignFileKey(Crm14AttachmentModel processAttachModel) {
         if (null != processAttachModel.getAttachmentId()){
             return "att_"+processAttachModel.getAttachmentId()+".att";
