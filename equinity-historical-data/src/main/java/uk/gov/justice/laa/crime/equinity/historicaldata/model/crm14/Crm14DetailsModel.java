@@ -19,6 +19,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmFormDetailsModelInterface {
+    private static final String ANSWER_YES = "Yes";
+
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
     @JsonProperty("Other_reason_to_be_represented")
@@ -845,12 +847,24 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public List<Crm14FundDecisionModel> fundingDecisions;
 
     public boolean hasCrm15() {
-        if (StringUtils.isNotEmpty(this.getPrivate_company()) && this.getPrivate_company().equalsIgnoreCase("Yes"))
-            return true;
-        else if (StringUtils.isNotEmpty(this.getPartner_private_company()) && this.getPartner_private_company().equalsIgnoreCase("Yes"))
-            return true;
-        else
-            return this.getEmployers_crm15() > 0 || this.getPartner_employer_crm15() > 0;
+        // Q3. Are you or your partner self-employed, employed in a business partnership, or employed as either a company director or a shareholder in a private company?
+        if (isAnswerYes(this.getPrivate_company()) || isAnswerYes(this.getPartner_private_company())) return true;
+        // Q4. Do you or your partner, together, in a year have a total income from all sources before tax or any other deduction, of more than £12, 475 (£239.90 a week)?
+        if (isAnswerYes(this.getIncome_over_set_amount())) return true;
+        // Q6. Do you or your partner have any income, savings or assets which are under a restraint order or a freezing order?
+        if (isAnswerYes(this.getFreezing_order())) return true;
+        // Q7. Do you or your partner own or part-own any land or property of any kind, including your own home, in the United Kingdom or overseas?
+        if (isAnswerYes(this.getOwn_land_or_property()) || isAnswerYes(this.getPartner_own_property())) return true;
+        // Q8. Do you or your partner have any savings or investments, in the United Kingdom or overseas?
+        if (isAnswerYes(this.getSavings_or_investments())) return true;
+        // Additional rule
+        return (this.getEmployers_crm15() + this.getPartner_employer_crm15() > 0);
+    }
+
+    private boolean isAnswerYes(String answerToCheck) {
+        return (StringUtils.isNotEmpty(answerToCheck)
+            && answerToCheck.equalsIgnoreCase(ANSWER_YES)
+        );
     }
 
     public List<Crm14FundDecisionModel> getFundingDecisions() {
