@@ -495,14 +495,14 @@ Crm14AllIncomesDTO:
 Crm14IncomeSourceDTO:
   type: object
   properties:
-    wageCalc:
+    wageAmount:
       type: number
       format: float
     wagePaidEvery:
       type: string
     wageTax:
       type: string
-    childBenefit:
+    childBenefitAmount:
       type: number
       format: float
     childBenefitPaidEvery:
@@ -512,12 +512,12 @@ Crm14IncomeSourceDTO:
       format: float
     taxCreditsPaidEvery:
       type: string
-    universalCredit:
+    universalCreditAmount:
       type: number
       format: float
     universalCreditPaidEvery:
       type: string
-    otherBenefitsCalc:
+    otherBenefitsAmount:
       type: number
       format: float
     otherBenefitsPaidEvery:
@@ -527,12 +527,12 @@ Crm14IncomeSourceDTO:
       format: float
     maintenancePaymentPaidEvery:
       type: string
-    pensionsCalc:
+    pensionsAmount:
       type: number
       format: float
     pensionsPaidEvery:
       type: string
-    otherIncomeCalc:
+    otherIncomeAmount:
       type: number
       format: float
     otherIncomePaidEvery:

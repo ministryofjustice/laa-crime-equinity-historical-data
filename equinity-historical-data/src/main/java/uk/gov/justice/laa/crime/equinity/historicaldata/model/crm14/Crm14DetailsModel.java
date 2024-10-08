@@ -827,6 +827,21 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int joint_properties_commercial;
     @JsonProperty("Joint_pieces_of_land")
     public int joint_pieces_of_land;
+    @JsonProperty("Wage_amount")
+    public float wage_amount;
+    @JsonProperty("Child_benefit")
+    public float child_benefit;
+    @JsonProperty("Tax_credits_amount")
+    public float tax_credits_amount;
+    @JsonProperty("Universal_credit")
+    public float universal_credit;
+    @JsonProperty("Other_benefits")
+    public float other_benefits;
+    @JsonProperty("Pensions")
+    public float pensions;
+    @JsonProperty("Other_income")
+    public float other_income;
+
     public List<Crm14FundDecisionModel> fundingDecisions;
 
     public boolean hasCrm15() {
