@@ -19,7 +19,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmFormDetailsModelInterface {
-    private final static String ANSWER_YES = "Yes";
+    private static final String ANSWER_YES = "Yes";
 
     @JsonProperty("Solicitor_phone_landline")
     public String solicitor_phone_landline;
