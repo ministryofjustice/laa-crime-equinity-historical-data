@@ -434,7 +434,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Own_land_or_property")
     public String own_land_or_property;
     @JsonProperty("Indictable_offence")
-    public int indictable_offence;
+    public Integer indictable_offence;
     @JsonProperty("Originator_emailflag")
     public String originator_emailflag;
     @JsonProperty("Interests_of_another_details")

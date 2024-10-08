@@ -43,6 +43,12 @@ public interface CrmMapper {
                 model.getFull_grant_notes() : model.getReason_details();
     }
 
+    default Boolean convertIntegerToBoolean(Integer i) {
+        if (i == null) return null;
+
+        return (i > 0);
+    }
+
     @Named("convertToTimeSpentString")
     default String convertToTimeSpentString(String endDateTime){
         if (StringUtils.isEmpty(endDateTime)){
