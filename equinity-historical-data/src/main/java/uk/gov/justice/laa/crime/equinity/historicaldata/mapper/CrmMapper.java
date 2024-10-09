@@ -1,5 +1,6 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.mapper;
 
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -41,6 +42,13 @@ public interface CrmMapper {
     default String convertDecisionReason(CrmDecisionReasonDetailsModelInterface model) {
         return (model.getDecision_original().equals(DECISION_GRANTED)) ?
                 model.getFull_grant_notes() : model.getReason_details();
+    }
+
+    @Nullable
+    default Boolean convertIntegerToBoolean(Integer i) {
+        if (i == null) return null;
+
+        return (i > 0);
     }
 
     @Named("convertToTimeSpentString")

@@ -442,7 +442,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="outgoings.legalAidContributionRef", source="legal_aid_contribution_ref")
     @Mapping(target="outgoings.paid40PercentTax", source="paid_40_percent_tax")
     @Mapping(target="outgoings.partnerPaid40PercentTax", source="partner_paid_40_percent_tax")
-    @Mapping(target="outgoings.indictable", source="indictable")
+    @Mapping(target="outgoings.indictable", source="indictable_offence")
     @Mapping(target="outgoings.householdOutgoingsExceedIncome", source="household_outgoings_exceed_income")
     @Mapping(target="outgoings.householdOutgoingsExceedIncomeHow", source="household_outgoings_exceed_income_how")
     @Mapping(target="savings.numBankAccounts", source="bank_accounts_crm15")
