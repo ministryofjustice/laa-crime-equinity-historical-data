@@ -286,6 +286,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="proceedingsConcluded", source = "proceedings_already_concluded")
     @Mapping(target="proceedingsConcludedNotes", source = "proceedings_already_concluded_notes")
     Crm14InterestOfJusticePart1DTO getInterestOfJusticePart1DTOFromModel(Crm14DetailsModel model);
+
     @Mapping(target="remandedInCustody", source = "remanded_in_custody")
     @Mapping(target="remandedDate", source = "remanded_in_custody_date")
     @Mapping(target="heardInMagistrateCourt", source = "heard_in_magistrates_court")
@@ -302,8 +303,6 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="charge", source="charge")
     @Mapping(target="whenOffence", source="offence_when")
     Crm14ChargesBroughtDTO getChargesBroughtDTOFromModel(Crm14ChargesModel chargesModel);
-
-
 
     @Mapping(target="income1.employersCrm15", source="employers_crm15")
     @Mapping(target="income1.allEmployers.you", source="employment_details.employers")
