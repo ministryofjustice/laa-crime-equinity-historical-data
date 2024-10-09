@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Crm14AdditionalDetails {
 
-    @JsonProperty("stocks")
+    @JsonProperty("Stocks")
     public Integer stocks;
     @JsonProperty("Partner_stocks")
     public Integer partner_stocks;
@@ -220,8 +220,6 @@ public class Crm14AdditionalDetails {
     public Integer partner_calc;
     @JsonProperty("Partner_other_income_checkbox_count")
     public Integer partner_other_income_checkbox_count;
-    @JsonProperty("Partner_tax_credits_paid_every")
-    public String partner_tax_credits_paid_every;
     @JsonProperty("Partner_other_benefits_crm15_details")
     public String partner_other_benefits_crm15_details;
     @JsonProperty("Partner_other_income_source_initialised_flag")
@@ -386,16 +384,12 @@ public class Crm14AdditionalDetails {
     public String partner_receive_pension;
     @JsonProperty("Partner_wage_tax_calc")
     public Integer partner_wage_tax_calc;
-    @JsonProperty("partner_self_employed_no_of_businesses")
+    @JsonProperty("Partner_self_employed_no_of_businesses")
     public Integer partner_self_employed_no_of_businesses;
-    @JsonProperty("partner_business_partnerships_no_of")
+    @JsonProperty("Partner_business_partnerships_no_of")
     public Integer partner_business_partnerships_no_of;
-    @JsonProperty("partner_private_companies_no_of")
+    @JsonProperty("Partner_private_companies_no_of")
     public Integer partner_private_companies_no_of;
-    @JsonProperty("tax_liability")
-    public Double tax_liability;
-    @JsonProperty("partner_tax_liability")
-    public Double partner_tax_liability;
     @JsonProperty("Partner_wage_amount")
     public float partner_wage_amount;
     @JsonProperty("Partner_child_benefit")
@@ -410,8 +404,6 @@ public class Crm14AdditionalDetails {
     public float partner_pensions;
     @JsonProperty("Partner_other_income")
     public float partner_other_income;
-
-
     @JsonProperty("Subformfundingdecision_1-Overall_result_magsorcfs")
     public String subformfundingdecision_1_overall_result_magsorcfs;
     @JsonProperty("Subformfundingdecision_3-Means_test_result_type")
@@ -594,7 +586,6 @@ public class Crm14AdditionalDetails {
     public String subformfundingdecision_5_case_number;
     @JsonProperty("Injection_count")
     public Integer injection_count;
-
     @JsonProperty("Employment_details")
     public Crm15EmployersModel employment_details;
     @JsonProperty("Partner_employment_details")

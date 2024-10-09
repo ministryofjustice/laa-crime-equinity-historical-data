@@ -515,8 +515,14 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String last_nct_stagefilter2;
     @JsonProperty("Last_nct_stagefilter1")
     public String last_nct_stagefilter1;
+    @JsonProperty("Tax_liability")
+    public Double tax_liability;
     @JsonProperty("Tax_liability_paid_every")
     public String tax_liability_paid_every;
+    @JsonProperty("Partner_tax_liability")
+    public Double partner_tax_liability;
+    @JsonProperty("Partner_tax_credits_paid_every")
+    public String partner_tax_credits_paid_every;
     @JsonProperty("Interest_paid_every")
     public String interest_paid_every;
     @JsonProperty("How_pay_bills")

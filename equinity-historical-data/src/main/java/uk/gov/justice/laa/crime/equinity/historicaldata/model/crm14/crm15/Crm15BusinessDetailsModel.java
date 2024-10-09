@@ -56,7 +56,7 @@ public class Crm15BusinessDetailsModel {
     @JsonProperty("Percent_of_profits")
     public double percent_of_profits;
     @JsonProperty("Drawings")
-    public int drawings;
+    public Float drawings;
     @JsonProperty("Business_no_of_employees")
     public int business_no_of_employees;
     @JsonProperty("Business_trading_date")
