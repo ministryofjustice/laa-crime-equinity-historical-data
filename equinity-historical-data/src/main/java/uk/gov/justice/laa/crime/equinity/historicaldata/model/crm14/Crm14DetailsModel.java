@@ -70,7 +70,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Childcare_costs")
     public String childcare_costs;
     @JsonProperty("Employed")
-    public int employed;
+    public Integer employed;
     @JsonProperty("Tlmessage")
     public String tlmessage;
     @JsonProperty("Fc_non_means_tested")
@@ -102,7 +102,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Court_name")
     public String court_name;
     @JsonProperty("Heard_in_magistrates_court")
-    public int heard_in_magistrates_court;
+    public Integer heard_in_magistrates_court;
     @JsonProperty("Other_income_maintenance")
     public boolean other_income_maintenance;
     @JsonProperty("Legal_aid_contribution_ref")
@@ -110,7 +110,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("White_and_asian")
     public boolean white_and_asian;
     @JsonProperty("Remanded_in_custody")
-    public boolean remanded_in_custody;
+    public Boolean remanded_in_custody;
     @JsonProperty("Lose_livelihood_details")
     public String lose_livelihood_details;
     @JsonProperty("Originator_selfregistered")
@@ -348,7 +348,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Legal_rep_declaration_2")
     public String legal_rep_declaration_2;
     @JsonProperty("Lost_job_due_to_custody")
-    public int lost_job_due_to_custody;
+    public Integer lost_job_due_to_custody;
     @JsonProperty("Tlreadonly")
     public int tlreadonly;
     @JsonProperty("Marital_status_2")
@@ -776,7 +776,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Other_income_calc")
     public int other_income_calc;
     @JsonProperty("Employment_ceased_3_months")
-    public int employment_ceased_3_months;
+    public Integer employment_ceased_3_months;
     @JsonProperty("Summary")
     public boolean summary;
     @JsonProperty("Hide_crm15")
