@@ -34,8 +34,6 @@ public class CrmFileService {
     public static final int CRM_TYPE_7 = 5;
     public static final int CRM_TYPE_14 = 6;
     private static final String CHAR_NULL = "\u0000";
-    private static final String CHAR_HYPHEN ="\u2010";
-    private static final String CHAR_AND ="&(?!a)";
     private static final String CHAR_EMPTY = "";
     private static final String CRM_FORM_DATA = "fd:formdata";
     private static final String CRM_PRINT_INFO = "printinfo";
@@ -133,10 +131,9 @@ public class CrmFileService {
             .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
 
         // Collect and clean content
-        String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.UTF_8)
+        String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.ISO_8859_1)
             .replaceAll(CHAR_NULL, CHAR_EMPTY);
-         crmFormFileContent = crmFormFileContent.replaceAll(CHAR_HYPHEN,CHAR_EMPTY); // replacing hyphen unicode with empty space to remove malformed xml error
-         crmFormFileContent = crmFormFileContent.replaceAll(CHAR_AND,CHAR_EMPTY);
+
         return convertCrmFileContentToJson(crmFormFileContent);
     }
 
