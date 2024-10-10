@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
 
 @Immutable @Entity
-@Table(name = "CrmFormsView")
+@Table(name = "CrmFormSummary")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
