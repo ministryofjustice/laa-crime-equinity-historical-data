@@ -134,8 +134,7 @@ public class CrmFileService {
 
         // Collect and clean content
         String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.ISO_8859_1)
-            .replaceAll(CHAR_NULL, CHAR_EMPTY);
-        crmFormFileContent = crmFormFileContent.replaceAll(CHAR_QUOTE,CHAR_SPACE);
+            .replaceAll(CHAR_NULL, CHAR_EMPTY).replaceAll(CHAR_QUOTE,CHAR_SPACE);
 
         return convertCrmFileContentToJson(crmFormFileContent);
     }
