@@ -34,6 +34,8 @@ public class CrmFileService {
     public static final int CRM_TYPE_7 = 5;
     public static final int CRM_TYPE_14 = 6;
     private static final String CHAR_NULL = "\u0000";
+    private static final String CHAR_QUOTE = " \" ";
+    private static final String CHAR_SPACE = " ";
     private static final String CHAR_EMPTY = "";
     private static final String CRM_FORM_DATA = "fd:formdata";
     private static final String CRM_PRINT_INFO = "printinfo";
@@ -132,7 +134,7 @@ public class CrmFileService {
 
         // Collect and clean content
         String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.ISO_8859_1)
-            .replaceAll(CHAR_NULL, CHAR_EMPTY);
+            .replaceAll(CHAR_NULL, CHAR_EMPTY).replaceAll(CHAR_QUOTE,CHAR_SPACE);
 
         return convertCrmFileContentToJson(crmFormFileContent);
     }
