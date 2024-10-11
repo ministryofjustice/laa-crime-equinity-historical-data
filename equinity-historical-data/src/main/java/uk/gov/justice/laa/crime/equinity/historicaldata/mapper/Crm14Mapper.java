@@ -395,19 +395,20 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="income2.partnerInterestPaidEvery", source="partner_interest_paid_every")
 
     // other_income_paid_every
-    @Mapping(target="income2.receiveOtherIncome", source="other_income_crm15")
+    @Mapping(target="income2.receiveOtherIncome", source="income_from_other_sources")
     @Mapping(target="income2.studentLoan", source="student_loan")
     @Mapping(target="income2.familyRent", source="family_rent")
     @Mapping(target="income2.otherRent", source="other_rent")
     @Mapping(target="income2.otherFinancialSupport", source="other_financial_support")
-    @Mapping(target="income2.incomeFromOtherSources", source="income_from_other_sources")
+    @Mapping(target="income2.incomeFromOtherSources", source="other_income_crm15")
     @Mapping(target="income2.otherIncomeSourceFreetext", source="other_income_source_freetext")
-    @Mapping(target="income2.partnerReceiveOtherIncome", source="partner_other_income_crm15")
+
+    @Mapping(target="income2.partnerReceiveOtherIncome", source="partner_income_from_other_sources")
     @Mapping(target="income2.partnerStudentLoan", source="partner_student_loan")
     @Mapping(target="income2.partnerFamilyRent", source="partner_family_rent")
     @Mapping(target="income2.partnerOtherRent", source="partner_other_rent")
     @Mapping(target="income2.partnerOtherFinancialSupport", source="partner_other_financial_support")
-    @Mapping(target="income2.partnerIncomeFromOtherSources", source="partner_income_from_other_sources")
+    @Mapping(target="income2.partnerIncomeFromOtherSources", source="partner_other_income_crm15")
     @Mapping(target="income2.partnerOtherIncomeSourceFreetext", source="partner_other_income_source_freetext")
 
     @Mapping(target="income2.totalAmountReceived", source="total_amount_received")
