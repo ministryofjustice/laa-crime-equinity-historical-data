@@ -5,13 +5,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm14InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm14Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessagesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14PSEMessagesService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 public class Crm14Controller implements Crm14InterfaceApi{
     private final CrmFileService crmFileService;
     private final Crm14AttachmentService crm14AttachmentService;
+    private final Crm14PSEMessagesService crm14PSEMessagesService;
     private final Crm14Mapper mapper;
 
     @Override
@@ -36,7 +39,9 @@ public class Crm14Controller implements Crm14InterfaceApi{
         );
         Crm14Model crm14FormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
         List<Crm14AttachmentModel> attachments = crm14AttachmentService.getCrm14Attachments(usn);
+        List<Crm14PSEMessagesModel> pseTlMessages = crm14PSEMessagesService.getCrm14PSEMessages(usn);
         crm14FormData.getFormDetails().setProcessedAttachments(attachments);
+        crm14FormData.getFormDetails().setPseTLMessages(pseTlMessages);
         crm14FormData.addProcessedAttachmentsToEvidence(attachments);
         return ResponseEntity.ok(mapper.getDTOFromModel(crm14FormData));
     }
