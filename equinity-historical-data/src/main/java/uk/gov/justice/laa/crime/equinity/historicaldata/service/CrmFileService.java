@@ -19,8 +19,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 
 import java.nio.charset.StandardCharsets;
 
@@ -65,7 +65,7 @@ public class CrmFileService {
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
 
 
-    private final TaskImageFilesRepository taskImageFilesRepository;
+    private final CrmFormDetailsRepository detailsRepository;
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
 
@@ -127,7 +127,7 @@ public class CrmFileService {
     }
 
     public JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
-        TaskImageFilesModel task = (TaskImageFilesModel) taskImageFilesRepository.findOne(
+        CrmFormDetailsModel task = (CrmFormDetailsModel) detailsRepository.findOne(
                 crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
             )
             .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));

@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
 
 @Immutable @Entity
-@Table(name = "TaskImageFiles")
+@Table(name = "CrmFormDetails")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskImageFilesModel {
+public class CrmFormDetailsModel {
 
     @Id
     @Column(name="USN")

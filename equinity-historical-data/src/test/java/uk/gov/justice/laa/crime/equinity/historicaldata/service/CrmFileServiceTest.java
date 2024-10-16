@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,7 +37,7 @@ class CrmFileServiceTest {
     private SoftAssertions softly;
 
     @Autowired
-    TaskImageFilesRepository taskImageFilesRepository;
+    CrmFormDetailsRepository detailsRepository;
 
     @Autowired
     CrmFileService crmFileService;
@@ -101,11 +101,11 @@ class CrmFileServiceTest {
     }
 
     private void createMock(Long mockID, Integer typeId, byte[] mockFile) {
-        TaskImageFilesModel taskModel = new TaskImageFilesModel();
+        CrmFormDetailsModel taskModel = new CrmFormDetailsModel();
         taskModel.setUSN(mockID);
         taskModel.setTypeId(typeId);
         taskModel.setCrmFile(mockFile);
-        taskImageFilesRepository.save(taskModel);
+        detailsRepository.save(taskModel);
     }
 
     @AfterAll

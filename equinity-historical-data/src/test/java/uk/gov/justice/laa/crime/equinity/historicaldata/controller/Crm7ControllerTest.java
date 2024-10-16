@@ -21,8 +21,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7Detail
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7OfficialUseDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7SummaryOfClaimDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,7 +44,7 @@ class Crm7ControllerTest {
     private SoftAssertions softly;
 
     @Autowired
-    TaskImageFilesRepository taskImageFilesRepository;
+    CrmFormDetailsRepository detailsRepository;
 
     @Autowired
     Crm7Controller controller;
@@ -66,11 +66,11 @@ class Crm7ControllerTest {
                 FileInputStream fis = new FileInputStream(testFile);
                 JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
                 byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                TaskImageFilesModel taskModel = new TaskImageFilesModel();
+                CrmFormDetailsModel taskModel = new CrmFormDetailsModel();
                 taskModel.setUSN(testUsn);
                 taskModel.setTypeId(CRM_TYPE_7);
                 taskModel.setCrmFile(fileDataByte);
-                taskImageFilesRepository.save(taskModel);
+                detailsRepository.save(taskModel);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
