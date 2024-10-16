@@ -37,7 +37,7 @@ class CrmFileServiceTest {
     private SoftAssertions softly;
 
     @Autowired
-    CrmFormDetailsRepository detailsRepository;
+    CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
     CrmFileService crmFileService;
@@ -105,7 +105,7 @@ class CrmFileServiceTest {
         taskModel.setUSN(mockID);
         taskModel.setTypeId(typeId);
         taskModel.setCrmFile(mockFile);
-        detailsRepository.save(taskModel);
+        crmFormDetailsRepository.save(taskModel);
     }
 
     @AfterAll

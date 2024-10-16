@@ -44,7 +44,7 @@ class Crm7ControllerTest {
     private SoftAssertions softly;
 
     @Autowired
-    CrmFormDetailsRepository detailsRepository;
+    CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
     Crm7Controller controller;
@@ -66,11 +66,11 @@ class Crm7ControllerTest {
                 FileInputStream fis = new FileInputStream(testFile);
                 JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
                 byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                CrmFormDetailsModel taskModel = new CrmFormDetailsModel();
-                taskModel.setUSN(testUsn);
-                taskModel.setTypeId(CRM_TYPE_7);
-                taskModel.setCrmFile(fileDataByte);
-                detailsRepository.save(taskModel);
+                CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+                crmFormDetail.setUSN(testUsn);
+                crmFormDetail.setTypeId(CRM_TYPE_7);
+                crmFormDetail.setCrmFile(fileDataByte);
+                crmFormDetailsRepository.save(crmFormDetail);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

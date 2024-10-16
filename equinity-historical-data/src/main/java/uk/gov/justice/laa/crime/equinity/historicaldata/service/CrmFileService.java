@@ -65,7 +65,7 @@ public class CrmFileService {
     public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
 
 
-    private final CrmFormDetailsRepository detailsRepository;
+    private final CrmFormDetailsRepository crmFormDetailsRepository;
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
 
@@ -127,7 +127,7 @@ public class CrmFileService {
     }
 
     public JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
-        CrmFormDetailsModel task = (CrmFormDetailsModel) detailsRepository.findOne(
+        CrmFormDetailsModel task = (CrmFormDetailsModel) crmFormDetailsRepository.findOne(
                 crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
             )
             .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));

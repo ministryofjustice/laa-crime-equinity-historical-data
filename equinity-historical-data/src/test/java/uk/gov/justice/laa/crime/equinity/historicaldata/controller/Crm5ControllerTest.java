@@ -38,7 +38,7 @@ public class Crm5ControllerTest {
     private static final String DENIED_PROFILE_TYPES = "9,19";
 
     @Autowired
-    CrmFormDetailsRepository detailsRepository;
+    CrmFormDetailsRepository crmFormDetailsRepository;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -137,7 +137,7 @@ public class Crm5ControllerTest {
                 taskModel.setUSN(testUsn);
                 taskModel.setTypeId(CRM_TYPE_5);
                 taskModel.setCrmFile(fileDataByte);
-                detailsRepository.save(taskModel);
+                crmFormDetailsRepository.save(taskModel);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

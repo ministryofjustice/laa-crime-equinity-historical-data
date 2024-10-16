@@ -45,7 +45,7 @@ class Crm14ControllerTest {
     private SoftAssertions softly;
 
     @Autowired
-    CrmFormDetailsRepository detailsRepository;
+    CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
     AttachmentStoreRepository attachmentStoreRepository;
@@ -79,7 +79,7 @@ class Crm14ControllerTest {
                 taskModel.setUSN(testUsn);
                 taskModel.setTypeId(CRM_TYPE_14);
                 taskModel.setCrmFile(fileDataByte);
-                detailsRepository.save(taskModel);
+                crmFormDetailsRepository.save(taskModel);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
