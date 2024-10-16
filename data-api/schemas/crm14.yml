@@ -1058,7 +1058,8 @@ Crm15Income2DTO:
     partnerJsaCrm15PaidEvery:
       type: string
     partnerOtherBenefitsCrm15:
-      type: integer
+      type: number
+      format: float
     partnerOtherBenefitsCrm15PaidEvery:
       type: string
     partnerOtherBenefitsCrm15Details:
