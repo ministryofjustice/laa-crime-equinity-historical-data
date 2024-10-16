@@ -6,5 +6,5 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataMo
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 
 
-public interface CrmFormsViewRepository extends JpaRepository<CrmFormSummaryModel, Integer>, JpaSpecificationExecutor<CrmFormDataModelInterface> {
+public interface CrmFormSummaryRepository extends JpaRepository<CrmFormSummaryModel, Integer>, JpaSpecificationExecutor<CrmFormDataModelInterface> {
 }

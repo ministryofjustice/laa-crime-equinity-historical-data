@@ -15,7 +15,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -33,7 +33,7 @@ class SearchServiceTest {
     private SoftAssertions softly;
 
     @Autowired
-    CrmFormsViewRepository searchRepository;
+    CrmFormSummaryRepository searchRepository;
 
     @Autowired
     SearchService searchService;
