@@ -12,11 +12,11 @@ import org.hibernate.annotations.Immutable;
 import java.util.Date;
 
 @Immutable @Entity
-@Table(name = "CrmFormCRM14PSEDetails")
+@Table(name = "CrmFormCRM14PSEMessages")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Crm14PSEMessageModel {
+public class CrmFormCRM14PSEMessageModel {
     @Id
     @Column(name="USN_PSE")
     private Long usn_pse;

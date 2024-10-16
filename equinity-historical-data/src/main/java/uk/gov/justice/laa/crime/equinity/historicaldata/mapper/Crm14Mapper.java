@@ -8,7 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14PSEMessageModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
@@ -48,6 +48,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "privacyAgree", source = "privacy_agree")
     @Mapping(target = "submit", source = "last_action")
     Crm14DetailsDTO getDTODetailsFromModel(Crm14DetailsModel model);
+
     @Mapping(target="usn", source="usn")
     @Mapping(target="urn", source="urn")
     @Mapping(target="prevAppUsn", source="prev_app_usn")
@@ -655,7 +656,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="pseUsn", source = "usn_pse")
     @Mapping(target="dtSubmitted", source="dateLastUpdate")
     @Mapping(target="message", source="message")
-    Crm14PseMessageDTO getCrm14PseTlMessagesFromModel(Crm14PSEMessageModel pseTlMessagesModel);
+    Crm14PseMessageDTO getCrm14PseTlMessagesFromModel(CrmFormCRM14PSEMessageModel pseMessageModel);
+
     @Mapping(target ="benefitCheck.dwpOverallCheck", source = "dwp_check_result")
     @Mapping(target ="benefitCheck.dwpResultReferTo", source = "who_dwp_checked")
     @Mapping(target ="benefitCheck.dwpCheckDob", source = "dwp_check_dob")

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14PSEMessageModel;
 
 import java.util.Date;
 import java.util.List;
@@ -608,7 +608,7 @@ public class Crm14AdditionalDetails {
     @JsonProperty("Tblnewattachments")
     public Crm15TblNewAttachmentsModel all_new_attachments;
     public List<CrmFormCRM14AttachmentStoreModel> processedAttachments;
-    public List<Crm14PSEMessageModel> pseMessages;
+    public List<CrmFormCRM14PSEMessageModel> pseMessages;
 
     @JsonProperty("Messagehistory")
     public Crm14MessageHistoryModel messagehistory;
