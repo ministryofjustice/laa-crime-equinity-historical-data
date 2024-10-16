@@ -12,7 +12,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14PSEMessagesService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14PSEMessageService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 public class Crm14Controller implements Crm14InterfaceApi{
     private final CrmFileService crmFileService;
     private final Crm14AttachmentService crm14AttachmentService;
-    private final Crm14PSEMessagesService crm14PSEMessagesService;
+    private final Crm14PSEMessageService crm14PSEMessageService;
     private final Crm14Mapper mapper;
 
     @Override
@@ -40,7 +40,7 @@ public class Crm14Controller implements Crm14InterfaceApi{
         List<CrmFormCRM14AttachmentStoreModel> attachments = crm14AttachmentService.getAttachments(usn);
         crm14FormData.getFormDetails().setProcessedAttachments(attachments);
         crm14FormData.addProcessedAttachmentsToEvidence(attachments);
-        crm14FormData.getFormDetails().setPseMessages(crm14PSEMessagesService.getMessages(usn));
+        crm14FormData.getFormDetails().setPseMessages(crm14PSEMessageService.getMessages(usn));
         return ResponseEntity.ok(mapper.getDTOFromModel(crm14FormData));
     }
 
