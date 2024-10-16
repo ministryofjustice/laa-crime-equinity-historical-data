@@ -101,11 +101,11 @@ class CrmFileServiceTest {
     }
 
     private void createMock(Long mockID, Integer typeId, byte[] mockFile) {
-        CrmFormDetailsModel taskModel = new CrmFormDetailsModel();
-        taskModel.setUSN(mockID);
-        taskModel.setTypeId(typeId);
-        taskModel.setCrmFile(mockFile);
-        crmFormDetailsRepository.save(taskModel);
+        CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+        crmFormDetail.setUSN(mockID);
+        crmFormDetail.setTypeId(typeId);
+        crmFormDetail.setCrmFile(mockFile);
+        crmFormDetailsRepository.save(crmFormDetail);
     }
 
     @AfterAll
