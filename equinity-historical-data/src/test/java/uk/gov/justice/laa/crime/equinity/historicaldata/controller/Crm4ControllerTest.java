@@ -19,8 +19,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,7 +43,7 @@ class Crm4ControllerTest {
     private SoftAssertions softly;
 
     @Autowired
-    TaskImageFilesRepository taskImageFilesRepository;
+    CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
     Crm4Controller controller;
@@ -63,11 +63,11 @@ class Crm4ControllerTest {
                 FileInputStream fis = new FileInputStream(testFile);
                 JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
                 byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                TaskImageFilesModel taskModel = new TaskImageFilesModel();
-                taskModel.setUSN(testUsn);
-                taskModel.setTypeId(CRM_TYPE_4);
-                taskModel.setCrmFile(fileDataByte);
-                taskImageFilesRepository.save(taskModel);
+                CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+                crmFormDetail.setUSN(testUsn);
+                crmFormDetail.setTypeId(CRM_TYPE_4);
+                crmFormDetail.setCrmFile(fileDataByte);
+                crmFormDetailsRepository.save(crmFormDetail);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
