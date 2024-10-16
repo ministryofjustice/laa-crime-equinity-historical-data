@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFileModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmEvidenceFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class Crm14Model implements CrmFormModelInterface {
     private CrmEvidenceFilesModel evidenceFiles;
 
     // TODO (EMP-557): Should it be considered moving this function to class CrmEvidenceFilesModel ?
-    public void addProcessedAttachmentsToEvidence(List<Crm14AttachmentModel> processedAttachments) {
-        for(Crm14AttachmentModel processedAttachment: processedAttachments){
+    public void addProcessedAttachmentsToEvidence(List<CrmFormCRM14AttachmentStoreModel> processedAttachments) {
+        for(CrmFormCRM14AttachmentStoreModel processedAttachment: processedAttachments){
             CrmEvidenceFileModel evidenceFileModel = new CrmEvidenceFileModel();
             evidenceFileModel.setKey("att_"+processedAttachment.getAttachmentId()+".att");
             evidenceFileModel.setName(processedAttachment.getFileName());

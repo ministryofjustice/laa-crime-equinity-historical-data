@@ -9,11 +9,11 @@ import org.hibernate.annotations.Immutable;
 import java.util.Date;
 
 @Immutable @Entity
-@Table(name = "AttachmentStore_CRM14")
+@Table(name = "CrmFormCRM14AttachmentStore")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Crm14AttachmentModel {
+public class CrmFormCRM14AttachmentStoreModel {
 
 
     @Column(name="USN")
