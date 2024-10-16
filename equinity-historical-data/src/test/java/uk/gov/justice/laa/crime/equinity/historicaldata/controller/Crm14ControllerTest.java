@@ -75,11 +75,11 @@ class Crm14ControllerTest {
                 FileInputStream fis = new FileInputStream(testFile);
                 JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
                 byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                CrmFormDetailsModel taskModel = new CrmFormDetailsModel();
-                taskModel.setUSN(testUsn);
-                taskModel.setTypeId(CRM_TYPE_14);
-                taskModel.setCrmFile(fileDataByte);
-                crmFormDetailsRepository.save(taskModel);
+                CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+                crmFormDetail.setUSN(testUsn);
+                crmFormDetail.setTypeId(CRM_TYPE_14);
+                crmFormDetail.setCrmFile(fileDataByte);
+                crmFormDetailsRepository.save(crmFormDetail);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
