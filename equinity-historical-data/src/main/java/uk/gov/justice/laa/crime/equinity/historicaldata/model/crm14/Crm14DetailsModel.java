@@ -353,6 +353,8 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int tlreadonly;
     @JsonProperty("Marital_status_2")
     public String marital_status_2;
+    @JsonProperty("Separation_date")
+    public String separation_date;
     @JsonProperty("Provider_displayname")
     public String provider_displayname;
     @JsonProperty("Forenames")
