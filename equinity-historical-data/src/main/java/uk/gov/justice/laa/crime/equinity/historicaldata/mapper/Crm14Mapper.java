@@ -102,7 +102,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "havePartner", source = "have_partner")
     @Mapping(target = "maritalStatus", source="marital_status")
     @Mapping(target = "relationship", source="marital_status_2")
-    @Mapping(target = "dateOfSeparation", source = "date_of_separation")
+    @Mapping(target = "dateOfSeparation", source = "separation_date")
     Crm14AboutYouPart2DTO getAboutYouPart2DTOFromModel(Crm14DetailsModel model);
 
     @Mapping(target = "isApplicantConfirmed", source="applicant_confirm_read")
