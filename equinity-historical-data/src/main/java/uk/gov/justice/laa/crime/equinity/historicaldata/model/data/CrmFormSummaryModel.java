@@ -11,7 +11,7 @@ import org.hibernate.annotations.Immutable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrmFormViewModel implements CrmFormDataModelInterface {
+public class CrmFormSummaryModel implements CrmFormDataModelInterface {
 
     @Id
     @Column(name="USN")

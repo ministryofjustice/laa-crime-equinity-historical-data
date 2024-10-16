@@ -14,7 +14,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inpu
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
 
 @SpringBootTest
@@ -40,7 +40,7 @@ class SearchServiceTest {
 
     @BeforeAll
     void preTest() {
-        CrmFormViewModel searchModel = new CrmFormViewModel();
+        CrmFormSummaryModel searchModel = new CrmFormSummaryModel();
         searchModel.setUSN("1826829");
         searchModel.setClientName("Mock Client");
         searchModel.setTypeId(CRM4_TYPE_ID);
