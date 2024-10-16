@@ -20,7 +20,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummar
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchServiceTest {
+class CrmFormSearchServiceTest {
     private static final Integer CRM4_TYPE_ID = 1;
     private static final String CRM4_TYPE_NAME = "CRM4";
     private static final Integer CRM5_TYPE_ID = 4;
@@ -36,7 +36,7 @@ class SearchServiceTest {
     CrmFormSummaryRepository searchRepository;
 
     @Autowired
-    SearchService searchService;
+    CrmFormSearchService searchService;
 
     @BeforeAll
     void preTest() {

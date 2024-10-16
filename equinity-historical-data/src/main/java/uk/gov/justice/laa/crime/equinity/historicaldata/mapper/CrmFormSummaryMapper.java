@@ -12,7 +12,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummar
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface CrmFormsViewMapper {
+public interface CrmFormSummaryMapper {
     @Mapping(target="results", source="crmFormsViewModels")
     @Mapping(target="paging", source="page")
     SearchResultDTO getDTOsFromModel(List<CrmFormSummaryModel> crmFormsViewModels, Page<CrmFormDataModelInterface> page);

@@ -11,17 +11,17 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmF
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormsViewMapper;
+import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormSummaryMapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
 
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SearchService {
+public class CrmFormSearchService {
     private final CrmFormSummaryRepository searchRepository;
     private final CrmFormSearchCriteria crmFormSearchCriteria;
-    private final CrmFormsViewMapper searchResultsMapper;
+    private final CrmFormSummaryMapper searchResultsMapper;
 
     @Timed("laa_crime_equiniti_historic_data_search")
     public SearchResultDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {

@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.SearchApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.SearchService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFormSearchService;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class SearchController implements SearchApi {
-    private final SearchService searchService;
+public class CrmFormSearchController implements SearchApi {
+    private final CrmFormSearchService searchService;
 
     @Override
     public ResponseEntity<SearchResultDTO> doSearchBy(

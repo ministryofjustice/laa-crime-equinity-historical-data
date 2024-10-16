@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.SearchService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFormSearchService;
 
 import java.util.List;
 
@@ -26,17 +26,17 @@ import static org.mockito.BDDMockito.given;
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchControllerInputsTest {
+class CrmFormSearchControllerInputsTest {
     private List<String> testInvalidFormatDates;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
 
     @MockBean
-    SearchService searchService;
+    CrmFormSearchService searchService;
 
     @Autowired
-    SearchController controller;
+    CrmFormSearchController controller;
 
     private static final String ACCEPTED_TYPES_DEFAULT = "1";
 
