@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Crm14PSEMessagesModel {
+public class Crm14PSEMessageModel {
     @Id
     @Column(name="USN_PSE")
     private Long usn_pse;
@@ -24,11 +24,11 @@ public class Crm14PSEMessagesModel {
     @Column(name="USN")
     private Long USN;
 
-    @Column(name = "DTLastActedOn")
-    private Date dtLastActedOn;
+    @Column(name = "DateLastUpdate")
+    private Date dateLastUpdate;
 
 
-    @Column(name = "Tlmessage")
-    private String tlmessage;
+    @Column(name = "message")
+    private String message;
 
 }

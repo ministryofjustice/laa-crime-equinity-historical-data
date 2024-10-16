@@ -20,7 +20,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessagesModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.AttachmentStoreRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
@@ -63,7 +63,7 @@ class Crm14ControllerTest {
 
     Map<Long, String> validUsnTests;
 
-    private List<Crm14PSEMessagesModel> pseTLmessages;
+    private List<Crm14PSEMessageModel> pseTLmessages;
 
     @BeforeAll
     void preTest() {
@@ -93,16 +93,16 @@ class Crm14ControllerTest {
         });
 
         pseTLmessages = new ArrayList<>();
-        Crm14PSEMessagesModel crm14PSEMessagesModel = getCrm14PSEMessagesModel();
-        pseTLmessages.add(crm14PSEMessagesModel);
+        Crm14PSEMessageModel crm14PSEMessageModel = getCrm14PSEMessagesModel();
+        pseTLmessages.add(crm14PSEMessageModel);
     }
-    private static Crm14PSEMessagesModel getCrm14PSEMessagesModel() {
-        Crm14PSEMessagesModel crm14PSEMessagesModel = new Crm14PSEMessagesModel();
-        crm14PSEMessagesModel.setUSN(5001817L);
-        crm14PSEMessagesModel.setUsn_pse(4938478L);
-        crm14PSEMessagesModel.setDtLastActedOn( new Date(2024,8, 19, 20, 15));
-        crm14PSEMessagesModel.setTlmessage("Thank you for providing this, we require a profit / loss sheet / full financial accounts in which we can see the list of business expenses being subtracted from the turnover to arrive at the NET profit. ");
-        return crm14PSEMessagesModel;
+    private static Crm14PSEMessageModel getCrm14PSEMessagesModel() {
+        Crm14PSEMessageModel crm14PSEMessageModel = new Crm14PSEMessageModel();
+        crm14PSEMessageModel.setUSN(5001817L);
+        crm14PSEMessageModel.setUsn_pse(4938478L);
+        crm14PSEMessageModel.setDateLastUpdate( new Date(2024,8, 19, 20, 15));
+        crm14PSEMessageModel.setMessage("Thank you for providing this, we require a profit / loss sheet / full financial accounts in which we can see the list of business expenses being subtracted from the turnover to arrive at the NET profit. ");
+        return crm14PSEMessageModel;
     }
 
     /**
@@ -181,14 +181,14 @@ class Crm14ControllerTest {
     @Test
     void getApplication_Crm14PSE_TLMessage() {
         Long usnToTest = 5001669L;
-        when(crm14PSEMessagesService.getCrm14PSEMessages(5001669L)).thenReturn(pseTLmessages);
+        when(crm14PSEMessagesService.getMessages(5001669L)).thenReturn(pseTLmessages);
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
         softly.assertThat(result.getBody()).isNotNull();
         softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseTlMessages()).isNotEmpty();
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseTlMessages().get(0).getPseUsn()).isEqualTo(4938478L);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseTlMessages().get(0).getMessage()).isNotNull();
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseMessages()).isNotEmpty();
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseMessages().get(0).getPseUsn()).isEqualTo(4938478L);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseMessages().get(0).getMessage()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
