@@ -654,7 +654,7 @@ public interface Crm14Mapper extends CrmMapper {
 
     @Mapping(target="pseUsn", source = "usn_pse")
     @Mapping(target="dtSubmitted", source="dateLastUpdate")
-    @Mapping(target="message", source="dateLastUpdate")
+    @Mapping(target="message", source="message")
     Crm14PseMessageDTO getCrm14PseTlMessagesFromModel(Crm14PSEMessageModel pseTlMessagesModel);
     @Mapping(target ="benefitCheck.dwpOverallCheck", source = "dwp_check_result")
     @Mapping(target ="benefitCheck.dwpResultReferTo", source = "who_dwp_checked")
