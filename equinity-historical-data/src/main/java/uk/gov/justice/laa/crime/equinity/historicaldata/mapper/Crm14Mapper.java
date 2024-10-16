@@ -8,6 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
@@ -35,6 +36,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target = "evidencePart1", source = "model")
     @Mapping(target = "evidencePart2.newAttachments", source="all_new_attachments.newAttachmentDetails")
     @Mapping(target = "evidencePart2.processedAttachments", source="processedAttachments")
+    @Mapping(target = "evidencePart2.pseMessages", source="pseMessages")
     @Mapping(target = "evidencePart2", expression = "java(null)")
     @Mapping(target = "income", source = "model")
     @Mapping(target = "hasCrm15", expression="java(model.hasCrm15())")
@@ -650,6 +652,10 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="key", expression = "java(assignFileKey(processAttachModel))")
     Crm14EvidenceDTO getCrm14ProcessAttachmentsFromModel(Crm14AttachmentModel processAttachModel);
 
+    @Mapping(target="pseUsn", source = "usn_pse")
+    @Mapping(target="dtSubmitted", source="dateLastUpdate")
+    @Mapping(target="message", source="message")
+    Crm14PseMessageDTO getCrm14PseTlMessagesFromModel(Crm14PSEMessageModel pseTlMessagesModel);
     @Mapping(target ="benefitCheck.dwpOverallCheck", source = "dwp_check_result")
     @Mapping(target ="benefitCheck.dwpResultReferTo", source = "who_dwp_checked")
     @Mapping(target ="benefitCheck.dwpCheckDob", source = "dwp_check_dob")
