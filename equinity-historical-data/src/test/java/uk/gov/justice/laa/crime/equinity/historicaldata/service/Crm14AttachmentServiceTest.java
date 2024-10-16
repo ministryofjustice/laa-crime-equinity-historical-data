@@ -10,8 +10,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.AttachmentStoreRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormCRM14AttachmentStoreRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,15 +23,15 @@ class Crm14AttachmentServiceTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
     @Autowired
-    AttachmentStoreRepository attachmentStoreRepository;
+    CrmFormCRM14AttachmentStoreRepository crmFormCRM14AttachmentStoreRepository;
     @Autowired
     Crm14AttachmentService crm14AttachmentService;
 
     @BeforeAll
     void preTest() throws IOException {
-        Crm14AttachmentModel attachModel = new Crm14AttachmentModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
+        CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
                 "3x monthly statements","",341);
-        attachmentStoreRepository.save(attachModel);
+        crmFormCRM14AttachmentStoreRepository.save(attachment);
     }
 
     @AfterAll
@@ -42,14 +42,14 @@ class Crm14AttachmentServiceTest {
     @Test
     void getCrm14PSE_ShouldReturnValidAttachments() {
         long usnToTest = 5001817L;
-        List<Crm14AttachmentModel> attachFiles= crm14AttachmentService.getCrm14Attachments(usnToTest);
-        softly.assertThat(attachFiles).isNotEmpty();
+        List<CrmFormCRM14AttachmentStoreModel> attachments = crm14AttachmentService.getAttachments(usnToTest);
+        softly.assertThat(attachments).isNotEmpty();
     }
 
     @Test
     void getCrm14PSE_ShouldReturnEmpty() {
         long usnToTest = 54L;
-        List<Crm14AttachmentModel> attachFiles= crm14AttachmentService.getCrm14Attachments(usnToTest);
-        softly.assertThat(attachFiles).isEmpty();
+        List<CrmFormCRM14AttachmentStoreModel> attachments= crm14AttachmentService.getAttachments(usnToTest);
+        softly.assertThat(attachments).isEmpty();
     }
 }

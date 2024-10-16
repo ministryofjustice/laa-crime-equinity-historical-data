@@ -9,8 +9,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm14Inter
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm14Mapper;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14PSEMessagesService;
@@ -38,11 +37,10 @@ public class Crm14Controller implements Crm14InterfaceApi{
                 usn, CRM_TYPE_14, profileAcceptedTypes
         );
         Crm14Model crm14FormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
-        List<Crm14AttachmentModel> attachments = crm14AttachmentService.getCrm14Attachments(usn);
-        List<Crm14PSEMessageModel> pseMessages = crm14PSEMessagesService.getMessages(usn);
+        List<CrmFormCRM14AttachmentStoreModel> attachments = crm14AttachmentService.getAttachments(usn);
         crm14FormData.getFormDetails().setProcessedAttachments(attachments);
-        crm14FormData.getFormDetails().setPseMessages(pseMessages);
         crm14FormData.addProcessedAttachmentsToEvidence(attachments);
+        crm14FormData.getFormDetails().setPseMessages(crm14PSEMessagesService.getMessages(usn));
         return ResponseEntity.ok(mapper.getDTOFromModel(crm14FormData));
     }
 

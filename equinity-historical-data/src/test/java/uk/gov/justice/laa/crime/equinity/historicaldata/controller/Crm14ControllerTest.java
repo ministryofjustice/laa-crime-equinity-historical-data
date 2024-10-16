@@ -18,9 +18,9 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.AttachmentStoreRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormCRM14AttachmentStoreRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
 
@@ -48,7 +48,7 @@ class Crm14ControllerTest {
     CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
-    AttachmentStoreRepository attachmentStoreRepository;
+    CrmFormCRM14AttachmentStoreRepository crmFormCRM14AttachmentStoreRepository;
 
     @Autowired
     Crm14AttachmentService crm14AttachmentService;
@@ -65,9 +65,9 @@ class Crm14ControllerTest {
         validUsnTests.put(5001669L, "src/test/resources/Crm14MockFile_5001669.txt");
         validUsnTests.put(1826833L, "src/test/resources/Crm14MockFile_1826833.txt");
 
-        Crm14AttachmentModel attachModel = new Crm14AttachmentModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
+        CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
                 "3x monthly statements","",341);
-        attachmentStoreRepository.save(attachModel);
+        crmFormCRM14AttachmentStoreRepository.save(attachment);
 
         validUsnTests.forEach((testUsn, testFile) -> {
             // Mocking good XML

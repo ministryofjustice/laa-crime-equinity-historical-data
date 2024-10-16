@@ -7,14 +7,14 @@ import org.mapstruct.Named;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
-    static final String PARTNER_INVOLVED_OPT1="Co-defendant";
-    static final String PARTNER_INVOLVED_OPT2="Prosecution witness";
-    static final  String PARTNER_INVOLVED_OPT3="Victim";
+    String PARTNER_INVOLVED_OPT1="Co-defendant";
+    String PARTNER_INVOLVED_OPT2="Prosecution witness";
+    String PARTNER_INVOLVED_OPT3="Victim";
 
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
@@ -649,8 +649,8 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="providerNotes", source="providerNotes")
     @Mapping(target="attachmentStoreId", source="attachmentId")
     @Mapping(target="providerFirmId", source="providerFirmId")
-    @Mapping(target="key", expression = "java(assignFileKey(processAttachModel))")
-    Crm14EvidenceDTO getCrm14ProcessAttachmentsFromModel(Crm14AttachmentModel processAttachModel);
+    @Mapping(target="key", expression = "java(assignFileKey(attachmentModel))")
+    Crm14EvidenceDTO getCrm14ProcessAttachmentsFromModel(CrmFormCRM14AttachmentStoreModel attachmentModel);
 
     @Mapping(target="pseUsn", source = "usn_pse")
     @Mapping(target="dtSubmitted", source="dateLastUpdate")
@@ -706,12 +706,13 @@ public interface Crm14Mapper extends CrmMapper {
 
     Crm4FundingDecisionDTO getOfficialUseDTOFromModel(Crm14FundDecisionModel model);
 
-    default String assignFileKey(Crm14AttachmentModel processAttachModel) {
-        if (null != processAttachModel.getAttachmentId()){
-            return "att_"+processAttachModel.getAttachmentId()+".att";
+    default String assignFileKey(CrmFormCRM14AttachmentStoreModel attachmentModel) {
+        if (null != attachmentModel.getAttachmentId()){
+            return "att_"+attachmentModel.getAttachmentId()+".att";
         }
         return null;
     }
+
     default boolean billsPayedOptions(String how_pay_bills, int option) {
         boolean opted= false;
         if (StringUtils.isNotEmpty(how_pay_bills)) {
