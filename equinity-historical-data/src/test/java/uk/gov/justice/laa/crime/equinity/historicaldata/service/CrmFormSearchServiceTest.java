@@ -14,13 +14,13 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inpu
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchServiceTest {
+class CrmFormSearchServiceTest {
     private static final Integer CRM4_TYPE_ID = 1;
     private static final String CRM4_TYPE_NAME = "CRM4";
     private static final Integer CRM5_TYPE_ID = 4;
@@ -33,14 +33,14 @@ class SearchServiceTest {
     private SoftAssertions softly;
 
     @Autowired
-    CrmFormsViewRepository searchRepository;
+    CrmFormSummaryRepository searchRepository;
 
     @Autowired
-    SearchService searchService;
+    CrmFormSearchService searchService;
 
     @BeforeAll
     void preTest() {
-        CrmFormViewModel searchModel = new CrmFormViewModel();
+        CrmFormSummaryModel searchModel = new CrmFormSummaryModel();
         searchModel.setUSN("1826829");
         searchModel.setClientName("Mock Client");
         searchModel.setTypeId(CRM4_TYPE_ID);

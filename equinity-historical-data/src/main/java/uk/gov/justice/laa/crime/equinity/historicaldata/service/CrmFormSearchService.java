@@ -6,22 +6,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataModelInterface;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormSearchCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormsViewMapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormsViewRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.CrmFormSummaryMapper;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
 
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SearchService {
-    private final CrmFormsViewRepository searchRepository;
+public class CrmFormSearchService {
+    private final CrmFormSummaryRepository searchRepository;
     private final CrmFormSearchCriteria crmFormSearchCriteria;
-    private final CrmFormsViewMapper searchResultsMapper;
+    private final CrmFormSummaryMapper searchResultsMapper;
 
     @Timed("laa_crime_equiniti_historic_data_search")
     public SearchResultDTO searchAllByCriteria(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
@@ -48,8 +48,8 @@ public class SearchService {
         log.info("Converting search results. Search criteria :: totalElements=[{}] pages=[{}]", pagedResults.getTotalElements(), pagedResults.getTotalPages());
         return searchResultsMapper.getDTOsFromModel(
                 pagedResults.stream()
-                        .filter(CrmFormViewModel.class::isInstance)
-                        .map(CrmFormViewModel.class::cast)
+                        .filter(CrmFormSummaryModel.class::isInstance)
+                        .map(CrmFormSummaryModel.class::cast)
                         .toList(),
                 pagedResults
         );

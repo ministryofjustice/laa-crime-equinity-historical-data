@@ -7,15 +7,15 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataMo
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchPagingDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormViewModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface CrmFormsViewMapper {
+public interface CrmFormSummaryMapper {
     @Mapping(target="results", source="crmFormsViewModels")
     @Mapping(target="paging", source="page")
-    SearchResultDTO getDTOsFromModel(List<CrmFormViewModel> crmFormsViewModels, Page<CrmFormDataModelInterface> page);
+    SearchResultDTO getDTOsFromModel(List<CrmFormSummaryModel> crmFormsViewModels, Page<CrmFormDataModelInterface> page);
 
     @Mapping(target="usn", source="USN")
     @Mapping(target="type", source="type")
@@ -26,7 +26,7 @@ public interface CrmFormsViewMapper {
     @Mapping(target="providerName", source="providerName")
     @Mapping(target="laaCaseRef", source="laaCaseRef")
     @Mapping(target="status", source="status")
-    SearchCrmFormDTO getDTOFromModel(CrmFormViewModel crmFormsViewModel);
+    SearchCrmFormDTO getDTOFromModel(CrmFormSummaryModel crmFormsViewModel);
 
     @Mapping(target="size", source="page.size")
     @Mapping(target="number", source="page.number")
