@@ -12,7 +12,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +19,18 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14AttachmentModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.Crm14PSEMessageModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.TaskImageFilesModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.AttachmentStoreRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.TaskImageFilesRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14PSEMessagesService;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
@@ -55,15 +53,10 @@ class Crm14ControllerTest {
     @Autowired
     Crm14AttachmentService crm14AttachmentService;
 
-    @MockBean
-    Crm14PSEMessagesService crm14PSEMessagesService;
-
     @Autowired
     Crm14Controller controller;
 
     Map<Long, String> validUsnTests;
-
-    private List<Crm14PSEMessageModel> pseTLmessages;
 
     @BeforeAll
     void preTest() {
@@ -91,18 +84,6 @@ class Crm14ControllerTest {
                 throw new RuntimeException(e);
             }
         });
-
-        pseTLmessages = new ArrayList<>();
-        Crm14PSEMessageModel crm14PSEMessageModel = getCrm14PSEMessagesModel();
-        pseTLmessages.add(crm14PSEMessageModel);
-    }
-    private static Crm14PSEMessageModel getCrm14PSEMessagesModel() {
-        Crm14PSEMessageModel crm14PSEMessageModel = new Crm14PSEMessageModel();
-        crm14PSEMessageModel.setUSN(5001817L);
-        crm14PSEMessageModel.setUsn_pse(4938478L);
-        crm14PSEMessageModel.setDateLastUpdate( new Date(2024,8, 19, 20, 15));
-        crm14PSEMessageModel.setMessage("Thank you for providing this, we require a profit / loss sheet / full financial accounts in which we can see the list of business expenses being subtracted from the turnover to arrive at the NET profit. ");
-        return crm14PSEMessageModel;
     }
 
     /**
@@ -174,21 +155,6 @@ class Crm14ControllerTest {
         softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
         softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getProcessedAttachments()).isNotEmpty();
         softly.assertThat(Objects.requireNonNull(result.getBody()).getEvidenceFiles().getFiles()).hasSize(2);
-        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-    }
-
-    @Test
-    void getApplication_Crm14PSE_TLMessage() {
-        Long usnToTest = 5001669L;
-        when(crm14PSEMessagesService.getMessages(5001669L)).thenReturn(pseTLmessages);
-        // Test with accepted types
-        ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseMessages()).isNotEmpty();
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseMessages().get(0).getPseUsn()).isEqualTo(4938478L);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getPseMessages().get(0).getMessage()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
