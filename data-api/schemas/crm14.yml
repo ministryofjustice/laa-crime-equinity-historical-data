@@ -599,6 +599,22 @@ Crm14AllEvidenceDTO:
       type: array
       items:
         $ref: "#/Crm14EvidenceDTO"
+    pseMessages:
+      type: array
+      items:
+        $ref: "#/Crm14PseMessageDTO"
+
+
+Crm14PseMessageDTO:
+  type: object
+  properties:
+    pseUsn:
+      type: integer
+    dtSubmitted:
+      type: string
+      format: date-time
+    message:
+      type: string
 
 
 Crm14EvidenceDTO:
