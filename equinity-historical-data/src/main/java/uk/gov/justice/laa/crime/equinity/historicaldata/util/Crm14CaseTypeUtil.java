@@ -1,6 +1,9 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.util;
 
-public class Crm14CaseTypeUtil {
+
+public final class Crm14CaseTypeUtil {
+    private Crm14CaseTypeUtil() {}
+
     public static String SUMMARY = "Summary-Only";
     public static String INDICTABLE = "Indictable";
     public static String EITHER_WAY = "Either-Way";
