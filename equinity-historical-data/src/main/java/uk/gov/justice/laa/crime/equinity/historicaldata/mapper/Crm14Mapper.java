@@ -9,6 +9,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.crm15.*;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14PSEMessageModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.Crm14CaseTypeUtil;
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
@@ -736,22 +737,22 @@ public interface Crm14Mapper extends CrmMapper {
     }
 
     default String convertCaseType(Crm14DetailsModel model) {
-        if (model.summary) {
-            return "Summary-Only";
-        } else if (model.indictable) {
-            return "Indictable";
-        } else if (model.either_way) {
-            return "Either-Way";
-        } else if (model.trial_in_crown_court) {
-            return "Trial already in Crown Court";
-        } else if (model.committal) {
-            return "Committal for Sentence";
-        } else if (model.appeal_to_crown_court) {
-            return "Appeal to Crown Court";
-        } else if (model.appeal_no_changes) {
-            return "Appeal to Crown Court and no changes";
-        }
-        return "Unknown";
+        if (model.summary)
+            return Crm14CaseTypeUtil.SUMMARY;
+        else if (model.indictable)
+            return Crm14CaseTypeUtil.INDICTABLE;
+        else if (model.either_way)
+            return Crm14CaseTypeUtil.EITHER_WAY;
+        else if (model.trial_in_crown_court)
+            return Crm14CaseTypeUtil.TRIAL_CROWN_COURT;
+        else if (model.committal)
+            return Crm14CaseTypeUtil.COMMITTAL;
+        else if (model.appeal_to_crown_court)
+            return Crm14CaseTypeUtil.APPEAL_CROWN_COURT;
+        else if (model.appeal_no_changes)
+            return Crm14CaseTypeUtil.APPEAL_NO_CHANGES;
+
+        return Crm14CaseTypeUtil.UNKNOWN;
     }
 
     @Named("convertPartnerInvolved")

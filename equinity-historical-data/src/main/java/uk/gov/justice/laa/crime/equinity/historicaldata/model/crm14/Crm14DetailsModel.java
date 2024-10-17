@@ -115,8 +115,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String lose_livelihood_details;
     @JsonProperty("Originator_selfregistered")
     public int originator_selfregistered;
-    @JsonProperty("Committal")
-    public Boolean committal;
     @JsonProperty("Board_and_lodgings_paid_every")
     public String board_and_lodgings_paid_every;
     @JsonProperty("Surname")
@@ -373,8 +371,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public Boolean pakistani;
     @JsonProperty("Originator_tl_neverpermanentlyremove")
     public int originator_tl_neverpermanentlyremove;
-    @JsonProperty("Appeal_to_crown_court")
-    public Boolean appeal_to_crown_court;
     @JsonProperty("Other_financial_support")
     public Boolean other_financial_support;
     @JsonProperty("Wage_paid_every")
@@ -497,10 +493,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String solicitor_phone_mobile;
     @JsonProperty("Datestamp_clientname")
     public String datestamp_clientname;
-    @JsonProperty("Indictable")
-    public Boolean indictable;
-    @JsonProperty("Appeal_no_changes")
-    public Boolean appeal_no_changes;
     @JsonProperty("Disabled_definition")
     public String disabled_definition;
     @JsonProperty("Business_calc")
@@ -545,8 +537,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public Date originator_dtlastupdated;
     @JsonProperty("Income_from_other_sources")
     public String income_from_other_sources;
-    @JsonProperty("Either_way")
-    public Boolean either_way;
     @JsonProperty("Irish")
     public Boolean irish;
     @JsonProperty("Originator_emailaddress")
@@ -755,8 +745,6 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public String originator_firm;
     @JsonProperty("Firm_administrator_email")
     public String firm_administrator_email;
-    @JsonProperty("Trial_in_crown_court")
-    public Boolean trial_in_crown_court;
     @JsonProperty("Means_tested")
     public String means_tested;
     @JsonProperty("White_and_black_caribbean")
@@ -779,8 +767,22 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     public int other_income_calc;
     @JsonProperty("Employment_ceased_3_months")
     public Integer employment_ceased_3_months;
+    // Case Type
     @JsonProperty("Summary")
-    public Boolean summary;
+    public boolean summary;
+    @JsonProperty("Indictable")
+    public boolean indictable;
+    @JsonProperty("Either_way")
+    public boolean either_way;
+    @JsonProperty("Trial_in_crown_court")
+    public boolean trial_in_crown_court;
+    @JsonProperty("Committal")
+    public boolean committal;
+    @JsonProperty("Appeal_to_crown_court")
+    public boolean appeal_to_crown_court;
+    @JsonProperty("Appeal_no_changes")
+    public boolean appeal_no_changes;
+    //
     @JsonProperty("Hide_crm15")
     public Boolean hide_crm15;
     @JsonProperty("Child_benefit_crm15_paid_every")
