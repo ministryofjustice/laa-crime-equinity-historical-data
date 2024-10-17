@@ -12,9 +12,14 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14P
 
 @Mapper(componentModel = "spring")
 public interface Crm14Mapper extends CrmMapper {
-    String PARTNER_INVOLVED_OPT1="Co-defendant";
-    String PARTNER_INVOLVED_OPT2="Prosecution witness";
-    String PARTNER_INVOLVED_OPT3="Victim";
+    String PARTNER_INVOLVED_OPT1 = "Co-defendant";
+    String PARTNER_INVOLVED_OPT2 = "Prosecution witness";
+    String PARTNER_INVOLVED_OPT3 = "Victim";
+
+    int OTHER_INCOME_FRIEND_SOFA = 1;
+    int OTHER_INCOME_STAY_FAMILY = 2;
+    int OTHER_INCOME_HOMELESS = 3;
+    int OTHER_INCOME_CUSTODY = 4;
 
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
@@ -194,10 +199,6 @@ public interface Crm14Mapper extends CrmMapper {
     Crm14InterestOfJusticePart2DTO getInterestOfJusticePart2DTOFromModel(Crm14DetailsModel model);
 
     @Mapping(target="receiveBenefits", source = "receive_benefits")
-    @Mapping(target="proofBenefits", source = "do_you_have_proof")
-    @Mapping(target="privateCompany", source="private_company")
-    @Mapping(target="partnerPrivateCompany", source="partner_private_company")
-    @Mapping(target="haveIncomeOverThreshold", source="income_over_set_amount")
 
     @Mapping(target="benefits.you.incomeSupport", source = "income_support")
     @Mapping(target="benefits.you.esa", source = "esa")
@@ -209,14 +210,21 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="benefits.partner.statePension", source = "state_pension_partner")
     @Mapping(target="benefits.partner.jsa", source = "jsa_partner")
 
+    @Mapping(target="proofBenefits", source = "do_you_have_proof")
+    @Mapping(target="privateCompany", source="private_company")
+    @Mapping(target="partnerPrivateCompany", source="partner_private_company")
+    @Mapping(target="haveIncomeOverThreshold", source="income_over_set_amount")
+
     @Mapping(target="allIncomes", source="model")
+
     @Mapping(target="freezingOrder", source = "freezing_order")
     @Mapping(target="ownLandOrProperty", source = "own_land_or_property")
     @Mapping(target="savingsOrInvestments", source = "savings_or_investments")
-    @Mapping(target="noMoneySleepingAtFriend", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 1))" )
-    @Mapping(target="noMoneyStayingWithFamily", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 2))" )
-    @Mapping(target="homeless", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 3))" )
-    @Mapping(target="remandedInCustody", expression = "java(billsPayedOptions(model.getHow_pay_bills(), 4))" )
+
+    @Mapping(target="noMoneySleepingAtFriend", expression = "java(billsPayedOptions(model.getHow_pay_bills(), OTHER_INCOME_FRIEND_SOFA))" )
+    @Mapping(target="noMoneyStayingWithFamily", expression = "java(billsPayedOptions(model.getHow_pay_bills(), OTHER_INCOME_STAY_FAMILY))" )
+    @Mapping(target="homeless", expression = "java(billsPayedOptions(model.getHow_pay_bills(), OTHER_INCOME_HOMELESS))" )
+    @Mapping(target="remandedInCustody", expression = "java(billsPayedOptions(model.getHow_pay_bills(), OTHER_INCOME_CUSTODY))" )
     @Mapping(target="howPayBillsText", source="how_pay_bills_freetext")
     Crm14IncomeDTO getIncomeDTOFromModel(Crm14DetailsModel model);
 
@@ -601,6 +609,7 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target="lAndpAddressDisplay", source="l_and_p_address_display")
     @Mapping(target="propertyNotHomePostcode", source="property_not_home_postcode")
     Crm15PropertyDTO getCrm15BusinessesDTOFromModel(Crm15PropertyDetailsModel propertyModel);
+
     @Mapping(target="carRegNumber", source="car_reg_numbers")
     Crm15CarRegistrationDTO getCrm15CarRegDTOFromModel(Crm15CarRegDetailsModel carRegModel);
 
@@ -705,7 +714,6 @@ public interface Crm14Mapper extends CrmMapper {
     @Mapping(target ="overallResultCc", source = "overallResultCc")
     @Mapping(target ="overallResultAppealtocc", source = "overallResultAppealToCc")
     @Mapping(target ="overallResultNonMeans", source = "overallResultNonMeans")
-
     Crm4FundingDecisionDTO getOfficialUseDTOFromModel(Crm14FundDecisionModel model);
 
     default String assignFileKey(CrmFormCRM14AttachmentStoreModel attachmentModel) {
@@ -715,33 +723,16 @@ public interface Crm14Mapper extends CrmMapper {
         return null;
     }
 
-    default boolean billsPayedOptions(String how_pay_bills, int option) {
-        boolean opted= false;
-        if (StringUtils.isNotEmpty(how_pay_bills)) {
-            switch (option) {
-                case 1:
-                    if (how_pay_bills.contains("Sleeping on friend's sofa - no money received")) {
-                        opted = true;
-                    }
-                    break;
-                case 2:
-                    if (how_pay_bills.contains("Staying with family - no money received")) {
-                        opted = true;
-                    }
-                    break;
-                case 3:
-                    if (how_pay_bills.contains("Living on the streets/homeless")) {
-                        opted = true;
-                    }
-                    break;
-                case 4:
-                    if (how_pay_bills.contains("Remanded in custody for more than 3 months")) {
-                        opted = true;
-                    }
-                    break;
-            }
-        }
-        return opted;
+    default Boolean billsPayedOptions(String howPayBills, int option) {
+        if (StringUtils.isEmpty(howPayBills)) return null;
+
+        return switch (option) {
+            case OTHER_INCOME_FRIEND_SOFA -> (howPayBills.contains("Sleeping on friend's sofa - no money received"));
+            case OTHER_INCOME_STAY_FAMILY -> (howPayBills.contains("Staying with family - no money received"));
+            case OTHER_INCOME_HOMELESS -> (howPayBills.contains("Living on the streets/homeless"));
+            case OTHER_INCOME_CUSTODY -> (howPayBills.contains("Remanded in custody for more than 3 months"));
+            default -> null;
+        };
     }
 
     default String convertCaseType(Crm14DetailsModel model) {
@@ -762,6 +753,7 @@ public interface Crm14Mapper extends CrmMapper {
         }
         return "Unknown";
     }
+
     @Named("convertPartnerInvolved")
     default String convertPartnerInvolved(String s) {
         if  (s == null || s.isEmpty())
