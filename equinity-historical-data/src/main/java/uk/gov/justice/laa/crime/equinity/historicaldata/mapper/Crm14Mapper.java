@@ -723,14 +723,14 @@ public interface Crm14Mapper extends CrmMapper {
         return null;
     }
 
-    default Boolean billsPayedOptions(String how_pay_bills, int option) {
-        if (StringUtils.isEmpty(how_pay_bills)) return null;
+    default Boolean billsPayedOptions(String howPayBills, int option) {
+        if (StringUtils.isEmpty(howPayBills)) return null;
 
         return switch (option) {
-            case OTHER_INCOME_FRIEND_SOFA -> (how_pay_bills.contains("Sleeping on friend's sofa - no money received"));
-            case OTHER_INCOME_STAY_FAMILY -> (how_pay_bills.contains("Staying with family - no money received"));
-            case OTHER_INCOME_HOMELESS -> (how_pay_bills.contains("Living on the streets/homeless"));
-            case OTHER_INCOME_CUSTODY -> (how_pay_bills.contains("Remanded in custody for more than 3 months"));
+            case OTHER_INCOME_FRIEND_SOFA -> (howPayBills.contains("Sleeping on friend's sofa - no money received"));
+            case OTHER_INCOME_STAY_FAMILY -> (howPayBills.contains("Staying with family - no money received"));
+            case OTHER_INCOME_HOMELESS -> (howPayBills.contains("Living on the streets/homeless"));
+            case OTHER_INCOME_CUSTODY -> (howPayBills.contains("Remanded in custody for more than 3 months"));
             default -> null;
         };
     }
