@@ -13,7 +13,7 @@ public class Crm15InvestmentDetailsModel {
     public String investment_holder;
     @JsonProperty("The_investment")
     public String the_investment;
-    @JsonProperty("investment")
+    @JsonProperty("Investment")
     public String investment;
     @JsonProperty("Value")
     public double value;

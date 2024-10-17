@@ -66,10 +66,10 @@ public class Crm14AdditionalDetails {
     public Double trust_fund_amount;
     @JsonProperty("Trust_fund_dividend")
     public Double trust_fund_dividend;
-    @JsonProperty("Partner_Trust_fund_amount")
-    public Double partner_Trust_fund_amount;
-    @JsonProperty("Partner_Trust_fund_dividend")
-    public Double partner_Trust_fund_dividend;
+    @JsonProperty("Partner_trust_fund_amount")
+    public Double partner_trust_fund_amount;
+    @JsonProperty("Partner_trust_fund_dividend")
+    public Double partner_trust_fund_dividend;
     @JsonProperty("Premium_bonds_holder_no")
     public Long premium_bonds_holder_no;
     @JsonProperty("Partner_premium_bonds_holder_no")
