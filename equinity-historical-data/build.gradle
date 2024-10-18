@@ -5,7 +5,7 @@ plugins {
 }
 def versions = [
 		springStarter 				: '3.3.3',
-		springWeb 					: '6.1.13',
+		springWeb 					: '6.1.14',
 		springSecurity 				: '6.3.3',
 		springdoc 					: '1.8.0',
 		json 						: '20240303',
