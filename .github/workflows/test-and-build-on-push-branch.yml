@@ -36,8 +36,8 @@ jobs:
 
   snyk-app:
     runs-on: ubuntu-latest
-#    needs:
-#      - test
+    needs:
+      - test
 
     steps:
       - uses: actions/checkout@v4
@@ -56,7 +56,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - test
-      - snyk-app
       - capture-repo-info
     env:
       IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
