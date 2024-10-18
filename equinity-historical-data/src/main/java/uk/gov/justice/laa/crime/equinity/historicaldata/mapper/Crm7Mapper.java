@@ -9,7 +9,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7TimeSpentModel;
 
 @Mapper(componentModel = "spring")
-public interface Crm7Mapper extends CrmMapper {
+public interface Crm7Mapper extends CrmEvidenceFilesMapper {
 
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
