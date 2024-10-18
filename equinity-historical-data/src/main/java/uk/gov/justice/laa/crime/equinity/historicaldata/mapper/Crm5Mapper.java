@@ -7,7 +7,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsMo
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 
 @Mapper(componentModel = "spring")
-public interface Crm5Mapper extends CrmMapper {
+public interface Crm5Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="formDetails", source="formDetails")
     @Mapping(target="evidenceFiles", source="evidenceFiles")
     Crm5FormDTO getDTOFromModel(Crm5Model model);

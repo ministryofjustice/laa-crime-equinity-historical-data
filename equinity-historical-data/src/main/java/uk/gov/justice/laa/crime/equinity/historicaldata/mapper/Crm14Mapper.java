@@ -12,7 +12,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14P
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.Crm14CaseTypeUtil;
 
 @Mapper(componentModel = "spring")
-public interface Crm14Mapper extends CrmMapper {
+public interface Crm14Mapper extends CrmEvidenceFilesMapper {
     String PARTNER_INVOLVED_OPT1 = "Co-defendant";
     String PARTNER_INVOLVED_OPT2 = "Prosecution witness";
     String PARTNER_INVOLVED_OPT3 = "Victim";

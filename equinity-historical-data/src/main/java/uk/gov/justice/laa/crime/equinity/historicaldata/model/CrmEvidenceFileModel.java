@@ -15,4 +15,6 @@ public class CrmEvidenceFileModel {
     private String type;
     @JsonProperty("name")
     private String name;
+
+    private Boolean isProcessed;
 }
