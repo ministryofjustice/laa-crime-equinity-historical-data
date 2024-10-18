@@ -16,3 +16,5 @@ CrmEvidenceFileDTO:
         string
     name:
       type: string
+    isProcessed:
+      type: boolean

@@ -15,5 +15,6 @@ public interface CrmEvidenceFilesMapper extends CrmMapper {
     @Mapping(target="key", source="key")
     @Mapping(target="type", source="type")
     @Mapping(target="name", source="name")
+    @Mapping(target="isProcessed", source="isProcessed")
     CrmEvidenceFileDTO getDTOFromModel(CrmEvidenceFileModel crmEvidenceFileModelModel);
 }
