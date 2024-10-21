@@ -26,13 +26,13 @@ public class Crm14Model implements CrmFormModelInterface {
     @JsonProperty("linkedAttachments")
     private CrmEvidenceFilesModel evidenceFiles;
 
-    // TODO (EMP-557): Should it be considered moving this function to class CrmEvidenceFilesModel ?
     public void addProcessedAttachmentsToEvidence(List<CrmFormCRM14AttachmentStoreModel> processedAttachments) {
         for(CrmFormCRM14AttachmentStoreModel processedAttachment: processedAttachments){
             CrmEvidenceFileModel evidenceFileModel = new CrmEvidenceFileModel();
             evidenceFileModel.setKey("att_"+processedAttachment.getAttachmentId()+".att");
             evidenceFileModel.setName(processedAttachment.getFileName());
             evidenceFileModel.setType(processedAttachment.getEvidenceType());
+            evidenceFileModel.setIsProcessed(true);
             getEvidenceFiles().getFiles().add(evidenceFileModel);
         }
     }
