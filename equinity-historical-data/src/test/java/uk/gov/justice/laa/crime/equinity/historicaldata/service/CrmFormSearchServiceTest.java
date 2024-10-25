@@ -206,21 +206,9 @@ class CrmFormSearchServiceTest {
                 .hasMessageContaining(expectedMessage);
     }
 
-    @Test
-    void searchAllByCriteriaTest_WhenSubmittedDateIsGivenThenShouldReturnResultsWithinThatRange() {
-        String submittedDate = "2024-02-15";
-
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null, submittedDate, submittedDate, null, null, null, ACCEPTED_TYPES_DEFAULT);
-        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
-
-        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
-        softly.assertThat(results.getResults()).isNotEmpty();
-        softly.assertThat(results.getResults().size()).isEqualTo(1);
-    }
-
     @ParameterizedTest
     @MethodSource("inputForSubmittedDateRangeTest")
-    public void convert(String submittedFrom, String submittedTo, int expectedResult) {
+    public void searchAllByCriteriaTest_WhenSubmittedDateIsGivenThenShouldReturnResultsWithinThatRange(String submittedFrom, String submittedTo, int expectedResult) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null, submittedFrom, submittedTo, null, null, null, ACCEPTED_TYPES_DEFAULT);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
