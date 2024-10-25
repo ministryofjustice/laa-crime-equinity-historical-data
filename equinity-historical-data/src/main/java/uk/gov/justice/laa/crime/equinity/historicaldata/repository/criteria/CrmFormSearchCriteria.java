@@ -9,7 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,8 +76,13 @@ public class CrmFormSearchCriteria {
     }
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {
+        LocalDate localDateSubmittedTo = DateUtil.convertStringToLocalDate(dateSubmittedTo);
+        if (localDateSubmittedTo == null) {
+            return null;
+        }
+
         return (root, query, criteriaBuilder)
-                -> dateSubmittedTo == null ? null : criteriaBuilder.lessThanOrEqualTo(root.get(SUBMITTED_DATE_COL), dateSubmittedTo);
+                -> criteriaBuilder.lessThan(root.get(SUBMITTED_DATE_COL), localDateSubmittedTo.plusDays(1).toString());
     }
 
     private Specification<CrmFormDataModelInterface> byProviderAccount(@Nullable String providerAccount) {
