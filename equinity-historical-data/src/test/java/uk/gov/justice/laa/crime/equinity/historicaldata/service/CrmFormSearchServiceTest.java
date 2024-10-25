@@ -8,6 +8,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
@@ -16,6 +20,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmF
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
+
+import java.util.stream.Stream;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -45,18 +51,21 @@ class CrmFormSearchServiceTest {
         searchModel.setClientName("Mock Client");
         searchModel.setTypeId(CRM4_TYPE_ID);
         searchModel.setType(CRM4_TYPE_NAME);
+        searchModel.setSubmittedDate("2024-02-15 16:47:12.29");
         searchRepository.save(searchModel);
 
         searchModel.setUSN("1826830");
         searchModel.setClientName("Mock Client Name");
         searchModel.setTypeId(CRM4_TYPE_ID);
         searchModel.setType(CRM4_TYPE_NAME);
+        searchModel.setSubmittedDate("2024-02-14 16:46:12.29");
         searchRepository.save(searchModel);
 
         searchModel.setUSN("1826831");
         searchModel.setClientName("Mocked Client Name");
         searchModel.setTypeId(CRM5_TYPE_ID);
         searchModel.setType(CRM5_TYPE_NAME);
+        searchModel.setSubmittedDate("2024-02-14 16:45:12.29");
         searchRepository.save(searchModel);
     }
 
@@ -68,7 +77,7 @@ class CrmFormSearchServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenExistingFullUsnShouldReturnSingleForm() {
         String usn = "1826829";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
@@ -81,7 +90,7 @@ class CrmFormSearchServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenExistingPartialUsnShouldReturnMultipleForms() {
         String usn = "18268";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
@@ -97,7 +106,7 @@ class CrmFormSearchServiceTest {
     @Test
     void searchAllByCriteriaTest_GivenNonExistingUsnShouldReturnResourceNotFoundException() {
         String usn = "1826832";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null,null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         String expectedMessage = "No Tasks were found";
 
         // execute
@@ -111,37 +120,37 @@ class CrmFormSearchServiceTest {
      */
     @Test
     void searchAllByCriteriaTest_WhenTypeIsGivenExistingInMultipleThenShouldReturnMultipleForms() {
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM4_TYPE_ID,null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM4_TYPE_ID, null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
         softly.assertThat(results.getResults()).isNotEmpty();
         softly.assertThat(results.getResults().size()).isGreaterThan(1);
         results.getResults().forEach(result -> {
-                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
-                softly.assertThat(result.getType()).isEqualTo(CRM4_TYPE_NAME);
-            }
+                    softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                    softly.assertThat(result.getType()).isEqualTo(CRM4_TYPE_NAME);
+                }
         );
     }
 
     @Test
     void searchAllByCriteriaTest_WhenTypeIsGivenExistsUniqueMultipleThenShouldReturnSingleForm() {
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM5_TYPE_ID,null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM5_TYPE_ID, null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
         softly.assertThat(results.getResults()).isNotEmpty();
         softly.assertThat(results.getResults().size()).isEqualTo(1);
         results.getResults().forEach(result -> {
-                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
-                softly.assertThat(result.getType()).isEqualTo(CRM5_TYPE_NAME);
-            }
+                    softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                    softly.assertThat(result.getType()).isEqualTo(CRM5_TYPE_NAME);
+                }
         );
     }
 
     @Test
     void searchAllByCriteriaTest_WhenTypeIsGivenNonExistingValueThenShouldReturnResourceNotFoundException() {
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM7_TYPE_ID,null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM7_TYPE_ID, null, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         String expectedMessage = "No Tasks were found";
 
         // execute
@@ -163,37 +172,80 @@ class CrmFormSearchServiceTest {
         softly.assertThat(results.getResults()).isNotEmpty();
         softly.assertThat(results.getResults().size()).isGreaterThan(1);
         results.getResults().forEach(result -> {
-                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
-                softly.assertThat(result.getClientName()).contains("Mock Client");
-            }
+                    softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                    softly.assertThat(result.getClientName()).contains("Mock Client");
+                }
         );
     }
 
     @Test
     void searchAllByCriteriaTest_WhenClientNameIsGivenExistsUniqueMultipleThenShouldReturnSingleForm() {
         String client = "Mock Client Name";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null,client, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, client, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
         softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
         softly.assertThat(results.getResults()).isNotEmpty();
         softly.assertThat(results.getResults().size()).isEqualTo(1);
         results.getResults().forEach(result -> {
-                softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
-                softly.assertThat(result.getClientName()).isEqualTo("Mock Client Name");
-            }
+                    softly.assertThat(result).isInstanceOf(SearchCrmFormDTO.class);
+                    softly.assertThat(result.getClientName()).isEqualTo("Mock Client Name");
+                }
         );
     }
 
     @Test
     void searchAllByCriteriaTest_WhenClientNameIsGivenNonExistingValueThenShouldReturnResourceNotFoundException() {
         String client = "Fake Client";
-        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null,client, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, client, null, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
         String expectedMessage = "No Tasks were found";
 
         // execute
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenSubmittedDateIsTheSameDayThenShouldReturnResults() {
+        String submittedDate = "2024-02-15";
+
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null, submittedDate, submittedDate, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(1);
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenSubmittedDateIsGivenThenShouldReturnResultsWithinThatRange() {
+        String submittedDate = "2024-02-15";
+
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null, submittedDate, submittedDate, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @MethodSource("inputForSubmittedDateRangeTest")
+    public void convert(String submittedFrom, String submittedTo, int expectedResult) {
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null, submittedFrom, submittedTo, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> inputForSubmittedDateRangeTest() {
+        return Stream.of(
+                Arguments.of("2024-02-15", "2024-02-15", 1),
+                Arguments.of("2024-02-14", "2024-02-14", 2),
+                Arguments.of("2024-02-14", "2024-02-15", 3)
+        );
     }
 }
