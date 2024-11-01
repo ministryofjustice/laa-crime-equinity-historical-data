@@ -39,8 +39,8 @@ securityContext:
   seccompProfile:
     type: RuntimeDefault
   runAsNonRoot: true
-  # readOnlyRootFilesystem: true
-  # runAsUser: 1000
+  readOnlyRootFilesystem: true
+  runAsUser: 10001
 
 service:
   type: ClusterIP
