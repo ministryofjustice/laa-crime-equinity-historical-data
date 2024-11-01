@@ -5,9 +5,20 @@ This is a Java based Spring Boot application hosted on [MOJ Cloud Platform](http
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![API docs](https://img.shields.io/badge/API_docs_-view-85EA2D.svg?logo=swagger)](https://laa-crime-means-assessment-dev.apps.live.cloud-platform.service.justice.gov.uk/open-api/swagger-ui/index.html)
 
+### API endpoints
+
+- /api/internal/v1/equinity/search/?
+- /api/internal/v1/equinity/crm4/{usn}
+- /api/internal/v1/equinity/crm5/{usn}
+- /api/internal/v1/equinity/crm7/{usn}
+- /api/internal/v1/equinity/crm14/{usn}
+- /api/internal/v1/equinity/report/crm4/{from}/{to}
+- /api/internal/v1/equinity/report/crm5/{from}/{to}
+- /api/internal/v1/equinity/report/crm14/?
+
+For more details, check file `data-api/open-api-specification.yml`  
 
 ## Application Set up
-
 
 Clone Repository
 
@@ -210,7 +221,6 @@ That should give you access to the pods terminal.
 
 - [Cloud Platform user guide](https://user-guide.cloud-platform.service.justice.gov.uk/#application-logging)
 - [Modernisation Platform Team Information](https://user-guide.modernisation-platform.service.justice.gov.uk/#modernisation-platform-team-information)
-
 
 
 # 
