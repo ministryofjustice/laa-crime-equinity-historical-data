@@ -5,9 +5,20 @@ This is a Java based Spring Boot application hosted on [MOJ Cloud Platform](http
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![API docs](https://img.shields.io/badge/API_docs_-view-85EA2D.svg?logo=swagger)](https://laa-crime-means-assessment-dev.apps.live.cloud-platform.service.justice.gov.uk/open-api/swagger-ui/index.html)
 
+### API endpoints
+
+- /api/internal/v1/equinity/search/?
+- /api/internal/v1/equinity/crm4/{usn}
+- /api/internal/v1/equinity/crm5/{usn}
+- /api/internal/v1/equinity/crm7/{usn}
+- /api/internal/v1/equinity/crm14/{usn}
+- /api/internal/v1/equinity/report/crm4/{from}/{to}
+- /api/internal/v1/equinity/report/crm5/{from}/{to}
+- /api/internal/v1/equinity/report/crm14/?
+
+For more details, check file `data-api/open-api-specification.yml`  
 
 ## Application Set up
-
 
 Clone Repository
 
@@ -211,85 +222,6 @@ That should give you access to the pods terminal.
 - [Cloud Platform user guide](https://user-guide.cloud-platform.service.justice.gov.uk/#application-logging)
 - [Modernisation Platform Team Information](https://user-guide.modernisation-platform.service.justice.gov.uk/#modernisation-platform-team-information)
 
-## API endpoints
-
-### search
-```
-/api/internal/v1/equinity/search/
-```  
-Query parameters:
-- usn  string : usn, supports partial search (format numbers up to 10 digits)
-- type integer : CRM form Type
-- client string : Client surname
-- submittedFrom string : submission date since (format yyyy-mm-dd)
-- submittedTo string : submission date until (format yyyy-mm-dd)
-- providerAccount string : provider account #, supports partial search (format letters and numbers)
-- page integer : index of the paginated data, starts at 0 (default 0)
-- pageSize integer : max records to return per page (default 10)
-
-
-### Crm4 form details
-```
-/api/internal/v1/equinity/crm4/{usn}
-```
-Path parameters:
-- usn  string : usn, unique search by ID (format numbers up to 10 digits)
-
-### Crm5 form details
-```
-/api/internal/v1/equinity/crm5/{usn}
-```
-Path parameters:
-- usn  string : usn, unique search by ID (format numbers up to 10 digits)
-
-### Crm7 form details
-```
-/api/internal/v1/equinity/crm7/{usn}
-```
-Path parameters:
-- usn  string : usn, unique search by ID (format numbers up to 10 digits)
-
-### Crm14/15 form details
-```
-/api/internal/v1/equinity/crm14/{usn}
-```
-Path parameters:
-- usn  string : usn, unique search by ID (format numbers up to 10 digits)
-
-### Crm4 report
-```
-/api/internal/v1/equinity/report/crm4/{from}/{to}
-```
-Path parameters:
-- from string : decision date since (format yyyy-mm-dd)
-- to string : decision date until (format yyyy-mm-dd)
-
-### Crm5 report
-```
-/api/internal/v1/equinity/report/crm5/{from}/{to}
-```  
-Path parameters:
-- from string : decision date since (format yyyy-mm-dd)
-- to string : decision date until (format yyyy-mm-dd)
-
-### Crm14 report
-```
-/api/internal/v1/equinity/report/crm14
-```
-Query parameters:
-- filterByDecision bit : flag indication whether to use this date range or not
-- decisionFrom string : decision date since (format yyyy-mm-dd)
-- decisionTo string : decision date until (format yyyy-mm-dd)
-- filterBySubmit bit : flag indication whether to use this date range or not
-- submitFrom string : submission date since (format yyyy-mm-dd)
-- submitTo string : submission date until (format yyyy-mm-dd)
-- filterByCreation bit : flag indication whether to use this date range or not
-- createdFrom string : creation date since (format yyyy-mm-dd)
-- createdTo string : creation date until (format yyyy-mm-dd)
-- filterByLastSubmit bit : flag indication whether to use this date range or not
-- lastSubmitFrom string : last submission date since (format yyyy-mm-dd)
-- lastSubmitTo string : last submission date until (format yyyy-mm-dd)
-- state string : last status of the application (default "All")
 
 # 
 
