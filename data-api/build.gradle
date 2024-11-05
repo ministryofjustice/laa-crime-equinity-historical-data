@@ -5,7 +5,7 @@ plugins {
 apply plugin: "maven-publish"
 
 def versions = [
-        springStarter               : '3.3.3',
+        springStarter               : '3.3.5',
         springWeb                   : '6.1.14',
         springData                  : '3.3.4',
         springdoc                   : '1.8.0',
@@ -16,8 +16,8 @@ def versions = [
 ]
 
 dependencies {
-    implementation "org.springframework:spring-webmvc:$versions.springWeb"
-    implementation "org.springframework:spring-web:$versions.springWeb"
+//    implementation "org.springframework:spring-webmvc:$versions.springWeb"
+//    implementation "org.springframework:spring-web:$versions.springWeb"
     implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
     implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 

@@ -4,7 +4,7 @@ plugins {
 	id "io.sentry.jvm.gradle" version "4.10.0"
 }
 def versions = [
-		springStarter 				: '3.3.3',
+		springStarter 				: '3.3.5',
 		springWeb 					: '6.1.14',
 		springSecurity 				: '6.3.4',
 		springdoc 					: '1.8.0',
@@ -37,8 +37,8 @@ configurations {
 			// with known vulnerabilities, and the version to use as a fix
 			// This will still need to be included manually under the dependencies section
 			// This will only ensure the override of the bundled version
-			force "org.springframework:spring-webmvc:$versions.springWeb"
-			force "org.springframework:spring-web:$versions.springWeb"
+//			force "org.springframework:spring-webmvc:$versions.springWeb"
+//			force "org.springframework:spring-web:$versions.springWeb"
 			force "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
 			force "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 			force "org.springframework:spring-webflux:$versions.springWeb"
@@ -64,8 +64,8 @@ dependencies {
 
 	// Spring
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springStarter"
-	implementation "org.springframework:spring-webmvc:$versions.springWeb"
-	implementation "org.springframework:spring-web:$versions.springWeb"
+//	implementation "org.springframework:spring-webmvc:$versions.springWeb"
+//	implementation "org.springframework:spring-web:$versions.springWeb"
 	implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
 	implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 
