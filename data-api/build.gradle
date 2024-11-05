@@ -17,7 +17,7 @@ def versions = [
 
 dependencies {
     implementation "org.springframework:spring-webmvc:$versions.springWeb"
-//    implementation "org.springframework:spring-web:$versions.springWeb"
+    implementation "org.springframework:spring-web:$versions.springWeb"
     implementation "org.springframework.boot:spring-boot-starter-web:$versions.springStarter"
     implementation "org.apache.tomcat.embed:tomcat-embed-core:$versions.tomcatEmbed"
 
