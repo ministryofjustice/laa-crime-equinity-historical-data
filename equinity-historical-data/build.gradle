@@ -4,7 +4,7 @@ plugins {
 	id "io.sentry.jvm.gradle" version "4.10.0"
 }
 def versions = [
-		springStarter 				: '3.3.3',
+		springStarter 				: '3.3.5',
 		springWeb 					: '6.1.14',
 		springSecurity 				: '6.3.4',
 		springdoc 					: '1.8.0',
