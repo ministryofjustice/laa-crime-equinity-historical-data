@@ -49,7 +49,8 @@ class CrmFurtherInformationServiceTest {
     void shouldNotAddFileKeyToFurtherInfo_whenFurtherInfoAttachmentsIsNull() {
 
         Crm4Model crm4Model = new Crm4Model();
-        crm4Model.setFormDetails(buildCrm4Details(null));
+        Crm4DetailsModel crm4DetailsModel = buildCrm4Details(null);
+        crm4Model.setFormDetails(crm4DetailsModel);
         crm4Model.setEvidenceFiles(buildCrmEvidenceFiles());
 
         crmFurtherInformationService.addFileKeyToFurtherInfo(crm4Model);
@@ -110,5 +111,5 @@ class CrmFurtherInformationServiceTest {
         return crmEvidenceFileModel;
     }
 
-
 }
+
