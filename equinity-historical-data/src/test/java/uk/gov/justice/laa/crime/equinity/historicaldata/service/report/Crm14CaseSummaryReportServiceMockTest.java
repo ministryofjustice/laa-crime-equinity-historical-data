@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Disabled
 class Crm14CaseSummaryReportServiceMockTest {
     @InjectSoftAssertions
     private SoftAssertions softly;

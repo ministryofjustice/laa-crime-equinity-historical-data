@@ -15,19 +15,20 @@ public class CrmFurtherInformationService {
         List<CrmFurtherInfoAttachmentsModel> furtherInfoAttachments = ((CrmFurtherInformationModelInterface) crmModel.getFormDetails()).getFurtherInformationModel().getAttachments();
 
         if (furtherInfoAttachments != null) {
-            for(CrmFurtherInfoAttachmentsModel furtherInfoAttachment: furtherInfoAttachments){
-                if(StringUtils.isNotEmpty(furtherInfoAttachment.getRetrieve()) && StringUtils.isNotEmpty(furtherInfoAttachment.getName())){
-                    furtherInfoAttachment.setFileKey(retrieveFileKey(furtherInfoAttachment.getName(),crmModel.getEvidenceFiles()));
+            for (CrmFurtherInfoAttachmentsModel furtherInfoAttachment : furtherInfoAttachments) {
+                if (StringUtils.isNotEmpty(furtherInfoAttachment.getRetrieve()) && StringUtils.isNotEmpty(furtherInfoAttachment.getName())) {
+                    furtherInfoAttachment.setFileKey(retrieveFileKeyAndUpdateFilename(furtherInfoAttachment.getName(), furtherInfoAttachment.getOriginalfilename(), crmModel.getEvidenceFiles()));
                 }
             }
         }
     }
 
-    public String retrieveFileKey(String filename, CrmEvidenceFilesModel evidenceFilesModel) {
-        String fileKey= null;
-        for(CrmEvidenceFileModel evidenceFiles: evidenceFilesModel.getFiles()) {
-            if (evidenceFiles.getName().equals(filename)){
-                fileKey = evidenceFiles.getKey();
+    private String retrieveFileKeyAndUpdateFilename(String filename, String originalFilename, CrmEvidenceFilesModel evidenceFilesModel) {
+        String fileKey = null;
+        for (CrmEvidenceFileModel evidenceFile : evidenceFilesModel.getFiles()) {
+            if (evidenceFile.getName().equals(filename)) {
+                fileKey = evidenceFile.getKey();
+                evidenceFile.setName(originalFilename);
                 break;
             }
         }
