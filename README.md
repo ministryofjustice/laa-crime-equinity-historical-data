@@ -132,7 +132,7 @@ We have configured a GitHub Actions code pipelines. You can [log in](https://git
 
 To make any changes, create a branch and submit the PR. Once the PR is submitted the branch checks will kick off, and on success, it will wait for approval before merged.
 Once PR is merged, image will be build and pushed automatically to AWS ECR. On success, the image will deploy automatically into UAT.
-After successful deployment to UAT, deployment to higher environments (staging and prod) start automatically, but require manual approval.
+After successful deployment to UAT, deployment to higher environments (prod and archive) start automatically, but require manual approval.
 
 
 ### Open API
@@ -180,8 +180,8 @@ kubectl get pods -n {nameSpace}
 Possible values for `nameSpace` are:
 
 - laa-crime-equinity-historical-data-uat
-- laa-crime-equinity-historical-data-staging
 - laa-crime-equinity-historical-data-prod
+- laa-crime-equinity-historical-data-archive
 
 Check response from command below, you will need that for the following step
 
