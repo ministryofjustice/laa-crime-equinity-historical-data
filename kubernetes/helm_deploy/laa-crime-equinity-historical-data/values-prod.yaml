@@ -13,6 +13,11 @@ service:
   port: 8089
   environment: "prod"
 
+securityContext:
+  runAsNonRoot: true
+  readOnlyRootFilesystem: false
+  runAsUser: 10001
+
 database:
   name: "eq_prod"
 
