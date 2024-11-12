@@ -9,6 +9,11 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+securityContext:
+  runAsNonRoot: true
+  readOnlyRootFilesystem: false
+  runAsUser: 10001
+
 service:
   type: ClusterIP
   port: 8089
