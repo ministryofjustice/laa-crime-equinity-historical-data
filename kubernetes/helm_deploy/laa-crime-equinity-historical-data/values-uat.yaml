@@ -12,7 +12,7 @@ image:
 securityContext:
   runAsNonRoot: true
   readOnlyRootFilesystem: false
-
+  runAsUser: 10001
 
 service:
   type: ClusterIP
