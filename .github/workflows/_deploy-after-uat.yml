@@ -19,32 +19,12 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     uses: ./.github/workflows/_capture-repo-info.yml
 
-  # TODO (EMP-74): re-activate deploy to staging, once it is up-and-running
-#  deploy-staging:
-#    permissions:
-#      contents: read
-#      packages: write
-#      id-token: write
-#    needs:
-#      - capture-repo-info
-#    runs-on: ubuntu-latest
-#    environment: "staging"
-
-#    steps:
-#      - run: |
-#          echo "Coming soon"
-#          echo "image_tag: [[ ${{ env.IMAGE_TAG }} ]]"
-#        env:
-#          IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
-
   deploy-prod:
     permissions:
       contents: read
       packages: write
       id-token: write
     needs:
-      # TODO (EMP-74): re-activate deploy to staging, once it is up-and-running
-#      - deploy-staging
       - capture-repo-info
     uses: ./.github/workflows/_deploy-to.yml
     with:
