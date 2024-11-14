@@ -142,19 +142,12 @@ The swagger link can be found from [here](https://dsdmoj.atlassian.net/wiki/x/SQ
 
 ## Application Monitoring and Logs
 
-[//]: # ()
-[//]: # ()
-[//]: # ([Thanos]&#40;https://thanos.live.cloud-platform.service.justice.gov.uk&#41;)
 
-[//]: # ()
-[//]: # ([AlertManager]&#40;https://alertmanager.cloud-platform.service.justice.gov.uk&#41;)
-
-[//]: # ()
-[//]: # ([Grafana]&#40;https://grafana.cloud-platform.service.justice.gov.uk&#41;)
-
-- Logs on [Kibana](https://kibana.cloud-platform.service.justice.gov.uk)
-- Alerts on [Sentry](https://ministryofjustice.sentry.io/projects/laa-crime-equinity-historical-data/?project=4507690126540800)
+- Logs on [OpenSearch](https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/goto/aeff31c5ab4e84c42abb8f7dbbc61852?security_tenant=global)
 - Metrics on [Prometheus](https://prometheus.cloud-platform.service.justice.gov.uk)
+- Access Dashboard on [OpenSearch](https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/goto/89c72b4ec62ed61331e03add24c3797e?security_tenant=global)
+- Alerts on [Sentry](https://ministryofjustice.sentry.io/projects/laa-crime-equinity-historical-data/?project=4507690126540800)
+
 
 [Crime Apps guide on logging and metrics](https://dsdmoj.atlassian.net/wiki/x/ToHjBQE)
 
