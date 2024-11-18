@@ -1,6 +1,9 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.model.data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +22,8 @@ public class CrmFormSummaryModel implements CrmFormDataModelInterface {
 
     @Column(name="ClientSurname")
     private String clientName;
+    @Column(name="ClientDoB")
+    private String clientDoB;
     @Column(name="TypeId")
     private Integer typeId;
     @Column(name="TypeName")

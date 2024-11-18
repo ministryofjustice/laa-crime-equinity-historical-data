@@ -277,6 +277,17 @@ class CrmFormSearchControllerInputsTest {
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
+    @Test
+    void doSearchByTest_WhenValidClientDateOfBirthIsGivenThenReturnDTO() {
+        String dateToTest = "2024-02-19";
+
+        // execute
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null,null, dateToTest, null, null, null, null, null);
+
+        softly.assertThat(response).isInstanceOf(ResponseEntity.class);
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
     /**
      * Provider Account input checks
      */

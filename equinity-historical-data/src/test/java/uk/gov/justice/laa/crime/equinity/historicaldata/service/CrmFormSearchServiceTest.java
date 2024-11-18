@@ -11,15 +11,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchCrmFormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 
 import java.util.stream.Stream;
 
@@ -49,6 +48,7 @@ class CrmFormSearchServiceTest {
         CrmFormSummaryModel searchModel = new CrmFormSummaryModel();
         searchModel.setUSN("1826829");
         searchModel.setClientName("Mock Client");
+        searchModel.setClientDoB("1977-08-01");
         searchModel.setTypeId(CRM4_TYPE_ID);
         searchModel.setType(CRM4_TYPE_NAME);
         searchModel.setSubmittedDate("2024-02-15 16:47:12.29");
@@ -56,6 +56,7 @@ class CrmFormSearchServiceTest {
 
         searchModel.setUSN("1826830");
         searchModel.setClientName("Mock Client Name");
+        searchModel.setClientDoB("1977-01-08");
         searchModel.setTypeId(CRM4_TYPE_ID);
         searchModel.setType(CRM4_TYPE_NAME);
         searchModel.setSubmittedDate("2024-02-14 16:46:12.29");
@@ -63,6 +64,7 @@ class CrmFormSearchServiceTest {
 
         searchModel.setUSN("1826831");
         searchModel.setClientName("Mocked Client Name");
+        searchModel.setClientDoB("1977-01-08");
         searchModel.setTypeId(CRM5_TYPE_ID);
         searchModel.setType(CRM5_TYPE_NAME);
         searchModel.setSubmittedDate("2024-02-14 16:45:12.29");
@@ -204,6 +206,39 @@ class CrmFormSearchServiceTest {
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining(expectedMessage);
+    }
+
+    @Test
+    void searchAllByCriteriaTest_WhenClientDateOfBirthNameIsGivenNonExistingValueThenShouldReturnResourceNotFoundException() {
+        String dateToTest = "1978-03-04";
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, dateToTest, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        String expectedMessage = "No Tasks were found";
+
+        // execute
+        softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining(expectedMessage);
+    }
+
+    @ParameterizedTest
+    @MethodSource("inputForClientDateOfBirthTest")
+    void searchAllByCriteriaTest_WhenClientDateOfBirthNameIsGivenThenShouldReturnResultsWithMatchingDate(
+            String clientDoB, int expectedResults
+    ) {
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, clientDoB, null, null, null, null, null, ACCEPTED_TYPES_DEFAULT);
+        // execute
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results).isInstanceOf(SearchResultDTO.class);
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(expectedResults);
+    }
+
+    private static Stream<Arguments> inputForClientDateOfBirthTest() {
+        return Stream.of(
+                Arguments.of("1977-01-08", 2),
+                Arguments.of("1977-08-01", 1)
+        );
     }
 
     @ParameterizedTest

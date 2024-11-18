@@ -26,6 +26,7 @@ public class CrmFormSearchCriteria {
     private static final String TYPE_ID_COL = "typeId";
     private static final String PROVIDER_ACCOUNT_COL = "providerAccount";
     private static final String CLIENT_NAME_COL = "clientName";
+    private static final String CLIENT_DOB_COL = "clientDoB";
     private static final String SEARCH_BY_CONTAINS_TEMPLATE = "%%%s%%";
 
 
@@ -67,7 +68,8 @@ public class CrmFormSearchCriteria {
     }
 
     private Specification<CrmFormDataModelInterface> byClientDoB(@Nullable String clientDOB) {
-        return null;
+        return (root, query, criteriaBuilder)
+                -> clientDOB == null ? null : criteriaBuilder.equal(root.get(CLIENT_DOB_COL), clientDOB);
     }
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
