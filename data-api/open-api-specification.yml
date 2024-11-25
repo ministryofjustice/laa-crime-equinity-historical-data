@@ -20,6 +20,8 @@ paths:
         - $ref: '#/components/parameters/searchProviderAccount'
         - $ref: '#/components/parameters/searchPage'
         - $ref: '#/components/parameters/searchPageSize'
+        - $ref: '#/components/parameters/searchSort'
+        - $ref: '#/components/parameters/searchOrder'
       responses:
         '200':
           description: 'Success'
@@ -321,6 +323,26 @@ components:
         minimum: 10
         maximum: 100
         example: 20
+    searchSort:
+      name: sort
+      in: query
+      required: false
+      schema:
+        type: string
+        example: 'originatedDate'
+        minLength: 3
+        maxLength: 20
+        pattern: '(originatedDate|submittedDate)'
+    searchOrder:
+      name: order
+      in: query
+      required: false
+      schema:
+        type: string
+        example: 'asc'
+        minLength: 3
+        maxLength: 4
+        pattern: '(asc|desc)'
     profileAcceptedTypes:
       name: profileAcceptedTypes
       in: header

@@ -12,8 +12,9 @@ public record CrmFormSearchCriteriaDTO(
         @Nullable String submittedFrom, @Nullable String submittedTo,
         @Nullable String providerAccount,
         @Nullable Integer page, @Nullable Integer pageSize,
-        @Nullable String profileAcceptedTypes
-        ) {
+        @Nullable String profileAcceptedTypes,
+        @Nullable String sort, @Nullable String order
+) {
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
@@ -22,7 +23,8 @@ public record CrmFormSearchCriteriaDTO(
         if (isNullOrBlank(usn) && (type == null)
                 && isNullOrBlank(client) && isNullOrBlank(clientDoB)
                 && isNullOrBlank(submittedFrom) && isNullOrBlank(submittedTo)
-                && isNullOrBlank(providerAccount)) {
+                && isNullOrBlank(providerAccount)
+                && isNullOrBlank(sort) && isNullOrBlank(order)) {
             throw new NotEnoughSearchParametersException("Not enough search parameters. Search criteria needs at least 1 input");
         }
     }
@@ -43,6 +45,8 @@ public record CrmFormSearchCriteriaDTO(
                 ", providerAccount='" + providerAccount + "'" +
                 ", page=" + page +
                 ", pageSize=" + pageSize +
-            " }";
+                ", sort='" + sort + '\'' +
+                ", order='" + order + '\'' +
+                " }";
     }
 }

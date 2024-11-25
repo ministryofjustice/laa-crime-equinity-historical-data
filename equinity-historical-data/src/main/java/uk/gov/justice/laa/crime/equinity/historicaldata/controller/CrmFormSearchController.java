@@ -19,11 +19,12 @@ public class CrmFormSearchController implements SearchApi {
     public ResponseEntity<SearchResultDTO> doSearchBy(
             String profileAcceptedTypes, String usn, Integer type, String client,
             String clientDoB, String submittedFrom, String submittedTo,
-            String providerAccount, Integer page, Integer pageSize) {
+            String providerAccount, Integer page, Integer pageSize,
+            String sort, String order) {
 
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
                 usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize,
-                profileAcceptedTypes
+                profileAcceptedTypes, sort, order
         );
 
         log.info("eForm search request received :: {} ", crmFormSearchCriteriaDTO);

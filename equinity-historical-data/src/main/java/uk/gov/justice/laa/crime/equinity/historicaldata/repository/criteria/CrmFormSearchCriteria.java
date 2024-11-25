@@ -23,33 +23,37 @@ public class CrmFormSearchCriteria {
 
     private static final String USN_COL = "USN";
     private static final String SUBMITTED_DATE_COL = "submittedDate";
+    private static final String ORIGINATED_DATE_COL = "originatedDate";
     private static final String TYPE_ID_COL = "typeId";
     private static final String PROVIDER_ACCOUNT_COL = "providerAccount";
     private static final String CLIENT_NAME_COL = "clientName";
     private static final String CLIENT_DOB_COL = "clientDoB";
     private static final String SEARCH_BY_CONTAINS_TEMPLATE = "%%%s%%";
+    private static final String DESC = "desc";
 
 
     public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         int DEFAULT_PAGE = 0;
         int page = (crmFormSearchCriteriaDTO.page() == null) ? DEFAULT_PAGE : crmFormSearchCriteriaDTO.page();
-        int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE :  crmFormSearchCriteriaDTO.pageSize();
-        return PageRequest.of(page, pageSize,
-                Sort.by(SUBMITTED_DATE_COL).descending()
-        );
+        int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE : crmFormSearchCriteriaDTO.pageSize();
+        String sort = (crmFormSearchCriteriaDTO.sort() == null) ? SUBMITTED_DATE_COL : crmFormSearchCriteriaDTO.sort();
+        String order = (crmFormSearchCriteriaDTO.order() == null) ? DESC : crmFormSearchCriteriaDTO.order();
+        Sort sortBy = order.equals(DESC) ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+
+        return PageRequest.of(page, pageSize, sortBy);
     }
 
     public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
-            .where(byUsn(crmFormSearchCriteriaDTO.usn())
-                .and(byType(crmFormSearchCriteriaDTO.type()))
-                .and(byClientName(crmFormSearchCriteriaDTO.client()))
-                .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
-                .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
-                .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
-                .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
-                .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
-            );
+                .where(byUsn(crmFormSearchCriteriaDTO.usn())
+                        .and(byType(crmFormSearchCriteriaDTO.type()))
+                        .and(byClientName(crmFormSearchCriteriaDTO.client()))
+                        .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
+                        .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
+                        .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
+                        .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
+                        .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
+                );
     }
 
     private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
