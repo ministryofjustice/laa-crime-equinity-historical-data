@@ -23,7 +23,6 @@ public class CrmFormSearchCriteria {
 
     private static final String USN_COL = "USN";
     private static final String SUBMITTED_DATE_COL = "submittedDate";
-    private static final String ORIGINATED_DATE_COL = "originatedDate";
     private static final String TYPE_ID_COL = "typeId";
     private static final String PROVIDER_ACCOUNT_COL = "providerAccount";
     private static final String CLIENT_NAME_COL = "clientName";
@@ -45,15 +44,15 @@ public class CrmFormSearchCriteria {
 
     public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
-                .where(byUsn(crmFormSearchCriteriaDTO.usn())
-                        .and(byType(crmFormSearchCriteriaDTO.type()))
-                        .and(byClientName(crmFormSearchCriteriaDTO.client()))
-                        .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
-                        .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
-                        .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
-                        .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
-                        .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
-                );
+            .where(byUsn(crmFormSearchCriteriaDTO.usn())
+                .and(byType(crmFormSearchCriteriaDTO.type()))
+                .and(byClientName(crmFormSearchCriteriaDTO.client()))
+                .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
+                .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
+                .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
+                .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
+                .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
+            );
     }
 
     private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
