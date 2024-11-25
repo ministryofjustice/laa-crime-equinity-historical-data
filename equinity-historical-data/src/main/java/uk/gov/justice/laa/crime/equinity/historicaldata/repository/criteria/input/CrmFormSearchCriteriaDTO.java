@@ -23,8 +23,7 @@ public record CrmFormSearchCriteriaDTO(
         if (isNullOrBlank(usn) && (type == null)
                 && isNullOrBlank(client) && isNullOrBlank(clientDoB)
                 && isNullOrBlank(submittedFrom) && isNullOrBlank(submittedTo)
-                && isNullOrBlank(providerAccount)
-                && isNullOrBlank(sort) && isNullOrBlank(order)) {
+                && isNullOrBlank(providerAccount)) {
             throw new NotEnoughSearchParametersException("Not enough search parameters. Search criteria needs at least 1 input");
         }
     }
