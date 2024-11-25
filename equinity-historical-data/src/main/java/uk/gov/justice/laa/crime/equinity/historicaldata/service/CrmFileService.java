@@ -151,7 +151,6 @@ public class CrmFileService {
         return crmFileJsonObject;
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends CrmFormModelInterface> T convertCrmFileJsonToModel(JSONObject crmFileJsonObject, CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws NotEnoughSearchParametersException, JSONException {
         CrmFormModelInterface crmFormData;
 
