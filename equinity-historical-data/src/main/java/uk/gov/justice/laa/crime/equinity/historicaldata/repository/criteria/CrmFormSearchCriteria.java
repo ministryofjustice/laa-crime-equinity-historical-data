@@ -28,15 +28,18 @@ public class CrmFormSearchCriteria {
     private static final String CLIENT_NAME_COL = "clientName";
     private static final String CLIENT_DOB_COL = "clientDoB";
     private static final String SEARCH_BY_CONTAINS_TEMPLATE = "%%%s%%";
+    private static final String DESC = "desc";
 
 
     public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         int DEFAULT_PAGE = 0;
         int page = (crmFormSearchCriteriaDTO.page() == null) ? DEFAULT_PAGE : crmFormSearchCriteriaDTO.page();
-        int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE :  crmFormSearchCriteriaDTO.pageSize();
-        return PageRequest.of(page, pageSize,
-                Sort.by(SUBMITTED_DATE_COL).descending()
-        );
+        int pageSize = (crmFormSearchCriteriaDTO.pageSize() == null) ? DEFAULT_PAGE_SIZE : crmFormSearchCriteriaDTO.pageSize();
+        String sort = (crmFormSearchCriteriaDTO.sort() == null) ? SUBMITTED_DATE_COL : crmFormSearchCriteriaDTO.sort();
+        String order = (crmFormSearchCriteriaDTO.order() == null) ? DESC : crmFormSearchCriteriaDTO.order();
+        Sort sortBy = order.equals(DESC) ? Sort.by(sort).descending() : Sort.by(sort).ascending();
+
+        return PageRequest.of(page, pageSize, sortBy);
     }
 
     public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {

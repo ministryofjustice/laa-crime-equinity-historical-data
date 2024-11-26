@@ -44,3 +44,5 @@ SearchPagingDTO:
       type: integer
     itemsTotal:
       type: number
+    sort:
+      type: string

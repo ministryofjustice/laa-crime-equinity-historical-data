@@ -12,8 +12,9 @@ public record CrmFormSearchCriteriaDTO(
         @Nullable String submittedFrom, @Nullable String submittedTo,
         @Nullable String providerAccount,
         @Nullable Integer page, @Nullable Integer pageSize,
-        @Nullable String profileAcceptedTypes
-        ) {
+        @Nullable String profileAcceptedTypes,
+        @Nullable String sort, @Nullable String order
+) {
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
@@ -43,6 +44,8 @@ public record CrmFormSearchCriteriaDTO(
                 ", providerAccount='" + providerAccount + "'" +
                 ", page=" + page +
                 ", pageSize=" + pageSize +
-            " }";
+                ", sort='" + sort + '\'' +
+                ", order='" + order + '\'' +
+                " }";
     }
 }

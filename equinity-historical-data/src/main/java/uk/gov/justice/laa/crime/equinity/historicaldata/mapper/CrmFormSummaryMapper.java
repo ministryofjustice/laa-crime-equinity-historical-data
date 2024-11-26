@@ -33,6 +33,7 @@ public interface CrmFormSummaryMapper {
     @Mapping(target="total", source="page.totalPages")
     @Mapping(target="itemsPage", source="page.numberOfElements")
     @Mapping(target="itemsTotal", source="page.totalElements")
+    @Mapping(target="sort", expression="java(page.getSort().toString())")
     SearchPagingDTO getPagingDTOFromPage(Page<CrmFormDataModelInterface> page);
 }
 
