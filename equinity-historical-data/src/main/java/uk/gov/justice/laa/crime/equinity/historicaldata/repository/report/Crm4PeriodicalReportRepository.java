@@ -7,7 +7,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm4Periodi
 
 import java.util.List;
 
-
 public interface Crm4PeriodicalReportRepository extends JpaRepository<Crm4PeriodicalReportModel, Integer> {
 
     @Procedure("Reporting_CRM4PeriodicalReport")
