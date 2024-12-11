@@ -242,7 +242,6 @@ paths:
       summary: 'CRM4 Periodical Provider Report'
       operationId: 'generateProviderReportCrm4'
       parameters:
-        - $ref: '#/components/parameters/profileAcceptedTypes'
         - $ref: '#/components/parameters/reportDecisionFrom'
         - $ref: '#/components/parameters/reportDecisionTo'
       responses:
