@@ -46,15 +46,13 @@ class Crm4ProviderReportServiceTest {
                 .totalAuthority(200.0).totalGranted(200.0).build();
         when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of(report));
 
-
-
         String results = reportService.getReport(startDate, endDate, providerAccount);
 
         softly.assertThat(results).isNotEmpty();
         softly.assertThat(results).isEqualTo("Client UFN,Usn,Provider Account,Firm Name,Client Name," +
                 "Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name," +
                 "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n" +
-                "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Some expert,tyjtjtjt," +
+                "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Costs,Some expert," +
                 "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n");
     }
 
