@@ -8,8 +8,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ProviderRe
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.provider.Crm4ProviderReportService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.ReportInputsUtil;
 
-import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j

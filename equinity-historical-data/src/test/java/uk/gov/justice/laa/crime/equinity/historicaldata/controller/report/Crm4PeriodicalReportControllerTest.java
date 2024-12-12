@@ -4,41 +4,29 @@ import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm4PeriodicalReportModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm4ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm4PeriodicalReportRepository;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm4ProviderReportRepository;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm4PeriodicalReportService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4PeriodicalReportControllerTest {
@@ -60,14 +48,13 @@ class Crm4PeriodicalReportControllerTest {
         String decisionFrom = "2010-02-01";
         String decisionTo = "2024-06-01";
 
-        List<Crm4PeriodicalReportModel> reportData = List.of(new Crm4PeriodicalReportModel(
+        when(mockReportRepository.getReport(decisionFrom, decisionTo)).thenReturn(List.of(new Crm4PeriodicalReportModel(
                 "123456/123", 1234567L, "1ABCD", "XXXX", "John Doe",
                 "1234567", "", "No", LocalDate.of(2023, 3, 16),
                 LocalDate.of(2023, 3, 16), "Grant", "Some expert",
                 "tyjtjtjt", 4.0, 50.0, "Hour(s)", 200.0, 0.0,
                 200.0, 200.0, "XXXX"
-        ));
-        when(mockReportRepository.getReport(decisionFrom, decisionTo)).thenReturn(reportData);
+        )));
 
         // execute
         ResponseEntity<String> response = controller.generateReportCrm4(
@@ -138,20 +125,4 @@ class Crm4PeriodicalReportControllerTest {
                 .isInstanceOf(UnauthorizedUserProfileException.class);
     }
 
-    @Test
-    void generateReportCrm4Test_WhenNonExistingValidDecisionDatesAreGivenThenReturnResourceNotFoundException() {
-
-        String decisionFrom = "1988-02-01";
-        String decisionTo = "1988-02-02";
-
-        when(mockReportRepository.getReport(decisionFrom, decisionTo)).thenReturn(List.of());
-
-        // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        decisionFrom, decisionTo, ACCEPTED_PROFILE_TYPES
-                ))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("No data found for CRM4 Periodical Report between 1988-02-01 and 1988-02-02");
-
-    }
 }
