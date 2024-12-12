@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4ProviderReportServiceTest {
-    private static final String PROVIDER_ACCOUNT = "123ABC";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -70,7 +69,7 @@ class Crm4ProviderReportServiceTest {
         // execute
         softly.assertThatThrownBy(() -> reportService.getReport(startDate,endDate, providerAccount))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("No data found for CRM4 Provider Report between 1988-02-01 and 1988-02-02");
+                .hasMessage("No data found for CRM4 Provider Report between 1988-02-01 and 1988-02-02, provider account = 123ABC");
 
     }
 }

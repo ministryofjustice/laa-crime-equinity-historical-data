@@ -25,8 +25,7 @@ public class Crm4ProviderReportService {
 
         if (report.isEmpty()) {
             throw new ResourceNotFoundException(
-                String.format("No data found for CRM4 Provider Report between %s and %s",
-                        startDate, endDate)
+                String.format("No data found for CRM4 Provider Report between %s and %s, provider account = %s", startDate, endDate, providerAccount)
             );
         }
 
