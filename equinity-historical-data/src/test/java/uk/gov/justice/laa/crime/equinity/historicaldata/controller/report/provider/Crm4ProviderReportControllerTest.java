@@ -40,7 +40,7 @@ class Crm4ProviderReportControllerTest {
     Crm4ProviderReportController controller;
 
     @Test
-    void generateProviderReportCrm4_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
+    void generateProviderReportCrm4_WhenExistingDecisionDatesAndValidProviderAccountAreGivenThenReturnDTO() {
         String decisionFrom = "2010-02-01";
         String decisionTo = "2024-06-01";
 
