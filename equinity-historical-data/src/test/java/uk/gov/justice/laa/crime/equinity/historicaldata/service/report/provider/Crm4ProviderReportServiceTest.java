@@ -38,15 +38,17 @@ class Crm4ProviderReportServiceTest {
         String endDate = "2024-06-01";
         String providerAccount = "123ABC";
 
-        when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of(new Crm4ProviderReportModel(
-                "123456/123", 1234567L, "1ABCD", "XXXX", "John Doe",
-                "1234567", "", "No", LocalDate.of(2023, 3, 16),
-                LocalDate.of(2023, 3, 16), "Grant", "Some expert",
-                "tyjtjtjt", 4.0, 50.0, "Hour(s)", 200.0, 0.0,
-                200.0, 200.0)
-        ));
+        Crm4ProviderReportModel report = Crm4ProviderReportModel.builder()
+                .clientUfn("123456/123").usn(1234567L).providerAccount("1ABCD").firmName("XXXX").clientName("John Doe")
+                .repOrderNumber("1234567").maatId("").prisonLaw("No").receivedDate(LocalDate.of(2023, 3, 16))
+                .decisionDate(LocalDate.of(2023, 3, 16)).decisionResult("Grant").expenditureType("Costs")
+                .expertName("Some expert").quantity(4.0).rate(50.0).unit("Hour(s)").totalCost(200.0).additionalExpenditure(0.0)
+                .totalAuthority(200.0).totalGranted(200.0).build();
+        when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of(report));
 
-        String results = reportService.getReport(startDate, endDate, providerAccount );
+
+
+        String results = reportService.getReport(startDate, endDate, providerAccount);
 
         softly.assertThat(results).isNotEmpty();
         softly.assertThat(results).isEqualTo("Client UFN,Usn,Provider Account,Firm Name,Client Name," +
@@ -64,7 +66,7 @@ class Crm4ProviderReportServiceTest {
 
         when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of());
 
-        softly.assertThatThrownBy(() -> reportService.getReport(startDate,endDate, providerAccount))
+        softly.assertThatThrownBy(() -> reportService.getReport(startDate, endDate, providerAccount))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("No data found for CRM4 Provider Report between 1988-02-01 and 1988-02-02, provider account = 123ABC");
     }

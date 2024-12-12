@@ -44,13 +44,14 @@ class Crm4ProviderReportControllerTest {
         String decisionFrom = "2010-02-01";
         String decisionTo = "2024-06-01";
 
-        when(mockReportRepository.getReport(decisionFrom, decisionTo, PROVIDER_ACCOUNT)).thenReturn(List.of(new Crm4ProviderReportModel(
-                "123456/123", 1234567L, "1ABCD", "XXXX", "John Doe",
-                "1234567", "", "No", LocalDate.of(2023, 3, 16),
-                LocalDate.of(2023, 3, 16), "Grant", "Some expert",
-                "tyjtjtjt", 4.0, 50.0, "Hour(s)", 200.0, 0.0,
-                200.0, 200.0)
-        ));
+        Crm4ProviderReportModel report = Crm4ProviderReportModel.builder()
+                .clientUfn("123456/123").usn(1234567L).providerAccount("1ABCD").firmName("XXXX").clientName("John Doe")
+                .repOrderNumber("1234567").maatId("").prisonLaw("No").receivedDate(LocalDate.of(2023, 3, 16))
+                .decisionDate(LocalDate.of(2023, 3, 16)).decisionResult("Grant").expenditureType("Costs")
+                .expertName("Some expert").quantity(4.0).rate(50.0).unit("Hour(s)").totalCost(200.0).additionalExpenditure(0.0)
+                .totalAuthority(200.0).totalGranted(200.0).build();
+
+        when(mockReportRepository.getReport(decisionFrom, decisionTo, PROVIDER_ACCOUNT)).thenReturn(List.of(report));
 
         // execute
         ResponseEntity<String> response = controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT);
@@ -59,7 +60,7 @@ class Crm4ProviderReportControllerTest {
         softly.assertThat(response.getBody()).isEqualTo("Client UFN,Usn,Provider Account,Firm Name,Client Name," +
                 "Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name," +
                 "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n" +
-                "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Some expert,tyjtjtjt," +
+                "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Costs,Some expert," +
                 "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n");
     }
 
