@@ -40,7 +40,7 @@ class Crm4ProviderReportControllerTest {
     Crm4ProviderReportController controller;
 
     @Test
-    void generateProviderReportCrm4Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
+    void generateProviderReportCrm4_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
         String decisionFrom = "2010-02-01";
         String decisionTo = "2024-06-01";
 
@@ -63,12 +63,9 @@ class Crm4ProviderReportControllerTest {
                 "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n");
     }
 
-    /**
-     * Date Format input checks
-     **/
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
-    void generateProviderReportCrm4Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException(String invalidDecisionFrom) {
+    void generateProviderReportCrm4_WhenInvalidDecisionDateFromIsGivenThenThrowConstraintViolationException(String invalidDecisionFrom) {
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(invalidDecisionFrom, VALID_DATE, PROVIDER_ACCOUNT))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionFrom: must match \"^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$\"");
@@ -76,18 +73,17 @@ class Crm4ProviderReportControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
-    void generateProviderReportCrm4Test_WhenInvalidDecisionDateToIsGivenThenReturnConstraintViolationException(String invalidDate) {
+    void generateProviderReportCrm4_WhenInvalidDecisionDateToIsGivenThenThrowConstraintViolationException(String invalidDate) {
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(VALID_DATE, invalidDate, PROVIDER_ACCOUNT))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionTo: must match \"^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$\"");
     }
 
     @Test
-    void generateProviderReportCrm4Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
+    void generateProviderReportCrm4_WhenInvalidDecisionDateRangeIsGivenThenThrowConstraintViolationException() {
         String decisionFrom = "2024-02-19";
         String decisionTo = "2024-02-09";
 
-        // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: start date [2024-02-19] must not be after end date [2024-02-09]");
@@ -95,42 +91,38 @@ class Crm4ProviderReportControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"123", "123*", "1234ABCD"})
-    void generateProviderReportCrm4Test_WhenInvalidProviderAccountIsGivenThenReturnConstraintViolationException(String invalidProviderAccount) {
+    void generateProviderReportCrm4_WhenInvalidProviderAccountIsGivenThenThrowConstraintViolationException(String invalidProviderAccount) {
         String decisionFrom = "2024-02-19";
         String decisionTo = "2024-02-09";
 
-        // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, invalidProviderAccount))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateProviderReportCrm4.providerAccount: must match \"([0-9A-Za-z]){4,6}\"");
     }
 
     @Test
-    void generateProviderReportCrm4Test_MissingDecisionFromIsGivenThenReturnConstraintViolationException() {
+    void generateProviderReportCrm4_WhenDecisionFromIsMissingThenThrowConstraintViolationException() {
         String decisionTo = "2024-02-09";
 
-        // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(null, decisionTo, PROVIDER_ACCOUNT))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionFrom: must not be null");
     }
 
     @Test
-    void generateProviderReportCrm4Test_MissingDecisionToIsGivenThenReturnConstraintViolationException() {
+    void generateProviderReportCrm4_WhenDecisionToIsMissingThenThrowConstraintViolationException() {
         String decisionFrom = "2024-02-19";
 
-        // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, null, PROVIDER_ACCOUNT))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionTo: must not be null");
     }
 
     @Test
-    void generateProviderReportCrm4Test_MissingProviderAccountIsGivenThenReturnConstraintViolationException() {
+    void generateProviderReportCrm4_WhenProviderAccountIsMissingThenThrowConstraintViolationException() {
         String decisionFrom = "2024-02-19";
         String decisionTo = "2024-02-09";
 
-        // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, null))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.providerAccount: must not be null");

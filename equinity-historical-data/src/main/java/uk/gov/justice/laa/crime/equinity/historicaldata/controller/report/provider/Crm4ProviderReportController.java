@@ -20,7 +20,7 @@ public class Crm4ProviderReportController implements ProviderReportCrm4Api {
 
         ReportInputsUtil.checkDateRange(decisionFrom, decisionTo);
 
-        log.info("eForm CRM4 Provider report request received :: decision date between [{}] and [{}]", decisionFrom, decisionTo);
+        log.info("eForm CRM4 Provider report request received :: decision date between [{}] and [{}], provider account = [{}]", decisionFrom, decisionTo, providerAccount);
 
         return ResponseEntity.ok(
             reportService.getReport(decisionFrom, decisionTo, providerAccount)

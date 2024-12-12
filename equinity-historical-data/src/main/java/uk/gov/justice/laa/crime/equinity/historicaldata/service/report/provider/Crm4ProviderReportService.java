@@ -20,7 +20,7 @@ public class Crm4ProviderReportService {
     @Transactional
     @Timed("laa_crime_equiniti_historic_data_provider_report_crm4_generate")
     public String getReport(String startDate, String endDate, String providerAccount) throws ResourceNotFoundException {
-        log.info("Generating CRM4 Provider Report between :: {} and {}", startDate, endDate);
+        log.info("Generating CRM4 Provider Report between :: {} and {}, provider account = {}", startDate, endDate, providerAccount);
         List<Crm4ProviderReportModel> report = reportRepository.getReport(startDate, endDate, providerAccount);
 
         if (report.isEmpty()) {

@@ -46,7 +46,6 @@ class Crm4ProviderReportServiceTest {
                 200.0, 200.0)
         ));
 
-
         String results = reportService.getReport(startDate, endDate, providerAccount );
 
         softly.assertThat(results).isNotEmpty();
@@ -55,21 +54,18 @@ class Crm4ProviderReportServiceTest {
                 "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n" +
                 "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Some expert,tyjtjtjt," +
                 "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n");
-
     }
 
     @Test
-    void getReportShouldThrowExceptionWhenNoReportData() {
+    void getReportThrowsResourceNotFoundExceptionWhenNoReportData() {
         String startDate = "1988-02-01";
         String endDate = "1988-02-02";
         String providerAccount = "123ABC";
 
         when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of());
 
-        // execute
         softly.assertThatThrownBy(() -> reportService.getReport(startDate,endDate, providerAccount))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("No data found for CRM4 Provider Report between 1988-02-01 and 1988-02-02, provider account = 123ABC");
-
     }
 }
