@@ -57,20 +57,18 @@ public class Crm4ProviderReportModel {
     private Double totalAuthority;
     @Column(name="Total Granted")
     private Double totalGranted;
-    @Column(name="Granting Caseworker")
-    private String grantingCaseworker;
 
     public String exportToCSV() {
         return String.format(
-                "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+                "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                 clientUsn, usn, providerAccount, firmName, clientName,
                 repOrderNumber, maatId, prisonLaw, receivedDate, decisionDate,
                 decisionResult, expenditureType, expertName, quantity, rate, unit,
-                totalCost, additionalExpenditure, totalAuthority, totalGranted, grantingCaseworker
+                totalCost, additionalExpenditure, totalAuthority, totalGranted
         );
     }
 
     public static String exportHeaderToCSV() {
-        return "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted,Granting Caseworker\n";
+        return "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n";
     }
 }

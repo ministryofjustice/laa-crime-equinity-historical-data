@@ -44,7 +44,7 @@ class Crm4ProviderReportServiceTest {
                 "1234567", "", "No", LocalDate.of(2023, 3, 16),
                 LocalDate.of(2023, 3, 16), "Grant", "Some expert",
                 "tyjtjtjt", 4.0, 50.0, "Hour(s)", 200.0, 0.0,
-                200.0, 200.0, "XXXX")
+                200.0, 200.0)
         ));
 
 
@@ -53,15 +53,14 @@ class Crm4ProviderReportServiceTest {
         softly.assertThat(results).isNotEmpty();
         softly.assertThat(results).isEqualTo("Client UFN,Usn,Provider Account,Firm Name,Client Name," +
                 "Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name," +
-                "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted,Granting Caseworker\n" +
+                "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n" +
                 "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Some expert,tyjtjtjt," +
-                "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0,XXXX\n");
+                "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n");
 
     }
 
     @Test
     void getReportShouldThrowExceptionWhenNoReportData() {
-
         String startDate = "1988-02-01";
         String endDate = "1988-02-02";
         String providerAccount = "123ABC";
