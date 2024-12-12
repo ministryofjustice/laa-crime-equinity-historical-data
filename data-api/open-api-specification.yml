@@ -256,11 +256,7 @@ paths:
           in: query
           required: true
           schema:
-            type: string
-            minLength: 4
-            maxLength: 6
-            pattern: "([0-9A-Za-z]){4,6}"
-            example: '0X12YZ'
+            $ref: '#/components/schemas/ParamFilterByProviderAccount'
       responses:
         '200':
           description: 'Success'
@@ -339,11 +335,7 @@ components:
       in: query
       required: false
       schema:
-        type: string
-        minLength: 4
-        maxLength: 6
-        pattern: "([0-9A-Za-z]){4,6}"
-        example: '0X12YZ'
+        $ref: '#/components/schemas/ParamFilterByProviderAccount'
     searchPage:
       name: page
       in: query
@@ -424,6 +416,12 @@ components:
       minimum: 0
       maximum: 1
       example: '0|1'
+    ParamFilterByProviderAccount:
+      type: string
+      minLength: 4
+      maxLength: 6
+      pattern: "([0-9A-Za-z]){4,6}"
+      example: '0X12YZ'
 
     ## Search
     SearchResultDTO:
