@@ -116,13 +116,12 @@ class Crm4PeriodicalReportControllerTest {
 
     @Test
     void generateReportCrm4Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
-        String startDate = "2010-02-01";
-        String endDate = "2024-06-01";
+        String decisionFrom = "2010-02-01";
+        String decisionTo = "2024-06-01";
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        startDate, endDate, DENIED_PROFILE_TYPES))
+                        decisionFrom, decisionTo, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class);
     }
-
 }

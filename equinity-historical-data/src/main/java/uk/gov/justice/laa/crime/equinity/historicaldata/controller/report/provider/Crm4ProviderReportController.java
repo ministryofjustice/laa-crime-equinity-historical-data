@@ -17,14 +17,14 @@ public class Crm4ProviderReportController implements ProviderReportCrm4Api {
 
     @Override
     public ResponseEntity<String> generateProviderReportCrm4(
-            String decisionFrom, String decisionTo) {
+            String decisionFrom, String decisionTo, String providerAccount) {
 
         ReportInputsUtil.checkDateRange(decisionFrom, decisionTo);
 
         log.info("eForm CRM4 Provider report request received :: decision between [{}] and [{}]", decisionFrom, decisionTo);
 
         return ResponseEntity.ok(
-            reportService.getReport(decisionFrom, decisionTo)
+            reportService.getReport(decisionFrom, decisionTo, providerAccount)
         );
     }
 }

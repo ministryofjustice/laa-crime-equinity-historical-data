@@ -235,15 +235,32 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
-  /api/internal/v1/equinity/report/provider/crm4/{decisionFrom}/{decisionTo}:
+  /api/internal/v1/equinity/report/provider/crm4/:
     get:
       tags:
         - ProviderReportCrm4
-      summary: 'CRM4 Periodical Provider Report'
+      summary: 'CRM4 Provider Report'
       operationId: 'generateProviderReportCrm4'
       parameters:
-        - $ref: '#/components/parameters/reportDecisionFrom'
-        - $ref: '#/components/parameters/reportDecisionTo'
+        - name: decisionFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: decisionTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: providerAccount
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 4
+            maxLength: 6
+            pattern: "([0-9A-Za-z]){4,6}"
+            example: '0X12YZ'
       responses:
         '200':
           description: 'Success'

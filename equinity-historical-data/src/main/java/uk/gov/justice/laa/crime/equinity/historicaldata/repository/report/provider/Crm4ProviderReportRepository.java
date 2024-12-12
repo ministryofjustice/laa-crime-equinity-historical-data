@@ -10,5 +10,7 @@ import java.util.List;
 public interface Crm4ProviderReportRepository extends JpaRepository<Crm4ProviderReportModel, Integer> {
 
     @Procedure("Reporting_CRM4PeriodicalReport_ProviderVersion")
-    List<Crm4ProviderReportModel> getReport(@Param("decisionRangeStart") String decisionRangeStart, @Param("decisionRangeEnd") String decisionRangeEnd);
+    List<Crm4ProviderReportModel> getReport(@Param("decisionRangeStart") String decisionRangeStart,
+                                            @Param("decisionRangeEnd") String decisionRangeEnd,
+                                            @Param("providerAccount") String providerAccount);
 }

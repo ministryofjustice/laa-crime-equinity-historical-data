@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4ProviderReportServiceTest {
+    private static final String PROVIDER_ACCOUNT = "123ABC";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -34,10 +35,11 @@ class Crm4ProviderReportServiceTest {
 
     @Test
     void getReportShouldReturnCSV() {
-        String decisionFrom = "2010-02-01";
-        String decisionTo = "2024-06-01";
+        String startDate = "2010-02-01";
+        String endDate = "2024-06-01";
+        String providerAccount = "123ABC";
 
-        when(mockReportRepository.getReport(decisionFrom, decisionTo)).thenReturn(List.of(new Crm4ProviderReportModel(
+        when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of(new Crm4ProviderReportModel(
                 "123456/123", 1234567L, "1ABCD", "XXXX", "John Doe",
                 "1234567", "", "No", LocalDate.of(2023, 3, 16),
                 LocalDate.of(2023, 3, 16), "Grant", "Some expert",
@@ -46,7 +48,7 @@ class Crm4ProviderReportServiceTest {
         ));
 
 
-        String results = reportService.getReport("2010-02-01", "2024-06-01");
+        String results = reportService.getReport(startDate, endDate, providerAccount );
 
         softly.assertThat(results).isNotEmpty();
         softly.assertThat(results).isEqualTo("Client UFN,Usn,Provider Account,Firm Name,Client Name," +
@@ -60,13 +62,14 @@ class Crm4ProviderReportServiceTest {
     @Test
     void getReportShouldThrowExceptionWhenNoReportData() {
 
-        String decisionFrom = "1988-02-01";
-        String decisionTo = "1988-02-02";
+        String startDate = "1988-02-01";
+        String endDate = "1988-02-02";
+        String providerAccount = "123ABC";
 
-        when(mockReportRepository.getReport(decisionFrom, decisionTo)).thenReturn(List.of());
+        when(mockReportRepository.getReport(startDate, endDate, providerAccount)).thenReturn(List.of());
 
         // execute
-        softly.assertThatThrownBy(() -> reportService.getReport("2010-02-01", "2024-06-01"))
+        softly.assertThatThrownBy(() -> reportService.getReport(startDate,endDate, providerAccount))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("No data found for CRM4 Provider Report between 1988-02-01 and 1988-02-02");
 
