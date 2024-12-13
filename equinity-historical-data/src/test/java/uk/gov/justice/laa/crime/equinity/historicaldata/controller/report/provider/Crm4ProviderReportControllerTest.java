@@ -57,11 +57,14 @@ class Crm4ProviderReportControllerTest {
         ResponseEntity<String> response = controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(response.getBody()).isEqualTo("Client UFN,Usn,Provider Account,Firm Name,Client Name," +
-                "Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name," +
-                "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n" +
-                "123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Costs,Some expert," +
-                "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n");
+        String expectedReport = """
+                Client UFN,Usn,Provider Account,Firm Name,Client Name,\
+                Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,\
+                Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted
+                123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,2023-03-16,2023-03-16,Grant,Costs,Some expert,\
+                4.0,50.0,Hour(s),200.0,0.0,200.0,200.0
+                """;
+        softly.assertThat(response.getBody()).isEqualTo(expectedReport);
     }
 
     @ParameterizedTest

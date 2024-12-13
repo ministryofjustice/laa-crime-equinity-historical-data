@@ -36,6 +36,6 @@ public class Crm4ProviderReportService {
     private String exportToCSV(List<Crm4ProviderReportModel> report) {
         return report.stream()
                 .map(Crm4ProviderReportModel::exportToCSV)
-                .reduce(Crm4ProviderReportModel.exportHeaderToCSV(), String::concat);
+                .reduce(Crm4ProviderReportModel.CSV_HEADER, String::concat);
     }
 }

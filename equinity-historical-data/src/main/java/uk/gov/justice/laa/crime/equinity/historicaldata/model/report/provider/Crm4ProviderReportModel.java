@@ -15,6 +15,9 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.BaseCrm4Rep
 @EqualsAndHashCode(callSuper = true)
 @Entity(name="Crm4ProviderReport")
 public class Crm4ProviderReportModel extends BaseCrm4ReportModel {
+    public static final String CSV_HEADER = "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number," +
+            "Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit," +
+            "Total Cost,Additional Expenditure,Total Authority,Total Granted\n";
 
     public String exportToCSV() {
         return String.format(
@@ -24,9 +27,5 @@ public class Crm4ProviderReportModel extends BaseCrm4ReportModel {
                 getDecisionResult(), getExpenditureType(), getExpertName(), getQuantity(), getRate(), getUnit(),
                 getTotalCost(), getAdditionalExpenditure(), getTotalAuthority(), getTotalGranted()
         );
-    }
-
-    public static String exportHeaderToCSV() {
-        return "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted\n";
     }
 }
