@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseCrm4ReportModel {
+public abstract class AbstractCrm4ReportModel {
     @Column(name="Client UFN")
     private String clientUfn;
     @Id

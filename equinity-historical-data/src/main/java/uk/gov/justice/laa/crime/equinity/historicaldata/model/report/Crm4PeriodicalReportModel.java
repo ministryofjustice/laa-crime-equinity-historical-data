@@ -2,16 +2,11 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.model.report;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Immutable;
-
-import java.time.LocalDate;
 
 @Data
 @SuperBuilder
@@ -19,7 +14,7 @@ import java.time.LocalDate;
 @Immutable
 @EqualsAndHashCode(callSuper = true)
 @Entity(name="Crm4PeriodicalReport")
-public class Crm4PeriodicalReportModel extends BaseCrm4ReportModel {
+public class Crm4PeriodicalReportModel extends AbstractCrm4ReportModel {
 
     @Column(name="Granting Caseworker")
     private String grantingCaseworker;

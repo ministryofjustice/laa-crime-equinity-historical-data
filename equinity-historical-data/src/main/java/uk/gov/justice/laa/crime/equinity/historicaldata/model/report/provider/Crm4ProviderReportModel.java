@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Immutable;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.BaseCrm4ReportModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.AbstractCrm4ReportModel;
 
 @Data
 @SuperBuilder
@@ -14,7 +14,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.BaseCrm4Rep
 @Immutable
 @EqualsAndHashCode(callSuper = true)
 @Entity(name="Crm4ProviderReport")
-public class Crm4ProviderReportModel extends BaseCrm4ReportModel {
+public class Crm4ProviderReportModel extends AbstractCrm4ReportModel {
     public static final String CSV_HEADER = "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number," +
             "Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit," +
             "Total Cost,Additional Expenditure,Total Authority,Total Granted\n";
