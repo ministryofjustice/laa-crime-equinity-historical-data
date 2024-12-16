@@ -8,7 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.util.ReportInputsUtil;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 
-public record Crm14CaseSummaryReportCriteriaDTO(
+public record Crm14ReportCriteriaDTO(
         @NotNull Integer filterByDecision,
         @NotNull String decisionFrom, @NotNull String decisionTo,
         @NotNull Integer filterBySubmit,
@@ -20,7 +20,7 @@ public record Crm14CaseSummaryReportCriteriaDTO(
         @NotNull String state,
         @Nullable String profileAcceptedTypes
         ) {
-    public Crm14CaseSummaryReportCriteriaDTO {
+    public Crm14ReportCriteriaDTO {
         ProfileAcceptedTypesUtil.checkTypeIsAcceptedByProfile(CRM_TYPE_14, profileAcceptedTypes);
 
         boolean isdateRangeChecked = false;
@@ -54,7 +54,7 @@ public record Crm14CaseSummaryReportCriteriaDTO(
 
     @Override
     public String toString() {
-        return "Crm14CaseSummaryReportCriteriaDTO { " +
+        return "Crm14ReportCriteriaDTO { " +
                 "filterByDecision='" + filterByDecision + "'" +
                 ", decisionFrom='" + decisionFrom + "'" +
                 ", decisionTo='" + decisionTo + "'" +

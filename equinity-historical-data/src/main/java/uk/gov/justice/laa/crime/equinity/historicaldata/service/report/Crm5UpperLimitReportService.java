@@ -38,6 +38,6 @@ public class Crm5UpperLimitReportService {
     private String exportToCSV(List<Crm5UpperLimitReportModel> report) {
         return report.stream()
                 .map(Crm5UpperLimitReportModel::exportToCSV)
-                .reduce(Crm5UpperLimitReportModel.exportHeaderToCSV(), String::concat);
+                .reduce(Crm5UpperLimitReportModel.CSV_HEADER, String::concat);
     }
 }

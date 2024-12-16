@@ -16,7 +16,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 public class Crm4PeriodicalReportController implements ReportCrm4Api {
     private final Crm4PeriodicalReportService reportService;
 
-
     @Override
     public ResponseEntity<String> generateReportCrm4(
             String decisionFrom, String decisionTo, String profileAcceptedTypes) {
