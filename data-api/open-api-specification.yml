@@ -235,7 +235,43 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
-
+  /api/internal/v1/equinity/report/provider/crm4/:
+    get:
+      tags:
+        - ProviderReportCrm4
+      summary: 'CRM4 Provider Report'
+      operationId: 'generateProviderReportCrm4'
+      parameters:
+        - name: decisionFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: decisionTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: providerAccount
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByProviderAccount'
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+        '400':
+          description: 'Bad request'
+        '403':
+          description: 'Unauthorized'
+        '404':
+          description: 'Not found'
+        '500':
+          description: 'Internal server error'
 components:
   parameters:
     crmUsn:
@@ -299,11 +335,7 @@ components:
       in: query
       required: false
       schema:
-        type: string
-        minLength: 4
-        maxLength: 6
-        pattern: "([0-9A-Za-z]){4,6}"
-        example: '0X12YZ'
+        $ref: '#/components/schemas/ParamFilterByProviderAccount'
     searchPage:
       name: page
       in: query
@@ -384,6 +416,12 @@ components:
       minimum: 0
       maximum: 1
       example: '0|1'
+    ParamFilterByProviderAccount:
+      type: string
+      minLength: 4
+      maxLength: 6
+      pattern: "([0-9A-Za-z]){4,6}"
+      example: '0X12YZ'
 
     ## Search
     SearchResultDTO:

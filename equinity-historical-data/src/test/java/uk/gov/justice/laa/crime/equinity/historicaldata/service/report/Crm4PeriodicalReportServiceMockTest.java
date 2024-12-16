@@ -37,29 +37,13 @@ class Crm4PeriodicalReportServiceMockTest {
     @BeforeAll
     void setup() {
         List<Crm4PeriodicalReportModel> expectedResponse = new ArrayList<>();
-        Crm4PeriodicalReportModel report = new Crm4PeriodicalReportModel(
-                "031022/777",
-                5001600L,
-                "0D182J",
-                "ABELS",
-                "Joe modo",
-                "78543657",
-                "",
-                "No",
-                LocalDate.of(2023, 3, 16),
-                LocalDate.of(2023, 3, 16),
-                "Grant",
-                "a Psychiatrist",
-                "tyjtjtjt",
-                4.0,
-                50.0,
-                "Hour(s)",
-                200.0,
-                0.0,
-                200.0,
-                200.0,
-                "Sym-G"
-        );
+        Crm4PeriodicalReportModel report = Crm4PeriodicalReportModel.builder()
+                .clientUfn("031022/777").usn(5001600L).providerAccount("0D182J").firmName("ABELS").clientName("Joe modo")
+                .repOrderNumber("78543657").maatId("").prisonLaw("No").receivedDate(LocalDate.of(2023, 3, 16))
+                .decisionDate(LocalDate.of(2023, 3, 16)).decisionResult("Grant").expenditureType("a Psychiatrist")
+                .expertName("tyjtjtjt").quantity(4.0).rate(50.0).unit("Hour(s)").totalCost(200.0).additionalExpenditure(0.0)
+                .totalAuthority(200.0).totalGranted(200.0).grantingCaseworker("Sym-G").build();
+
         expectedResponse.add(report);
 
         when(reportRepository.getReport(any(), any()))
