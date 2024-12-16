@@ -69,7 +69,7 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
 
             csvService.close(writer);
         } catch (IOException e) {
-            log.error("Something went wrong generating CRM14 report for given criteria [{}]. Error:: {}. StackTrace:: {}", criteria, e.getMessage(), e.getStackTrace());
+            log.error("Something went wrong generating CRM14 Provider report for given criteria [{}]. Error:: {}. StackTrace:: {}", criteria, e.getMessage(), e.getStackTrace());
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             return null;
         }

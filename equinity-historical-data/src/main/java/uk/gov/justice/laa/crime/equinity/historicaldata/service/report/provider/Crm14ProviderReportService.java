@@ -21,7 +21,7 @@ public class Crm14ProviderReportService {
     private final Crm14ProviderReportRepository reportRepository;
 
     public static String getCSVFileName() {
-        return String.format("Report_CRM14_Provider_%s.csv", LocalDate.now());
+        return String.format("Provider_Report_CRM14_%s.csv", LocalDate.now());
     }
 
     @Transactional
