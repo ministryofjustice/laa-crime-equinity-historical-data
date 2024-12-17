@@ -27,10 +27,10 @@ public class DateUtil {
             .withLocale(Locale.UK);
 
     public enum DateRange {
-        CREATED("Created"),
-        DECISION("Decision"),
-        LAST_SUBMITTED("Last submitted"),
-        SUBMITTED("Submitted");
+        CREATED("created"),
+        DECISION("decision"),
+        LAST_SUBMITTED("lastSubmitted"),
+        SUBMITTED("submitted");
 
         private final String value;
 

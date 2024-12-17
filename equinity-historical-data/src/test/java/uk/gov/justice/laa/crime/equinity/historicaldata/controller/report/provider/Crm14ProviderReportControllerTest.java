@@ -114,7 +114,7 @@ class Crm14ProviderReportControllerTest {
                         0, VALID_START_DATE, VALID_END_DATE,
                         STATE_DEFAULT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: [Decision] start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: \"decision\" start date [2024-07-05] must not be after end date [2024-06-30]");
     }
 
     @Test
@@ -130,7 +130,7 @@ class Crm14ProviderReportControllerTest {
                         0, VALID_START_DATE, VALID_END_DATE,
                         STATE_DEFAULT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: [Submitted] start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: \"submitted\" start date [2024-07-05] must not be after end date [2024-06-30]");
     }
 
     @Test
@@ -146,7 +146,7 @@ class Crm14ProviderReportControllerTest {
                         0, VALID_START_DATE, VALID_END_DATE,
                         STATE_DEFAULT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: [Created] start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: \"created\" start date [2024-07-05] must not be after end date [2024-06-30]");
     }
 
     @Test
@@ -162,7 +162,7 @@ class Crm14ProviderReportControllerTest {
                         1, startDate, endDate,
                         STATE_DEFAULT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: [Last submitted] start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: \"lastSubmitted\" start date [2024-07-05] must not be after end date [2024-06-30]");
     }
 
     @Test
