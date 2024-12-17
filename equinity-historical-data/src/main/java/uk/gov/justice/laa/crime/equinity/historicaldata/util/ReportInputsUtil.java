@@ -20,6 +20,6 @@ public class ReportInputsUtil {
     public static void checkDateRange(String dateFrom, String dateTo, DateRange dateRange) throws DateRangeConstraintViolationException {
         LocalDate checkDateFrom = DateUtil.convertStringToLocalDate(dateFrom);
         LocalDate checkDateTo = DateUtil.convertStringToLocalDate(dateTo);
-        DateUtil.checkDateRangeIsValid(checkDateFrom, checkDateTo, dateRange);
+        DateUtil.checkDateRangeIsValid(dateRange, checkDateFrom, checkDateTo);
     }
 }

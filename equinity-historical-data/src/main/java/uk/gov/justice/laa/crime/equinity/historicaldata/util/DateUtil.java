@@ -50,13 +50,13 @@ public class DateUtil {
         return LocalDate.parse(dateToConvert, dateTimeFormatter);
     }
 
-    public static void checkDateRangeIsValid(LocalDate startDate, LocalDate endDate, DateRange dateRange) {
+    public static void checkDateRangeIsValid(DateRange dateRange, LocalDate startDate, LocalDate endDate) {
         if (Objects.isNull(startDate)) return; // By default, accept open date ranges
 
         if (Objects.isNull(endDate)) return; // By default, accept open date ranges
 
         if (startDate.isAfter(endDate))
-            throw new DateRangeConstraintViolationException(startDate, endDate, dateRange);
+            throw new DateRangeConstraintViolationException(dateRange, startDate, endDate);
     }
 
     public static Date convertStringToSimpleDate(String dateToConvert) throws ParseException {
