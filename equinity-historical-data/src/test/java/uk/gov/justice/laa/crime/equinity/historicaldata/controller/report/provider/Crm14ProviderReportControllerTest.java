@@ -16,6 +16,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm14ProviderReportRepository;
 
@@ -47,7 +49,7 @@ class Crm14ProviderReportControllerTest {
     Crm14ProviderReportController controller;
 
     @Test
-    void generateProviderReportCrm14Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() {
+    void generateProviderReportCrm14Test_WhenExistingDecisionDatesGivenThenReturnDTO() {
         Crm14ProviderReportModel report = new Crm14ProviderReportModel(
                 1234567L, LocalDate.of(2023, 3, 16), "",
                 LocalDate.of(2023, 3, 16), "Mr John Doe", "1ABCD",
@@ -100,7 +102,7 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14_WhenInvalidDecisionDateRangeIsGivenThenThrowConstraintViolationException() {
+    void generateProviderReportCrm14_WhenInvalidDecisionDateRangeIsGivenThenThrowConstraintViolationException() {
         String startDate = "2024-07-05";
         String endDate = "2024-06-30";
 
@@ -116,7 +118,7 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14_WhenInvalidSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
+    void generateProviderReportCrm14_WhenInvalidSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
         String startDate = "2024-07-05";
         String endDate = "2024-06-30";
 
@@ -132,7 +134,7 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14_WhenInvalidCreationDateRangeIsGivenThenThrowConstraintViolationException() {
+    void generateProviderReportCrm14_WhenInvalidCreationDateRangeIsGivenThenThrowConstraintViolationException() {
         String startDate = "2024-07-05";
         String endDate = "2024-06-30";
 
@@ -148,7 +150,7 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14_WhenInvalidLastSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
+    void generateProviderReportCrm14_WhenInvalidLastSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
         String startDate = "2024-07-05";
         String endDate = "2024-06-30";
 
@@ -161,5 +163,42 @@ class Crm14ProviderReportControllerTest {
                         STATE_DEFAULT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: [Last submitted] start date [2024-07-05] must not be after end date [2024-06-30]");
+    }
+
+    @Test
+    void generateReportCrm14_WhenNoFilterFlagIsSetThenThrowDateRangeConstraintViolationException() {
+        // execute
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        STATE_DEFAULT))
+                .isInstanceOf(NotEnoughSearchParametersException.class)
+                .hasMessage("Not enough inputs to generate report. Please specify at least 1 date range and turn on the corresponding filter flag");
+    }
+
+    @Test
+    void generateProviderReportCrm14_WhenExistingDecisionDatesGivenThenReturnDTO2() {
+        Crm14ProviderReportModel report = new Crm14ProviderReportModel(
+                1234567L, LocalDate.of(2023, 3, 16), "",
+                LocalDate.of(2023, 3, 16), "Mr John Doe", "1ABCD",
+                "Someone", "Crown Court", "Indictable", "Passed",
+                LocalDate.of(2023, 3, 16), "XXXX", "Some charge");
+
+        when(mockReportRepository.getReport(0, VALID_START_DATE, VALID_END_DATE,
+                0, VALID_START_DATE, VALID_END_DATE,
+                1, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
+                0, VALID_START_DATE, VALID_END_DATE)).thenThrow(new ResourceNotFoundException("error"));
+
+        // execute
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        1, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        STATE_DEFAULT))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("No data found for CRM14 Provider Report for inputs");
     }
 }

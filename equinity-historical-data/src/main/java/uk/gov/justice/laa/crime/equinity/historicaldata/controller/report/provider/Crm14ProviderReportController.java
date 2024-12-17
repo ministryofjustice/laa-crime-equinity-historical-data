@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ProviderReportCrm14Api;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ProviderReportCriteriaDTO;
@@ -46,9 +45,6 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
 
             log.info("eForm CRM14 Provider report download request received :: [{}]", criteria);
             reportData = reportService.getReportData(criteria);
-        } catch (UnauthorizedUserProfileException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            throw e;
         } catch (ResourceNotFoundException e) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
             throw e;

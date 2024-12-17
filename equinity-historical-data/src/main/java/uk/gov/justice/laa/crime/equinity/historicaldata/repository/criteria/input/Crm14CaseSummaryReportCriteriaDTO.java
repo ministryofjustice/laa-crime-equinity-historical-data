@@ -27,22 +27,22 @@ public record Crm14CaseSummaryReportCriteriaDTO(
         boolean isdateRangeChecked = false;
 
         if (filterByDecision > 0) {
-            ReportInputsUtil.checkDateRange(decisionFrom, decisionTo, DECISION);
+            ReportInputsUtil.checkDateRange(DECISION, decisionFrom, decisionTo);
             isdateRangeChecked = true;
         }
 
         if (filterBySubmit > 0) {
-            ReportInputsUtil.checkDateRange(submittedFrom, submittedTo, SUBMITTED);
+            ReportInputsUtil.checkDateRange(SUBMITTED, submittedFrom, submittedTo);
             isdateRangeChecked = true;
         }
 
         if (filterByCreation > 0) {
-            ReportInputsUtil.checkDateRange(createdFrom, createdTo, CREATED);
+            ReportInputsUtil.checkDateRange(CREATED, createdFrom, createdTo);
             isdateRangeChecked = true;
         }
 
         if (filterByLastSubmit > 0) {
-            ReportInputsUtil.checkDateRange(lastSubmittedFrom, lastSubmittedTo, LAST_SUBMITTED);
+            ReportInputsUtil.checkDateRange(LAST_SUBMITTED, lastSubmittedFrom, lastSubmittedTo);
             isdateRangeChecked = true;
         }
 
@@ -51,7 +51,6 @@ public record Crm14CaseSummaryReportCriteriaDTO(
         }
 
     }
-
 
     @Override
     public String toString() {
