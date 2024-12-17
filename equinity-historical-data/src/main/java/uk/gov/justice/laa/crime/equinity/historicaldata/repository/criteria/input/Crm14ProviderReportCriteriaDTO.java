@@ -1,14 +1,13 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input;
 
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.ProfileAcceptedTypesUtil;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.ReportInputsUtil;
 
-import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.*;
 
-public record Crm14ReportCriteriaDTO(
+public record Crm14ProviderReportCriteriaDTO(
         @NotNull Integer filterByDecision,
         @NotNull String decisionFrom, @NotNull String decisionTo,
         @NotNull Integer filterBySubmit,
@@ -17,31 +16,28 @@ public record Crm14ReportCriteriaDTO(
         @NotNull String createdFrom, @NotNull  String createdTo,
         @NotNull Integer filterByLastSubmit,
         @NotNull String lastSubmittedFrom, @NotNull String lastSubmittedTo,
-        @NotNull String state,
-        @Nullable String profileAcceptedTypes
+        @NotNull String state
         ) {
-    public Crm14ReportCriteriaDTO {
-        ProfileAcceptedTypesUtil.checkTypeIsAcceptedByProfile(CRM_TYPE_14, profileAcceptedTypes);
-
+    public Crm14ProviderReportCriteriaDTO {
         boolean isdateRangeChecked = false;
 
         if (filterByDecision > 0) {
-            ReportInputsUtil.checkDateRange(decisionFrom, decisionTo);
+            ReportInputsUtil.checkDateRange(decisionFrom, decisionTo, DECISION);
             isdateRangeChecked = true;
         }
 
         if (filterBySubmit > 0) {
-            ReportInputsUtil.checkDateRange(submittedFrom, submittedTo);
+            ReportInputsUtil.checkDateRange(submittedFrom, submittedTo, SUBMITTED);
             isdateRangeChecked = true;
         }
 
         if (filterByCreation > 0) {
-            ReportInputsUtil.checkDateRange(createdFrom, createdTo);
+            ReportInputsUtil.checkDateRange(createdFrom, createdTo, CREATED);
             isdateRangeChecked = true;
         }
 
         if (filterByLastSubmit > 0) {
-            ReportInputsUtil.checkDateRange(lastSubmittedFrom, lastSubmittedTo);
+            ReportInputsUtil.checkDateRange(lastSubmittedFrom, lastSubmittedTo, LAST_SUBMITTED);
             isdateRangeChecked = true;
         }
 
@@ -54,7 +50,7 @@ public record Crm14ReportCriteriaDTO(
 
     @Override
     public String toString() {
-        return "Crm14ReportCriteriaDTO { " +
+        return "Crm14CaseSummaryReportCriteriaDTO { " +
                 "filterByDecision='" + filterByDecision + "'" +
                 ", decisionFrom='" + decisionFrom + "'" +
                 ", decisionTo='" + decisionTo + "'" +
@@ -68,7 +64,6 @@ public record Crm14ReportCriteriaDTO(
                 ", lastSubmittedFrom='" + lastSubmittedFrom + "'" +
                 ", lastSubmittedTo='" + lastSubmittedTo + "'" +
                 ", state='" + state + "'" +
-                ", profileAcceptedTypes='" + profileAcceptedTypes + "'" +
             '}';
     }
 }

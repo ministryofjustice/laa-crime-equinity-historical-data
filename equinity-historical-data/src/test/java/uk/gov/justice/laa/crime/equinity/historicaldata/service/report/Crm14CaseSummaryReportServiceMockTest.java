@@ -8,8 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14CaseSummaryReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
 
 import java.time.LocalDate;
@@ -142,7 +142,7 @@ class Crm14CaseSummaryReportServiceMockTest {
 
     @Test
     void getReportDataWhenCalledMockedThenShouldReturnList() {
-        Crm14ReportCriteriaDTO criteria = new Crm14ReportCriteriaDTO(
+        Crm14CaseSummaryReportCriteriaDTO criteria = new Crm14CaseSummaryReportCriteriaDTO(
                 1, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",

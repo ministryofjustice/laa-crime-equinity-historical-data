@@ -279,7 +279,6 @@ paths:
       summary: 'CRM14 Provider Report'
       operationId: 'generateProviderReportCrm14'
       parameters:
-        - $ref: '#/components/parameters/profileAcceptedTypes'
         - name: filterByDecision
           in: query
           required: true

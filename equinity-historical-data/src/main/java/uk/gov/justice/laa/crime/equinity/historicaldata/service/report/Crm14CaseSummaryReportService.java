@@ -5,9 +5,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14CaseSummaryReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
 
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class Crm14CaseSummaryReportService {
 
     @Transactional
     @Timed("laa_crime_equiniti_historic_data_report_crm14_get_data")
-    public List<Crm14CaseSummaryReportModel> getReportData(Crm14ReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {
+    public List<Crm14CaseSummaryReportModel> getReportData(Crm14CaseSummaryReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {
         log.info("Collecting data for CRM14 Case Summary Report with :: {} ", reportCriteria);
         List<Crm14CaseSummaryReportModel> reportData = reportRepository.getReport(
                 reportCriteria.filterByDecision(), reportCriteria.decisionFrom(), reportCriteria.decisionTo(),

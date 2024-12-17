@@ -11,7 +11,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ProviderReportCrm14Api;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ProviderReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.provider.Crm14ProviderReportService;
 
@@ -31,17 +31,17 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
                                                             Integer filterBySubmit, String submittedFrom, String submittedTo,
                                                             Integer filterByCreation, String createdFrom, String createdTo,
                                                             Integer filterByLastSubmit, String lastSubmittedFrom, String lastSubmittedTo,
-                                                            String profileAcceptedTypes, String state) {
-        Crm14ReportCriteriaDTO criteria;
+                                                            String state) {
+        Crm14ProviderReportCriteriaDTO criteria;
         List<Crm14ProviderReportModel> reportData;
 
         try {
-            criteria = new Crm14ReportCriteriaDTO(
+            criteria = new Crm14ProviderReportCriteriaDTO(
                     filterByDecision, decisionFrom, decisionTo,
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
                     filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
-                    state, profileAcceptedTypes
+                    state
             );
 
             log.info("eForm CRM14 Provider report download request received :: [{}]", criteria);

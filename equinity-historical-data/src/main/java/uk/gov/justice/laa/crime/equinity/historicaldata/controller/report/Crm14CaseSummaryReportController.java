@@ -11,7 +11,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ReportCrm14Api;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14CaseSummaryReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
@@ -32,11 +32,11 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
                                                     Integer filterByCreation, String createdFrom, String createdTo,
                                                     Integer filterByLastSubmit, String lastSubmittedFrom, String lastSubmittedTo,
                                                     String profileAcceptedTypes, String state) {
-        Crm14ReportCriteriaDTO criteria;
+        Crm14CaseSummaryReportCriteriaDTO criteria;
         List<Crm14CaseSummaryReportModel> reportData;
 
         try {
-            criteria = new Crm14ReportCriteriaDTO(
+            criteria = new Crm14CaseSummaryReportCriteriaDTO(
                     filterByDecision, decisionFrom, decisionTo,
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
