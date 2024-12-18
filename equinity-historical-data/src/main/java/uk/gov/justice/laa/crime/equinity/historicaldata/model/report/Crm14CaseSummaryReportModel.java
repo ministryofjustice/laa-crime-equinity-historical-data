@@ -30,7 +30,7 @@ public class Crm14CaseSummaryReportModel {
     @Column(name="DTCreated")
     private LocalDate createdDate;
     @Column(name="MAAT")
-    private String MAAT;
+    private String maat;
     @Column(name="DTFirstSubmitted")
     private LocalDate firstSubmittedDate;
     @Column(name="DefendantName")
@@ -109,7 +109,7 @@ public class Crm14CaseSummaryReportModel {
     public String[] exportToCSVArray() {
         return String.format(
                 "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                usn, createdDate, MAAT, firstSubmittedDate, defendantName, providerAccount,
+                usn, createdDate, maat, firstSubmittedDate, defendantName, providerAccount,
                 originatorName, queueType, queueName, queueSortOrder, court,
                 sanitiseField(caseworker), state,
                 firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,

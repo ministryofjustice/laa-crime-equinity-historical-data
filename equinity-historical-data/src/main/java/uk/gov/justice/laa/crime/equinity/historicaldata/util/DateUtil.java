@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,11 +15,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.CREATED;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.DECISION;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.LAST_SUBMITTED;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
 
 @UtilityClass
 @ConfigurationPropertiesScan

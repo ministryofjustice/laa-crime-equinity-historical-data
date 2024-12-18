@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

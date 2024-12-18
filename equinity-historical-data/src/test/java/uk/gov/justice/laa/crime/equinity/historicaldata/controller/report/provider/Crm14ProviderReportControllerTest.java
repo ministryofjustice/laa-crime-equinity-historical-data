@@ -25,7 +25,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -34,7 +33,6 @@ class Crm14ProviderReportControllerTest {
     private static final String STATE_DEFAULT = "All";
     private static final String VALID_START_DATE = "2024-06-01";
     private static final String VALID_END_DATE = "2024-06-30";
-    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
 
     @InjectSoftAssertions
     private SoftAssertions softly;

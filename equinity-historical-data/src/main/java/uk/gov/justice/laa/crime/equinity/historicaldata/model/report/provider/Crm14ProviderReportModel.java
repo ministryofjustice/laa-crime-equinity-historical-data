@@ -26,7 +26,7 @@ public class Crm14ProviderReportModel {
     @Column(name="DTCreated")
     private LocalDate createdDate;
     @Column(name="MAAT")
-    private String MAAT;
+    private String maat;
     @Column(name="DTFirstSubmitted")
     private LocalDate firstSubmittedDate;
     @Column(name="DefendantName")
@@ -51,7 +51,7 @@ public class Crm14ProviderReportModel {
     public String[] exportToCSVArray() {
         return String.format(
             "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
-            usn, createdDate, MAAT, firstSubmittedDate, defendantName, firmNo,
+            usn, createdDate, maat, firstSubmittedDate, defendantName, firmNo,
             originatorName, court, caseType, ioJDecision, decisionDate, providerName, charges
         ).split(",");
     }
