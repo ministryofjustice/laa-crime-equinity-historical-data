@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ProviderReportCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm14ProviderReportRepository;
 
 import java.time.LocalDate;
@@ -48,12 +48,12 @@ class Crm14ProviderReportServiceTest {
                 0, "2010-02-01", "2024-06-01"))
                 .thenReturn(List.of(report));
 
-        Crm14ProviderReportCriteriaDTO reportCriteria = new Crm14ProviderReportCriteriaDTO(
+        Crm14ReportCriteriaDTO reportCriteria = new Crm14ReportCriteriaDTO(
                 1, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
-                "All"
+                "All", null
         );
 
         List<Crm14ProviderReportModel> results = reportService.getReportData(reportCriteria);
@@ -71,12 +71,12 @@ class Crm14ProviderReportServiceTest {
                 0, "2010-02-01", "2024-06-01"))
                 .thenReturn(List.of());
 
-        Crm14ProviderReportCriteriaDTO reportCriteria = new Crm14ProviderReportCriteriaDTO(
+        Crm14ReportCriteriaDTO reportCriteria = new Crm14ReportCriteriaDTO(
                 1, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
-                "All"
+                "All", null
         );
 
         softly.assertThatThrownBy(() -> reportService.getReportData(reportCriteria))

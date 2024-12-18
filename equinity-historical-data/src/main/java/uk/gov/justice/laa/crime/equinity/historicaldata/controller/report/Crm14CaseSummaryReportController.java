@@ -11,7 +11,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ReportCrm14Api;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14CaseSummaryReportCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
 
@@ -32,11 +32,11 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
                                                     Integer filterByCreation, String createdFrom, String createdTo,
                                                     Integer filterByLastSubmit, String lastSubmittedFrom, String lastSubmittedTo,
                                                     String profileAcceptedTypes, String state) {
-        Crm14CaseSummaryReportCriteriaDTO criteria;
+        Crm14ReportCriteriaDTO criteria;
         List<Crm14CaseSummaryReportModel> reportData;
 
         try {
-            criteria = new Crm14CaseSummaryReportCriteriaDTO(
+            criteria = new Crm14ReportCriteriaDTO(
                     filterByDecision, decisionFrom, decisionTo,
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
@@ -60,7 +60,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
             CSVWriter writer = csvService.open();
 
             // Write header to CSV file
-            csvService.writeLine(writer, Crm14CaseSummaryReportModel.CSV_HEADER_ARRAY);
+            csvService.writeLine(writer, Crm14CaseSummaryReportModel.exportHeaderToCSVArray());
 
             // Write data to CSV file
             for (Crm14CaseSummaryReportModel report : reportData) {

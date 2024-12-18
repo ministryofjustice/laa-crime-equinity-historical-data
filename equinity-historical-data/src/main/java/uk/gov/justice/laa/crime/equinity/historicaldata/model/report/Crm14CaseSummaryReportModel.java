@@ -24,8 +24,6 @@ public class Crm14CaseSummaryReportModel {
             "SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2," +
             "ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5";
 
-    public static final String[] CSV_HEADER_ARRAY = CSV_HEADER.split(",");
-
     @Id
     @Column(name="USN")
     private Long usn;
@@ -121,6 +119,10 @@ public class Crm14CaseSummaryReportModel {
                 resubmissionDate2, returnDate3, resubmissionDate3, returnDate4, resubmissionDate4,
                 returnDate5, resubmissionDate5
         ).split(",");
+    }
+
+    public static String[] exportHeaderToCSVArray() {
+        return CSV_HEADER.split(",");
     }
 
     private String sanitiseField(String text) {

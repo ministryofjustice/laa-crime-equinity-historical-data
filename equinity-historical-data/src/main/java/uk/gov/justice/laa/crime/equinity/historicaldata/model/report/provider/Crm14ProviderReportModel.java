@@ -20,8 +20,6 @@ public class Crm14ProviderReportModel {
     public static final String CSV_HEADER = "Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,FirmNo," +
             "Originator,Court,CaseType,IOJDecision,DTDecision,ProviderName,Charges";
 
-    public static final String[] CSV_HEADER_ARRAY = CSV_HEADER.split(",");
-
     @Id
     @Column(name="USN")
     private Long usn;
@@ -56,5 +54,9 @@ public class Crm14ProviderReportModel {
             usn, createdDate, MAAT, firstSubmittedDate, defendantName, firmNo,
             originatorName, court, caseType, ioJDecision, decisionDate, providerName, charges
         ).split(",");
+    }
+
+    public static String[] exportHeaderToCSVArray() {
+        return CSV_HEADER.split(",");
     }
 }

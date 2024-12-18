@@ -80,10 +80,6 @@ class Crm14ProviderReportControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateProviderReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException(String invalidDate) {
-        String expectedMessage = "must match";
-        String validDate = "2050-01-01";
-
-        // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         1, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
@@ -180,12 +176,6 @@ class Crm14ProviderReportControllerTest {
 
     @Test
     void generateProviderReportCrm14_WhenExistingDecisionDatesGivenThenReturnDTO2() {
-        Crm14ProviderReportModel report = new Crm14ProviderReportModel(
-                1234567L, LocalDate.of(2023, 3, 16), "",
-                LocalDate.of(2023, 3, 16), "Mr John Doe", "1ABCD",
-                "Someone", "Crown Court", "Indictable", "Passed",
-                LocalDate.of(2023, 3, 16), "XXXX", "Some charge");
-
         when(mockReportRepository.getReport(0, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
                 1, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
