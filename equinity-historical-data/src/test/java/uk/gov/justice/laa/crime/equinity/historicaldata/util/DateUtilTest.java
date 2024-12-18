@@ -118,6 +118,6 @@ class DateUtilTest {
         softly.assertThatThrownBy(() -> DateUtil.checkDateRangeIsValid(DateUtil.DateRange.DECISION,
                         LocalDate.of(2024, 1, 1), LocalDate.of(2023, 12, 1)))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: \"decision\" start date [2024-01-01] must not be after end date [2023-12-01]");
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-01-01] must not be after end date [2023-12-01]");
     }
 }
