@@ -18,7 +18,7 @@ public record CrmFormSearchCriteriaDTO(
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
-        DateUtil.checkDateRangeIsValid(dateSubmittedFrom, dateSubmittedTo);
+        DateUtil.checkDateRangeIsValid(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom, dateSubmittedTo);
 
         if (isNullOrBlank(usn) && (type == null)
                 && isNullOrBlank(client) && isNullOrBlank(clientDoB)

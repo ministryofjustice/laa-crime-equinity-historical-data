@@ -67,7 +67,7 @@ class Crm5UpperLimitReportServiceMockTest {
         String results = reportService.getReport("2010-02-01", "2024-06-01");
 
         softly.assertThat(results).isNotEmpty();
-        softly.assertThat(results).startsWith(Crm5UpperLimitReportModel.exportHeaderToCSV());
+        softly.assertThat(results).startsWith(Crm5UpperLimitReportModel.CSV_HEADER);
         softly.assertThat(results).contains("5001600,");
     }
 }

@@ -16,6 +16,10 @@ import org.hibernate.annotations.Immutable;
 @Entity(name="Crm4PeriodicalReport")
 public class Crm4PeriodicalReportModel extends AbstractCrm4ReportModel {
 
+    public static final String CSV_HEADER = "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number," +
+            "Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit," +
+            "Total Cost,Additional Expenditure,Total Authority,Total Granted,Granting Caseworker\n";
+
     @Column(name="Granting Caseworker")
     private String grantingCaseworker;
 
@@ -27,9 +31,5 @@ public class Crm4PeriodicalReportModel extends AbstractCrm4ReportModel {
                 getDecisionResult(), getExpenditureType(), getExpertName(), getQuantity(), getRate(), getUnit(),
                 getTotalCost(), getAdditionalExpenditure(), getTotalAuthority(), getTotalGranted(), grantingCaseworker
         );
-    }
-
-    public static String exportHeaderToCSV() {
-        return "Client UFN,Usn,Provider Account,Firm Name,Client Name,Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name,Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted,Granting Caseworker\n";
     }
 }

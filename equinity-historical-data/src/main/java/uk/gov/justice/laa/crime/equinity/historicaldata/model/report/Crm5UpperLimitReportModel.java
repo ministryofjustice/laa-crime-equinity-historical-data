@@ -16,6 +16,10 @@ import java.time.LocalDate;
 @Immutable
 @Entity(name="Crm5UpperLimitReport")
 public class Crm5UpperLimitReportModel {
+
+    public static final String CSV_HEADER = "Usn,Provider Account,Firm Name,Client Name,LAA Case Ref,New Limit Request," +
+            "Upper Limit Extended,Date Received,Decision Date,User,Review,Level Of Work\n";
+
     @Id
     @Column(name="USN")
     private Long usn;
@@ -49,9 +53,5 @@ public class Crm5UpperLimitReportModel {
                 newLimitRequest, upperLimitExtended, receivedDate, decisionDate,
                 currentUser, review, levelOfWork
         );
-    }
-
-    public static String exportHeaderToCSV() {
-        return "Usn,Provider Account,Firm Name,Client Name,LAA Case Ref,New Limit Request,Upper Limit Extended,Date Received,Decision Date,User,Review,Level Of Work\n";
     }
 }

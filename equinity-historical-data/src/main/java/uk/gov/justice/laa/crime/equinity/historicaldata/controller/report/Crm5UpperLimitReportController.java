@@ -16,7 +16,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 public class Crm5UpperLimitReportController implements ReportCrm5Api {
     private final Crm5UpperLimitReportService reportService;
 
-
     @Override
     public ResponseEntity<String> generateReportCrm5(
             String decisionFrom, String decisionTo, String profileAcceptedTypes) {
