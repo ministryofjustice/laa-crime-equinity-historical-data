@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
@@ -171,4 +172,24 @@ class Crm14CaseSummaryReportControllerTest {
                 .isInstanceOf(UnauthorizedUserProfileException.class);
     }
 
+    @Test
+    void generateReportCrm14Test_WhenNoReportDataThenThrowResourceNotFoundException() {
+        String startDate = "1988-02-01";
+        String endDate = "1988-02-02";
+
+        when(mockReportRepository.getReport(1, startDate, endDate,
+                0, startDate, endDate,
+                0, startDate, endDate, STATE_DEFAULT,
+                0, startDate, endDate)).thenReturn(List.of());
+
+
+        // execute
+        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
+                0, startDate, endDate,
+                1, startDate, endDate,
+                0, startDate, endDate,
+                0, startDate, endDate,
+                ACCEPTED_PROFILE_TYPES, STATE_DEFAULT
+        )).isInstanceOf(ResourceNotFoundException.class).hasMessageContaining("No data found for CRM14 Case Summary Report for inputs");
+    }
 }
