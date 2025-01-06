@@ -173,7 +173,7 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
-    void generateProviderReportCrm14_WhenExistingDecisionDatesGivenThenReturnDTO2() {
+    void generateProviderReportCrm14_WhenNoReportDataThenThrowResourceNotFoundException() {
         when(mockReportRepository.getReport(0, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
                 1, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
