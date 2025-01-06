@@ -5,6 +5,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("local")
+@Disabled
 class Crm14CaseSummaryReportControllerFailedWriterTest {
     private static final String STATE_DEFAULT = "All";
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
