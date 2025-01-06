@@ -177,7 +177,7 @@ class Crm14ProviderReportControllerTest {
         when(mockReportRepository.getReport(0, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
                 1, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
-                0, VALID_START_DATE, VALID_END_DATE)).thenThrow(new ResourceNotFoundException("error"));
+                0, VALID_START_DATE, VALID_END_DATE)).thenReturn(List.of());
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
