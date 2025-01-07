@@ -41,7 +41,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
                     filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
-                    state, profileAcceptedTypes
+                    state, null, profileAcceptedTypes
             );
 
             log.info("eForm CRM14 report download request received :: [{}]", criteria);

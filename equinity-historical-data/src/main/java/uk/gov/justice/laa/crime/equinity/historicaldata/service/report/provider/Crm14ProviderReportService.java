@@ -29,6 +29,7 @@ public class Crm14ProviderReportService {
     public List<Crm14ProviderReportModel> getReportData(Crm14ReportCriteriaDTO reportCriteria) throws ResourceNotFoundException {
         log.info("Collecting data for CRM14 Provider Report with :: {} ", reportCriteria);
         List<Crm14ProviderReportModel> reportData = reportRepository.getReport(
+                reportCriteria.providerAccount(),
                 reportCriteria.filterByDecision(), reportCriteria.decisionFrom(), reportCriteria.decisionTo(),
                 reportCriteria.filterBySubmit(), reportCriteria.submittedFrom(), reportCriteria.submittedTo(),
                 reportCriteria.filterByCreation(), reportCriteria.createdFrom(), reportCriteria.createdTo(),

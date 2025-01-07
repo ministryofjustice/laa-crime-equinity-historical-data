@@ -151,7 +151,7 @@ class Crm14CaseSummaryReportServiceMockTest {
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
-                "All", null
+                "All", null, null
         );
         List<Crm14CaseSummaryReportModel> results = reportService.getReportData(criteria);
 

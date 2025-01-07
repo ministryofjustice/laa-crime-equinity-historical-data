@@ -22,6 +22,7 @@ public record Crm14ReportCriteriaDTO(
         @NotNull Integer filterByLastSubmit,
         @NotNull String lastSubmittedFrom, @NotNull String lastSubmittedTo,
         @NotNull String state,
+        @Nullable String providerAccount,
         @Nullable String profileAcceptedTypes
         ) {
     public Crm14ReportCriteriaDTO {

@@ -279,6 +279,11 @@ paths:
       summary: 'CRM14 Provider Report'
       operationId: 'generateProviderReportCrm14'
       parameters:
+        - name: providerAccount
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByProviderAccount'
         - name: filterByDecision
           in: query
           required: true
