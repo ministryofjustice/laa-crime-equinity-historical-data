@@ -176,7 +176,8 @@ class Crm14CaseSummaryReportControllerTest {
                         0, startDate, endDate,
                         0, startDate, endDate,
                         DENIED_PROFILE_TYPES, STATE_DEFAULT))
-                .isInstanceOf(UnauthorizedUserProfileException.class);
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [6]");
     }
 
     @Test
