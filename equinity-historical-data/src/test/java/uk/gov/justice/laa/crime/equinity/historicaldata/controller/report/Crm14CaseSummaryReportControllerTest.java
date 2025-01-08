@@ -21,10 +21,14 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -41,50 +45,14 @@ class Crm14CaseSummaryReportControllerTest {
     @MockBean
     Crm14CaseSummaryReportRepository mockReportRepository;
 
+    @MockBean
+    private CsvWriterService csvService;
+
     @Autowired
     private Crm14CaseSummaryReportController controller;
 
     @Autowired
     HttpServletResponse response;
-
-    /**
-     * Date Format input checks
-     **/
-    @ParameterizedTest
-    @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
-    void generateReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException(String invalidDate) throws ConstraintViolationException {
-        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
-                        1, invalidDate, invalidDate,
-                        0, invalidDate, invalidDate,
-                        0, invalidDate, invalidDate,
-                        0, invalidDate, invalidDate,
-                        ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
-                .isInstanceOf(ConstraintViolationException.class)
-                .hasMessageContaining("generateReportCrm14.decisionFrom: must match")
-                .hasMessageContaining("generateReportCrm14.decisionTo: must match")
-                .hasMessageContaining("generateReportCrm14.submittedFrom: must match")
-                .hasMessageContaining("generateReportCrm14.submittedTo: must match")
-                .hasMessageContaining("generateReportCrm14.createdFrom: must match")
-                .hasMessageContaining("generateReportCrm14.createdTo: must match")
-                .hasMessageContaining("generateReportCrm14.lastSubmittedFrom: must match")
-                .hasMessageContaining("generateReportCrm14.lastSubmittedTo: must match");
-    }
-
-    @Test
-    void generateReportCrm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
-        String startDate = "2024-02-19";
-        String endDate = "2024-02-09";
-
-        // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
-                        1, startDate, endDate,
-                        0, startDate, endDate,
-                        0, startDate, endDate,
-                        0, startDate, endDate,
-                        ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
-                .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-02-19] must not be after end date [2024-02-09]");
-    }
 
     /**
      * Report data collection tests
@@ -157,6 +125,45 @@ class Crm14CaseSummaryReportControllerTest {
         softly.assertThat(result).isNull();
     }
 
+    /**
+     * Date Format input checks
+     **/
+    @ParameterizedTest
+    @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
+    void generateReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException(String invalidDate) throws ConstraintViolationException {
+        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
+                        1, invalidDate, invalidDate,
+                        0, invalidDate, invalidDate,
+                        0, invalidDate, invalidDate,
+                        0, invalidDate, invalidDate,
+                        ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("generateReportCrm14.decisionFrom: must match")
+                .hasMessageContaining("generateReportCrm14.decisionTo: must match")
+                .hasMessageContaining("generateReportCrm14.submittedFrom: must match")
+                .hasMessageContaining("generateReportCrm14.submittedTo: must match")
+                .hasMessageContaining("generateReportCrm14.createdFrom: must match")
+                .hasMessageContaining("generateReportCrm14.createdTo: must match")
+                .hasMessageContaining("generateReportCrm14.lastSubmittedFrom: must match")
+                .hasMessageContaining("generateReportCrm14.lastSubmittedTo: must match");
+    }
+
+    @Test
+    void generateReportCrm14Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
+        String startDate = "2024-02-19";
+        String endDate = "2024-02-09";
+
+        // execute
+        softly.assertThatThrownBy(() -> controller.generateReportCrm14(
+                        1, startDate, endDate,
+                        0, startDate, endDate,
+                        0, startDate, endDate,
+                        0, startDate, endDate,
+                        ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
+                .isInstanceOf(DateRangeConstraintViolationException.class)
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-02-19] must not be after end date [2024-02-09]");
+    }
+
     @Test
     void generateReportCrm14Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
         String startDate = "2010-02-01";
@@ -185,11 +192,40 @@ class Crm14CaseSummaryReportControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateReportCrm14(
+                        0, startDate, endDate,
+                        1, startDate, endDate,
+                        0, startDate, endDate,
+                        0, startDate, endDate,
+                        ACCEPTED_PROFILE_TYPES, STATE_DEFAULT
+                )).isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("No data found for CRM14 Case Summary Report for inputs");
+    }
+
+
+    @Test
+    void generateReportCrm14Test_GivenValidProfilesWhenUnexpectedCSVWriterErrorThenServerErrorHttpCode() throws Exception {
+
+        String startDate = "2010-02-01";
+        String endDate = "2024-06-01";
+
+        when(mockReportRepository.getReport(
+                1, startDate, endDate,
                 0, startDate, endDate,
+                0, startDate, endDate, STATE_DEFAULT,
+                0, startDate, endDate)).thenReturn(List.of(new Crm14CaseSummaryReportModel()));
+
+        doThrow(IOException.class).when(csvService).close(any());
+
+        // execute
+        ResponseEntity<Void> result = controller.generateReportCrm14(
                 1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate,
+                0, startDate, endDate,
                 ACCEPTED_PROFILE_TYPES, STATE_DEFAULT
-        )).isInstanceOf(ResourceNotFoundException.class).hasMessageContaining("No data found for CRM14 Case Summary Report for inputs");
+        );
+
+        softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        softly.assertThat(result).isNull();
     }
 }
