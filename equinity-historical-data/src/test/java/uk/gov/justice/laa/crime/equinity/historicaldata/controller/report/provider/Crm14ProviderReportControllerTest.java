@@ -75,9 +75,19 @@ class Crm14ProviderReportControllerTest {
         softly.assertThat(result).isNull();
     }
 
-    /**
-     * Date Format input checks
-     **/
+    @Test
+    void generateProviderReportCrm4_WhenProviderAccountIsMissingThenThrowConstraintViolationException() {
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        null,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        STATE_DEFAULT))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessage("generateProviderReportCrm14.providerAccount: must not be null");
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateProviderReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException(String invalidDate) {
@@ -179,19 +189,6 @@ class Crm14ProviderReportControllerTest {
                         STATE_DEFAULT))
                 .isInstanceOf(NotEnoughSearchParametersException.class)
                 .hasMessage("Not enough inputs to generate report. Please specify at least 1 date range and turn on the corresponding filter flag");
-    }
-
-    @Test
-    void generateProviderReportCrm4_WhenProviderAccountIsMissingThenThrowConstraintViolationException() {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
-                        null,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
-                .isInstanceOf(ConstraintViolationException.class)
-                .hasMessage("generateProviderReportCrm14.providerAccount: must not be null");
     }
 
     @Test

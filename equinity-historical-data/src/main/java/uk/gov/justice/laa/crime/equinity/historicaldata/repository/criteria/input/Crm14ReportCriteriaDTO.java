@@ -72,6 +72,7 @@ public record Crm14ReportCriteriaDTO(
                 ", lastSubmittedFrom='" + lastSubmittedFrom + "'" +
                 ", lastSubmittedTo='" + lastSubmittedTo + "'" +
                 ", state='" + state + "'" +
+                ", providerAccount='" + providerAccount + "'" +
                 ", profileAcceptedTypes='" + profileAcceptedTypes + "'" +
             '}';
     }
