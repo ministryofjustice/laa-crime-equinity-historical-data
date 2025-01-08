@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14ProviderReportControllerTest {
+    private static final String PROVIDER_ACCOUNT = "123ABC";
     private static final String STATE_DEFAULT = "All";
     private static final String VALID_START_DATE = "2024-06-01";
     private static final String VALID_END_DATE = "2024-06-30";
@@ -54,13 +55,15 @@ class Crm14ProviderReportControllerTest {
                 "Someone", "Crown Court", "Indictable", "Passed",
                 LocalDate.of(2023, 3, 16), "XXXX", "Some charge");
 
-        when(mockReportRepository.getReport(1, VALID_START_DATE, VALID_END_DATE,
+        when(mockReportRepository.getReport(PROVIDER_ACCOUNT,
+                1, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
                 0, VALID_START_DATE, VALID_END_DATE)).thenReturn(List.of(report));
 
         // execute
         ResponseEntity<Void> result = controller.generateProviderReportCrm14(
+                PROVIDER_ACCOUNT,
                 1, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
@@ -72,13 +75,24 @@ class Crm14ProviderReportControllerTest {
         softly.assertThat(result).isNull();
     }
 
-    /**
-     * Date Format input checks
-     **/
+    @Test
+    void generateProviderReportCrm4_WhenProviderAccountIsMissingThenThrowConstraintViolationException() {
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        null,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        0, VALID_START_DATE, VALID_END_DATE,
+                        STATE_DEFAULT))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessage("generateProviderReportCrm14.providerAccount: must not be null");
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateProviderReportCrm14Test_WhenInvalidDateIsGivenThenReturnConstraintViolationException(String invalidDate) {
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         1, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
@@ -102,6 +116,7 @@ class Crm14ProviderReportControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         1, startDate, endDate,
                         0, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,
@@ -118,6 +133,7 @@ class Crm14ProviderReportControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         0, VALID_START_DATE, VALID_END_DATE,
                         1, startDate, endDate,
                         0, VALID_START_DATE, VALID_END_DATE,
@@ -134,6 +150,7 @@ class Crm14ProviderReportControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         0, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,
                         1, startDate, endDate,
@@ -150,6 +167,7 @@ class Crm14ProviderReportControllerTest {
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         0, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,
@@ -160,9 +178,10 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14_WhenNoFilterFlagIsSetThenThrowDateRangeConstraintViolationException() {
+    void generateProviderReportCrm14_WhenNoFilterFlagIsSetThenThrowDateRangeConstraintViolationException() {
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         0, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,
@@ -174,13 +193,15 @@ class Crm14ProviderReportControllerTest {
 
     @Test
     void generateProviderReportCrm14_WhenNoReportDataThenThrowResourceNotFoundException() {
-        when(mockReportRepository.getReport(0, VALID_START_DATE, VALID_END_DATE,
+        when(mockReportRepository.getReport(PROVIDER_ACCOUNT,
+                0, VALID_START_DATE, VALID_END_DATE,
                 0, VALID_START_DATE, VALID_END_DATE,
                 1, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
-                0, VALID_START_DATE, VALID_END_DATE)).thenThrow(new ResourceNotFoundException("error"));
+                0, VALID_START_DATE, VALID_END_DATE)).thenReturn(List.of());
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
                         0, VALID_START_DATE, VALID_END_DATE,
                         1, VALID_START_DATE, VALID_END_DATE,
                         0, VALID_START_DATE, VALID_END_DATE,

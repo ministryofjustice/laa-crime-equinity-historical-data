@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14ProviderReportServiceTest {
+    private static final String PROVIDER_ACCOUNT = "123ABC";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -42,6 +43,7 @@ class Crm14ProviderReportServiceTest {
                 LocalDate.of(2023, 3, 16), "XXXX", "Some charge");
 
         when(mockReportRepository.getReport(
+                PROVIDER_ACCOUNT,
                 1, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01", "All",
@@ -53,7 +55,7 @@ class Crm14ProviderReportServiceTest {
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
-                "All", null
+                "All", PROVIDER_ACCOUNT, null
         );
 
         List<Crm14ProviderReportModel> results = reportService.getReportData(reportCriteria);
@@ -65,6 +67,7 @@ class Crm14ProviderReportServiceTest {
     @Test
     void getReportData_WhenNoReportDataFoundThrowsException() {
         when(mockReportRepository.getReport(
+                PROVIDER_ACCOUNT,
                 0, "2010-02-01", "2024-06-01",
                 1, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01", "All",
@@ -76,7 +79,7 @@ class Crm14ProviderReportServiceTest {
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
-                "All", null
+                "All", PROVIDER_ACCOUNT, null
         );
 
         softly.assertThatThrownBy(() -> reportService.getReportData(reportCriteria))

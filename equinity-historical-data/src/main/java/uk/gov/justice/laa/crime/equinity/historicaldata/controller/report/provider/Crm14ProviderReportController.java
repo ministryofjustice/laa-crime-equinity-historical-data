@@ -26,7 +26,8 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
     private final CsvWriterService csvService;
 
     @Override
-    public ResponseEntity<Void> generateProviderReportCrm14(Integer filterByDecision, String decisionFrom, String decisionTo,
+    public ResponseEntity<Void> generateProviderReportCrm14(String providerAccount,
+                                                            Integer filterByDecision, String decisionFrom, String decisionTo,
                                                             Integer filterBySubmit, String submittedFrom, String submittedTo,
                                                             Integer filterByCreation, String createdFrom, String createdTo,
                                                             Integer filterByLastSubmit, String lastSubmittedFrom, String lastSubmittedTo,
@@ -40,7 +41,7 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
                     filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
-                    state, null
+                    state, providerAccount, null
             );
 
             log.info("eForm CRM14 Provider report download request received :: [{}]", criteria);
