@@ -8,6 +8,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.ProviderRe
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.provider.Crm4ProviderReportService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.ReportInputsUtil;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.DECISION;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -18,7 +20,7 @@ public class Crm4ProviderReportController implements ProviderReportCrm4Api {
     public ResponseEntity<String> generateProviderReportCrm4(
             String decisionFrom, String decisionTo, String providerAccount) {
 
-        ReportInputsUtil.checkDateRange(decisionFrom, decisionTo);
+        ReportInputsUtil.checkDateRange(DECISION, decisionFrom, decisionTo);
 
         log.info("eForm CRM4 Provider report request received :: decision date between [{}] and [{}], provider account = [{}]", decisionFrom, decisionTo, providerAccount);
 

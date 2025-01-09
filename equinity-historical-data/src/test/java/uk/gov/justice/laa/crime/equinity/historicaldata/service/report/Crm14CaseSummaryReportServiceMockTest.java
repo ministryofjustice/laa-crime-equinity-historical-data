@@ -3,13 +3,17 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.service.report;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14CaseSummaryReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
 
 import java.time.LocalDate;
@@ -142,34 +146,17 @@ class Crm14CaseSummaryReportServiceMockTest {
 
     @Test
     void getReportDataWhenCalledMockedThenShouldReturnList() {
-        Crm14CaseSummaryReportCriteriaDTO criteria = new Crm14CaseSummaryReportCriteriaDTO(
+        Crm14ReportCriteriaDTO criteria = new Crm14ReportCriteriaDTO(
                 1, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
                 0, "2010-02-01", "2024-06-01",
-                "All", null
+                "All", null, null
         );
         List<Crm14CaseSummaryReportModel> results = reportService.getReportData(criteria);
 
         softly.assertThat(results).isNotEmpty();
         softly.assertThat(results.get(0).getUsn()).isEqualTo(5012603L);
         softly.assertThat(results.get(1).getUsn()).isEqualTo(4004444L);
-    }
-
-    @Test
-    void getReportWhenCalledMockedThenShouldReturnCSV() {
-        Crm14CaseSummaryReportCriteriaDTO criteria = new Crm14CaseSummaryReportCriteriaDTO(
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                "All", null
-        );
-        String results = reportService.getReport(criteria);
-
-        softly.assertThat(results).isNotEmpty();
-        softly.assertThat(results).startsWith(Crm14CaseSummaryReportModel.exportHeaderToCSV());
-        softly.assertThat(results).contains("5012603,");
-        softly.assertThat(results).contains("4004444,");
     }
 }

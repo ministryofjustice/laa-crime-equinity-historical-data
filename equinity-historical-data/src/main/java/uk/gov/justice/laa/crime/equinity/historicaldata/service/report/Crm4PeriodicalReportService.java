@@ -38,6 +38,6 @@ public class Crm4PeriodicalReportService {
     private String exportToCSV(List<Crm4PeriodicalReportModel> report) {
         return report.stream()
                 .map(Crm4PeriodicalReportModel::exportToCSV)
-                .reduce(Crm4PeriodicalReportModel.exportHeaderToCSV(), String::concat);
+                .reduce(Crm4PeriodicalReportModel.CSV_HEADER, String::concat);
     }
 }

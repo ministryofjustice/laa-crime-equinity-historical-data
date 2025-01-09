@@ -9,7 +9,7 @@ def versions = [
         springWeb                   : '6.1.14',
         springData                  : '3.3.4',
         springdoc                   : '1.8.0',
-        tomcatEmbed                 : '10.1.31',
+        tomcatEmbed                 : '10.1.34',
         jacksonFaster               : '2.17.2',
         jacksonNullable             : '0.2.6',
         googleFirebugs              : '3.0.2'

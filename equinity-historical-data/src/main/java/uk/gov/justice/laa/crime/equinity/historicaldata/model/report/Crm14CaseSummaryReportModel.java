@@ -16,13 +16,21 @@ import java.time.LocalDate;
 @Immutable
 @Entity(name="Crm14CaseSummaryReport")
 public class Crm14CaseSummaryReportModel {
+
+    public static final String CSV_HEADER = "Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,Provider Account," +
+            "Originator,QueueType,QueueName,QueueSortOrder,Court,Caseworker,Stage,DTFirstSentToNct,CaseType," +
+            "DTLastReturnedToProvider,BenefitCheckResult,IOJDecision,MeansTested,MeansDecision,OverallDecision," +
+            "DTDecision,ProviderName,ApplicationType,IsNewApplication,IsCIFC,FundingDecisionUpdateCount,IsPriorityCase," +
+            "SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2," +
+            "ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5";
+
     @Id
     @Column(name="USN")
     private Long usn;
     @Column(name="DTCreated")
     private LocalDate createdDate;
     @Column(name="MAAT")
-    private String MAAT;
+    private String maat;
     @Column(name="DTFirstSubmitted")
     private LocalDate firstSubmittedDate;
     @Column(name="DefendantName")
@@ -98,36 +106,26 @@ public class Crm14CaseSummaryReportModel {
     @Column(name="ResubmissionDate5")
     private LocalDate resubmissionDate5;
 
-    public String exportToCSV() {
+    public String[] exportToCSVArray() {
         return String.format(
-            "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
-            usn, createdDate,MAAT, firstSubmittedDate, defendantName, providerAccount,
-            originatorName, queueType, queueName, queueSortOrder, court,
-            sanitiseField(caseworker), state,
-            firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,
-            ioJDecision, meansTested, meansDecision, overallDecision, decisionDate, providerName,
-            applicationType, isNewApplication, isCIFC, fundingDecisionUpdateCount, isPriorityCase,
-            submissionCount, latestSubmissionDate, returnDate1, resubmissionDate1, returnDate2,
-            resubmissionDate2, returnDate3, resubmissionDate3, returnDate4, resubmissionDate4,
-            returnDate5, resubmissionDate5
-        );
+                "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                usn, createdDate, maat, firstSubmittedDate, defendantName, providerAccount,
+                originatorName, queueType, queueName, queueSortOrder, court,
+                sanitiseField(caseworker), state,
+                firstSentToNctDate, caseType, lastReturnedToProviderDate, benefitCheckResult,
+                ioJDecision, meansTested, meansDecision, overallDecision, decisionDate, providerName,
+                applicationType, isNewApplication, isCIFC, fundingDecisionUpdateCount, isPriorityCase,
+                submissionCount, latestSubmissionDate, returnDate1, resubmissionDate1, returnDate2,
+                resubmissionDate2, returnDate3, resubmissionDate3, returnDate4, resubmissionDate4,
+                returnDate5, resubmissionDate5
+        ).split(",");
+    }
+
+    public static String[] exportHeaderToCSVArray() {
+        return CSV_HEADER.split(",");
     }
 
     private String sanitiseField(String text) {
         return (text == null) ? "" : text.replace(",", ";");
-    }
-
-    // TODO (EMP-000): consider moving this conversion to a CSV Writer helper class
-    public String[] exportToCSVArray() {
-        return exportToCSV().split(",");
-    }
-
-    public static String exportHeaderToCSV() {
-        return "Usn,DTCreated,MAAT,DTFirstSubmitted,DefendantName,Provider Account,Originator,QueueType,QueueName,QueueSortOrder,Court,Caseworker,Stage,DTFirstSentToNct,CaseType,DTLastReturnedToProvider,BenefitCheckResult,IOJDecision,MeansTested,MeansDecision,OverallDecision,DTDecision,ProviderName,ApplicationType,IsNewApplication,IsCIFC,FundingDecisionUpdateCount,IsPriorityCase,SubmissionCount,LatestSubmissionDate,ReturnDate1,ResubmissionDate1,ReturnDate2,ResubmissionDate2,ReturnDate3,ResubmissionDate3,ReturnDate4,ResubmissionDate4,ReturnDate5,ResubmissionDate5";
-    }
-
-    // TODO (EMP-000): consider moving this conversion to a CSV Writer helper class
-    public static String[] exportHeaderToCSVArray() {
-        return exportHeaderToCSV().split(",");
     }
 }

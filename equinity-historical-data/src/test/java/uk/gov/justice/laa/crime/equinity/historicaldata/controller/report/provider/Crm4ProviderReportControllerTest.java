@@ -90,7 +90,7 @@ class Crm4ProviderReportControllerTest {
 
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: start date [2024-02-19] must not be after end date [2024-02-09]");
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-02-19] must not be after end date [2024-02-09]");
     }
 
     @ParameterizedTest

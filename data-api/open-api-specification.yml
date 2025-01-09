@@ -272,6 +272,91 @@ paths:
           description: 'Not found'
         '500':
           description: 'Internal server error'
+  /api/internal/v1/equinity/report/provider/crm14/:
+    get:
+      tags:
+        - ProviderReportCrm14
+      summary: 'CRM14 Provider Report'
+      operationId: 'generateProviderReportCrm14'
+      parameters:
+        - name: providerAccount
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByProviderAccount'
+        - name: filterByDecision
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: decisionFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: decisionTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: filterBySubmit
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: submittedFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: submittedTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: filterByCreation
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: createdFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: createdTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: filterByLastSubmit
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByFlag'
+        - name: lastSubmittedFrom
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - name: lastSubmittedTo
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ParamFilterByDate'
+        - $ref: '#/components/parameters/reportState'
+
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Bad request'
+        '403':
+          description: 'Unauthorized'
+        '404':
+          description: 'Not found'
+        '500':
+          description: 'Internal server error'
 components:
   parameters:
     crmUsn:

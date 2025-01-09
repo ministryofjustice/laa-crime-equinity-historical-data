@@ -26,19 +26,37 @@ public class DateUtil {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
             .withLocale(Locale.UK);
 
+    public enum DateRange {
+        CREATED("created"),
+        DECISION("decision"),
+        LAST_SUBMITTED("lastSubmitted"),
+        SUBMITTED("submitted");
+
+        private final String value;
+
+        DateRange(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+    }
+
     public static LocalDate convertStringToLocalDate(String dateToConvert) throws DateTimeParseException {
         if (Objects.isNull(dateToConvert)) return null;
 
         return LocalDate.parse(dateToConvert, dateTimeFormatter);
     }
 
-    public static void checkDateRangeIsValid(LocalDate startDate, LocalDate endDate) {
+    public static void checkDateRangeIsValid(DateRange dateRange, LocalDate startDate, LocalDate endDate) {
         if (Objects.isNull(startDate)) return; // By default, accept open date ranges
 
         if (Objects.isNull(endDate)) return; // By default, accept open date ranges
 
         if (startDate.isAfter(endDate))
-            throw new DateRangeConstraintViolationException(startDate, endDate);
+            throw new DateRangeConstraintViolationException(dateRange, startDate, endDate);
     }
 
     public static Date convertStringToSimpleDate(String dateToConvert) throws ParseException {
@@ -62,4 +80,6 @@ public class DateUtil {
             return null;
         }
     }
+
+
 }
