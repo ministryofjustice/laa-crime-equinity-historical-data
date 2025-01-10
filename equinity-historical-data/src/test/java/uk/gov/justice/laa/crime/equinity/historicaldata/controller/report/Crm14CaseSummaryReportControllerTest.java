@@ -58,7 +58,7 @@ class Crm14CaseSummaryReportControllerTest {
      * Report data collection tests
      */
     @ParameterizedTest
-    @NullSource
+    @NullSource // test when profileTypes = null
     @ValueSource(strings = {ACCEPTED_PROFILE_TYPES})
     void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) throws ConstraintViolationException {
         String startDate = "2010-02-01";

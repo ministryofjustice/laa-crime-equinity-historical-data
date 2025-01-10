@@ -46,7 +46,7 @@ class Crm4PeriodicalReportControllerTest {
      * Report data collection tests
      */
     @ParameterizedTest
-    @NullSource
+    @NullSource // test when profileTypes = null
     @ValueSource(strings = {ACCEPTED_PROFILE_TYPES})
     void generateReportCrm4Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) {
         String startDate = "2010-02-01";

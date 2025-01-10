@@ -83,7 +83,7 @@ class Crm5UpperLimitReportControllerTest {
      * Report data collection tests
      */
     @ParameterizedTest
-    @NullSource
+    @NullSource // test when profileTypes = null
     @ValueSource(strings = {ACCEPTED_PROFILE_TYPES})
     void generateReportCrm5Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) {
 
