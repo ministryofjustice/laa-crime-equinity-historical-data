@@ -64,50 +64,19 @@ class Crm14CaseSummaryReportControllerTest {
         String startDate = "2010-02-01";
         String endDate = "2024-06-01";
 
-        Crm14CaseSummaryReportModel report = new Crm14CaseSummaryReportModel(
-                4004444L,
-                LocalDate.of(2017, 5, 6),
-                "4004004",
-                LocalDate.of(2017, 5, 30),
-                "Mr Reed Richards",
-                "0D182J",
-                "Silver Surfer",
-                "HMCTS / CAT",
-                "CAT 1",
-                "19990",
-                "Galactic Magistrates' Court",
-                "Von Doom, Mr. Victor",
-                "Completed",
-                null,
-                "Summary-Only",
-                LocalDate.of(2017, 6, 1),
-                "NOT_NEEDED",
-                "Passed",
-                "Yes",
-                "Magistrates' Court or CFS: Passed",
-                "Magistrates' Court or CFS: Granted",
-                LocalDate.of(2017, 6, 4),
-                "LESS THAN 4 SOLICITORS LTD",
-                "New application",
-                "N",
-                "N",
-                1,
-                "Y",
-                2,
-                LocalDate.of(2017, 6, 1),
-                LocalDate.of(2017, 6, 1),
-                LocalDate.of(2017, 6, 1),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+        Crm14CaseSummaryReportModel report = new Crm14CaseSummaryReportModel(4004444L, LocalDate.of(2017, 5, 6),
+                "4004004", LocalDate.of(2017, 5, 30), "Mr Reed Richards", "0D182J",
+                "Silver Surfer", "HMCTS / CAT", "CAT 1", "19990","Galactic Magistrates' Court",
+                "Von Doom, Mr. Victor", "Completed", null, "Summary-Only",
+                LocalDate.of(2017, 6, 1), "NOT_NEEDED", "Passed", "Yes",
+                "Magistrates' Court or CFS: Passed", "Magistrates' Court or CFS: Granted", LocalDate.of(2017, 6, 4),
+                "LESS THAN 4 SOLICITORS LTD", "New application", "N", "N", 1, "Y",
+                2, LocalDate.of(2017, 6, 1), LocalDate.of(2017, 6, 1), LocalDate.of(2017, 6, 1),
+                null, null, null, null, null, null, null, null
         );
 
-        when(mockReportRepository.getReport(1, startDate, endDate,
+        when(mockReportRepository.getReport(
+                1, startDate, endDate,
                 0, startDate, endDate,
                 0, startDate, endDate, STATE_DEFAULT,
                 0, startDate, endDate)).thenReturn(List.of(report));
@@ -185,8 +154,9 @@ class Crm14CaseSummaryReportControllerTest {
         String startDate = "1988-02-01";
         String endDate = "1988-02-02";
 
-        when(mockReportRepository.getReport(1, startDate, endDate,
+        when(mockReportRepository.getReport(
                 0, startDate, endDate,
+                1, startDate, endDate,
                 0, startDate, endDate, STATE_DEFAULT,
                 0, startDate, endDate)).thenReturn(List.of());
 

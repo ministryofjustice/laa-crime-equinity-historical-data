@@ -45,7 +45,8 @@ class Crm4PeriodicalReportServiceTest {
 
         expectedResponse.add(report);
 
-        when(reportRepository.getReport("2010-02-01", "2024-06-01")).thenReturn(expectedResponse);
+        when(reportRepository.getReport("2010-02-01", "2024-06-01"))
+                .thenReturn(expectedResponse);
     }
 
     @AfterAll

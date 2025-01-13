@@ -62,9 +62,7 @@ class Crm4PeriodicalReportControllerTest {
         when(mockReportRepository.getReport(startDate, endDate)).thenReturn(List.of(report));
 
         // execute
-        ResponseEntity<String> response = controller.generateReportCrm4(
-                startDate, endDate, profileTypes
-        );
+        ResponseEntity<String> response = controller.generateReportCrm4(startDate, endDate, profileTypes);
 
         softly.assertThat(response.getBody()).isNotEmpty();
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -78,8 +76,7 @@ class Crm4PeriodicalReportControllerTest {
     void generateReportCrm4Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException(String invalidDate) {
         String validDate = "2050-01-01";
 
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        invalidDate, validDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(invalidDate, validDate, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateReportCrm4.decisionFrom: must match");
     }
@@ -89,8 +86,7 @@ class Crm4PeriodicalReportControllerTest {
     void generateReportCrm4Test_WhenInvalidDecisionDateToIsGivenThenReturnConstraintViolationException(String invalidDate) {
         String validDate = "2050-01-01";
 
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        validDate, invalidDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(validDate, invalidDate, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateReportCrm4.decisionTo: must match");
     }
@@ -101,8 +97,7 @@ class Crm4PeriodicalReportControllerTest {
         String endDate = "2024-02-09";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        startDate, endDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(startDate, endDate, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-02-19] must not be after end date [2024-02-09]");
     }
@@ -113,8 +108,7 @@ class Crm4PeriodicalReportControllerTest {
         String endDate = "2024-06-01";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        startDate, endDate, DENIED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(startDate, endDate, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class)
                 .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [1]");
     }
@@ -127,9 +121,8 @@ class Crm4PeriodicalReportControllerTest {
         when(mockReportRepository.getReport(startDate, endDate)).thenReturn(List.of());
 
         // execute
-        softly.assertThatThrownBy(() ->
-                controller.generateReportCrm4(
-                        startDate, endDate, ACCEPTED_PROFILE_TYPES
-                )).isInstanceOf(ResourceNotFoundException.class).hasMessage("No data found for CRM4 Periodical Report between 1988-02-01 and 1988-02-02");
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(startDate, endDate, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("No data found for CRM4 Periodical Report between 1988-02-01 and 1988-02-02");
     }
 }
