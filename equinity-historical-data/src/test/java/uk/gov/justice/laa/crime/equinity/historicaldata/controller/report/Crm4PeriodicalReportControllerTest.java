@@ -25,12 +25,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4PeriodicalReportControllerTest {
-    private static final String ACCEPTED_PROFILE_TYPES = "1";
+    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_4);
     private static final String DENIED_PROFILE_TYPES = "2,9";
 
     @InjectSoftAssertions
@@ -47,7 +48,7 @@ class Crm4PeriodicalReportControllerTest {
      */
     @ParameterizedTest
     @NullSource // test when profileTypes = null
-    @ValueSource(strings = {ACCEPTED_PROFILE_TYPES})
+    @ValueSource(strings = "1")
     void generateReportCrm4Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) {
         String startDate = "2010-02-01";
         String endDate = "2024-06-01";

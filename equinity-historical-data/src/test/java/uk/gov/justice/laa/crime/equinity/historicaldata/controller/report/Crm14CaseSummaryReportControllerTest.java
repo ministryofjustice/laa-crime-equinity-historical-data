@@ -30,12 +30,13 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14CaseSummaryReportControllerTest {
-    private static final String ACCEPTED_PROFILE_TYPES = "6";
+    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
     private static final String DENIED_PROFILE_TYPES = "2,9";
     private static final String STATE_DEFAULT = "All";
 
@@ -59,7 +60,7 @@ class Crm14CaseSummaryReportControllerTest {
      */
     @ParameterizedTest
     @NullSource // test when profileTypes = null
-    @ValueSource(strings = {ACCEPTED_PROFILE_TYPES})
+    @ValueSource(strings = "6")
     void generateReportCrm14Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) throws ConstraintViolationException {
         String startDate = "2010-02-01";
         String endDate = "2024-06-01";
