@@ -4,23 +4,24 @@ import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm4PeriodicalReportService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm4PeriodicalReportModel;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm4PeriodicalReportRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -29,118 +30,77 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("local")
 class Crm4PeriodicalReportControllerTest {
-    private List<String> testInvalidFormatDates;
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_4);
     private static final String DENIED_PROFILE_TYPES = "2,9";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
 
-    @Mock
-    Crm4PeriodicalReportService reportService;
+    @MockBean
+    Crm4PeriodicalReportRepository mockReportRepository;
 
     @Autowired
     Crm4PeriodicalReportController controller;
 
+    /**
+     * Report data collection tests
+     */
+    @ParameterizedTest
+    @NullSource // test when profileTypes = null
+    @ValueSource(strings = "1")
+    void generateReportCrm4Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) {
+        String startDate = "2010-02-01";
+        String endDate = "2024-06-01";
 
-    @BeforeAll
-    void preTest() {
-        testInvalidFormatDates = List.of(
-                "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
-        );
+        Crm4PeriodicalReportModel report = Crm4PeriodicalReportModel.builder()
+                .clientUfn("031022/777").usn(5001600L).providerAccount("0D182J").firmName("ABELS").clientName("Joe modo")
+                .repOrderNumber("78543657").maatId("").prisonLaw("No").receivedDate(LocalDate.of(2023, 3, 16))
+                .decisionDate(LocalDate.of(2023, 3, 16)).decisionResult("Grant").expenditureType("a Psychiatrist")
+                .expertName("tyjtjtjt").quantity(4.0).rate(50.0).unit("Hour(s)").totalCost(200.0).additionalExpenditure(0.0)
+                .totalAuthority(200.0).totalGranted(200.0).grantingCaseworker("Sym-G").build();
 
-        when(reportService.getReport("fail", "fail"))
-            .thenThrow(Mockito.mock(InvalidDataAccessResourceUsageException.class));
+        when(mockReportRepository.getReport(startDate, endDate)).thenReturn(List.of(report));
+
+        // execute
+        ResponseEntity<String> response = controller.generateReportCrm4(startDate, endDate, profileTypes);
+
+        softly.assertThat(response.getBody()).isNotEmpty();
+        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     /**
      * Date Format input checks
      **/
-    @Test
-    void generateReportCrm4Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException() {
-        String expectedMessage = "must match";
+    @ParameterizedTest
+    @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
+    void generateReportCrm4Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException(String invalidDate) {
         String validDate = "2050-01-01";
 
-
-        // execute
-        testInvalidFormatDates.forEach(dateToTest ->
-            softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                    dateToTest, validDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(invalidDate, validDate, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
-                .hasMessageContaining(expectedMessage)
-        );
+                .hasMessageContaining("generateReportCrm4.decisionFrom: must match");
     }
 
-    @Test
-    void generateReportCrm4Test_WhenInvalidDecisionDateToIsGivenThenReturnConstraintViolationException() {
-        String expectedMessage = "must match";
+    @ParameterizedTest
+    @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
+    void generateReportCrm4Test_WhenInvalidDecisionDateToIsGivenThenReturnConstraintViolationException(String invalidDate) {
         String validDate = "2050-01-01";
 
-
-        // execute
-        testInvalidFormatDates.forEach(dateToTest ->
-            softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                    validDate, dateToTest, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(validDate, invalidDate, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
-                .hasMessageContaining(expectedMessage)
-        );
+                .hasMessageContaining("generateReportCrm4.decisionTo: must match");
     }
 
     @Test
     void generateReportCrm4Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
         String startDate = "2024-02-19";
         String endDate = "2024-02-09";
-        String expectedMessage = "must not be after end date";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                startDate, endDate, ACCEPTED_PROFILE_TYPES))
-            .isInstanceOf(DateRangeConstraintViolationException.class)
-            .hasMessageContaining(expectedMessage);
-    }
-
-    /**
-     * Report data collection tests
-     */
-
-    @Test
-    void generateReportCrm4Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO() {
-        try {
-            String startDate = "2010-02-01";
-            String endData = "2024-06-01";
-
-            // execute
-            ResponseEntity<String> response = controller.generateReportCrm4(
-                    startDate, endData, ACCEPTED_PROFILE_TYPES
-            );
-
-            softly.assertThat(response.getBody()).isNotEmpty();
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        } catch (InvalidDataAccessResourceUsageException e) {
-            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
-            // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
-        }
-    }
-
-    @Test
-    void generateReportCrm4Test_WhenExistingDecisionDatesAndNoProfileAreGivenThenReturnDTO() {
-        try {
-            String startDate = "2010-02-01";
-            String endData = "2024-06-01";
-
-            // execute
-            ResponseEntity<String> response = controller.generateReportCrm4(
-                    startDate, endData, null
-            );
-
-            softly.assertThat(response.getBody()).isNotEmpty();
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        } catch (InvalidDataAccessResourceUsageException e) {
-            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
-            // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
-        }
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(startDate, endDate, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(DateRangeConstraintViolationException.class)
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-02-19] must not be after end date [2024-02-09]");
     }
 
     @Test
@@ -149,29 +109,21 @@ class Crm4PeriodicalReportControllerTest {
         String endDate = "2024-06-01";
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(
-                        startDate, endDate, DENIED_PROFILE_TYPES))
-                .isInstanceOf(UnauthorizedUserProfileException.class);
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(startDate, endDate, DENIED_PROFILE_TYPES))
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [1]");
     }
 
     @Test
     void generateReportCrm4Test_WhenNonExistingValidDecisionDatesAreGivenThenReturnResourceNotFoundException() {
-        try {
-            String startDate = "1988-02-01";
-            String endDate = "1988-02-02";
+        String startDate = "1988-02-01";
+        String endDate = "1988-02-02";
 
-            // execute
-            controller.generateReportCrm4(
-                    startDate, endDate, ACCEPTED_PROFILE_TYPES
-            );
-        } catch (ResourceNotFoundException e) {
-            softly.assertThat(e).isInstanceOf(ResourceNotFoundException.class);
-            softly.assertThat(e.getMessage()).contains("CRM4");
-        } catch (InvalidDataAccessResourceUsageException e) {
-            softly.assertThat(e).isInstanceOf(InvalidDataAccessResourceUsageException.class);
-            // This exception is happening during test running on GitHub pipeline. Mock test covered on other class
-        }
+        when(mockReportRepository.getReport(startDate, endDate)).thenReturn(List.of());
+
+        // execute
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(startDate, endDate, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("No data found for CRM4 Periodical Report between 1988-02-01 and 1988-02-02");
     }
-
-
 }

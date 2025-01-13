@@ -16,7 +16,7 @@ public class ProfileAcceptedTypesUtil {
         }
 
         throw new UnauthorizedUserProfileException(
-            String.format("Unauthorized. User profile does not have privileges to access requested report type [%d] ", requiredType)
+            String.format("Unauthorized. User profile does not have privileges to access requested report type [%d]", requiredType)
         );
     }
 }
