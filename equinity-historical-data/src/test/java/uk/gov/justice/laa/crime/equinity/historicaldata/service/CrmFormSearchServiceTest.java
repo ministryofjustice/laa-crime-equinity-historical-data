@@ -11,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
@@ -290,6 +292,22 @@ class CrmFormSearchServiceTest {
                 Arguments.of("originatedDate", "desc", List.of("1826829", "1826830",  "1826831")),
                 Arguments.of("originatedDate", "asc", List.of("1826831", "1826830",  "1826829"))
         );
+    }
+
+    @NullSource // test when profileTypes = null
+    @ValueSource(strings = {"", "  "})
+    @ParameterizedTest
+    void searchAllByCriteriaTest_GivenNullOrEmptyProfileShouldReturnSingleForm(String profileTypes) {
+        String usn = "1826829";
+        CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null,
+                null, null, null, null, null, profileTypes, null, null);
+
+        SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
+
+        softly.assertThat(results.getResults()).isNotEmpty();
+        softly.assertThat(results.getResults().size()).isEqualTo(1);
+        softly.assertThat(results.getResults().get(0)).isInstanceOf(SearchCrmFormDTO.class);
+        softly.assertThat(results.getResults().get(0).getUsn()).isEqualTo(usn);
     }
 
 }

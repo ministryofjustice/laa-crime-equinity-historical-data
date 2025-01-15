@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDataModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
@@ -96,7 +97,7 @@ public class CrmFormSearchCriteria {
     }
 
     private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
-        if (types == null) return null;
+        if (types == null || types.isBlank() ) return null;
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));
         return (root, query, criteriaBuilder)
