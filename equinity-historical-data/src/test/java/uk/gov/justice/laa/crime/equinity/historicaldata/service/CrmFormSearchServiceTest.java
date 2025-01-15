@@ -297,10 +297,10 @@ class CrmFormSearchServiceTest {
     @NullSource // test when profileTypes = null
     @ValueSource(strings = {"", "  "})
     @ParameterizedTest
-    void searchAllByCriteriaTest_GivenNullOrEmptyProfileShouldReturnSingleForm(String profileTypes) {
+    void searchAllByCriteriaTest_GivenNullOrEmptyProfileAcceptedTypesShouldReturnSingleForm(String profileAcceptedTypes) {
         String usn = "1826829";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null,
-                null, null, null, null, null, profileTypes, null, null);
+                null, null, null, null, null, profileAcceptedTypes, null, null);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
