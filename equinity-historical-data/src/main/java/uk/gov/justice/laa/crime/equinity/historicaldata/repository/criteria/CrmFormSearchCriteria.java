@@ -96,7 +96,7 @@ public class CrmFormSearchCriteria {
     }
 
     private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
-        if (types == null) return null;
+        if (types == null || types.isBlank() ) return null;
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));
         return (root, query, criteriaBuilder)
