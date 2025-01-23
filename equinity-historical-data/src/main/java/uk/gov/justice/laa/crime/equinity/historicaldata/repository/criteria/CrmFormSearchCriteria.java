@@ -14,6 +14,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 @NoArgsConstructor
@@ -29,6 +30,7 @@ public class CrmFormSearchCriteria {
     private static final String CLIENT_DOB_COL = "clientDoB";
     private static final String SEARCH_BY_CONTAINS_TEMPLATE = "%%%s%%";
     private static final String DESC = "desc";
+    private static final int SEVEN_YEARS = 7;
 
 
     public PageRequest getNextPageRequest(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
@@ -44,15 +46,15 @@ public class CrmFormSearchCriteria {
 
     public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
-            .where(byUsn(crmFormSearchCriteriaDTO.usn())
-                .and(byType(crmFormSearchCriteriaDTO.type()))
-                .and(byClientName(crmFormSearchCriteriaDTO.client()))
-                .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
-                .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
-                .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
-                .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
-                .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
-            );
+                .where(byUsn(crmFormSearchCriteriaDTO.usn())
+                        .and(byType(crmFormSearchCriteriaDTO.type()))
+                        .and(byClientName(crmFormSearchCriteriaDTO.client()))
+                        .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
+                        .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
+                        .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
+                        .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
+                        .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
+                );
     }
 
     private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
@@ -77,7 +79,8 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
         return (root, query, criteriaBuilder)
-                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get(SUBMITTED_DATE_COL), dateSubmittedFrom);
+                -> criteriaBuilder.greaterThanOrEqualTo(root.get(SUBMITTED_DATE_COL),
+                        Objects.requireNonNullElse(dateSubmittedFrom, LocalDate.now().minusYears(SEVEN_YEARS).toString()));
     }
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {
@@ -92,11 +95,11 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byProviderAccount(@Nullable String providerAccount) {
         return (root, query, criteriaBuilder)
-            -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, providerAccount));
+                -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, providerAccount));
     }
 
     private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
-        if (types == null || types.isBlank() ) return null;
+        if (types == null || types.isBlank()) return null;
 
         List<String> convertedTypes = Arrays.asList(types.replace(" ", "").split(",", -1));
         return (root, query, criteriaBuilder)

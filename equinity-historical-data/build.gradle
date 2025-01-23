@@ -122,6 +122,8 @@ dependencies {
 	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
 	testImplementation "io.projectreactor:reactor-test:$versions.reactorTest"
 	testImplementation "com.h2database:h2:$versions.h2db"
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 jar {
