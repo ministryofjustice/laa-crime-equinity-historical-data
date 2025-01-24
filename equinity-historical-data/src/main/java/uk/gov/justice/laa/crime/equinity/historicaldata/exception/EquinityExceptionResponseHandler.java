@@ -5,89 +5,89 @@ import jakarta.validation.ConstraintViolationException;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @ControllerAdvice
 public class EquinityExceptionResponseHandler {
     private static final Logger log = LoggerFactory.getLogger(EquinityExceptionResponseHandler.class);
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleResourceNotFoundException(
-            ResourceNotFoundException exception
-    ) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
-    }
-
-    @ExceptionHandler(UnauthorizedUserProfileException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleUnauthorizedUserProfileException(
-            UnauthorizedUserProfileException exception
-    ) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception.getMessage());
-    }
-
+    /**
+     * 400 Bad Request
+     */
     @ExceptionHandler({ConstraintViolationException.class, DateRangeConstraintViolationException.class,
-            MethodArgumentTypeMismatchException.class,
-            MissingServletRequestParameterException.class, StartDateConstraintViolationException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleBadRequestException(
-            Exception exception
-    ) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+            MethodArgumentTypeMismatchException.class, MissingServletRequestParameterException.class,
+            StartDateConstraintViolationException.class})
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseEntity<String> handleBadRequestException(Exception exception) {
+        return ResponseEntity.status(BAD_REQUEST).body(exception.getMessage());
     }
 
+    /**
+     * 401 Unauthorized
+     */
+    @ExceptionHandler(UnauthorizedUserProfileException.class)
+    @ResponseStatus(UNAUTHORIZED)
+    public ResponseEntity<String> handleUnauthorizedUserProfileException(UnauthorizedUserProfileException exception) {
+        return ResponseEntity.status(UNAUTHORIZED).body(exception.getMessage());
+    }
+
+    /**
+     * 404 Not Found
+     */
+    @ExceptionHandler({NoResourceFoundException.class, ResourceNotFoundException.class})
+    @ResponseStatus(NOT_FOUND)
+    public ResponseEntity<String> handleNotFoundException(Exception exception) {
+        return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
+    }
+
+    /**
+     * 416 Range Not Satisfiable
+     */
     @ExceptionHandler(NotEnoughSearchParametersException.class)
-    @ResponseStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
-    public ResponseEntity<String> handleNotEnoughSearchParametersException(
-            NotEnoughSearchParametersException exception
-    ) {
-        return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).body(exception.getMessage());
+    @ResponseStatus(REQUESTED_RANGE_NOT_SATISFIABLE)
+    public ResponseEntity<String> handleNotEnoughSearchParametersException(NotEnoughSearchParametersException exception) {
+        return ResponseEntity.status(REQUESTED_RANGE_NOT_SATISFIABLE).body(exception.getMessage());
     }
 
-    @ExceptionHandler(JSONException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleJsonException(
-            JSONException exception
-    ) {
-        String logMessage = String.format("There was a problem reading CRM image file. %s :: %s ", exception.getClass(), exception.getMessage());
-        log.error(logMessage);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
-    }
-
-    @ExceptionHandler(ClassCastException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleClassCastException(
-            ClassCastException exception
-    ) {
-        String logMessage = String.format("There was a problem reading CRM image file. %s :: %s ", exception.getClass(), exception.getMessage());
-        log.error(logMessage);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
+    /**
+     * 500 Internal Server Error
+     */
+    @ExceptionHandler({JSONException.class, ClassCastException.class})
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleCrmImageFilmException(Exception exception) {
+        String logMessage = logError("There was a problem reading CRM image file.", exception);
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(logMessage);
     }
 
     @ExceptionHandler(SQLServerException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleSQLServerException(
-            SQLServerException exception
-    ) {
-        String logMessage = String.format("There was an unexpected problem with the database. %s :: %s ", exception.getClass(), exception.getMessage());
-        log.error(logMessage);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleSQLServerException(SQLServerException exception) {
+        String logMessage = logError("There was an unexpected problem with the database.", exception);
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(logMessage);
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleGenericException(
-            Exception exception
-    ) {
-        String logMessage = String.format("There was an unexpected problem with the database. %s :: %s ", exception.getClass(), exception.getMessage());
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleGenericException(Exception exception) {
+        String logMessage = logError("There was an unexpected problem with the application.", exception);
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(logMessage);
+    }
+
+    private String logError(String errorMessage, Exception exception) {
+        String logMessage = String.format(errorMessage + "%s :: %s ", exception.getClass(), exception.getMessage());
         log.error(logMessage);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(logMessage);
+        return logMessage;
     }
 }
