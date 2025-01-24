@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
+
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DateUtilTest {
@@ -125,19 +127,19 @@ class DateUtilTest {
     @Test
     void checkStartDateWithinLimit_AcceptsStartDateWithin7yrs() {
         LocalDate startDate = LocalDate.now().minusYears(1);
-        DateUtil.checkStartDateWithinLimit(startDate);
+        DateUtil.checkStartDateWithinLimit(SUBMITTED, startDate);
     }
 
     @Test
     void checkStartDateWithinLimit_AcceptsStartDateExactly7yrsAgo() {
         LocalDate startDate = LocalDate.now().minusYears(7);
-        DateUtil.checkStartDateWithinLimit(startDate);
+        DateUtil.checkStartDateWithinLimit(SUBMITTED, startDate);
     }
 
     @Test
     void checkStartDateWithinLimit_WhenStartDateIsMoreThan7YrsAgoThenThrowsException() {
         LocalDate oldStartDate = LocalDate.now().minusYears(7).minusDays(1);
-        softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithinLimit(oldStartDate))
+        softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithinLimit(SUBMITTED, oldStartDate))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: submitted start date [" + oldStartDate + "] cannot be earlier than 7 years ago");
     }

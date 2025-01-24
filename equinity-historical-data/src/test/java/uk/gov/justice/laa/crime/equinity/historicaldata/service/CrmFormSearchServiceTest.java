@@ -305,6 +305,9 @@ class CrmFormSearchServiceTest {
         );
     }
 
+    /**
+     * Search by Provider account
+     */
     @Test
     void searchAllByCriteriaTest_GivenExistingProviderAccountShouldReturnMultipleForms() {
         String providerAccount = "1234AB";
@@ -319,9 +322,6 @@ class CrmFormSearchServiceTest {
         softly.assertThat(results.getResults().get(1).getUsn()).isEqualTo("1826831");
     }
 
-    /**
-     * Search by Provider account
-     */
     @ParameterizedTest
     @ValueSource(strings = {"2222AB", OLD_FORM_PROVIDER_ACCOUNT})
     void searchAllByCriteriaTest_WhenProviderAccountGivenNonExistingValueThenShouldReturnResourceNotFoundException(String providerAccount) {

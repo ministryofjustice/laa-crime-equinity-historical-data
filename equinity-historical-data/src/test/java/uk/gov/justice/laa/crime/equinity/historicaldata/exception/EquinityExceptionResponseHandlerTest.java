@@ -128,7 +128,6 @@ class EquinityExceptionResponseHandlerTest {
                 .andExpect(content().string("There was a problem reading CRM image file.class org.json.JSONException :: Some error "));
     }
 
-
     @Test
     void shouldHandleGenericException() throws Exception {
         when(crm5Controller.getApplication(3456789L, null)).thenThrow(new RuntimeException("Some error"));

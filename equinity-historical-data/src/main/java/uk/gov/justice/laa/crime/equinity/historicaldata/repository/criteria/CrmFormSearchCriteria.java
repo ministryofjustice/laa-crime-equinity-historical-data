@@ -46,15 +46,15 @@ public class CrmFormSearchCriteria {
 
     public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
         return Specification
-                .where(byUsn(crmFormSearchCriteriaDTO.usn())
-                        .and(byType(crmFormSearchCriteriaDTO.type()))
-                        .and(byClientName(crmFormSearchCriteriaDTO.client()))
-                        .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
-                        .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
-                        .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
-                        .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
-                        .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
-                );
+            .where(byUsn(crmFormSearchCriteriaDTO.usn())
+                .and(byType(crmFormSearchCriteriaDTO.type()))
+                .and(byClientName(crmFormSearchCriteriaDTO.client()))
+                .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
+                .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
+                .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
+                .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
+                .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
+            );
     }
 
     private Specification<CrmFormDataModelInterface> byUsn(@Nullable String usn) {
@@ -95,7 +95,7 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byProviderAccount(@Nullable String providerAccount) {
         return (root, query, criteriaBuilder)
-                -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, providerAccount));
+            -> providerAccount == null ? null : criteriaBuilder.like(root.get(PROVIDER_ACCOUNT_COL), String.format(SEARCH_BY_CONTAINS_TEMPLATE, providerAccount));
     }
 
     private Specification<CrmFormDataModelInterface> byProfileAcceptedTypes(@Nullable String types) {
