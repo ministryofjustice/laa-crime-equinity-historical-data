@@ -58,10 +58,10 @@ class Crm4ProviderReportControllerTest {
         ResponseEntity<String> response = controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, PROVIDER_ACCOUNT);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        String expectedReport = "Client UFN,Usn,Provider Account,Firm Name,Client Name,"+
+        String expectedReport = "Client UFN,Usn,Provider Account,Firm Name,Client Name," +
                 "Rep Order Number,Maat ID,Prison Law,Date Received,Decision Date,Decision,Expenditure Type,Expert Name," +
-                "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted"+
-                "\n123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No,"+ CURRENT_DATE + "," + CURRENT_DATE + ",Grant,Costs,Some expert," +
+                "Quantity,Rate,Unit,Total Cost,Additional Expenditure,Total Authority,Total Granted" +
+                "\n123456/123,1234567,1ABCD,XXXX,John Doe,1234567,,No," + CURRENT_DATE + "," + CURRENT_DATE + ",Grant,Costs,Some expert," +
                 "4.0,50.0,Hour(s),200.0,0.0,200.0,200.0\n";
         softly.assertThat(response.getBody()).isEqualTo(expectedReport);
 
@@ -82,7 +82,7 @@ class Crm4ProviderReportControllerTest {
 
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom7yrsAgo, DECISION_TO, PROVIDER_ACCOUNT))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date ["+ decisionFrom7yrsAgo + "] cannot be earlier than 7 years ago");
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom7yrsAgo + "] cannot be earlier than 7 years ago");
     }
 
     @ParameterizedTest
@@ -95,12 +95,12 @@ class Crm4ProviderReportControllerTest {
 
     @Test
     void generateProviderReportCrm4_WhenInvalidDecisionDateRangeIsGivenThenThrowConstraintViolationException() {
-        String decisionFrom = LocalDate.now().toString();
-        String decisionTo = LocalDate.now().minusDays(1).toString(); // before decisionFrom
+        String decisionFrom = CURRENT_DATE.toString();
+        String decisionTo = CURRENT_DATE.minusDays(1).toString(); // before decisionFrom
 
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: decision start date [" + decisionFrom +"] must not be after end date ["+ decisionTo+"]");
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [" + decisionFrom + "] must not be after end date [" + decisionTo + "]");
     }
 
     @ParameterizedTest

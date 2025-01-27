@@ -17,13 +17,18 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provid
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14ProviderReportServiceTest {
+    private static final LocalDate CURRENT_DATE = LocalDate.now();
+    private static final String START_DATE = CURRENT_DATE.minusDays(1).toString();
+    private static final String END_DATE = CURRENT_DATE.toString();
     private static final String PROVIDER_ACCOUNT = "123ABC";
+    private static final String STATE = "All";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -38,52 +43,64 @@ class Crm14ProviderReportServiceTest {
     void getReportData_WhenGivenReportCriteriaReturnsData() {
         Crm14ProviderReportModel report = new Crm14ProviderReportModel(
                 1234567L, LocalDate.of(2023, 3, 16), "",
-                LocalDate.of(2023, 3, 16), "Mr John Doe", "1ABCD",
+                CURRENT_DATE, "Mr John Doe", "1ABCD",
                 "Someone", "Crown Court", "Indictable", "Passed",
-                LocalDate.of(2023, 3, 16), "XXXX", "Some charge");
+                CURRENT_DATE, "XXXX", "Some charge");
 
         when(mockReportRepository.getReport(
                 PROVIDER_ACCOUNT,
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01", "All",
-                0, "2010-02-01", "2024-06-01"))
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE))
                 .thenReturn(List.of(report));
 
         Crm14ReportCriteriaDTO reportCriteria = new Crm14ReportCriteriaDTO(
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                "All", PROVIDER_ACCOUNT, null
+                1,  START_DATE, END_DATE,
+                0,  START_DATE, END_DATE,
+                0,  START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                STATE, PROVIDER_ACCOUNT, null
         );
 
         List<Crm14ProviderReportModel> results = reportService.getReportData(reportCriteria);
 
         softly.assertThat(results).hasSize(1);
         softly.assertThat(results.get(0)).isEqualTo(report);
+
+        verify(mockReportRepository).getReport(PROVIDER_ACCOUNT,
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE);
     }
 
     @Test
     void getReportData_WhenNoReportDataFoundThrowsException() {
         when(mockReportRepository.getReport(
                 PROVIDER_ACCOUNT,
-                0, "2010-02-01", "2024-06-01",
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01", "All",
-                0, "2010-02-01", "2024-06-01"))
+                0, START_DATE, END_DATE,
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE))
                 .thenReturn(List.of());
 
         Crm14ReportCriteriaDTO reportCriteria = new Crm14ReportCriteriaDTO(
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
+                0,  START_DATE, END_DATE,
+                1, START_DATE, END_DATE,
+                0,  START_DATE, END_DATE,
+                0,  START_DATE, END_DATE,
                 "All", PROVIDER_ACCOUNT, null
         );
 
         softly.assertThatThrownBy(() -> reportService.getReportData(reportCriteria))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("No data found for CRM14 Provider Report for inputs");
+
+        verify(mockReportRepository).getReport(PROVIDER_ACCOUNT,
+                0, START_DATE, END_DATE,
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE);
     }
 }

@@ -54,8 +54,6 @@ class Crm5UpperLimitReportControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateReportCrm5Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException(String invalidDate) {
-        String validDate = "2050-01-01";
-
         softly.assertThatThrownBy(() -> controller.generateReportCrm5(invalidDate, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateReportCrm5.decisionFrom: must match");
@@ -63,7 +61,7 @@ class Crm5UpperLimitReportControllerTest {
 
     @Test
     void generateReportCrm5Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
-        String decisionFrom7yrsAgo = LocalDate.now().minusYears(7).minusMonths(2).toString();
+        String decisionFrom7yrsAgo = CURRENT_DATE.minusYears(7).minusMonths(2).toString();
 
         softly.assertThatThrownBy(() -> controller.generateReportCrm5(decisionFrom7yrsAgo, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(StartDateConstraintViolationException.class)

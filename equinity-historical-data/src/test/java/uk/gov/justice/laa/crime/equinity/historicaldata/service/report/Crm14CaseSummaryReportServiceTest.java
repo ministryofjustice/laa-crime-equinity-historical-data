@@ -18,12 +18,18 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14C
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14CaseSummaryReportServiceTest {
+    private static final LocalDate CURRENT_DATE = LocalDate.now();
+    private static final String START_DATE = CURRENT_DATE.minusDays(1).toString();
+    private static final String END_DATE = CURRENT_DATE.toString();
+    private static final String STATE = "All";
+
     @InjectSoftAssertions
     private SoftAssertions softly;
 
@@ -36,36 +42,35 @@ class Crm14CaseSummaryReportServiceTest {
     @BeforeAll
     void setup() {
         List<Crm14CaseSummaryReportModel> mockedResponse = List.of(
-                new Crm14CaseSummaryReportModel(5012603L, LocalDate.of(2017, 5, 6),
-                        "7000011", LocalDate.of(2017, 5, 6), "Miss Lois Lane",
+                new Crm14CaseSummaryReportModel(5012603L, CURRENT_DATE,
+                        "7000011", CURRENT_DATE, "Miss Lois Lane",
                         "0D182J", "Clark Kent", "HMCTS / CAT", "CAT 1",
                         "19990", "Metropolis Youth Court", "Wayne, Mr. Bruce", "Completed",
                         null, "Summary-Only", null, "NOT_NEEDED",
                         "Passed", "Yes", "Magistrates' Court or CFS: Passed",
-                        "Magistrates' Court or CFS: Granted", LocalDate.of(2017, 5, 9),
+                        "Magistrates' Court or CFS: Granted", CURRENT_DATE,
                         "LUTHOR CORP LLP", "New application", "Y", "N",
-                        1, "Y", 1, LocalDate.of(2017, 5, 6),
+                        1, "Y", 1, CURRENT_DATE,
                         null, null, null, null, null,
                         null, null, null, null, null),
 
-                new Crm14CaseSummaryReportModel(4004444L, LocalDate.of(2017, 5, 6), "4004004",
-                        LocalDate.of(2017, 5, 30), "Mr Reed Richards", "0D182J",
+                new Crm14CaseSummaryReportModel(4004444L, CURRENT_DATE, "4004004",
+                        CURRENT_DATE, "Mr Reed Richards", "0D182J",
                         "Silver Surfer", "HMCTS / CAT", "CAT 1", "19990",
                         "Galactic Magistrates' Court", "Von Doom, Mr. Victor", "Completed", null,
-                        "Summary-Only", LocalDate.of(2017, 6, 1), "NOT_NEEDED",
+                        "Summary-Only", CURRENT_DATE, "NOT_NEEDED",
                         "Passed", "Yes", "Magistrates' Court or CFS: Passed", "Magistrates' Court or CFS: Granted",
-                        LocalDate.of(2017, 6, 4), "LESS THAN 4 SOLICITORS LTD", "New application",
+                        CURRENT_DATE, "LESS THAN 4 SOLICITORS LTD", "New application",
                         "N", "N", 1, "Y", 2,
-                        LocalDate.of(2017, 6, 1), LocalDate.of(2017, 6, 1),
-                        LocalDate.of(2017, 6, 1), null, null, null,
+                        CURRENT_DATE, CURRENT_DATE,CURRENT_DATE, null, null, null,
                         null, null, null, null, null)
         );
 
         when(reportRepository.getReport(
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01", "All",
-                0, "2010-02-01", "2024-06-01"))
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE))
                 .thenReturn(mockedResponse);
     }
 
@@ -77,16 +82,23 @@ class Crm14CaseSummaryReportServiceTest {
     @Test
     void getReportDataShouldReturnList() {
         Crm14ReportCriteriaDTO criteria = new Crm14ReportCriteriaDTO(
-                1, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                0, "2010-02-01", "2024-06-01",
-                "All", null, null
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                STATE, "0D182J", null
         );
+
         List<Crm14CaseSummaryReportModel> results = reportService.getReportData(criteria);
 
         softly.assertThat(results).hasSize(2);
         softly.assertThat(results.get(0).getUsn()).isEqualTo(5012603L);
         softly.assertThat(results.get(1).getUsn()).isEqualTo(4004444L);
+
+        verify(reportRepository).getReport(
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE);
     }
 }

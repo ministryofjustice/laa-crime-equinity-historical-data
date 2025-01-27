@@ -18,22 +18,25 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm14ProviderReportRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14ProviderReportControllerTest {
+    private static final LocalDate CURRENT_DATE = LocalDate.now();
+    private static final String START_DATE = CURRENT_DATE.minusDays(1).toString();
+    private static final String END_DATE = CURRENT_DATE.toString();
     private static final String PROVIDER_ACCOUNT = "123ABC";
-    private static final String STATE_DEFAULT = "All";
-    private static final String VALID_START_DATE = "2024-06-01";
-    private static final String VALID_END_DATE = "2024-06-30";
+    private static final String STATE = "All";
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -50,40 +53,44 @@ class Crm14ProviderReportControllerTest {
     @Test
     void generateProviderReportCrm14Test_WhenExistingDecisionDatesGivenThenReturnDTO() {
         Crm14ProviderReportModel report = new Crm14ProviderReportModel(
-                1234567L, LocalDate.of(2023, 3, 16), "",
-                LocalDate.of(2023, 3, 16), "Mr John Doe", "1ABCD",
+                1234567L, CURRENT_DATE, "", CURRENT_DATE, "Mr John Doe", "1ABCD",
                 "Someone", "Crown Court", "Indictable", "Passed",
-                LocalDate.of(2023, 3, 16), "XXXX", "Some charge");
+                CURRENT_DATE, "XXXX", "Some charge");
 
         when(mockReportRepository.getReport(PROVIDER_ACCOUNT,
-                1, VALID_START_DATE, VALID_END_DATE,
-                0, VALID_START_DATE, VALID_END_DATE,
-                0, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
-                0, VALID_START_DATE, VALID_END_DATE)).thenReturn(List.of(report));
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE)).thenReturn(List.of(report));
 
         // execute
         ResponseEntity<Void> result = controller.generateProviderReportCrm14(
                 PROVIDER_ACCOUNT,
-                1, VALID_START_DATE, VALID_END_DATE,
-                0, VALID_START_DATE, VALID_END_DATE,
-                0, VALID_START_DATE, VALID_END_DATE,
-                0, VALID_START_DATE, VALID_END_DATE,
-                STATE_DEFAULT
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE
         );
 
         softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         softly.assertThat(result).isNull();
+
+        verify(mockReportRepository).getReport(PROVIDER_ACCOUNT,
+                1, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE);
     }
 
     @Test
     void generateProviderReportCrm4_WhenProviderAccountIsMissingThenThrowConstraintViolationException() {
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         null,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
+                        1, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        STATE))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm14.providerAccount: must not be null");
     }
@@ -97,7 +104,7 @@ class Crm14ProviderReportControllerTest {
                         0, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
-                        STATE_DEFAULT))
+                        STATE))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateProviderReportCrm14.decisionFrom: must match")
                 .hasMessageContaining("generateProviderReportCrm14.decisionTo: must match")
@@ -110,71 +117,85 @@ class Crm14ProviderReportControllerTest {
     }
 
     @Test
+    void generateReportCrm14Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
+        String startDate7yrsAgo = CURRENT_DATE.minusYears(7).minusMonths(2).toString();
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                        PROVIDER_ACCOUNT,
+                        1, startDate7yrsAgo, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        STATE))
+                .isInstanceOf(StartDateConstraintViolationException.class)
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + startDate7yrsAgo + "] cannot be earlier than 7 years ago");
+    }
+
+    @Test
     void generateProviderReportCrm14_WhenInvalidDecisionDateRangeIsGivenThenThrowConstraintViolationException() {
-        String startDate = "2024-07-05";
-        String endDate = "2024-06-30";
+        String decisionFrom = CURRENT_DATE.toString();
+        String decisionTo = CURRENT_DATE.minusDays(1).toString(); // before decisionFrom
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
-                        1, startDate, endDate,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
+                        1, decisionFrom, decisionTo,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [" + decisionFrom + "] must not be after end date [" + decisionTo + "]");
     }
 
     @Test
     void generateProviderReportCrm14_WhenInvalidSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
-        String startDate = "2024-07-05";
-        String endDate = "2024-06-30";
+        String submittedFrom = CURRENT_DATE.toString();
+        String submittedTo = CURRENT_DATE.minusDays(1).toString(); // before submittedFrom
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        1, startDate, endDate,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
+                        0, START_DATE, END_DATE,
+                        1, submittedFrom, submittedTo,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: submitted start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: submitted start date ["+ submittedFrom + "] must not be after end date [" + submittedTo + "]");
     }
 
     @Test
     void generateProviderReportCrm14_WhenInvalidCreationDateRangeIsGivenThenThrowConstraintViolationException() {
-        String startDate = "2024-07-05";
-        String endDate = "2024-06-30";
+        String createdFrom = CURRENT_DATE.toString();
+        String createdTo = CURRENT_DATE.minusDays(1).toString(); // before createdFrom
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        1, startDate, endDate,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        1, createdFrom, createdTo,
+                        0, START_DATE, END_DATE,
+                        STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: created start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: created start date [" + createdFrom + "] must not be after end date [" + createdTo + "]");
     }
 
     @Test
     void generateProviderReportCrm14_WhenInvalidLastSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
-        String startDate = "2024-07-05";
-        String endDate = "2024-06-30";
+        String lastSubmittedFrom = CURRENT_DATE.toString();
+        String lastSubmittedTo = CURRENT_DATE.minusDays(1).toString(); // before lastSubmittedFrom
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        1, startDate, endDate,
-                        STATE_DEFAULT))
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        1, lastSubmittedFrom, lastSubmittedTo,
+                        STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: lastSubmitted start date [2024-07-05] must not be after end date [2024-06-30]");
+                .hasMessage("Date Range Constraint Violation Exception :: lastSubmitted start date [" + lastSubmittedFrom + "] must not be after end date [" + lastSubmittedTo + "]");
     }
 
     @Test
@@ -182,11 +203,11 @@ class Crm14ProviderReportControllerTest {
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        STATE))
                 .isInstanceOf(NotEnoughSearchParametersException.class)
                 .hasMessage("Not enough inputs to generate report. Please specify at least 1 date range and turn on the corresponding filter flag");
     }
@@ -194,20 +215,26 @@ class Crm14ProviderReportControllerTest {
     @Test
     void generateProviderReportCrm14_WhenNoReportDataThenThrowResourceNotFoundException() {
         when(mockReportRepository.getReport(PROVIDER_ACCOUNT,
-                0, VALID_START_DATE, VALID_END_DATE,
-                0, VALID_START_DATE, VALID_END_DATE,
-                1, VALID_START_DATE, VALID_END_DATE, STATE_DEFAULT,
-                0, VALID_START_DATE, VALID_END_DATE)).thenReturn(List.of());
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                1, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE)).thenReturn(List.of());
 
         // execute
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        1, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        0, VALID_START_DATE, VALID_END_DATE,
-                        STATE_DEFAULT))
+                        0, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        1, START_DATE, END_DATE,
+                        0, START_DATE, END_DATE,
+                        STATE))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("No data found for CRM14 Provider Report for inputs");
+
+        verify(mockReportRepository).getReport(PROVIDER_ACCOUNT,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                1, START_DATE, END_DATE, STATE,
+                0, START_DATE, END_DATE);
     }
 }
