@@ -86,7 +86,7 @@ public class EquinityExceptionResponseHandler {
     }
 
     private String logError(String errorMessage, Exception exception) {
-        String logMessage = String.format(errorMessage + "%s :: %s ", exception.getClass(), exception.getMessage());
+        String logMessage = String.format("%s %s :: %s ", errorMessage, exception.getClass(), exception.getMessage());
         log.error(logMessage);
         return logMessage;
     }

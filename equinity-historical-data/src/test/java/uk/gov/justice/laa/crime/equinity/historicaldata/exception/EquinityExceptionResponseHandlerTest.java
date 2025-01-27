@@ -115,17 +115,13 @@ class EquinityExceptionResponseHandlerTest {
 
     @Test
     void shouldHandleCrmImageFilmException() throws Exception {
-        CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                2345678L, CRM_TYPE_5, "1,4,5,6"
-        );
-
         when(crm5Controller.getApplication(2345678L, null)).thenThrow(new JSONException("Some error"));
 
         mockMvc.perform(get("/api/internal/v1/equinity/crm5/2345678")
                         .header(HEADER_EQ_API_CLIENT_ID, CLIENT_ID)
                         .header(HEADER_EQ_API_SECRET, SECRET))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().string("There was a problem reading CRM image file.class org.json.JSONException :: Some error "));
+                .andExpect(content().string("There was a problem reading CRM image file. class org.json.JSONException :: Some error "));
     }
 
     @Test
@@ -136,6 +132,6 @@ class EquinityExceptionResponseHandlerTest {
                         .header(HEADER_EQ_API_CLIENT_ID, CLIENT_ID)
                         .header(HEADER_EQ_API_SECRET, SECRET))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().string("There was an unexpected problem with the application.class java.lang.RuntimeException :: Some error "));
+                .andExpect(content().string("There was an unexpected problem with the application. class java.lang.RuntimeException :: Some error "));
     }
 }
