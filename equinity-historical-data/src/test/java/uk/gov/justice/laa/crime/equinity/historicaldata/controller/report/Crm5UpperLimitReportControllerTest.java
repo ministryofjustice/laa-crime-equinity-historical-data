@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm5UpperLimitReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm5UpperLimitReportRepository;
@@ -24,6 +25,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm5Up
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
@@ -32,6 +34,9 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm5UpperLimitReportControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
+    private static final LocalDate CURRENT_DATE = LocalDate.now();
+    private static final String DECISION_FROM = CURRENT_DATE.minusDays(1).toString();
+    private static final String DECISION_TO = CURRENT_DATE.toString();
     private static final String DENIED_PROFILE_TYPES = "2,9";
 
     @MockBean
@@ -49,32 +54,38 @@ class Crm5UpperLimitReportControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateReportCrm5Test_WhenInvalidDecisionDateFromIsGivenThenReturnConstraintViolationException(String invalidDate) {
-        String validDate = "2050-01-01";
-
-        softly.assertThatThrownBy(() -> controller.generateReportCrm5(invalidDate, validDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm5(invalidDate, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateReportCrm5.decisionFrom: must match");
+    }
+
+    @Test
+    void generateReportCrm5Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
+        String decisionFrom7yrsAgo = CURRENT_DATE.minusYears(7).minusMonths(2).toString();
+
+        softly.assertThatThrownBy(() -> controller.generateReportCrm5(decisionFrom7yrsAgo, DECISION_TO, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(StartDateConstraintViolationException.class)
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom7yrsAgo + "] cannot be earlier than 7 years ago");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateReportCrm5Test_WhenInvalidDecisionDateToIsGivenThenReturnConstraintViolationException(String invalidDate) {
-        String validDate = "2050-01-01";
-
-        softly.assertThatThrownBy(() -> controller.generateReportCrm5(validDate, invalidDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm5(DECISION_FROM, invalidDate, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateReportCrm5.decisionTo: must match");
     }
 
+
     @Test
     void generateReportCrm5Test_WhenInvalidDecisionDateRangeIsGivenThenReturnConstraintViolationException() {
-        String startDate = "2024-02-19";
-        String endDate = "2024-02-09";
+        String decisionFrom = CURRENT_DATE.toString();
+        String decisionTo = CURRENT_DATE.minusDays(1).toString(); // before decisionFrom
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm5(startDate, endDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm5(decisionFrom, decisionTo, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
-                .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-02-19] must not be after end date [2024-02-09]");
+                .hasMessage("Date Range Constraint Violation Exception :: decision start date [" + decisionFrom + "] must not be after end date [" + decisionTo + "]");
     }
 
     /**
@@ -84,10 +95,6 @@ class Crm5UpperLimitReportControllerTest {
     @NullSource // test when profileTypes = null
     @ValueSource(strings = "4")
     void generateReportCrm5Test_WhenExistingDecisionDatesAndValidProfileAreGivenThenReturnDTO(String profileTypes) {
-
-        String startDate = "2010-02-01";
-        String endDate = "2024-06-01";
-
         Crm5UpperLimitReportModel report = new Crm5UpperLimitReportModel(
                 5001600L,
                 "0D182J",
@@ -96,44 +103,40 @@ class Crm5UpperLimitReportControllerTest {
                 "031022/777",
                 238,
                 239,
-                LocalDate.of(2023, 3, 16),
-                LocalDate.of(2023, 3, 16),
+                CURRENT_DATE,
+                CURRENT_DATE,
                 "POOL-Mock",
                 "Appeal",
                 "Advice"
         );
 
-        when(mockReportRepository.getReport(startDate, endDate)).thenReturn(List.of(report));
+        when(mockReportRepository.getReport(DECISION_FROM, DECISION_TO)).thenReturn(List.of(report));
 
         // execute
-        ResponseEntity<String> response = controller.generateReportCrm5(startDate, endDate, profileTypes);
+        ResponseEntity<String> response = controller.generateReportCrm5(DECISION_FROM, DECISION_TO, profileTypes);
 
         softly.assertThat(response.getBody()).isNotEmpty();
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        verify(mockReportRepository).getReport(DECISION_FROM, DECISION_TO);
     }
 
     @Test
     void generateReportCrm5Test_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
-        String startDate = "2010-02-01";
-        String endDate = "2024-06-01";
-
-        // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm5(startDate, endDate, DENIED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm5(DECISION_FROM, DECISION_TO, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class)
                 .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [4]");
     }
 
     @Test
     void generateReportCrm5Test_WhenNonExistingValidDecisionDatesAreGivenThenReturnResourceNotFoundException() {
-
-        String startDate = "1988-02-01";
-        String endDate = "1988-02-02";
-
-        when(mockReportRepository.getReport(startDate, endDate)).thenReturn(List.of());
+        when(mockReportRepository.getReport(DECISION_FROM, DECISION_TO)).thenReturn(List.of());
 
         // execute
-        softly.assertThatThrownBy(() -> controller.generateReportCrm5(startDate, endDate, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm5(DECISION_FROM, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("No data found for CRM5 Upper Limit Report between 1988-02-01 and 1988-02-02");
+                .hasMessage("No data found for CRM5 Upper Limit Report between " + DECISION_FROM + " and " + DECISION_TO);
+
+        verify(mockReportRepository).getReport(DECISION_FROM, DECISION_TO);
     }
 }

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,6 +26,7 @@ public class DateUtil {
     private static final String INVALID_FORMAT_NO_DATE_ONLY_ZERO_TIME = "00:00:00";
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
             .withLocale(Locale.UK);
+    private static final int START_DATE_LIMIT = 7; // 7 years limit
 
     public enum DateRange {
         CREATED("created"),
@@ -57,6 +59,12 @@ public class DateUtil {
 
         if (startDate.isAfter(endDate))
             throw new DateRangeConstraintViolationException(dateRange, startDate, endDate);
+    }
+
+    public static void checkStartDateWithinLimit(DateRange dateRange, LocalDate startDate) {
+        if (!Objects.isNull(startDate) && startDate.isBefore(LocalDate.now().minusYears(START_DATE_LIMIT))) {
+            throw new StartDateConstraintViolationException(dateRange, startDate, START_DATE_LIMIT);
+        }
     }
 
     public static Date convertStringToSimpleDate(String dateToConvert) throws ParseException {

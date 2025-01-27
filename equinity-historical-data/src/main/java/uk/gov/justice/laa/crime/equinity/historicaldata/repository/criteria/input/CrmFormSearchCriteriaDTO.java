@@ -2,6 +2,7 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inp
 
 import jakarta.annotation.Nullable;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.time.LocalDate;
@@ -18,6 +19,9 @@ public record CrmFormSearchCriteriaDTO(
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
+
+        DateUtil.checkStartDateWithinLimit(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom);
+
         DateUtil.checkDateRangeIsValid(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom, dateSubmittedTo);
 
         if (isNullOrBlank(usn) && (type == null)

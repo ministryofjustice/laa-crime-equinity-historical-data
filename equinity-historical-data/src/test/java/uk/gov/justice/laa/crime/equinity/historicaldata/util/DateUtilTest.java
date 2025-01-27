@@ -10,10 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
+
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
 
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -119,5 +122,25 @@ class DateUtilTest {
                         LocalDate.of(2024, 1, 1), LocalDate.of(2023, 12, 1)))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-01-01] must not be after end date [2023-12-01]");
+    }
+
+    @Test
+    void checkStartDateWithinLimit_AcceptsStartDateWithin7yrs() {
+        LocalDate startDate = LocalDate.now().minusYears(1);
+        DateUtil.checkStartDateWithinLimit(SUBMITTED, startDate);
+    }
+
+    @Test
+    void checkStartDateWithinLimit_AcceptsStartDateExactly7yrsAgo() {
+        LocalDate startDate = LocalDate.now().minusYears(7);
+        DateUtil.checkStartDateWithinLimit(SUBMITTED, startDate);
+    }
+
+    @Test
+    void checkStartDateWithinLimit_WhenStartDateIsMoreThan7YrsAgoThenThrowsException() {
+        LocalDate oldStartDate = LocalDate.now().minusYears(7).minusDays(1);
+        softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithinLimit(SUBMITTED, oldStartDate))
+                .isInstanceOf(StartDateConstraintViolationException.class)
+                .hasMessage("Start Date Constraint Violation Exception :: submitted start date [" + oldStartDate + "] cannot be earlier than 7 years ago");
     }
 }
