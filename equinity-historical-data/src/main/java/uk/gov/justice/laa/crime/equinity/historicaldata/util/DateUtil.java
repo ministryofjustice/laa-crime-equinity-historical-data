@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
@@ -46,6 +47,14 @@ public class DateUtil {
         }
     }
 
+    public static LocalDate convertDateToLocalDate(Date dateToConvert) throws DateTimeParseException {
+        if (Objects.isNull(dateToConvert)) return null;
+
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
     public static LocalDate convertStringToLocalDate(String dateToConvert) throws DateTimeParseException {
         if (Objects.isNull(dateToConvert)) return null;
 
@@ -62,7 +71,7 @@ public class DateUtil {
     }
 
     public static void checkStartDateWithinLimit(DateRange dateRange, LocalDate startDate) {
-        if (!Objects.isNull(startDate) && startDate.isBefore(LocalDate.now().minusYears(START_DATE_LIMIT))) {
+        if (!Objects.isNull(startDate) && startDate.isBefore(minStartDate())) {
             throw new StartDateConstraintViolationException(dateRange, startDate, START_DATE_LIMIT);
         }
     }
@@ -89,5 +98,8 @@ public class DateUtil {
         }
     }
 
+    public static LocalDate minStartDate() {
+        return LocalDate.now().minusYears(START_DATE_LIMIT);
+    }
 
 }

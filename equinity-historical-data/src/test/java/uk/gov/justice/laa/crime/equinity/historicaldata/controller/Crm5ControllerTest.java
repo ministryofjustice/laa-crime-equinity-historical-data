@@ -10,11 +10,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
@@ -36,6 +41,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 public class Crm5ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
     private static final String DENIED_PROFILE_TYPES = "9,19";
+    private static final Long OLD_FORM_USN = 5001649L;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
@@ -46,86 +52,14 @@ public class Crm5ControllerTest {
     @Autowired
     Crm5Controller controller;
 
-    Map<Long, String> validUsnTests;
-
-    @Test
-    void getApplication_TaskNotFound() {
-        Long usnTest = 10L;
-        softly.assertThatThrownBy(() -> controller.getApplication(usnTest, ACCEPTED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
-
-    }
-
-    @Test
-    void getApplicationTest_WhenGivenExistingUsnThenReturnValidResponse() {
-        Long usnTest = 5001604L;
-        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, ACCEPTED_PROFILE_TYPES);
-
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFormDetails().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
-    }
-
-    @Test
-    void getApplicationTest_WhenGivenExistingUsnWithNoProfileAcceptedTypesThenReturnValidResponse() {
-        Long usnTest = 5001604L;
-        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
-
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFormDetails().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
-    }
-
-    @Test
-    void getApplicationTest_WhenGivenExistingUsnButNotAcceptedTypeThenReturnTaskNotFoundException() {
-        Long usnTest = 5001604L;
-
-        softly.assertThatThrownBy(() -> controller.getApplication(usnTest, DENIED_PROFILE_TYPES))
-                .isInstanceOf(UnauthorizedUserProfileException.class)
-                .hasMessageContaining("Unauthorized").hasMessageContaining("not have privileges");
-    }
-
-    @Test
-    void getApplicationTest_WhenGivenExistingUsnWithAcPreparationTimeFormatThenReturnValidResponse() {
-        Long usnTest = 5001604L;
-        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
-
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("00:15:00");    }
-
-    @Test
-    void getApplicationTest_WhenGivenExistingUsnWithAcPreparationDateTimeFormatThenReturnValidResponse() {
-        Long usnTest = 5001716L;
-        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
-
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001716L);
-        softly.assertThat(result.getBody().getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("193:48:00");    }
-    @Test
-    void getApplicationTest_OfficialUseResponse() {
-        Long usnTest = 5001604L;
-        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
-
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm5FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getUsn()).isEqualTo(5001604);
-        softly.assertThat(result.getBody().getFormDetails().getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("G");
-        softly.assertThat(result.getBody().getFormDetails().getOfficeUseOnly().getAuthority().getSignedAuthDate()).isNotNull();
-    }
-
-
     @BeforeAll
     void preTest() throws IOException {
         // Mocking good XML
-        validUsnTests = new HashMap<>();
-        validUsnTests.put(5001604L, "src/test/resources/Crm5MockFile_5001604.txt");
-        validUsnTests.put(5001716L, "src/test/resources/Crm5MockFile_5001716.txt");
+        Map<Long, String> validUsnTests = Map.of(
+                5001604L, "src/test/resources/Crm5MockFile_5001604.txt",
+                5001716L, "src/test/resources/Crm5MockFile_5001716.txt",
+                OLD_FORM_USN, "src/test/resources/Crm5MockFile_5001649.txt"
+        );
 
         validUsnTests.forEach((testUsn, testFile) -> {
             // Mocking good XML
@@ -142,5 +76,84 @@ public class Crm5ControllerTest {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @Test
+    void getApplication_TaskNotFound() {
+        Long usnTest = 10L;
+        softly.assertThatThrownBy(() -> controller.getApplication(usnTest, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Task with USN 10 not found");
+
+    }
+
+    @NullSource  // test when profileTypes = null
+    @ValueSource(strings = {"4"})
+    @ParameterizedTest
+    void getApplicationTest_WhenGivenExistingUsnThenReturnValidResponse(String profileAcceptedTypes) {
+        Long usnTest = 5001604L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, profileAcceptedTypes);
+
+        Crm5FormDTO crm5FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm5FormDTO).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(crm5FormDTO.getFormDetails().getFirm().getFirmName()).isEqualTo("MOCK_FIRM_001");
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void getApplicationTest_WhenGivenExistingUsnButNotAcceptedTypeThenReturnTaskNotFoundException() {
+        Long usnTest = 5001604L;
+        softly.assertThatThrownBy(() -> controller.getApplication(usnTest, DENIED_PROFILE_TYPES))
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [4]");
+    }
+
+    @Test
+    void getApplicationTest_WhenGivenOldFormUsnThenReturnTaskNotFoundException() {
+        softly.assertThatThrownBy(() -> controller.getApplication(OLD_FORM_USN, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("USN 5001649 is unavailable");
+    }
+
+    @Test
+    void getApplicationTest_WhenGivenExistingUsnWithAcPreparationTimeFormatThenReturnValidResponse() {
+        Long usnTest = 5001604L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        Crm5FormDTO crm5FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm5FormDTO).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(crm5FormDTO.getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("00:15:00");
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void getApplicationTest_WhenGivenExistingUsnWithAcPreparationDateTimeFormatThenReturnValidResponse() {
+        Long usnTest = 5001716L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        Crm5FormDTO crm5FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm5FormDTO).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails().getUsn()).isEqualTo(5001716);
+        softly.assertThat(crm5FormDTO.getFormDetails().getAllCosts().getAnticipatedCosts().getPreparation().getTime()).isEqualTo("193:48:00");
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void getApplicationTest_OfficialUseResponse() {
+        Long usnTest = 5001604L;
+        ResponseEntity<Crm5FormDTO> result = controller.getApplication(usnTest, null);
+
+        Crm5FormDTO crm5FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm5FormDTO).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm5FormDTO.getFormDetails().getUsn()).isEqualTo(5001604);
+        softly.assertThat(crm5FormDTO.getFormDetails().getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("G");
+        softly.assertThat(crm5FormDTO.getFormDetails().getOfficeUseOnly().getAuthority().getSignedAuthDate()).isNotNull();
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

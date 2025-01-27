@@ -21,8 +21,11 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Service
@@ -86,6 +89,17 @@ public class CrmFileService {
         formattingSanityCheckConversions(crmFormDetailsCriteriaDTO, crmFileJsonObject);
 
         return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
+    }
+
+    public void checkDateReceived(Crm4Model crmFormData) {
+        checkDateReceived(crmFormData.getFormDetails().getDate_received(), crmFormData.getFormDetails().getUsn());
+    }
+
+    private void checkDateReceived(Date dateReceived, Long usn) {
+        LocalDate localDate = DateUtil.convertDateToLocalDate(dateReceived);
+        if (localDate != null && localDate.isBefore(DateUtil.minStartDate())) {
+            throw new ResourceNotFoundException("USN " + usn + " is unavailable");
+        }
     }
 
     /**
