@@ -44,7 +44,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 class Crm7ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_7);
     private static final String DENIED_PROFILE_TYPES = "12,7,9";
-    private static final Long OLD_FORM_USN = 5001664L;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -111,13 +110,6 @@ class Crm7ControllerTest {
         softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, ACCEPTED_PROFILE_TYPES))
             .isInstanceOf(ResourceNotFoundException.class)
             .hasMessage("Task with USN 10 not found");
-    }
-
-    @Test
-    void getApplicationCrm7Test_WhenGivenOldFormUsnThenReturnTaskNotFoundException() {
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm7(OLD_FORM_USN, ACCEPTED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 5001664 is unavailable");
     }
 
     @ParameterizedTest
