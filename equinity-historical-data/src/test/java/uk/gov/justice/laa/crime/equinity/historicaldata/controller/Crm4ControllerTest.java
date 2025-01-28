@@ -6,13 +6,16 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -23,6 +26,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 
 @SpringBootTest
@@ -38,7 +43,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 class Crm4ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_4);
     private static final String DENIED_PROFILE_TYPES = "7,9,19";
-    private static final Long OLD_FORM_USN = 5001613L;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -49,13 +53,14 @@ class Crm4ControllerTest {
     @Autowired
     Crm4Controller controller;
 
+    private MockedStatic<CrmFormUtil> mockStatic;
+
     @BeforeAll
     void preTest() {
         // Mocking good XML
         Map<Long, String> validUsnTests = Map.of(
                 5001912L, "src/test/resources/Crm4MockFile_5001912.txt",
-                4795804L, "src/test/resources/Crm4MockFile_4795804.txt",
-                5001613L, "src/test/resources/Crm4MockFile_5001613.txt");
+                4795804L, "src/test/resources/Crm4MockFile_4795804.txt");
 
         validUsnTests.forEach((testUsn, testFile) -> {
             // Mocking good XML
@@ -74,6 +79,16 @@ class Crm4ControllerTest {
         });
     }
 
+    @BeforeEach
+    public void setUp() {
+        mockStatic = mockStatic(CrmFormUtil.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        mockStatic.close();
+    }
+
     /**
      * USN input checks
      */
@@ -90,13 +105,6 @@ class Crm4ControllerTest {
         softly.assertThatThrownBy(() -> controller.getApplicationCrm4(usnTest, ACCEPTED_PROFILE_TYPES))
             .isInstanceOf(ResourceNotFoundException.class)
             .hasMessage("Task with USN 10 not found");
-    }
-
-    @Test
-    void getApplicationCrm4Test_WhenGivenOldFormUsnThenReturnTaskNotFoundException() {
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm4(OLD_FORM_USN, ACCEPTED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 5001613 is unavailable");
     }
 
     @NullSource  // test when profileTypes = null

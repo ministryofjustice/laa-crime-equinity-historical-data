@@ -10,22 +10,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.*;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Date;
+
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil.checkCrmFormDateReceived;
 
 
 @Service
@@ -47,25 +50,25 @@ public class CrmFileService {
     public static final String CRM_LINKED_EVIDENCE_FILES = "linkedAttachment";
     public static final String CRM_FORM_FIELD_DATA = "fielddata";
     public static final String CRM_ROW = "row";
-    public static final String CRM4_ADDITIONAL_EXPENDITURE ="Ae";
-    public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE ="Ae_cw";
-    public static final String CRM4_RELATED_SUBMISSIONS ="Relatedsubmissions";
-    public static final String CRM_FURTHER_INFO_ATTACHMENT ="Attachments";
-    public static final String CRM7_DISBURSEMENTS ="Db";
-    public static final String CRM7_SCHEDULE ="Schedule";
-    public static final String CRM7_SCHEDULE_CW ="Schedule_cw";
+    public static final String CRM4_ADDITIONAL_EXPENDITURE = "Ae";
+    public static final String CRM4_AUTHORISED_ADDITIONAL_EXPENDITURE = "Ae_cw";
+    public static final String CRM4_RELATED_SUBMISSIONS = "Relatedsubmissions";
+    public static final String CRM_FURTHER_INFO_ATTACHMENT = "Attachments";
+    public static final String CRM7_DISBURSEMENTS = "Db";
+    public static final String CRM7_SCHEDULE = "Schedule";
+    public static final String CRM7_SCHEDULE_CW = "Schedule_cw";
     public static final String CRM14_CHARGES_BROUGHT = "Charges_brought";
-    public static final String CRM14_MESSAGE_HISTORY ="Messagehistory";
+    public static final String CRM14_MESSAGE_HISTORY = "Messagehistory";
     public static final String CRM15_BUSINESS_DETAILS = "Business_details";
     public static final String CRM15_PARTNER_BUSINESS_DETAILS = "Partner_business_details";
     public static final String CRM15_LAND_PROPERTY_DETAILS = "Land_and_property_table";
     public static final String CRM15_CAR_REG_DETAILS = "Car_reg_table";
-    public static final String CRM15_INVESTMENT_DETAILS ="Investments_table";
-    public static final String CRM15_SAVINGS_CERT_DETAILS ="Savings_certificates";
-    public static final String CRM15_BANK_ACCOUNTS_DETAILS ="Bank_accounts";
-    public static final String CRM15_EMPLOYMENT_DETAILS ="Employment_details";
-    public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS ="Partner_employment_details";
-    public static final String CRM15_NEW_ATTACHMENTS ="Tblnewattachments";
+    public static final String CRM15_INVESTMENT_DETAILS = "Investments_table";
+    public static final String CRM15_SAVINGS_CERT_DETAILS = "Savings_certificates";
+    public static final String CRM15_BANK_ACCOUNTS_DETAILS = "Bank_accounts";
+    public static final String CRM15_EMPLOYMENT_DETAILS = "Employment_details";
+    public static final String CRM15_PARTNER_EMPLOYMENT_DETAILS = "Partner_employment_details";
+    public static final String CRM15_NEW_ATTACHMENTS = "Tblnewattachments";
 
 
     private final CrmFormDetailsRepository crmFormDetailsRepository;
@@ -78,7 +81,8 @@ public class CrmFileService {
             case CRM_TYPE_5 -> Crm5Model.class;
             case CRM_TYPE_7 -> Crm7Model.class;
             case CRM_TYPE_14 -> Crm14Model.class;
-            default -> throw new NotEnoughSearchParametersException("A valid CRM From Type is required. Given type: " + type);
+            default ->
+                    throw new NotEnoughSearchParametersException("A valid CRM From Type is required. Given type: " + type);
         };
     }
 
@@ -88,22 +92,15 @@ public class CrmFileService {
 
         formattingSanityCheckConversions(crmFormDetailsCriteriaDTO, crmFileJsonObject);
 
-        return convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
-    }
+        T crmFormModel = convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
 
-    public void checkDateReceived(Crm4Model crmFormData) {
-        checkDateReceived(crmFormData.getFormDetails().getDate_received(), crmFormData.getFormDetails().getUsn());
-    }
+        checkCrmFormDateReceived(crmFormModel);
 
-    private void checkDateReceived(Date dateReceived, Long usn) {
-        LocalDate localDate = DateUtil.convertDateToLocalDate(dateReceived);
-        if (localDate != null && localDate.isBefore(DateUtil.minStartDate())) {
-            throw new ResourceNotFoundException("USN " + usn + " is unavailable");
-        }
+        return crmFormModel;
     }
 
     /**
-     *  Format sanity checks and conversions
+     * Format sanity checks and conversions
      */
     private void formattingSanityCheckConversions(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO, JSONObject crmFileJsonObject) {
         switch (crmFormDetailsCriteriaDTO.type()) {
@@ -114,13 +111,13 @@ public class CrmFileService {
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
             case CRM_TYPE_5:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
-            break;
+                break;
             case CRM_TYPE_7:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_SCHEDULE_CW, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM7_DISBURSEMENTS, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM_FURTHER_INFO_ATTACHMENT, CRM_ROW);
-            break;
+                break;
             case CRM_TYPE_14:
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_CHARGES_BROUGHT, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_BUSINESS_DETAILS, CRM_ROW);
@@ -134,7 +131,7 @@ public class CrmFileService {
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_PARTNER_EMPLOYMENT_DETAILS, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM15_NEW_ATTACHMENTS, CRM_ROW);
                 convertCrmFormObjectToArray(crmFileJsonObject.getJSONObject(CRM_FORM_FIELD_DATA), CRM14_MESSAGE_HISTORY, CRM_ROW);
-            break;
+                break;
         }
 
         convertCrmFormObjectToArray(crmFileJsonObject, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
@@ -142,13 +139,13 @@ public class CrmFileService {
 
     public JSONObject getCrmFileJson(CrmFormDetailsCriteriaDTO crmFormDetailsCriteriaDTO) throws JSONException {
         CrmFormDetailsModel task = (CrmFormDetailsModel) crmFormDetailsRepository.findOne(
-                crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
-            )
-            .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
+                        crmFormDetailsCriteria.getSpecification(crmFormDetailsCriteriaDTO)
+                )
+                .orElseThrow(() -> new ResourceNotFoundException("Task with USN " + crmFormDetailsCriteriaDTO.usn() + " not found"));
 
         // Collect and clean content
         String crmFormFileContent = new String(task.getCrmFile(), StandardCharsets.ISO_8859_1)
-            .replaceAll(CHAR_NULL, CHAR_EMPTY).replaceAll(CHAR_QUOTE,CHAR_SPACE);
+                .replaceAll(CHAR_NULL, CHAR_EMPTY).replaceAll(CHAR_QUOTE, CHAR_SPACE);
 
         return convertCrmFileContentToJson(crmFormFileContent);
     }
@@ -170,8 +167,8 @@ public class CrmFileService {
 
         try {
             crmFormData = jsonObjectMapper.readValue(
-                crmFileJsonObject.toString(),
-                getCrmFormTypeMapClass(crmFormDetailsCriteriaDTO.type())
+                    crmFileJsonObject.toString(),
+                    getCrmFormTypeMapClass(crmFormDetailsCriteriaDTO.type())
             );
         } catch (JsonProcessingException e) {
             throw new JSONException(e);
@@ -185,14 +182,14 @@ public class CrmFileService {
         if (!crmFileJsonObject.has(jsonParentKey)) {
             jsonParentObject = new JSONObject();
             jsonParentObject.put(jsonChildKey, new JSONArray());
-            crmFileJsonObject.put(jsonParentKey,jsonParentObject);
+            crmFileJsonObject.put(jsonParentKey, jsonParentObject);
             return;
         }
         jsonParentObject = (JSONObject) crmFileJsonObject.get(jsonParentKey);
 
         if (!jsonParentObject.has(jsonChildKey)) {
             jsonParentObject.put(jsonChildKey, new JSONArray());
-            crmFileJsonObject.put(jsonParentKey,jsonParentObject);
+            crmFileJsonObject.put(jsonParentKey, jsonParentObject);
             return;
         }
         if (jsonParentObject.get(jsonChildKey) instanceof JSONObject) {
@@ -201,7 +198,7 @@ public class CrmFileService {
             JSONArray toArray = new JSONArray();
             toArray.put(jsonParentObject.get(jsonChildKey));
             jsonParentObject.put(jsonChildKey, toArray);
-            crmFileJsonObject.put(jsonParentKey,jsonParentObject);
+            crmFileJsonObject.put(jsonParentKey, jsonParentObject);
         }
     }
 }

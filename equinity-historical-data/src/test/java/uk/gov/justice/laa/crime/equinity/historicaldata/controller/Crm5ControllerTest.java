@@ -13,27 +13,25 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
-
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -41,7 +39,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 public class Crm5ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
     private static final String DENIED_PROFILE_TYPES = "9,19";
-    private static final Long OLD_FORM_USN = 5001649L;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
@@ -52,13 +49,14 @@ public class Crm5ControllerTest {
     @Autowired
     Crm5Controller controller;
 
+    private MockedStatic<CrmFormUtil> mockStatic;
+
     @BeforeAll
-    void preTest() throws IOException {
+    void preTest() {
         // Mocking good XML
         Map<Long, String> validUsnTests = Map.of(
                 5001604L, "src/test/resources/Crm5MockFile_5001604.txt",
-                5001716L, "src/test/resources/Crm5MockFile_5001716.txt",
-                OLD_FORM_USN, "src/test/resources/Crm5MockFile_5001649.txt"
+                5001716L, "src/test/resources/Crm5MockFile_5001716.txt"
         );
 
         validUsnTests.forEach((testUsn, testFile) -> {
@@ -108,13 +106,6 @@ public class Crm5ControllerTest {
         softly.assertThatThrownBy(() -> controller.getApplication(usnTest, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class)
                 .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [4]");
-    }
-
-    @Test
-    void getApplicationTest_WhenGivenOldFormUsnThenReturnTaskNotFoundException() {
-        softly.assertThatThrownBy(() -> controller.getApplication(OLD_FORM_USN, ACCEPTED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 5001649 is unavailable");
     }
 
     @Test

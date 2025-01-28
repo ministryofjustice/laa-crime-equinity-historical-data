@@ -6,10 +6,15 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -18,19 +23,22 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormCRM14AttachmentStoreRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
@@ -40,6 +48,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 class Crm14ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
     private static final String DENIED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
+    private static final Long OLD_FORM_USN = 5001509L;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -56,17 +65,19 @@ class Crm14ControllerTest {
     @Autowired
     Crm14Controller controller;
 
-    Map<Long, String> validUsnTests;
+    private MockedStatic<CrmFormUtil> mockStatic;
 
     @BeforeAll
     void preTest() {
-        validUsnTests = new HashMap<>();
-        validUsnTests.put(5001817L, "src/test/resources/Crm14MockFile_5001817.txt");
-        validUsnTests.put(5001669L, "src/test/resources/Crm14MockFile_5001669.txt");
-        validUsnTests.put(1826833L, "src/test/resources/Crm14MockFile_1826833.txt");
+        Map<Long, String> validUsnTests = Map.of(
+                5001817L, "src/test/resources/Crm14MockFile_5001817.txt",
+                5001669L, "src/test/resources/Crm14MockFile_5001669.txt",
+                1826833L, "src/test/resources/Crm14MockFile_1826833.txt",
+                OLD_FORM_USN, "src/test/resources/Crm14MockFile_5001509.txt"
+        );
 
-        CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
-                "3x monthly statements","",341);
+        CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L, "61c6df22-c18c-4182-9560-897b0e18dfcd", "Screenshot 2022-05-23 at 13.26.59.png", 3, null, null, "Accepted", "BANK_STATEMENTS",
+                "3x monthly statements", "", 341);
         crmFormCRM14AttachmentStoreRepository.save(attachment);
 
         validUsnTests.forEach((testUsn, testFile) -> {
@@ -85,6 +96,17 @@ class Crm14ControllerTest {
             }
         });
     }
+
+    @BeforeEach
+    public void setUp() {
+        mockStatic = mockStatic(CrmFormUtil.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        mockStatic.close();
+    }
+
 
     /**
      * USN input checks
@@ -108,17 +130,26 @@ class Crm14ControllerTest {
     }
 
     @Test
-    void getApplication_Crm14Test_WhenGivenExistingUsnThenReturnValidResponse() {
+    void getApplicationCrm14Test_WhenGivenOldFormUsnThenReturnTaskNotFoundException() {
+        mockStatic.when(() -> CrmFormUtil.checkCrmFormDateReceived(any(Crm14Model.class)))
+                        .thenThrow(new ResourceNotFoundException("USN 5001509 is unavailable"));
 
-        // Test with accepted types
-        validUsnTests.keySet().forEach((usnToTest) -> {
-            ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
+        softly.assertThatThrownBy(() -> controller.getApplicationCrm14(OLD_FORM_USN, ACCEPTED_PROFILE_TYPES))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("USN 5001509 is unavailable");
+    }
 
-            softly.assertThat(result.getBody()).isNotNull();
-            softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-            softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getLegalRepresentativeUse().getDateStamp().getUsn()).isEqualTo(usnToTest.intValue());
-            softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-        });
+    @ParameterizedTest
+    @ValueSource(longs = {5001817L, 5001669L, 1826833L})
+    void getApplication_Crm14Test_WhenGivenExistingUsnThenReturnValidResponse(Long usn) {
+
+        ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usn, ACCEPTED_PROFILE_TYPES);
+
+        softly.assertThat(result.getBody()).isNotNull();
+        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
+        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getLegalRepresentativeUse().getDateStamp().getUsn()).isEqualTo(usn.intValue());
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+
     }
 
     @Test
@@ -171,6 +202,7 @@ class Crm14ControllerTest {
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
+
     @Test
     void getApplication_Crm14Test_FundingDecisions() {
         Long usnToTest = 1826833L;
@@ -182,6 +214,7 @@ class Crm14ControllerTest {
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
+
     @Test
     void getApplication_Crm14Test_MessageHistory() {
         Long usnToTest = 1826833L;
@@ -193,6 +226,7 @@ class Crm14ControllerTest {
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
+
     @Test
     void getApplication_Crm14Test_WhenGivenExistingUsnWrongProfileType() {
         Long usnTest = 5001817L;

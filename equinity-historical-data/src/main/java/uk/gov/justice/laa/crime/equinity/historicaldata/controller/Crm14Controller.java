@@ -14,6 +14,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inpu
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14AttachmentService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.Crm14PSEMessageService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Crm14Controller implements Crm14InterfaceApi{
                 usn, CRM_TYPE_14, profileAcceptedTypes
         );
         Crm14Model crm14FormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
+        CrmFormUtil.checkCrmFormDateReceived(crm14FormData);
         List<CrmFormCRM14AttachmentStoreModel> attachments = crm14AttachmentService.getAttachments(usn);
         crm14FormData.getFormDetails().setProcessedAttachments(attachments);
         crm14FormData.addProcessedAttachmentsToEvidence(attachments);
