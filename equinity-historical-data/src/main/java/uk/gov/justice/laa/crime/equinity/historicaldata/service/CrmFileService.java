@@ -21,12 +21,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetail
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.Date;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil.checkCrmFormDateReceived;
 

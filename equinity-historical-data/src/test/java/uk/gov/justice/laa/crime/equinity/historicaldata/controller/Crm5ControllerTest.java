@@ -6,7 +6,9 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
 @SpringBootTest
@@ -75,6 +78,17 @@ public class Crm5ControllerTest {
             }
         });
     }
+
+    @BeforeEach
+    public void setUp() {
+        mockStatic = mockStatic(CrmFormUtil.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        mockStatic.close();
+    }
+
 
     @Test
     void getApplication_TaskNotFound() {

@@ -12,7 +12,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFurtherInformationService;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
 
@@ -33,8 +32,6 @@ public class Crm7Controller implements Crm7InterfaceApi {
                 usn, CRM_TYPE_7, profileAcceptedTypes
         );
         Crm7Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
-
-        CrmFormUtil.checkCrmFormDateReceived(crmFormData);
 
         crmFurtherInfoService.addFileKeyToFurtherInfo(crmFormData);
         return ResponseEntity.ok(mapper.getDTOFromModel(crmFormData));

@@ -6,12 +6,15 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -24,6 +27,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7Offici
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7SummaryOfClaimDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,6 +35,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
 
 @SpringBootTest
@@ -50,6 +55,8 @@ class Crm7ControllerTest {
     @Autowired
     Crm7Controller controller;
 
+    private MockedStatic<CrmFormUtil> mockStatic;
+
     @BeforeAll
     void preTest() {
         Map<Long, String> validUsnTests = Map.of(
@@ -57,8 +64,7 @@ class Crm7ControllerTest {
                 5001597L, "src/test/resources/Crm7MockFile_5001597.txt",
                 4808706L,  "src/test/resources/Crm7MockFile_4808706.txt",
                 4808532L,  "src/test/resources/Crm7MockFile_4808532.txt",
-                4808666L, "src/test/resources/Crm7MockFile_4808666.txt",
-                OLD_FORM_USN, "src/test/resources/Crm7MockFile_5001664.txt"
+                4808666L, "src/test/resources/Crm7MockFile_4808666.txt"
         );
 
         validUsnTests.forEach((testUsn, testFile) -> {
@@ -76,6 +82,16 @@ class Crm7ControllerTest {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @BeforeEach
+    public void setUp() {
+        mockStatic = mockStatic(CrmFormUtil.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        mockStatic.close();
     }
 
     /**

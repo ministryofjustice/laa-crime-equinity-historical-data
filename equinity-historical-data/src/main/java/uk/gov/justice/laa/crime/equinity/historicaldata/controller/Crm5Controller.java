@@ -5,19 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.Crm5InterfaceApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.mapper.Crm5Mapper;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm4.Crm4Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFurtherInformationService;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
-
-import java.time.LocalDate;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
@@ -39,8 +33,6 @@ public class Crm5Controller implements Crm5InterfaceApi {
                 usn, CRM_TYPE_5, profileAcceptedTypes
         );
         Crm5Model crmFormData = crmFileService.getCrmFormData(crmFormDetailsCriteriaDTO);
-
-        CrmFormUtil.checkCrmFormDateReceived(crmFormData);
 
         crmFurtherInfoService.addFileKeyToFurtherInfo(crmFormData);
         return ResponseEntity.ok(crm5Mapper.getDTOFromModel(crmFormData));

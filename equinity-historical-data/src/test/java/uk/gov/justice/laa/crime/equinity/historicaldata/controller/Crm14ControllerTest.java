@@ -23,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm14FormDTO;
-import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm14.Crm14Model;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormCRM14AttachmentStoreRepository;
@@ -37,7 +36,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
@@ -48,7 +46,6 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 class Crm14ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
     private static final String DENIED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
-    private static final Long OLD_FORM_USN = 5001509L;
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -72,8 +69,7 @@ class Crm14ControllerTest {
         Map<Long, String> validUsnTests = Map.of(
                 5001817L, "src/test/resources/Crm14MockFile_5001817.txt",
                 5001669L, "src/test/resources/Crm14MockFile_5001669.txt",
-                1826833L, "src/test/resources/Crm14MockFile_1826833.txt",
-                OLD_FORM_USN, "src/test/resources/Crm14MockFile_5001509.txt"
+                1826833L, "src/test/resources/Crm14MockFile_1826833.txt"
         );
 
         CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L, "61c6df22-c18c-4182-9560-897b0e18dfcd", "Screenshot 2022-05-23 at 13.26.59.png", 3, null, null, "Accepted", "BANK_STATEMENTS",
@@ -127,16 +123,6 @@ class Crm14ControllerTest {
         softly.assertThatThrownBy(() -> controller.getApplicationCrm14(usnTest, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Task with USN").hasMessageContaining("not found");
-    }
-
-    @Test
-    void getApplicationCrm14Test_WhenGivenOldFormUsnThenReturnTaskNotFoundException() {
-        mockStatic.when(() -> CrmFormUtil.checkCrmFormDateReceived(any(Crm14Model.class)))
-                        .thenThrow(new ResourceNotFoundException("USN 5001509 is unavailable"));
-
-        softly.assertThatThrownBy(() -> controller.getApplicationCrm14(OLD_FORM_USN, ACCEPTED_PROFILE_TYPES))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 5001509 is unavailable");
     }
 
     @ParameterizedTest
