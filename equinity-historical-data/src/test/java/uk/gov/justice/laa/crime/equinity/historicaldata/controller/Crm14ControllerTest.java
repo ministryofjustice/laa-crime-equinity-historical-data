@@ -103,7 +103,6 @@ class Crm14ControllerTest {
         mockStatic.close();
     }
 
-
     /**
      * USN input checks
      */

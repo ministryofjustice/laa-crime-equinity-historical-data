@@ -31,7 +31,7 @@ public class CrmFormUtil {
     }
 
     private static void checkDateReceived(LocalDate dateReceived, Long usn) {
-        if (dateReceived != null && dateReceived.isBefore(DateUtil.minStartDate())) {
+        if (dateReceived != null && dateReceived.isBefore(DateUtil.getMinimumStartDate())) {
             throw new ResourceNotFoundException("USN " + usn + " is unavailable");
         }
     }

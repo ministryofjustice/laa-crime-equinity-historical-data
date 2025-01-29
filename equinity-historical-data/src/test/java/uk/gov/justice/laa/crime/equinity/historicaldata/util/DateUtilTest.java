@@ -143,4 +143,19 @@ class DateUtilTest {
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: submitted start date [" + oldStartDate + "] cannot be earlier than 7 years ago");
     }
+
+    @Test
+    void convertDateToLocalDate_WhenGivenDateShouldReturnLocalDate() {
+        LocalDate result = DateUtil.convertDateToLocalDate(new Date());
+
+        softly.assertThat(result).isNotNull();
+        softly.assertThat(result).isEqualTo(LocalDate.now());
+    }
+
+    @Test
+    void getMinimumStartDate_ShouldReturnDate() {
+        LocalDate result = DateUtil.getMinimumStartDate();
+
+        softly.assertThat(result).isNotNull();
+    }
 }
