@@ -17,10 +17,13 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
 
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DateUtilTest {
+
+    private static final LocalDate MIN_START_DATE = getMinStartDate();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -131,17 +134,22 @@ class DateUtilTest {
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsStartDateExactly7yrsAgo() {
-        LocalDate startDate = LocalDate.now().minusYears(7);
-        DateUtil.checkStartDateWithinLimit(SUBMITTED, startDate);
+    void checkStartDateWithinLimit_AcceptsNullStartDate() {
+        DateUtil.checkStartDateWithinLimit(SUBMITTED, null);
     }
 
     @Test
-    void checkStartDateWithinLimit_WhenStartDateIsMoreThan7YrsAgoThenThrowsException() {
-        LocalDate oldStartDate = LocalDate.now().minusYears(7).minusDays(1);
+    void checkStartDateWithinLimit_AcceptsMinStartDate() {
+        DateUtil.checkStartDateWithinLimit(SUBMITTED, MIN_START_DATE);
+    }
+
+    @Test
+    void checkStartDateWithinLimit_WhenStartDateIsBeforeMinStartDateThenThrowsException() {
+        LocalDate oldStartDate = MIN_START_DATE.minusDays(1);
         softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithinLimit(SUBMITTED, oldStartDate))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: submitted start date [" + oldStartDate + "] cannot be earlier than 7 years ago");
+                .hasMessageContaining("Start Date Constraint Violation Exception :: submitted start date ["
+                        + oldStartDate + "] cannot be earlier than " + MIN_START_DATE);
     }
 
     @Test
@@ -154,7 +162,7 @@ class DateUtilTest {
 
     @Test
     void getMinimumStartDate_ShouldReturnDate() {
-        LocalDate result = DateUtil.getMinimumStartDate();
+        LocalDate result = getMinStartDate();
 
         softly.assertThat(result).isNotNull();
     }

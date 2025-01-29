@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.justice.laa.crime.equinity.historicaldata.controller.Crm5Controller;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -73,7 +74,8 @@ class EquinityExceptionResponseHandlerTest {
                         .header(HEADER_EQ_API_CLIENT_ID, CLIENT_ID)
                         .header(HEADER_EQ_API_SECRET, SECRET))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Start Date Constraint Violation Exception :: submitted start date [2001-01-01] cannot be earlier than 7 years ago"));
+                .andExpect(content().string("Start Date Constraint Violation Exception :: submitted start date [2001-01-01] " +
+                        "cannot be earlier than " + DateUtil.getMinStartDate()));
     }
 
     @Test

@@ -108,12 +108,9 @@ class Crm14ControllerTest {
      */
     @Test
     void getApplication_Crm14Test_WhenUsnInputIsGivenNullThenReturnInvalidDataAccessApiUsageException() {
-        String expectedMessage = "not be null";
-
-        // execute
         softly.assertThatThrownBy(() -> controller.getApplicationCrm14(null, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(InvalidDataAccessApiUsageException.class)
-                .hasMessageContaining(expectedMessage);
+                .hasMessage("Expected USN not be null");
     }
 
     @Test
@@ -121,18 +118,17 @@ class Crm14ControllerTest {
         Long usnTest = 10L;
         softly.assertThatThrownBy(() -> controller.getApplicationCrm14(usnTest, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+                .hasMessage("Task with USN 10 not found");
     }
 
     @ParameterizedTest
     @ValueSource(longs = {5001817L, 5001669L, 1826833L})
     void getApplication_Crm14Test_WhenGivenExistingUsnThenReturnValidResponse(Long usn) {
-
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usn, ACCEPTED_PROFILE_TYPES);
 
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getLegalRepresentativeUse().getDateStamp().getUsn()).isEqualTo(usn.intValue());
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getLegalRepresentativeUse().getDateStamp().getUsn()).isEqualTo(usn.intValue());
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -142,9 +138,10 @@ class Crm14ControllerTest {
         Long usnToTest = 5001669L;
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getNewAttachments()).isNotEmpty();
+
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getEvidencePart2().getNewAttachments()).isNotEmpty();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -154,10 +151,11 @@ class Crm14ControllerTest {
         Long usnToTest = 5001669L;
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getIncome().getNoMoneySleepingAtFriend()).isEqualTo(true);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getIncome().getHomeless()).isEqualTo(true);
+
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getIncome().getNoMoneySleepingAtFriend()).isEqualTo(true);
+        softly.assertThat(crm14FormDTO.getFormDetails().getIncome().getHomeless()).isEqualTo(true);
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -167,10 +165,11 @@ class Crm14ControllerTest {
         Long usnToTest = 5001817L;
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getProcessedAttachments()).isNotEmpty();
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getEvidenceFiles().getFiles()).hasSize(2);
+
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getEvidencePart2().getProcessedAttachments()).isNotEmpty();
+        softly.assertThat(crm14FormDTO.getEvidenceFiles().getFiles()).hasSize(2);
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -180,10 +179,11 @@ class Crm14ControllerTest {
         Long usnToTest = 5001817L;
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getEvidencePart2().getProcessedAttachments()).hasSize(1);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getEvidenceFiles().getFiles()).hasSize(2);
+
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getEvidencePart2().getProcessedAttachments()).hasSize(1);
+        softly.assertThat(crm14FormDTO.getEvidenceFiles().getFiles()).hasSize(2);
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -193,9 +193,10 @@ class Crm14ControllerTest {
         Long usnToTest = 1826833L;
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getOfficeUseOnly().getFundingDecisions().get(0).getCaseNumber()).isEqualTo("061601049057");
+
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getOfficeUseOnly().getFundingDecisions().get(0).getCaseNumber()).isEqualTo("061601049057");
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -205,9 +206,10 @@ class Crm14ControllerTest {
         Long usnToTest = 1826833L;
         // Test with accepted types
         ResponseEntity<Crm14FormDTO> result = controller.getApplicationCrm14(usnToTest, ACCEPTED_PROFILE_TYPES);
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm14FormDTO.class);
-        softly.assertThat(Objects.requireNonNull(result.getBody()).getFormDetails().getOfficeUseOnly().getMessageHistory().get(0).getSenderUniqueName()).isNotNull();
+
+        Crm14FormDTO crm14FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm14FormDTO).isNotNull();
+        softly.assertThat(crm14FormDTO.getFormDetails().getOfficeUseOnly().getMessageHistory().get(0).getSenderUniqueName()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     }
@@ -218,6 +220,6 @@ class Crm14ControllerTest {
         // Test with accepted types
         softly.assertThatThrownBy(() -> controller.getApplicationCrm14(usnTest, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class)
-                .hasMessageContaining("Unauthorized").hasMessageContaining("not have privileges");
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [6]");
     }
 }

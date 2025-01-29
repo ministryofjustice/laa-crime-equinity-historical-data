@@ -33,6 +33,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -44,6 +45,7 @@ class Crm14CaseSummaryReportControllerTest {
     private static final String END_DATE = CURRENT_DATE.toString();
     private static final String DENIED_PROFILE_TYPES = "2,9";
     private static final String STATE_DEFAULT = "All";
+    private static final LocalDate MIN_START_DATE = getMinStartDate();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -127,16 +129,17 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
-        String startDate7yrsAgo = CURRENT_DATE.minusYears(7).minusMonths(2).toString();
+    void generateReportCrm14Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+        String decisionFrom = MIN_START_DATE.minusMonths(2).toString();
         softly.assertThatThrownBy(() -> controller.generateReportCrm14(
-                        1, startDate7yrsAgo, END_DATE,
+                        1, decisionFrom, END_DATE,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + startDate7yrsAgo + "] cannot be earlier than 7 years ago");
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date ["
+                        + decisionFrom + "] cannot be earlier than " + MIN_START_DATE);
     }
 
     @Test

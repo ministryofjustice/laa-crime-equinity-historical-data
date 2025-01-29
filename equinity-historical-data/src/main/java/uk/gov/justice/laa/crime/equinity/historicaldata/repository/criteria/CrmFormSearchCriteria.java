@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
+
 @Configuration
 @NoArgsConstructor
 public class CrmFormSearchCriteria {
@@ -80,7 +82,7 @@ public class CrmFormSearchCriteria {
     private Specification<CrmFormDataModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
         return (root, query, criteriaBuilder)
                 -> criteriaBuilder.greaterThanOrEqualTo(root.get(SUBMITTED_DATE_COL),
-                        Objects.requireNonNullElse(dateSubmittedFrom, LocalDate.now().minusYears(SEVEN_YEARS).toString()));
+                        Objects.requireNonNullElse(dateSubmittedFrom, getMinStartDate().toString()));
     }
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {

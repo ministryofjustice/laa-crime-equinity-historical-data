@@ -27,7 +27,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.con
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CrmFormUtilTest {
 
-    private static final Date DATE_RECEIVED_OVER_7_YRS_AGO = Date.from(LocalDate.now().minusYears(7)
+    private static final Date DATE_RECEIVED_OVER_7_YRS_AGO = Date.from(DateUtil.getMinStartDate()
             .minusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
 
     @InjectSoftAssertions

@@ -11,6 +11,8 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm7.Crm7Model;
 import java.time.LocalDate;
 import java.util.Date;
 
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
+
 @UtilityClass
 public class CrmFormUtil {
 
@@ -31,7 +33,7 @@ public class CrmFormUtil {
     }
 
     private static void checkDateReceived(LocalDate dateReceived, Long usn) {
-        if (dateReceived != null && dateReceived.isBefore(DateUtil.getMinimumStartDate())) {
+        if (dateReceived != null && dateReceived.isBefore(getMinStartDate())) {
             throw new ResourceNotFoundException("USN " + usn + " is unavailable");
         }
     }

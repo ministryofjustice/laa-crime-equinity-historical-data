@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 public class StartDateConstraintViolationException extends RuntimeException {
 
-    public StartDateConstraintViolationException(DateUtil.DateRange dateRange, LocalDate startDate, int yearsLimit) {
-        super(String.format("Start Date Constraint Violation Exception :: %s start date [%s] cannot be earlier than %d years ago",
-                dateRange, startDate, yearsLimit));
+    public StartDateConstraintViolationException(DateUtil.DateRange dateRange, LocalDate startDate, LocalDate minStartDate) {
+        super(String.format("Start Date Constraint Violation Exception :: %s start date [%s] cannot be earlier than %s",
+                dateRange, startDate, minStartDate));
     }
 }
