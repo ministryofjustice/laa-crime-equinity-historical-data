@@ -190,7 +190,7 @@ class CrmFileServiceTest {
 
         softly.assertThatThrownBy(() -> crmFileService.getCrmFormData(detailsCriteriaDTO))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 5001613 is unavailable");
+                .hasMessage("USN 5001613 not found");
     }
 
     private CrmFormDetailsCriteriaDTO buildDetailsCriteriaDTO(Long usn) {

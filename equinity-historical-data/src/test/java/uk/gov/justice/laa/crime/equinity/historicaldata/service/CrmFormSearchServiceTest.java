@@ -65,7 +65,7 @@ class CrmFormSearchServiceTest {
         searchModel.setTypeId(CRM4_TYPE_ID);
         searchModel.setType(CRM4_TYPE_NAME);
         searchModel.setOriginatedDate(MIN_START_DATE.minusWeeks(2).toString());
-        searchModel.setSubmittedDate(MIN_START_DATE.minusYears(7).minusWeeks(1).toString());
+        searchModel.setSubmittedDate(MIN_START_DATE.minusWeeks(1).toString());
         searchModel.setProviderAccount(OLD_FORM_PROVIDER_ACCOUNT);
         searchRepository.save(searchModel);
 

@@ -84,7 +84,7 @@ class Crm4ProviderReportControllerTest {
 
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, DECISION_TO, PROVIDER_ACCOUNT))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than " + MIN_START_DATE);
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
     }
 
     @ParameterizedTest

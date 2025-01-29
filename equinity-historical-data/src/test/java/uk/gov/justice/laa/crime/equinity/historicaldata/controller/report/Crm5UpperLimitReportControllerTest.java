@@ -68,7 +68,7 @@ class Crm5UpperLimitReportControllerTest {
         softly.assertThatThrownBy(() -> controller.generateReportCrm5(decisionFrom, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: decision start date ["
-                        + decisionFrom + "] cannot be earlier than " + MIN_START_DATE);
+                        + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + ']');
     }
 
     @ParameterizedTest

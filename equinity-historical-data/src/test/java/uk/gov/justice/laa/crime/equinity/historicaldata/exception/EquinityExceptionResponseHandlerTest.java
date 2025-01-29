@@ -75,7 +75,7 @@ class EquinityExceptionResponseHandlerTest {
                         .header(HEADER_EQ_API_SECRET, SECRET))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Start Date Constraint Violation Exception :: submitted start date [2001-01-01] " +
-                        "cannot be earlier than " + DateUtil.getMinStartDate()));
+                        "cannot be earlier than [" + DateUtil.getMinStartDate() + "]"));
     }
 
     @Test

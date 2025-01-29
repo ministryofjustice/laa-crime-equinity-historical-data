@@ -139,7 +139,7 @@ class Crm14CaseSummaryReportControllerTest {
                         ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: decision start date ["
-                        + decisionFrom + "] cannot be earlier than " + MIN_START_DATE);
+                        + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
     }
 
     @Test

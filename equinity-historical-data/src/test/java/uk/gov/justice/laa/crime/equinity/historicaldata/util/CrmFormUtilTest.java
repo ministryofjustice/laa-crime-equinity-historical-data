@@ -57,7 +57,7 @@ class CrmFormUtilTest {
 
         softly.assertThatThrownBy(() -> CrmFormUtil.checkCrmFormDateReceived(crm4FormData))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 101 is unavailable");
+                .hasMessage("USN 101 not found");
     }
 
     @Test
@@ -81,7 +81,7 @@ class CrmFormUtilTest {
 
         softly.assertThatThrownBy(() -> CrmFormUtil.checkCrmFormDateReceived(crm5FormData))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 201 is unavailable");
+                .hasMessage("USN 201 not found");
     }
 
     @Test
@@ -105,7 +105,7 @@ class CrmFormUtilTest {
 
         softly.assertThatThrownBy(() -> CrmFormUtil.checkCrmFormDateReceived(crm7FormData))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 301 is unavailable");
+                .hasMessage("USN 301 not found");
     }
 
     @Test
@@ -129,6 +129,6 @@ class CrmFormUtilTest {
 
         softly.assertThatThrownBy(() -> CrmFormUtil.checkCrmFormDateReceived(crm14FormData))
                 .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage("USN 401 is unavailable");
+                .hasMessage("USN 401 not found");
     }
 }

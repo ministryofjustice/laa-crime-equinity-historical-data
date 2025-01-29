@@ -149,7 +149,7 @@ class DateUtilTest {
         softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithinLimit(SUBMITTED, oldStartDate))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessageContaining("Start Date Constraint Violation Exception :: submitted start date ["
-                        + oldStartDate + "] cannot be earlier than " + MIN_START_DATE);
+                        + oldStartDate + "] cannot be earlier than [" + MIN_START_DATE + ']');
     }
 
     @Test
