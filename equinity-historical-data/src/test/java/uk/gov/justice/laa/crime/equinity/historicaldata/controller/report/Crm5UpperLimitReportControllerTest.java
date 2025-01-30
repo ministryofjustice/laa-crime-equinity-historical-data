@@ -28,7 +28,7 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -39,7 +39,7 @@ class Crm5UpperLimitReportControllerTest {
     private static final String DECISION_FROM = CURRENT_DATE.minusDays(1).toString();
     private static final String DECISION_TO = CURRENT_DATE.toString();
     private static final String DENIED_PROFILE_TYPES = "2,9";
-    private static final LocalDate MIN_START_DATE = getMinStartDate();
+    private static final LocalDate MIN_START_DATE = getMinimumDate();
 
     @MockBean
     Crm5UpperLimitReportRepository mockReportRepository;

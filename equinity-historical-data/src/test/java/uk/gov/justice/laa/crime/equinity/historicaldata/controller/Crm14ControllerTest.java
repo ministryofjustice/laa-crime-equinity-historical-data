@@ -66,26 +66,18 @@ class Crm14ControllerTest {
 
     @BeforeAll
     void preTest() {
-        Map<Long, String> validUsnTests = Map.of(
-                5001817L, "src/test/resources/Crm14MockFile_5001817.txt",
-                5001669L, "src/test/resources/Crm14MockFile_5001669.txt",
-                1826833L, "src/test/resources/Crm14MockFile_1826833.txt"
-        );
-
         CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L, "61c6df22-c18c-4182-9560-897b0e18dfcd", "Screenshot 2022-05-23 at 13.26.59.png", 3, null, null, "Accepted", "BANK_STATEMENTS",
                 "3x monthly statements", "", 341);
         crmFormCRM14AttachmentStoreRepository.save(attachment);
 
-        validUsnTests.forEach((testUsn, testFile) -> {
+        Map.of(
+                5001817L, "src/test/resources/Crm14MockFile_5001817.txt",
+                5001669L, "src/test/resources/Crm14MockFile_5001669.txt",
+                1826833L, "src/test/resources/Crm14MockFile_1826833.txt"
+        ).forEach((testUsn, testFile) -> {
             // Mocking good XML
             try {
-                FileInputStream fis = new FileInputStream(testFile);
-                JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-                byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
-                crmFormDetail.setUSN(testUsn);
-                crmFormDetail.setTypeId(CRM_TYPE_14);
-                crmFormDetail.setCrmFile(fileDataByte);
+                CrmFormDetailsModel crmFormDetail = buildCrmFormDetailsModel(testUsn, testFile);
                 crmFormDetailsRepository.save(crmFormDetail);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -221,5 +213,16 @@ class Crm14ControllerTest {
         softly.assertThatThrownBy(() -> controller.getApplicationCrm14(usnTest, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class)
                 .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [6]");
+    }
+
+    private static CrmFormDetailsModel buildCrmFormDetailsModel(Long testUsn, String testFile) throws FileNotFoundException {
+        FileInputStream fis = new FileInputStream(testFile);
+        JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+        byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
+        CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+        crmFormDetail.setUSN(testUsn);
+        crmFormDetail.setTypeId(CRM_TYPE_14);
+        crmFormDetail.setCrmFile(fileDataByte);
+        return crmFormDetail;
     }
 }

@@ -17,13 +17,13 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DateUtilTest {
 
-    private static final LocalDate MIN_START_DATE = getMinStartDate();
+    private static final LocalDate MIN_START_DATE = getMinimumDate();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -162,7 +162,7 @@ class DateUtilTest {
 
     @Test
     void getMinimumStartDate_ShouldReturnDate() {
-        LocalDate result = getMinStartDate();
+        LocalDate result = getMinimumDate();
 
         softly.assertThat(result).isNotNull();
     }

@@ -71,7 +71,7 @@ public class DateUtil {
     }
 
     public static void checkStartDateWithinLimit(DateRange dateRange, LocalDate startDate) {
-        LocalDate minStartDate = getMinStartDate();
+        LocalDate minStartDate = getMinimumDate();
         if (Objects.nonNull(startDate) && startDate.isBefore(minStartDate)) {
             throw new StartDateConstraintViolationException(dateRange, startDate, minStartDate);
         }
@@ -99,8 +99,8 @@ public class DateUtil {
         }
     }
 
-    public static LocalDate getMinStartDate() {
-        // set minimum start date to seven yrs ago
+    public static LocalDate getMinimumDate() {
+        // set minimum date to seven yrs ago
         return LocalDate.now().minusYears(SEVEN_YEARS);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class Crm4SubmissionModel {
     @JsonProperty("Usn")
-    public int usn;
+    public Long usn;
     @JsonProperty("Clientname")
     public String clientname;
     @JsonProperty("State")

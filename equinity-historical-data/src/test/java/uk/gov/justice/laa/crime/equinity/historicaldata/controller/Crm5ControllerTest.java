@@ -57,21 +57,13 @@ public class Crm5ControllerTest {
     @BeforeAll
     void preTest() {
         // Mocking good XML
-        Map<Long, String> validUsnTests = Map.of(
+        Map.of(
                 5001604L, "src/test/resources/Crm5MockFile_5001604.txt",
                 5001716L, "src/test/resources/Crm5MockFile_5001716.txt"
-        );
-
-        validUsnTests.forEach((testUsn, testFile) -> {
+        ).forEach((testUsn, testFile) -> {
             // Mocking good XML
             try {
-                FileInputStream fis = new FileInputStream(testFile);
-                JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-                byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
-                crmFormDetail.setUSN(testUsn);
-                crmFormDetail.setTypeId(CRM_TYPE_5);
-                crmFormDetail.setCrmFile(fileDataByte);
+                CrmFormDetailsModel crmFormDetail = buildCrmFormDetailsModel(testUsn, testFile);
                 crmFormDetailsRepository.save(crmFormDetail);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -88,7 +80,6 @@ public class Crm5ControllerTest {
     public void tearDown() {
         mockStatic.close();
     }
-
 
     @Test
     void getApplication_TaskNotFound() {
@@ -160,5 +151,16 @@ public class Crm5ControllerTest {
         softly.assertThat(crm5FormDTO.getFormDetails().getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("G");
         softly.assertThat(crm5FormDTO.getFormDetails().getOfficeUseOnly().getAuthority().getSignedAuthDate()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    private static CrmFormDetailsModel buildCrmFormDetailsModel(Long testUsn, String testFile) throws FileNotFoundException {
+        FileInputStream fis = new FileInputStream(testFile);
+        JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+        byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
+        CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+        crmFormDetail.setUSN(testUsn);
+        crmFormDetail.setTypeId(CRM_TYPE_5);
+        crmFormDetail.setCrmFile(fileDataByte);
+        return crmFormDetail;
     }
 }

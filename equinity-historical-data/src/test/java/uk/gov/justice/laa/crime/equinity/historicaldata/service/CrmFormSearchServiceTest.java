@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinStartDate;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -38,7 +38,7 @@ class CrmFormSearchServiceTest {
     private static final String CRM5_TYPE_NAME = "CRM5";
     private static final Integer CRM7_TYPE_ID = 5;
     private static final String ACCEPTED_TYPES_DEFAULT = "1,4,5";
-    private static final LocalDate MIN_START_DATE = getMinStartDate();
+    private static final LocalDate MIN_START_DATE = getMinimumDate();
 
     private static final String OLD_FORM_USN = "1826000";
     private static final String OLD_FORM_CLIENT_NAME = "Some Client";

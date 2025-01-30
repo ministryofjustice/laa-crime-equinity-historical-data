@@ -11,6 +11,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformat
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,8 @@ public class Crm4DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     public String lsc_region;
     @JsonProperty("Lsc_accountoffice")
     public String lsc_accountoffice;
+    @JsonProperty("TlTaskLastUpdated")
+    public LocalDate tlTaskLastUpdated;
 
     @JsonProperty("Applyingge100")
     public boolean applyingge100;

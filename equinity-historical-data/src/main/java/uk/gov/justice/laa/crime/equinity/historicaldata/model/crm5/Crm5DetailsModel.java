@@ -8,6 +8,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsMode
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFurtherInformationModelInterface;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @NoArgsConstructor
@@ -257,7 +258,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Fc_pg_options")
     public String fc_pg_options;
     @JsonProperty("TlTaskLastUpdated")
-    public Date tlTaskLastUpdated;
+    public LocalDate tlTaskLastUpdated;
     @JsonProperty("Urgent")
     public String urgent;
     @JsonProperty("Form_type")
@@ -411,7 +412,7 @@ public class Crm5DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("Solicitor_sign_date")
     public Date solicitor_sign_date;
     @JsonProperty("Usn")
-    public int usn;
+    public Long usn;
     @JsonProperty("Aa_cds_provided_same_matter_reason")
     public String aa_cds_provided_same_matter_reason;
     @JsonProperty("Fc_info_returned")
