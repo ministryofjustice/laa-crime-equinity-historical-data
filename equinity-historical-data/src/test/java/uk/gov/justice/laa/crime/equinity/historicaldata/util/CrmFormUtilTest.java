@@ -37,6 +37,15 @@ class CrmFormUtilTest {
     }
 
     @Test
+    void checkSubmittedDate_AcceptsNullTlTaskLastUpdated() {
+        Crm4DetailsModel crm4DetailsModel = new Crm4DetailsModel();
+        crm4DetailsModel.setUsn(100L);
+        Crm4Model crm4FormData = new Crm4Model(crm4DetailsModel, false, null, null);
+
+        CrmFormUtil.checkSubmittedDate(crm4FormData);
+    }
+
+    @Test
     void checkSubmittedDate_AcceptsCrm4FormTlTaskLastUpdated() {
         Crm4DetailsModel crm4DetailsModel = new Crm4DetailsModel();
         crm4DetailsModel.setUsn(100L);
