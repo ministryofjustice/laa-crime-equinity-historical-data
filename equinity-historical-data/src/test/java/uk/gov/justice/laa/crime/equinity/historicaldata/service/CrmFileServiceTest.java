@@ -12,20 +12,35 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.*;
+import static java.lang.String.format;
+import static java.util.Map.entry;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM14_CHARGES_BROUGHT;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_FORM_FIELD_DATA;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_LINKED_EVIDENCE;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_LINKED_EVIDENCE_FILES;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_ROW;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -42,46 +57,29 @@ class CrmFileServiceTest {
     @Autowired
     CrmFileService crmFileService;
 
-    Map<Long, String> crmFileTests;
-    Map<Long, Integer> crmFileTestTypes;
-    Map<Long, Integer> linkedAttachmentTests;
-
+    Map<Long, Map.Entry<Integer, String>> crmFileTests;
 
     @BeforeAll
     void preTest() {
-        crmFileTestTypes = new HashMap<>();
-        crmFileTestTypes.put(5001912L, CRM_TYPE_4);
-        crmFileTestTypes.put(5001604L, CRM_TYPE_5);
-        crmFileTestTypes.put(11L, CRM_TYPE_5);
-        crmFileTestTypes.put(5001662L, CRM_TYPE_7);
-        crmFileTestTypes.put(4808706L, CRM_TYPE_7);
-        crmFileTestTypes.put(5001597L, CRM_TYPE_7);
-        crmFileTestTypes.put(5001669L, CRM_TYPE_14);
+        crmFileTests = Map.of(
+                5001912L, entry(CRM_TYPE_4, format(TEST_FILES_PATH, "Crm4MockFile_5001912.txt")),
+                492914L, entry(CRM_TYPE_4, format(TEST_FILES_PATH, "Crm4MockFile_492914.txt")),
+                5001613L, entry(CRM_TYPE_4, format(TEST_FILES_PATH, "Crm4MockFile_5001613.txt")),
+                5001604L, entry(CRM_TYPE_5, format(TEST_FILES_PATH, "Crm5MockFile_5001604.txt")),
+                11L, entry(CRM_TYPE_5, format(TEST_FILES_PATH, "Crm5MockOFDFile_WrongFormat.txt")),
+                4808706L, entry(CRM_TYPE_7, format(TEST_FILES_PATH, "Crm7MockFile_4808706.txt")),
+                5001662L, entry(CRM_TYPE_7, format(TEST_FILES_PATH, "Crm7MockFile_5001662.txt")),
+                5001597L, entry(CRM_TYPE_7, format(TEST_FILES_PATH, "Crm7MockFile_5001597.txt")),
+                5001669L, entry(CRM_TYPE_14, format(TEST_FILES_PATH, "Crm14MockFile_5001669.txt"))
+        );
 
-        crmFileTests =  new HashMap<>();
-        crmFileTests.put(5001604L, String.format(TEST_FILES_PATH, "Crm5MockFile_5001604.txt"));
-        crmFileTests.put(11L, String.format(TEST_FILES_PATH, "Crm5MockOFDFile_WrongFormat.txt"));
-        crmFileTests.put(5001912L, String.format(TEST_FILES_PATH, "Crm4MockFile_5001912.txt"));
-        crmFileTests.put(492914L, String.format(TEST_FILES_PATH, "Crm4MockFile_492914.txt"));
-        crmFileTests.put(4808706L, String.format(TEST_FILES_PATH, "Crm7MockFile_4808706.txt"));
-        crmFileTests.put(5001662L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001662.txt"));
-        crmFileTests.put(5001597L, String.format(TEST_FILES_PATH, "Crm7MockFile_5001597.txt"));
-        crmFileTests.put(5001669L, String.format(TEST_FILES_PATH, "Crm14MockFile_5001669.txt"));
-
-        crmFileTests.forEach((testUsn, testFile) -> {
+        crmFileTests.forEach((testUsn, entry) -> {
             try {
-                createMock(testUsn, crmFileTestTypes.get(testUsn), loadMockFile(testFile));
+                createMock(testUsn, entry.getKey(), loadMockFile(entry.getValue()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
-
-        linkedAttachmentTests = new HashMap<>();
-        linkedAttachmentTests.put(5001604L, 0);
-        linkedAttachmentTests.put(5001662L, 0);
-        linkedAttachmentTests.put(5001912L, 3);
-        linkedAttachmentTests.put(4808706L, 2);
-        linkedAttachmentTests.put(5001597L, 1);
     }
 
     private byte[] loadMockFile(String fileName) throws IOException {
@@ -115,72 +113,67 @@ class CrmFileServiceTest {
 
     @Test
     void getCrmFileDataTest_ShouldReturnValidOFDFile() {
-        long usnToTest = 5001604L;
-        int typeId = crmFileTestTypes.get(usnToTest);
-        String expectedUrgent ="Yes";
-        String expectedFirmName ="MOCK_FIRM_001";
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(5001604L);
 
         // execute
-        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usnToTest, typeId, Integer.toString(typeId)
-        );
-        Crm5DetailsModel result = (Crm5DetailsModel) crmFileService
-                .getCrmFormData(detailsCriteriaDTO)
-                .getFormDetails();
+        CrmFormModelInterface result = crmFileService.getCrmFormData(detailsCriteriaDTO);
 
         // checks
-        softly.assertThat(result).isInstanceOf(Crm5DetailsModel.class);
-        softly.assertThat(result.getFirm_name()).isEqualTo(expectedFirmName);
-        softly.assertThat(result.getUrgent()).isEqualTo(expectedUrgent);
+        softly.assertThat(result.getFormDetails()).isInstanceOf(Crm5DetailsModel.class);
+        Crm5DetailsModel formDetails = (Crm5DetailsModel) result.getFormDetails();
+        softly.assertThat(formDetails.getFirm_name()).isEqualTo("MOCK_FIRM_001");
+        softly.assertThat(formDetails.getUrgent()).isEqualTo("Yes");
     }
 
     @Test
     void getCrmFileDataTest_ShouldReturnException() {
-        long usnToTest = 11L;
-        int typeId = crmFileTestTypes.get(usnToTest);
-        String expectedMessage = "JSONObject";
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(11L);
 
         // execute
-        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = new CrmFormDetailsCriteriaDTO(
-                usnToTest, typeId, Integer.toString(typeId)
-        );
-
         softly.assertThatThrownBy(() -> crmFileService.getCrmFormData(detailsCriteriaDTO))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining(expectedMessage);
+                .isInstanceOf(JSONException.class)
+                .hasMessage("JSONObject[\"fd:formdata\"] not found.");
     }
 
-    @Test
-    void getConvertCrmFormLinkedAttachmentsTest_ShouldJSONArrayObject() {
-
+    @ParameterizedTest
+    @MethodSource("inputForLinkedAttachmentsTest")
+    void getConvertCrmFormLinkedAttachmentsTest_ShouldJSONArrayObject(Long usn, int expectedAttachments) {
         // Test with accepted types
-        linkedAttachmentTests.forEach((usnToTest, expectedAttachments) -> {
-            int typeId = crmFileTestTypes.get(usnToTest);
-            JSONObject result = crmFileService.getCrmFileJson(
-                    new CrmFormDetailsCriteriaDTO(usnToTest, typeId, Integer.toString(typeId))
-            );
-            // Execute
-            crmFileService.convertCrmFormObjectToArray(result,CRM_LINKED_EVIDENCE,CRM_LINKED_EVIDENCE_FILES);
-            // Check
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.has(CRM_LINKED_EVIDENCE)).isTrue();
-            softly.assertThat(result.get(CRM_LINKED_EVIDENCE)).isInstanceOf(JSONObject.class);
-            softly.assertThat(result.getJSONObject(CRM_LINKED_EVIDENCE).has(CRM_LINKED_EVIDENCE_FILES)).isTrue();
-            softly.assertThat(result.getJSONObject(CRM_LINKED_EVIDENCE).getJSONArray(CRM_LINKED_EVIDENCE_FILES).length()).isEqualTo(expectedAttachments);
-        });
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(usn);
+        JSONObject result = crmFileService.getCrmFileJson(detailsCriteriaDTO);
+
+        // Execute
+        crmFileService.convertCrmFormObjectToArray(result, CRM_LINKED_EVIDENCE, CRM_LINKED_EVIDENCE_FILES);
+
+        // Check
+        softly.assertThat(result).isNotNull();
+        softly.assertThat(result.has(CRM_LINKED_EVIDENCE)).isTrue();
+        softly.assertThat(result.get(CRM_LINKED_EVIDENCE)).isInstanceOf(JSONObject.class);
+        softly.assertThat(result.getJSONObject(CRM_LINKED_EVIDENCE).has(CRM_LINKED_EVIDENCE_FILES)).isTrue();
+        softly.assertThat(result.getJSONObject(CRM_LINKED_EVIDENCE).getJSONArray(CRM_LINKED_EVIDENCE_FILES).length()).isEqualTo(expectedAttachments);
+
     }
+
+    private static Stream<Arguments> inputForLinkedAttachmentsTest() {
+        return Stream.of(
+                Arguments.of(5001604L, 0),
+                Arguments.of(5001662L, 0),
+                Arguments.of(5001912L, 3),
+                Arguments.of(4808706L, 2),
+                Arguments.of(5001597L, 1)
+        );
+    }
+
     @Test
     void getConvertCrmFormChargesBroughtTest_ShouldJSONArrayObject() {
-
         // Test with accepted types
-        Long usnToTest = 5001669L;
-        int typeId = crmFileTestTypes.get(usnToTest);
-        JSONObject crmToTest = crmFileService.getCrmFileJson(
-                new CrmFormDetailsCriteriaDTO(usnToTest, typeId, Integer.toString(typeId))
-        );
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(5001669L);
+        JSONObject crmToTest = crmFileService.getCrmFileJson(detailsCriteriaDTO);
         JSONObject result = crmToTest.getJSONObject(CRM_FORM_FIELD_DATA);
+
         // Execute
-        crmFileService.convertCrmFormObjectToArray(result,CRM14_CHARGES_BROUGHT, CRM_ROW);
+        crmFileService.convertCrmFormObjectToArray(result, CRM14_CHARGES_BROUGHT, CRM_ROW);
+
         // Check
         softly.assertThat(result).isNotNull();
         softly.assertThat(result.has(CRM14_CHARGES_BROUGHT)).isTrue();
@@ -188,5 +181,21 @@ class CrmFileServiceTest {
         softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).has(CRM_ROW)).isTrue();
         softly.assertThat(result.getJSONObject(CRM14_CHARGES_BROUGHT).getJSONArray(CRM_ROW).length()).isEqualTo(3);
 
+    }
+
+    @Test
+    void getCrmFileDataTest_ShouldThrowResourceNotFoundException() {
+        // criteria for CRM form with date received over 7 ys ago
+        CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(5001613L);
+
+        softly.assertThatThrownBy(() -> crmFileService.getCrmFormData(detailsCriteriaDTO))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("USN 5001613 not found");
+    }
+
+    private CrmFormDetailsCriteriaDTO buildDetailsCriteriaDTO(Long usn) {
+        return new CrmFormDetailsCriteriaDTO(
+                usn, crmFileTests.get(usn).getKey(), Integer.toString(crmFileTests.get(usn).getKey())
+        );
     }
 }

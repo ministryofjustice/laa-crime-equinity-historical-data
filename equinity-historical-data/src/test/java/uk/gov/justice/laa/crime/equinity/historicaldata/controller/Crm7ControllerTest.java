@@ -6,10 +6,15 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -17,20 +22,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7DetailsDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7OfficialUseDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm7SummaryOfClaimDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_7;
 
 @SpringBootTest
@@ -49,32 +54,34 @@ class Crm7ControllerTest {
     @Autowired
     Crm7Controller controller;
 
-    Map<Long, String> validUsnTests;
+    private MockedStatic<CrmFormUtil> mockStatic;
 
     @BeforeAll
     void preTest() {
-        validUsnTests = new HashMap<>();
-        validUsnTests.put(5001662L, "src/test/resources/Crm7MockFile_5001662.txt");
-        validUsnTests.put(5001597L, "src/test/resources/Crm7MockFile_5001597.txt");
-        validUsnTests.put(4808706L,  "src/test/resources/Crm7MockFile_4808706.txt");
-        validUsnTests.put(4808532L,  "src/test/resources/Crm7MockFile_4808532.txt");
-        validUsnTests.put(4808666L, "src/test/resources/Crm7MockFile_4808666.txt");
-
-        validUsnTests.forEach((testUsn, testFile) -> {
+        Map.of(
+                5001662L, "src/test/resources/Crm7MockFile_5001662.txt",
+                5001597L, "src/test/resources/Crm7MockFile_5001597.txt",
+                4808706L, "src/test/resources/Crm7MockFile_4808706.txt",
+                4808532L, "src/test/resources/Crm7MockFile_4808532.txt",
+                4808666L, "src/test/resources/Crm7MockFile_4808666.txt"
+        ).forEach((testUsn, testFile) -> {
             // Mocking good XML
             try {
-                FileInputStream fis = new FileInputStream(testFile);
-                JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
-                byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
-                CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
-                crmFormDetail.setUSN(testUsn);
-                crmFormDetail.setTypeId(CRM_TYPE_7);
-                crmFormDetail.setCrmFile(fileDataByte);
-                crmFormDetailsRepository.save(crmFormDetail);
+                crmFormDetailsRepository.save(buildCrmFormDetailsModel(testUsn, testFile));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @BeforeEach
+    public void setUp() {
+        mockStatic = mockStatic(CrmFormUtil.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        mockStatic.close();
     }
 
     /**
@@ -82,61 +89,52 @@ class Crm7ControllerTest {
      */
     @Test
     void getApplicationCrm7Test_WhenUsnInputIsGivenNullThenReturnInvalidDataAccessApiUsageException() {
-        String expectedMessage = "not be null";
-
         // execute
         softly.assertThatThrownBy(() -> controller.getApplicationCrm7(null, ACCEPTED_PROFILE_TYPES))
-            .isInstanceOf(InvalidDataAccessApiUsageException.class)
-            .hasMessageContaining(expectedMessage);
+                .isInstanceOf(InvalidDataAccessApiUsageException.class)
+                .hasMessage("Expected USN not be null");
     }
 
     @Test
     void getApplicationCrm7Test_WhenGivenNonExistingUsnThenReturnTaskNotFoundException() {
         Long usnTest = 10L;
         softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, ACCEPTED_PROFILE_TYPES))
-            .isInstanceOf(ResourceNotFoundException.class)
-            .hasMessageContaining("Task with USN").hasMessageContaining("not found");
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Task with USN 10 not found");
     }
 
-    @Test
-    void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse() {
+    @ParameterizedTest
+    @ValueSource(longs = {5001662L, 5001597L, 4808706L, 4808532L, 4808666L})
+    void getApplicationCrm7Test_WhenGivenExistingUsnThenReturnValidResponse(Long usn) {
         String expectedClientFirstName = "James";
         String expectedClientSurname = "Bond";
 
         // Test with accepted types
-        validUsnTests.keySet().forEach((usnToTest) -> {
-            ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usnToTest, ACCEPTED_PROFILE_TYPES);
+        ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usn, ACCEPTED_PROFILE_TYPES);
 
-            softly.assertThat(result.getBody()).isNotNull();
-            softly.assertThat(result.getBody()).isInstanceOf(Crm7FormDTO.class);
-
-            Crm7DetailsDTO crmFormDetails = Objects.requireNonNull(result.getBody()).getFormDetails();
-            softly.assertThat(crmFormDetails).isInstanceOf(Crm7DetailsDTO.class);
-            softly.assertThat(crmFormDetails.getUsn()).isEqualTo(usnToTest.intValue());
-            softly.assertThat(crmFormDetails.getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
-            softly.assertThat(crmFormDetails.getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
-            softly.assertThat(crmFormDetails.getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
-            softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-        });
+        Crm7FormDTO crm7FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm7FormDTO).isNotNull();
+        softly.assertThat(crm7FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm7FormDTO.getFormDetails().getUsn()).isEqualTo(usn.intValue());
+        softly.assertThat(crm7FormDTO.getFormDetails().getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+        softly.assertThat(crm7FormDTO.getFormDetails().getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
+        softly.assertThat(crm7FormDTO.getFormDetails().getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
+        softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     void getApplicationCrm7Test_WhenGivenExistingUsnWithNoProfileAcceptedTypesThenReturnValidResponse() {
         Long usnTest = 5001662L;
-        String expectedClientFirstName = "James";
-        String expectedClientSurname = "Bond";
 
         ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usnTest, null);
 
-        softly.assertThat(result.getBody()).isNotNull();
-        softly.assertThat(result.getBody()).isInstanceOf(Crm7FormDTO.class);
-
-        Crm7DetailsDTO crmFormDetails = Objects.requireNonNull(result.getBody()).getFormDetails();
-        softly.assertThat(crmFormDetails).isInstanceOf(Crm7DetailsDTO.class);
-        softly.assertThat(crmFormDetails.getUsn()).isEqualTo(usnTest.intValue());
-        softly.assertThat(crmFormDetails.getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
-        softly.assertThat(crmFormDetails.getSummary().getClientFirstName()).isEqualTo(expectedClientFirstName);
-        softly.assertThat(crmFormDetails.getSummary().getClientSurname()).isEqualTo(expectedClientSurname);
+        Crm7FormDTO crm7FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm7FormDTO).isNotNull();
+        softly.assertThat(crm7FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm7FormDTO.getFormDetails().getUsn()).isEqualTo(usnTest.intValue());
+        softly.assertThat(crm7FormDTO.getFormDetails().getSummary()).isInstanceOf(Crm7SummaryOfClaimDTO.class);
+        softly.assertThat(crm7FormDTO.getFormDetails().getSummary().getClientFirstName()).isEqualTo("James");
+        softly.assertThat(crm7FormDTO.getFormDetails().getSummary().getClientSurname()).isEqualTo("Bond");
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
@@ -145,19 +143,32 @@ class Crm7ControllerTest {
         Long usnTest = 5001662L;
         softly.assertThatThrownBy(() -> controller.getApplicationCrm7(usnTest, DENIED_PROFILE_TYPES))
                 .isInstanceOf(UnauthorizedUserProfileException.class)
-                .hasMessageContaining("Unauthorized").hasMessageContaining("not have privileges");
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [5]");
     }
+
     @Test
     void getApplicationCrm7Test_OfficialUseResponse() {
         Long usnTest = 5001662L;
         ResponseEntity<Crm7FormDTO> result = controller.getApplicationCrm7(usnTest, null);
 
-        Crm7DetailsDTO crmFormDetails = Objects.requireNonNull(result.getBody()).getFormDetails();
-        softly.assertThat(crmFormDetails).isInstanceOf(Crm7DetailsDTO.class);
-        softly.assertThat(crmFormDetails.getUsn()).isEqualTo(usnTest.intValue());
-        softly.assertThat(crmFormDetails.getOfficeUseOnly()).isInstanceOf(Crm7OfficialUseDTO.class);
-        softly.assertThat(crmFormDetails.getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("PG");
-        softly.assertThat(crmFormDetails.getOfficeUseOnly().getAuthority().getSignedAuth()).isNotNull();
+        Crm7FormDTO crm7FormDTO = Objects.requireNonNull(result.getBody());
+        softly.assertThat(crm7FormDTO).isNotNull();
+        softly.assertThat(crm7FormDTO.getFormDetails()).isNotNull();
+        softly.assertThat(crm7FormDTO.getFormDetails().getUsn()).isEqualTo(usnTest.intValue());
+        softly.assertThat(crm7FormDTO.getFormDetails().getOfficeUseOnly()).isInstanceOf(Crm7OfficialUseDTO.class);
+        softly.assertThat(crm7FormDTO.getFormDetails().getOfficeUseOnly().getQualityControl().getDecision()).isEqualTo("PG");
+        softly.assertThat(crm7FormDTO.getFormDetails().getOfficeUseOnly().getAuthority().getSignedAuth()).isNotNull();
         softly.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    private static CrmFormDetailsModel buildCrmFormDetailsModel(Long testUsn, String testFile) throws FileNotFoundException {
+        FileInputStream fis = new FileInputStream(testFile);
+        JSONObject mockedCrmFileJson = new JSONObject(IOUtils.toString(fis, StandardCharsets.UTF_8));
+        byte[] fileDataByte = XML.toString(mockedCrmFileJson).getBytes(StandardCharsets.UTF_8);
+        CrmFormDetailsModel crmFormDetail = new CrmFormDetailsModel();
+        crmFormDetail.setUSN(testUsn);
+        crmFormDetail.setTypeId(CRM_TYPE_7);
+        crmFormDetail.setCrmFile(fileDataByte);
+        return crmFormDetail;
     }
 }

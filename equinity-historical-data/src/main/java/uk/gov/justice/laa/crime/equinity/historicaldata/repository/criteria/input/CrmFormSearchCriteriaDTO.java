@@ -2,7 +2,6 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inp
 
 import jakarta.annotation.Nullable;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
-import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.time.LocalDate;

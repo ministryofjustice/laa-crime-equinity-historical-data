@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class DateUtil {
     private static final String INVALID_FORMAT_NO_DATE_ONLY_ZERO_TIME = "00:00:00";
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
             .withLocale(Locale.UK);
-    private static final int START_DATE_LIMIT = 7; // 7 years limit
+    private static final int SEVEN_YEARS = 7;
 
     public enum DateRange {
         CREATED("created"),
@@ -46,6 +47,14 @@ public class DateUtil {
         }
     }
 
+    public static LocalDate convertDateToLocalDate(Date dateToConvert) throws DateTimeParseException {
+        if (Objects.isNull(dateToConvert)) return null;
+
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
     public static LocalDate convertStringToLocalDate(String dateToConvert) throws DateTimeParseException {
         if (Objects.isNull(dateToConvert)) return null;
 
@@ -62,8 +71,9 @@ public class DateUtil {
     }
 
     public static void checkStartDateWithinLimit(DateRange dateRange, LocalDate startDate) {
-        if (!Objects.isNull(startDate) && startDate.isBefore(LocalDate.now().minusYears(START_DATE_LIMIT))) {
-            throw new StartDateConstraintViolationException(dateRange, startDate, START_DATE_LIMIT);
+        LocalDate minStartDate = getMinimumDate();
+        if (Objects.nonNull(startDate) && startDate.isBefore(minStartDate)) {
+            throw new StartDateConstraintViolationException(dateRange, startDate, minStartDate);
         }
     }
 
@@ -89,5 +99,8 @@ public class DateUtil {
         }
     }
 
-
+    public static LocalDate getMinimumDate() {
+        // set minimum date to seven yrs ago
+        return LocalDate.now().minusYears(SEVEN_YEARS);
+    }
 }

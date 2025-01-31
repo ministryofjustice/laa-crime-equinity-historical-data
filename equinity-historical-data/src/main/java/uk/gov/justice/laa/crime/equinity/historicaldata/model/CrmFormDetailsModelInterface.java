@@ -1,3 +1,8 @@
 package uk.gov.justice.laa.crime.equinity.historicaldata.model;
 
-public interface CrmFormDetailsModelInterface { }
+import java.time.LocalDate;
+
+public interface CrmFormDetailsModelInterface {
+    Long getUsn();
+    LocalDate getTlTaskLastUpdated();
+}

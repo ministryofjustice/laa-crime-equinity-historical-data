@@ -24,6 +24,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -32,6 +33,7 @@ class Crm4ProviderReportControllerTest {
     private static final LocalDate CURRENT_DATE = LocalDate.now();
     private static final String DECISION_FROM = CURRENT_DATE.minusDays(1).toString();
     private static final String DECISION_TO = CURRENT_DATE.toString();
+    private static final LocalDate MIN_START_DATE = getMinimumDate();
     private static final String PROVIDER_ACCOUNT = "123ABC";
 
     @InjectSoftAssertions
@@ -77,12 +79,12 @@ class Crm4ProviderReportControllerTest {
     }
 
     @Test
-    void generateProviderReportCrm4_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
-        String decisionFrom7yrsAgo = CURRENT_DATE.minusYears(7).minusMonths(2).toString();
+    void generateProviderReportCrm4_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+        String decisionFrom = MIN_START_DATE.minusMonths(2).toString();
 
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom7yrsAgo, DECISION_TO, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, DECISION_TO, PROVIDER_ACCOUNT))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom7yrsAgo + "] cannot be earlier than 7 years ago");
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
     }
 
     @ParameterizedTest

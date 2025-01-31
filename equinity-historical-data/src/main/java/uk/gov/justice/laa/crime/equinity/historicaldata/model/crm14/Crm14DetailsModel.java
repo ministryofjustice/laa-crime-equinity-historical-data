@@ -10,6 +10,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormDetailsMode
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -198,7 +199,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Last_hmcts_stagefilter1_display")
     public String last_hmcts_stagefilter1_display;
     @JsonProperty("TlTaskLastUpdated")
-    public Date tlTaskLastUpdated;
+    public LocalDate tlTaskLastUpdated;
     @JsonProperty("Other_income_friends_family")
     public Boolean other_income_friends_family;
     @JsonProperty("Maintenance_payment_paid_every")
@@ -306,7 +307,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
     @JsonProperty("Solicitor_address_3")
     public String solicitor_address_3;
     @JsonProperty("Usn")
-    public int usn;
+    public Long usn;
     @JsonProperty("Originator_notificationmethod")
     public int originator_notificationmethod;
     @JsonProperty("Dwp_check_nino")

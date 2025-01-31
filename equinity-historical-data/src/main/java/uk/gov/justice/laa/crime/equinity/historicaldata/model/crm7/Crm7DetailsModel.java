@@ -569,7 +569,7 @@ public class Crm7DetailsModel implements CrmFormDetailsModelInterface, CrmFurthe
     @JsonProperty("TLProjectName")
     public String tLProjectName;
     @JsonProperty("TlTaskLastUpdated") // in crm5 too
-    public LocalDateTime tlTaskLastUpdated;
+    public LocalDate tlTaskLastUpdated;
     @JsonProperty("Tlnewmessage") // in crm5 too
     public String tlnewmessage;
     @JsonProperty("TLActionsOnLine") // in crm5 too

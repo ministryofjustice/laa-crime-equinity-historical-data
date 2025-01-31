@@ -28,6 +28,7 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -38,6 +39,7 @@ class Crm4PeriodicalReportControllerTest {
     private static final String DECISION_FROM = CURRENT_DATE.minusDays(1).toString();
     private static final String DECISION_TO = CURRENT_DATE.toString();
     private static final String DENIED_PROFILE_TYPES = "2,9";
+    private static final LocalDate MIN_START_DATE = getMinimumDate();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -85,12 +87,12 @@ class Crm4PeriodicalReportControllerTest {
     }
 
     @Test
-    void generateReportCrm4Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
-        String decisionFrom7yrsAgo = CURRENT_DATE.minusYears(7).minusMonths(2).toString();
+    void generateReportCrm4Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+        String decisionFrom = MIN_START_DATE.minusMonths(2).toString();
 
-        softly.assertThatThrownBy(() -> controller.generateReportCrm4(decisionFrom7yrsAgo, DECISION_TO, ACCEPTED_PROFILE_TYPES))
+        softly.assertThatThrownBy(() -> controller.generateReportCrm4(decisionFrom, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom7yrsAgo + "] cannot be earlier than 7 years ago");
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
     }
 
     @ParameterizedTest
