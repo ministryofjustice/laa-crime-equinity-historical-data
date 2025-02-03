@@ -6,17 +6,15 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +34,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
@@ -50,6 +47,9 @@ class Crm14ControllerTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
+    @MockBean
+    private CrmFormUtil crmFormUtil;
+
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
 
@@ -61,8 +61,6 @@ class Crm14ControllerTest {
 
     @Autowired
     Crm14Controller controller;
-
-    private MockedStatic<CrmFormUtil> mockStatic;
 
     @BeforeAll
     void preTest() {
@@ -83,16 +81,6 @@ class Crm14ControllerTest {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    @BeforeEach
-    public void setUp() {
-        mockStatic = mockStatic(CrmFormUtil.class);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        mockStatic.close();
     }
 
     /**

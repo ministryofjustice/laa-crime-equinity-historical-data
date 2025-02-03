@@ -21,12 +21,11 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResu
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummaryModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormSummaryRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormSearchCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -38,7 +37,7 @@ class CrmFormSearchServiceTest {
     private static final String CRM5_TYPE_NAME = "CRM5";
     private static final Integer CRM7_TYPE_ID = 5;
     private static final String ACCEPTED_TYPES_DEFAULT = "1,4,5";
-    private static final LocalDate MIN_START_DATE = getMinimumDate();
+    private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
 
     private static final String OLD_FORM_USN = "1826000";
     private static final String OLD_FORM_CLIENT_NAME = "Some Client";
@@ -64,8 +63,8 @@ class CrmFormSearchServiceTest {
         searchModel.setClientDoB(OLD_FORM_CLIENT_DOB);
         searchModel.setTypeId(CRM4_TYPE_ID);
         searchModel.setType(CRM4_TYPE_NAME);
-        searchModel.setOriginatedDate(MIN_START_DATE.minusWeeks(2).toString());
-        searchModel.setSubmittedDate(MIN_START_DATE.minusWeeks(1).toString());
+        searchModel.setOriginatedDate(SEVEN_YEARS_AGO.minusWeeks(2).toString());
+        searchModel.setSubmittedDate(SEVEN_YEARS_AGO.minusWeeks(1).toString());
         searchModel.setProviderAccount(OLD_FORM_PROVIDER_ACCOUNT);
         searchRepository.save(searchModel);
 

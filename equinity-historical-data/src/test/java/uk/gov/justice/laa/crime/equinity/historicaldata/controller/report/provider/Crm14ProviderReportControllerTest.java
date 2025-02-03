@@ -21,13 +21,13 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm14ProviderReportRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -38,7 +38,7 @@ class Crm14ProviderReportControllerTest {
     private static final String END_DATE = CURRENT_DATE.toString();
     private static final String PROVIDER_ACCOUNT = "123ABC";
     private static final String STATE = "All";
-    private static final LocalDate MIN_START_DATE = getMinimumDate();
+    private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -120,7 +120,7 @@ class Crm14ProviderReportControllerTest {
 
     @Test
     void generateReportCrm14Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
-        String decisionFrom = MIN_START_DATE.minusMonths(2).toString();
+        String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
                         PROVIDER_ACCOUNT,
                         1, decisionFrom, END_DATE,
@@ -129,7 +129,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         STATE))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + SEVEN_YEARS_AGO + "]");
     }
 
     @Test

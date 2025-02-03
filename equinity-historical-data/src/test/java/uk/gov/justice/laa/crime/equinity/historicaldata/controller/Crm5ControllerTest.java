@@ -6,9 +6,7 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
@@ -33,7 +32,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_5;
 
 @SpringBootTest
@@ -43,16 +41,18 @@ public class Crm5ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
     private static final String DENIED_PROFILE_TYPES = "9,19";
 
-    @Autowired
-    CrmFormDetailsRepository crmFormDetailsRepository;
-
     @InjectSoftAssertions
     private SoftAssertions softly;
+
+    @MockBean
+    private CrmFormUtil crmFormUtil;
+
+    @Autowired
+    CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
     Crm5Controller controller;
 
-    private MockedStatic<CrmFormUtil> mockStatic;
 
     @BeforeAll
     void preTest() {
@@ -69,16 +69,6 @@ public class Crm5ControllerTest {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    @BeforeEach
-    public void setUp() {
-        mockStatic = mockStatic(CrmFormUtil.class);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        mockStatic.close();
     }
 
     @Test

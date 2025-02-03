@@ -17,13 +17,13 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getDateSevenYearsAgo;
 
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DateUtilTest {
 
-    private static final LocalDate MIN_START_DATE = getMinimumDate();
+    private static final LocalDate MIN_START_DATE = getDateSevenYearsAgo();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -128,25 +128,25 @@ class DateUtilTest {
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsStartDateWithin7yrs() {
+    void checkStartDateWithinLimit_AcceptsStartDateWithin7yrs7Yrs() {
         LocalDate startDate = LocalDate.now().minusYears(1);
-        DateUtil.checkStartDateWithinLimit(SUBMITTED, startDate);
+        DateUtil.checkStartDateWithin7yrs(SUBMITTED, startDate);
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsNullStartDate() {
-        DateUtil.checkStartDateWithinLimit(SUBMITTED, null);
+    void checkStartDateWithinLimit_AcceptsNullStartDate7yrs() {
+        DateUtil.checkStartDateWithin7yrs(SUBMITTED, null);
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsMinStartDate() {
-        DateUtil.checkStartDateWithinLimit(SUBMITTED, MIN_START_DATE);
+    void checkStartDateWithinLimit_AcceptsMinStartDate7yrs() {
+        DateUtil.checkStartDateWithin7yrs(SUBMITTED, MIN_START_DATE);
     }
 
     @Test
-    void checkStartDateWithinLimit_WhenStartDateIsBeforeMinStartDateThenThrowsException() {
+    void checkStartDateWithinLimit_WhenStartDateIsBeforeMinStartDateThenThrowsException7yrs() {
         LocalDate oldStartDate = MIN_START_DATE.minusDays(1);
-        softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithinLimit(SUBMITTED, oldStartDate))
+        softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithin7yrs(SUBMITTED, oldStartDate))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessageContaining("Start Date Constraint Violation Exception :: submitted start date ["
                         + oldStartDate + "] cannot be earlier than [" + MIN_START_DATE + ']');
@@ -162,7 +162,7 @@ class DateUtilTest {
 
     @Test
     void getMinimumStartDate_ShouldReturnDate() {
-        LocalDate result = getMinimumDate();
+        LocalDate result = getDateSevenYearsAgo();
 
         softly.assertThat(result).isNotNull();
     }

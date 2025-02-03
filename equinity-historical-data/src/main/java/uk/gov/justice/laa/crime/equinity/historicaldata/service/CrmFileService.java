@@ -21,10 +21,9 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetail
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
 
 import java.nio.charset.StandardCharsets;
-
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil.checkSubmittedDate;
 
 
 @Service
@@ -69,6 +68,7 @@ public class CrmFileService {
     private final CrmFormDetailsRepository crmFormDetailsRepository;
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
+    private final CrmFormUtil crmFormUtil;
 
     private static Class<? extends CrmFormModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
         return switch (type) {
@@ -89,7 +89,7 @@ public class CrmFileService {
 
         T crmFormModel = convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
 
-        checkSubmittedDate(crmFormModel);
+        crmFormUtil.checkSubmittedDate(crmFormModel);
 
         return crmFormModel;
     }

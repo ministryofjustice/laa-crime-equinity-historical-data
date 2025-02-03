@@ -67,3 +67,7 @@ sentry:
     minimum-event-level: warn
     minimum-breadcrumb-level: info
   in-app-includes: uk.gov.justice.laa.crime.equinity.historicaldata
+
+# custom application properties
+app:
+  environment: ${HOST_ENV}

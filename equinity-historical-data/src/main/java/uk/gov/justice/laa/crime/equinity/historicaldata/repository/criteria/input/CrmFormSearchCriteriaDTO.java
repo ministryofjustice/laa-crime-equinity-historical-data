@@ -19,7 +19,7 @@ public record CrmFormSearchCriteriaDTO(
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
 
-        DateUtil.checkStartDateWithinLimit(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom);
+        DateUtil.checkStartDateWithin7yrs(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom);
 
         DateUtil.checkDateRangeIsValid(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom, dateSubmittedTo);
 

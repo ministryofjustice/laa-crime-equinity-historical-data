@@ -27,7 +27,7 @@ public class DateUtil {
     private static final String INVALID_FORMAT_NO_DATE_ONLY_ZERO_TIME = "00:00:00";
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN)
             .withLocale(Locale.UK);
-    private static final int SEVEN_YEARS = 7;
+    private static final int SEVEN = 7;
 
     public enum DateRange {
         CREATED("created"),
@@ -70,10 +70,9 @@ public class DateUtil {
             throw new DateRangeConstraintViolationException(dateRange, startDate, endDate);
     }
 
-    public static void checkStartDateWithinLimit(DateRange dateRange, LocalDate startDate) {
-        LocalDate minStartDate = getMinimumDate();
-        if (Objects.nonNull(startDate) && startDate.isBefore(minStartDate)) {
-            throw new StartDateConstraintViolationException(dateRange, startDate, minStartDate);
+    public static void checkStartDateWithin7yrs(DateRange dateRange, LocalDate startDate) {
+        if (Objects.nonNull(startDate) && startDate.isBefore(getDateSevenYearsAgo())) {
+            throw new StartDateConstraintViolationException(dateRange, startDate, getDateSevenYearsAgo());
         }
     }
 
@@ -99,8 +98,11 @@ public class DateUtil {
         }
     }
 
-    public static LocalDate getMinimumDate() {
-        // set minimum date to seven yrs ago
-        return LocalDate.now().minusYears(SEVEN_YEARS);
+    public static boolean isDateWithin7yrs(LocalDate date) {
+        return Objects.isNull(date) || !date.isBefore(getDateSevenYearsAgo());
+    }
+
+    public static LocalDate getDateSevenYearsAgo() {
+        return LocalDate.now().minusYears(SEVEN);
     }
 }
