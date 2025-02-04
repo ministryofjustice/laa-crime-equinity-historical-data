@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,12 +18,14 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.CrmFormModelInterface;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.crm5.Crm5DetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +35,7 @@ import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.util.Map.entry;
+import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM14_CHARGES_BROUGHT;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_FORM_FIELD_DATA;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_LINKED_EVIDENCE;
@@ -50,6 +54,9 @@ class CrmFileServiceTest {
 
     @InjectSoftAssertions
     private SoftAssertions softly;
+
+    @MockBean
+    AppUtil appUtil;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
@@ -109,6 +116,11 @@ class CrmFileServiceTest {
     @AfterAll
     void postTest() {
         softly.assertAll();
+    }
+
+    @BeforeEach
+    void setUp() {
+        when(appUtil.applySevenYearsLimit()).thenReturn(false);
     }
 
     @Test
@@ -185,7 +197,9 @@ class CrmFileServiceTest {
 
     @Test
     void getCrmFileDataTest_ShouldThrowResourceNotFoundException() {
-        // criteria for CRM form with date received over 7 ys ago
+        when(appUtil.applySevenYearsLimit()).thenReturn(true); // switch on 7rs limit
+
+        // criteria for CRM form with date submitted over 7 ys ago
         CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(5001613L);
 
         softly.assertThatThrownBy(() -> crmFileService.getCrmFormData(detailsCriteriaDTO))

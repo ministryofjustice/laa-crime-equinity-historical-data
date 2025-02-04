@@ -86,7 +86,7 @@ class Crm14CaseSummaryReportServiceTest {
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
-                STATE, "0D182J", null
+                STATE, "0D182J", null, true
         );
 
         List<Crm14CaseSummaryReportModel> results = reportService.getReportData(criteria);

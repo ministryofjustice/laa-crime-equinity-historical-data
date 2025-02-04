@@ -60,7 +60,7 @@ class Crm14ProviderReportServiceTest {
                 0,  START_DATE, END_DATE,
                 0,  START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
-                STATE, PROVIDER_ACCOUNT, null
+                STATE, PROVIDER_ACCOUNT, null, true
         );
 
         List<Crm14ProviderReportModel> results = reportService.getReportData(reportCriteria);
@@ -90,7 +90,7 @@ class Crm14ProviderReportServiceTest {
                 1, START_DATE, END_DATE,
                 0,  START_DATE, END_DATE,
                 0,  START_DATE, END_DATE,
-                "All", PROVIDER_ACCOUNT, null
+                "All", PROVIDER_ACCOUNT, null, true
         );
 
         softly.assertThatThrownBy(() -> reportService.getReportData(reportCriteria))

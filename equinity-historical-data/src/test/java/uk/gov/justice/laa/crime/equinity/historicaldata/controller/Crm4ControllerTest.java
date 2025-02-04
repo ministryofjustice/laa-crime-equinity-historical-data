@@ -24,7 +24,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,7 +45,7 @@ class Crm4ControllerTest {
     private SoftAssertions softly;
 
     @MockBean
-    private CrmFormUtil crmFormUtil;
+    private AppUtil appUtil;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;

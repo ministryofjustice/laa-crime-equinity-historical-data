@@ -111,7 +111,8 @@ class CrmFormSearchServiceTest {
     void searchAllByCriteriaTest_GivenExistingFullUsnShouldReturnSingleForm() {
         String usn = "1826829";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -123,7 +124,8 @@ class CrmFormSearchServiceTest {
     void searchAllByCriteriaTest_GivenExistingPartialUsnShouldReturnMultipleForms() {
         String usn = "18268";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -138,7 +140,8 @@ class CrmFormSearchServiceTest {
     @ValueSource(strings = {"1826832", OLD_FORM_USN})
     void searchAllByCriteriaTest_GivenNonExistingUsnShouldReturnResourceNotFoundException(String usn) { // capability
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         // execute
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
@@ -152,7 +155,8 @@ class CrmFormSearchServiceTest {
     @Test
     void searchAllByCriteriaTest_WhenTypeIsGivenExistingInMultipleThenShouldReturnMultipleForms() {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM4_TYPE_ID, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -164,7 +168,8 @@ class CrmFormSearchServiceTest {
     @Test
     void searchAllByCriteriaTest_WhenTypeIsGivenExistsUniqueMultipleThenShouldReturnSingleForm() {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM5_TYPE_ID, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -175,7 +180,8 @@ class CrmFormSearchServiceTest {
     @Test
     void searchAllByCriteriaTest_WhenTypeIsGivenNonExistingValueThenShouldReturnResourceNotFoundException() {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, CRM7_TYPE_ID, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         // execute
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
@@ -190,7 +196,8 @@ class CrmFormSearchServiceTest {
     void searchAllByCriteriaTest_WhenClientNameIsGivenExistingInMultipleThenShouldReturnMultipleForms() {
         String client = "Mock Client";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, client, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -203,7 +210,8 @@ class CrmFormSearchServiceTest {
     void searchAllByCriteriaTest_WhenClientNameIsGivenExistsUniqueMultipleThenShouldReturnSingleForm() {
         String client = "Mock Client Name";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, client, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -215,7 +223,8 @@ class CrmFormSearchServiceTest {
     @ValueSource(strings = {"Fake Client", OLD_FORM_CLIENT_NAME})
     void searchAllByCriteriaTest_WhenClientNameIsGivenNonExistingValueThenShouldReturnResourceNotFoundException(String client) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, client, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         // execute
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
@@ -230,7 +239,8 @@ class CrmFormSearchServiceTest {
     @ValueSource(strings = {"1978-03-04", OLD_FORM_CLIENT_DOB})
     void searchAllByCriteriaTest_WhenClientDateOfBirthNameIsGivenNonExistingValueThenShouldReturnResourceNotFoundException(String clientDob) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, clientDob,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         // execute
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
@@ -242,7 +252,8 @@ class CrmFormSearchServiceTest {
     @MethodSource("inputForClientDateOfBirthTest")
     void searchAllByCriteriaTest_WhenClientDateOfBirthNameIsGivenThenShouldReturnResultsWithMatchingDate(String clientDoB, int expectedResults) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, clientDoB,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -260,7 +271,8 @@ class CrmFormSearchServiceTest {
     @MethodSource("inputForSubmittedDateRangeTest")
     public void searchAllByCriteriaTest_WhenSubmittedDateIsGivenThenShouldReturnResultsWithinThatRange(String submittedFrom, String submittedTo, int expectedResult) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null,
-                submittedFrom, submittedTo, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                submittedFrom, submittedTo, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -283,7 +295,8 @@ class CrmFormSearchServiceTest {
         String partialUsn = "18268";
 
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(partialUsn, null, null, null,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, sort, order);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                sort, order, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -314,7 +327,8 @@ class CrmFormSearchServiceTest {
     void searchAllByCriteriaTest_GivenExistingProviderAccountShouldReturnMultipleForms() {
         String providerAccount = "1234AB";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null,
-                null, null, providerAccount, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, providerAccount, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 
@@ -328,7 +342,8 @@ class CrmFormSearchServiceTest {
     @ValueSource(strings = {"2222AB", OLD_FORM_PROVIDER_ACCOUNT})
     void searchAllByCriteriaTest_WhenProviderAccountGivenNonExistingValueThenShouldReturnResourceNotFoundException(String providerAccount) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, providerAccount,
-                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT, null, null);
+                null, null, null, null, null, ACCEPTED_TYPES_DEFAULT,
+                null, null, true);
 
         // execute
         softly.assertThatThrownBy(() -> searchService.searchAllByCriteria(searchCriteria))
@@ -342,7 +357,8 @@ class CrmFormSearchServiceTest {
     void searchAllByCriteriaTest_GivenNullOrEmptyProfileAcceptedTypesShouldReturnSingleForm(String profileAcceptedTypes) {
         String usn = "1826829";
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(usn, null, null, null,
-                null, null, null, null, null, profileAcceptedTypes, null, null);
+                null, null, null, null, null, profileAcceptedTypes,
+                null, null, true);
 
         SearchResultDTO results = searchService.searchAllByCriteria(searchCriteria);
 

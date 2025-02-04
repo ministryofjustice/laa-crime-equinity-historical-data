@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,7 +23,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm5FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,7 +44,7 @@ public class Crm5ControllerTest {
     private SoftAssertions softly;
 
     @MockBean
-    private CrmFormUtil crmFormUtil;
+    private AppUtil appUtil;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
