@@ -17,13 +17,12 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.SUBMITTED;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getDateSevenYearsAgo;
 
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DateUtilTest {
 
-    private static final LocalDate MIN_START_DATE = getDateSevenYearsAgo();
+    private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -128,28 +127,28 @@ class DateUtilTest {
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsStartDateWithin7yrs7Yrs() {
+    void checkStartDateWithinLimit_AcceptsStartDateWithin7yrs() {
         LocalDate startDate = LocalDate.now().minusYears(1);
         DateUtil.checkStartDateWithin7yrs(SUBMITTED, startDate);
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsNullStartDate7yrs() {
+    void checkStartDateWithinLimit_AcceptsNullStartDate() {
         DateUtil.checkStartDateWithin7yrs(SUBMITTED, null);
     }
 
     @Test
-    void checkStartDateWithinLimit_AcceptsMinStartDate7yrs() {
-        DateUtil.checkStartDateWithin7yrs(SUBMITTED, MIN_START_DATE);
+    void checkStartDateWithinLimit_AcceptsStartDateExactly7yrsAgo() {
+        DateUtil.checkStartDateWithin7yrs(SUBMITTED, SEVEN_YEARS_AGO);
     }
 
     @Test
-    void checkStartDateWithinLimit_WhenStartDateIsBeforeMinStartDateThenThrowsException7yrs() {
-        LocalDate oldStartDate = MIN_START_DATE.minusDays(1);
+    void checkStartDateWithinLimit_WhenStartDateIsOver7ysAgoThenThrowsException7yrs() {
+        LocalDate oldStartDate = SEVEN_YEARS_AGO.minusDays(1);
         softly.assertThatThrownBy(() -> DateUtil.checkStartDateWithin7yrs(SUBMITTED, oldStartDate))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessageContaining("Start Date Constraint Violation Exception :: submitted start date ["
-                        + oldStartDate + "] cannot be earlier than [" + MIN_START_DATE + ']');
+                        + oldStartDate + "] cannot be earlier than [" + SEVEN_YEARS_AGO + ']');
     }
 
     @Test
@@ -161,8 +160,8 @@ class DateUtilTest {
     }
 
     @Test
-    void getMinimumStartDate_ShouldReturnDate() {
-        LocalDate result = getDateSevenYearsAgo();
+    void getDateSevenYearsAgo_ShouldReturnDate() {
+        LocalDate result = DateUtil.getDateSevenYearsAgo();
 
         softly.assertThat(result).isNotNull();
     }

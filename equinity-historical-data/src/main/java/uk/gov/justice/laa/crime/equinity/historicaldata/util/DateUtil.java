@@ -48,9 +48,6 @@ public class DateUtil {
         }
     }
 
-    @Autowired
-    private AppUtil appUtil;
-
     public static LocalDate convertDateToLocalDate(Date dateToConvert) throws DateTimeParseException {
         if (Objects.isNull(dateToConvert)) return null;
 
@@ -100,10 +97,6 @@ public class DateUtil {
             log.error("error parsing endDatetime :: endDateTime={} :: {}", endDateTime, e.getMessage());
             return null;
         }
-    }
-
-    public static boolean isDateWithin7yrs(LocalDate date) {
-        return Objects.isNull(date) || !date.isBefore(getDateSevenYearsAgo());
     }
 
     public static LocalDate getDateSevenYearsAgo() {

@@ -22,12 +22,11 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetail
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.isDateWithin7yrs;
-
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -204,7 +203,7 @@ public class CrmFileService {
 
     public <T extends CrmFormModelInterface> void checkSubmittedDate(T crmFormModel) {
         LocalDate submittedDate = crmFormModel.getFormDetails().getTlTaskLastUpdated();
-        if (!isDateWithin7yrs(submittedDate)) {
+        if (Objects.nonNull(submittedDate) && submittedDate.isBefore(DateUtil.getDateSevenYearsAgo())) {
             throw new ResourceNotFoundException("USN " + crmFormModel.getFormDetails().getUsn() + " not found");
         }
     }

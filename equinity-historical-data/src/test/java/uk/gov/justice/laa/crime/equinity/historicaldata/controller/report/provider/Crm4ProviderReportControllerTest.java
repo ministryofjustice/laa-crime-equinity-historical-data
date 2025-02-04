@@ -79,7 +79,7 @@ class Crm4ProviderReportControllerTest {
     }
 
     @Test
-    void generateProviderReportCrm4_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+    void generateProviderReportCrm4_WhenDecisionDateFromIsOver7yrsAgoThenThrowConstraintViolationException() {
         String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
 
         softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, DECISION_TO, PROVIDER_ACCOUNT))

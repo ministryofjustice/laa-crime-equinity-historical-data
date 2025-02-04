@@ -87,7 +87,7 @@ class Crm4PeriodicalReportControllerTest {
     }
 
     @Test
-    void generateReportCrm4Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+    void generateReportCrm4Test_WhenDecisionDateFromIsOver7ysAgoThenThrowConstraintViolationException() {
         String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
 
         softly.assertThatThrownBy(() -> controller.generateReportCrm4(decisionFrom, DECISION_TO, ACCEPTED_PROFILE_TYPES))

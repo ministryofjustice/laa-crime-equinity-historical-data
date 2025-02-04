@@ -129,7 +129,7 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+    void generateReportCrm14Test_WhenDecisionDateFromIsOver7ysAgoThenThrowConstraintViolationException() {
         String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
         softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                         1, decisionFrom, END_DATE,

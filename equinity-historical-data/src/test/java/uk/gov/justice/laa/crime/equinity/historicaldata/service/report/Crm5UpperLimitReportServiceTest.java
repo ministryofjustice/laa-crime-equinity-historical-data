@@ -65,8 +65,10 @@ class Crm5UpperLimitReportServiceTest {
         String results = reportService.getReport("2010-02-01", "2024-06-01");
 
         softly.assertThat(results).isNotEmpty();
-        softly.assertThat(results).isEqualTo("Usn,Provider Account,Firm Name,Client Name,LAA Case Ref,New Limit " +
-                "Request,Upper Limit Extended,Date Received,Decision Date,User,Review,Level Of Work\n" +
-                "5001600,0D182J,ABELS,Joe modo,031022/777,238.0,239.0,2023-03-16,2023-03-16,POOL-Mock,Appeal,Advice\n");
+        softly.assertThat(results).isEqualTo("""
+                Usn,Provider Account,Firm Name,Client Name,LAA Case Ref,New Limit \
+                Request,Upper Limit Extended,Date Received,Decision Date,User,Review,Level Of Work
+                5001600,0D182J,ABELS,Joe modo,031022/777,238.0,239.0,2023-03-16,2023-03-16,POOL-Mock,Appeal,Advice
+                """);
     }
 }

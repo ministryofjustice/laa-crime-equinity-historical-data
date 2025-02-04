@@ -62,7 +62,7 @@ class Crm5UpperLimitReportControllerTest {
     }
 
     @Test
-    void generateReportCrm5Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
+    void generateReportCrm5Test_WhenDecisionDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
         String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
 
         softly.assertThatThrownBy(() -> controller.generateReportCrm5(decisionFrom, DECISION_TO, ACCEPTED_PROFILE_TYPES))
