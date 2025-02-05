@@ -3,7 +3,6 @@ package uk.gov.justice.laa.crime.equinity.historicaldata.util;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;

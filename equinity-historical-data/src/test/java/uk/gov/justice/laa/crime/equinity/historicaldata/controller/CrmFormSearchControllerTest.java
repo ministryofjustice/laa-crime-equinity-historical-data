@@ -38,8 +38,9 @@ class CrmFormSearchControllerTest {
 
     @InjectSoftAssertions
     private SoftAssertions softly;
+
     @MockBean
-    CrmFormSearchService searchService;
+    CrmFormSearchService mockSearchService;
 
     @Autowired
     CrmFormSearchController controller;
@@ -55,7 +56,7 @@ class CrmFormSearchControllerTest {
     @BeforeEach
     void preTest() {
         searchResultDTO = new SearchResultDTO();
-        given(searchService.searchAllByCriteria(any())).willReturn(searchResultDTO);
+        given(mockSearchService.searchAllByCriteria(any())).willReturn(searchResultDTO);
     }
 
     @AfterAll

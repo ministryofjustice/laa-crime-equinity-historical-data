@@ -48,7 +48,7 @@ class Crm14ControllerTest {
     private SoftAssertions softly;
 
     @MockBean
-    private AppUtil appUtil;
+    private AppUtil mockAppUtil;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;

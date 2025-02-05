@@ -82,7 +82,7 @@ kubectl \
  --env="REMOTE_PORT=1433"
 ```
 
-.2. Open tunnel from local (on port 9433) to port-forward (on port 1433)
+2. Open tunnel from local (on port 9433) to port-forward (on port 1433)
 ```
 kubectl \
  -n laa-crime-equinity-historical-data-uat \

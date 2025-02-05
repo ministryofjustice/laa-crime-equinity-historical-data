@@ -43,12 +43,15 @@ public class CrmFormSearchCriteria {
     }
 
     public Specification<CrmFormDataModelInterface> getSpecification(CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO) {
+        String submittedFrom = crmFormSearchCriteriaDTO.applySevenYearsLimit() ?
+                Objects.requireNonNullElse(crmFormSearchCriteriaDTO.submittedFrom(), DateUtil.getDateSevenYearsAgo().toString()) : crmFormSearchCriteriaDTO.submittedFrom();
+
         return Specification
             .where(byUsn(crmFormSearchCriteriaDTO.usn())
                 .and(byType(crmFormSearchCriteriaDTO.type()))
                 .and(byClientName(crmFormSearchCriteriaDTO.client()))
                 .and(byClientDoB(crmFormSearchCriteriaDTO.clientDoB()))
-                .and(byDateSubmittedFrom(crmFormSearchCriteriaDTO.submittedFrom()))
+                .and(byDateSubmittedFrom(submittedFrom))
                 .and(byDateSubmittedTo(crmFormSearchCriteriaDTO.submittedTo()))
                 .and(byProviderAccount(crmFormSearchCriteriaDTO.providerAccount()))
                 .and(byProfileAcceptedTypes(crmFormSearchCriteriaDTO.profileAcceptedTypes()))
@@ -77,8 +80,7 @@ public class CrmFormSearchCriteria {
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedFrom(@Nullable String dateSubmittedFrom) {
         return (root, query, criteriaBuilder)
-                -> criteriaBuilder.greaterThanOrEqualTo(root.get(SUBMITTED_DATE_COL),
-                        Objects.requireNonNullElse(dateSubmittedFrom, DateUtil.getDateSevenYearsAgo().toString()));
+                -> dateSubmittedFrom == null ? null : criteriaBuilder.greaterThanOrEqualTo(root.get(SUBMITTED_DATE_COL), dateSubmittedFrom);
     }
 
     private Specification<CrmFormDataModelInterface> byDateSubmittedTo(@Nullable String dateSubmittedTo) {

@@ -27,7 +27,7 @@ class EquinityExceptionResponseHandlerTest {
     private static final String SECRET = "local-secret-x";
 
     @MockBean
-    Crm5Controller crm5Controller;
+    Crm5Controller mockCrm5Controller;
 
     @Autowired
     private MockMvc mockMvc;
@@ -115,7 +115,7 @@ class EquinityExceptionResponseHandlerTest {
 
     @Test
     void shouldHandleCrmImageFilmException() throws Exception {
-        when(crm5Controller.getApplication(2345678L, null)).thenThrow(new JSONException("Some error"));
+        when(mockCrm5Controller.getApplication(2345678L, null)).thenThrow(new JSONException("Some error"));
 
         mockMvc.perform(get("/api/internal/v1/equinity/crm5/2345678")
                         .header(HEADER_EQ_API_CLIENT_ID, CLIENT_ID)
@@ -126,7 +126,7 @@ class EquinityExceptionResponseHandlerTest {
 
     @Test
     void shouldHandleGenericException() throws Exception {
-        when(crm5Controller.getApplication(3456789L, null)).thenThrow(new RuntimeException("Some error"));
+        when(mockCrm5Controller.getApplication(3456789L, null)).thenThrow(new RuntimeException("Some error"));
 
         mockMvc.perform(get("/api/internal/v1/equinity/crm5/3456789")
                         .header(HEADER_EQ_API_CLIENT_ID, CLIENT_ID)

@@ -28,7 +28,7 @@ class Crm5UpperLimitReportServiceTest {
     private SoftAssertions softly;
 
     @MockBean
-    Crm5UpperLimitReportRepository reportRepository;
+    Crm5UpperLimitReportRepository mockReportRepository;
 
     @Autowired
     Crm5UpperLimitReportService reportService;
@@ -52,7 +52,7 @@ class Crm5UpperLimitReportServiceTest {
         );
         expectedResponse.add(report);
 
-        when(reportRepository.getReport("2010-02-01", "2024-06-01")).thenReturn(expectedResponse);
+        when(mockReportRepository.getReport("2010-02-01", "2024-06-01")).thenReturn(expectedResponse);
     }
 
     @AfterAll

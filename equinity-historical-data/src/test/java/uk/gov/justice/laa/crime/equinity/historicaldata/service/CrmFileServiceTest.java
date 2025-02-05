@@ -56,7 +56,7 @@ class CrmFileServiceTest {
     private SoftAssertions softly;
 
     @MockBean
-    AppUtil appUtil;
+    AppUtil mockAppUtil;
 
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
@@ -120,7 +120,7 @@ class CrmFileServiceTest {
 
     @BeforeEach
     void setUp() {
-        when(appUtil.applySevenYearsLimit()).thenReturn(false);
+        when(mockAppUtil.applySevenYearsLimit()).thenReturn(false);
     }
 
     @Test
@@ -197,7 +197,7 @@ class CrmFileServiceTest {
 
     @Test
     void getCrmFileDataTest_ShouldThrowResourceNotFoundException() {
-        when(appUtil.applySevenYearsLimit()).thenReturn(true); // switch on 7rs limit
+        when(mockAppUtil.applySevenYearsLimit()).thenReturn(true); // switch on 7rs limit
 
         // criteria for CRM form with date submitted over 7 ys ago
         CrmFormDetailsCriteriaDTO detailsCriteriaDTO = buildDetailsCriteriaDTO(5001613L);
