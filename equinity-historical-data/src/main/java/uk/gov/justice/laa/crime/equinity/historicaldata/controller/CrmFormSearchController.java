@@ -8,12 +8,14 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.inpu
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.api.SearchApi;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFormSearchService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 public class CrmFormSearchController implements SearchApi {
     private final CrmFormSearchService searchService;
+    private final AppUtil appUtil;
 
     @Override
     public ResponseEntity<SearchResultDTO> doSearchBy(
@@ -24,7 +26,7 @@ public class CrmFormSearchController implements SearchApi {
 
         CrmFormSearchCriteriaDTO crmFormSearchCriteriaDTO = new CrmFormSearchCriteriaDTO(
                 usn, type, client, clientDoB, submittedFrom, submittedTo, providerAccount, page, pageSize,
-                profileAcceptedTypes, sort, order
+                profileAcceptedTypes, sort, order, appUtil.applySevenYearsLimit()
         );
 
         log.info("eForm search request received :: {} ", crmFormSearchCriteriaDTO);

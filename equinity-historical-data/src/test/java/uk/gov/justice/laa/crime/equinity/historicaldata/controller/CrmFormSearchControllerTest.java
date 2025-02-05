@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,10 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.SearchResultDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFormSearchService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -35,23 +40,23 @@ class CrmFormSearchControllerTest {
     private SoftAssertions softly;
 
     @MockBean
-    CrmFormSearchService searchService;
+    CrmFormSearchService mockSearchService;
 
     @Autowired
     CrmFormSearchController controller;
 
     private static final String ACCEPTED_TYPES_DEFAULT = "1";
-
-    private static final List<String> INVALID_DATE_FORMATS = List.of(
-            "123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"
-    );
+    private static final LocalDate CURRENT_DATE = LocalDate.now();
+    private static final String SUBMITTED_FROM = CURRENT_DATE.minusDays(1).toString();
+    private static final String SUBMITTED_TO = CURRENT_DATE.toString();
+    private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
 
     private SearchResultDTO searchResultDTO;
 
     @BeforeEach
     void preTest() {
         searchResultDTO = new SearchResultDTO();
-        given(searchService.searchAllByCriteria(any())).willReturn(searchResultDTO);
+        given(mockSearchService.searchAllByCriteria(any())).willReturn(searchResultDTO);
     }
 
     @AfterAll
@@ -163,49 +168,69 @@ class CrmFormSearchControllerTest {
     /**
      * Date Format input checks
      **/
-    @Test
-    void doSearchByTest_WhenInvalidSubmittedDateFromIsGivenThenThrowConstraintViolationException() {
-        String expectedMessage = "must match";
+    @ParameterizedTest
+    @MethodSource("inputForInvalidDatesTest")
+    void doSearchByTest_WhenInvalidSubmittedDateFromIsGivenThenThrowConstraintViolationException(String dateToTest) {
 
-        // execute
-        INVALID_DATE_FORMATS.forEach(dateToTest ->
-                softly.assertThatThrownBy(() -> controller.doSearchBy(
-                                ACCEPTED_TYPES_DEFAULT, null, null, null, null, dateToTest, null,
-                                null, null, null, null, null))
-                        .isInstanceOf(ConstraintViolationException.class)
-                        .hasMessageContaining(expectedMessage)
+        softly.assertThatThrownBy(() -> controller.doSearchBy(
+                        ACCEPTED_TYPES_DEFAULT, null, null, null, null, dateToTest, null,
+                        null, null, null, null, null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("doSearchBy.submittedFrom: must match");
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("inputForInvalidDatesTest")
+    void doSearchByTest_WhenInvalidSubmittedDateToIsGivenThenThrowConstraintViolationException(String dateToTest) {
+        softly.assertThatThrownBy(() -> controller.doSearchBy(
+                        ACCEPTED_TYPES_DEFAULT, null, null, null, null, null, dateToTest,
+                        null, null, null, null, null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("doSearchBy.submittedTo: must match");
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("inputForInvalidDatesTest")
+    void doSearchByTest_WhenInvalidClientDateOfBirthIsGivenThenThrowConstraintViolationException(String dateToTest) {
+        softly.assertThatThrownBy(() -> controller.doSearchBy(
+                        ACCEPTED_TYPES_DEFAULT, null, null, null, dateToTest, null, null,
+                        null, null, null, null, null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("doSearchBy.clientDoB: must match");
+    }
+
+    private static Stream<Arguments> inputForInvalidDatesTest() {
+        return Stream.of(
+                Arguments.of("123"),
+                Arguments.of("12-12-23"),
+                Arguments.of("12-12-2023"),
+                Arguments.of("10/11/2024"),
+                Arguments.of("2024/03/12"),
+                Arguments.of("2024-13-01"),
+                Arguments.of("2024-12-32"),
+                Arguments.of("2024-12-1"),
+                Arguments.of("2024-1-12")
         );
     }
 
     @Test
-    void doSearchByTest_WhenInvalidSubmittedDateToIsGivenThenThrowConstraintViolationException() {
-        String expectedMessage = "must match";
+    void doSearchByTest_WhenSubmittedDateFromIsOver7YrsAgoThenThrowConstraintViolationException() {
+        String submittedFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
 
         // execute
-        INVALID_DATE_FORMATS.forEach(dateToTest ->
-                softly.assertThatThrownBy(() -> controller.doSearchBy(
-                                ACCEPTED_TYPES_DEFAULT, null, null, null, null, null, dateToTest,
-                                null, null, null, null, null))
-                        .isInstanceOf(ConstraintViolationException.class)
-                        .hasMessageContaining(expectedMessage)
-        );
-    }
-
-    @Test
-    void doSearchByTest_WhenInvalidClientDateOfBirthIsGivenThenThrowConstraintViolationException() {
-        INVALID_DATE_FORMATS.forEach(dateToTest ->
-                softly.assertThatThrownBy(() -> controller.doSearchBy(
-                                ACCEPTED_TYPES_DEFAULT, null, null, null, dateToTest, null, null,
-                                null, null, null, null, null))
-                        .isInstanceOf(ConstraintViolationException.class)
-                        .hasMessageContaining("must match")
-        );
+        softly.assertThatThrownBy(() -> controller.doSearchBy(
+                        ACCEPTED_TYPES_DEFAULT, null, null, null, null, submittedFrom, SUBMITTED_TO,
+                        null, null, null, null, null))
+                .isInstanceOf(StartDateConstraintViolationException.class)
+                .hasMessage("Start Date Constraint Violation Exception :: submitted start date [" + submittedFrom + "] cannot be earlier than [" + SEVEN_YEARS_AGO + "]");
     }
 
     @Test
     void doSearchByTest_WhenInvalidSubmittedDateRangeIsGivenThenThrowConstraintViolationException() {
-        String startDate = "2024-02-19";
-        String endDate = "2024-02-09";
+        String startDate = CURRENT_DATE.toString();
+        String endDate = CURRENT_DATE.minusDays(1).toString(); // before startDate
 
         // execute
         softly.assertThatThrownBy(() -> controller.doSearchBy(
@@ -217,10 +242,7 @@ class CrmFormSearchControllerTest {
 
     @Test
     void doSearchByTest_WhenOnlyValidSubmittedDateFromIsGivenThenReturnDTO() {
-        String dateToTest = "2024-02-19";
-
-        // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, dateToTest, null,
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, SUBMITTED_FROM, null,
                 null, null, null, null, null);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -229,10 +251,7 @@ class CrmFormSearchControllerTest {
 
     @Test
     void doSearchByTest_WhenOnlyValidSubmittedDateToIsGivenThenReturnDTO() {
-        String dateToTest = "2024-02-19";
-
-        // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, null, dateToTest,
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, null, SUBMITTED_TO,
                 null, null, null, null, null);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -241,11 +260,7 @@ class CrmFormSearchControllerTest {
 
     @Test
     void doSearchByTest_WhenOnlyValidSubmittedDateRangeIsGivenThenReturnDTO() {
-        String dateToTestFrom = "2024-02-09";
-        String dateToTestTo = "2024-02-19";
-
-        // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, dateToTestFrom, dateToTestTo,
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, SUBMITTED_FROM, SUBMITTED_TO,
                 null, null, null, null, null);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -254,11 +269,8 @@ class CrmFormSearchControllerTest {
 
     @Test
     void doSearchByTest_WhenOnlyValidSubmittedDateRangeWithSameDatesIsGivenThenReturnDTO() {
-        String dateToTestFrom = "2024-02-19";
-        String dateToTestTo = "2024-02-19";
-
-        // execute
-        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, dateToTestFrom, dateToTestTo,
+        String dateToTest = SUBMITTED_FROM;
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, null, dateToTest, dateToTest,
                 null, null, null, null, null);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -267,7 +279,7 @@ class CrmFormSearchControllerTest {
 
     @Test
     void doSearchByTest_WhenValidClientDateOfBirthIsGivenThenReturnDTO() {
-        String dateToTest = "2024-02-19";
+        String dateToTest = CURRENT_DATE.minusYears(30).toString();
 
         // execute
         ResponseEntity<SearchResultDTO> response = controller.doSearchBy(ACCEPTED_TYPES_DEFAULT, null, null, null, dateToTest, null, null,
@@ -334,9 +346,9 @@ class CrmFormSearchControllerTest {
         String usn = "1234";
         String order = "asc";
 
-        ResponseEntity<SearchResultDTO> response =  controller.doSearchBy(
-                        ACCEPTED_TYPES_DEFAULT, usn, null, null, null, null, null,
-                        null, null, null, sort, order);
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(
+                ACCEPTED_TYPES_DEFAULT, usn, null, null, null, null, null,
+                null, null, null, sort, order);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         softly.assertThat(response.getBody()).isEqualTo(searchResultDTO);
@@ -364,7 +376,7 @@ class CrmFormSearchControllerTest {
         String usn = "1234";
         String sort = "originatedDate";
 
-        ResponseEntity<SearchResultDTO> response =  controller.doSearchBy(
+        ResponseEntity<SearchResultDTO> response = controller.doSearchBy(
                 ACCEPTED_TYPES_DEFAULT, usn, null, null, null, null, null,
                 null, null, null, sort, order);
 

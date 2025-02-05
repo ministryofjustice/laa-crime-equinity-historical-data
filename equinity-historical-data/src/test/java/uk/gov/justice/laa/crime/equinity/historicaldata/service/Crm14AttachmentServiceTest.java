@@ -28,7 +28,7 @@ class Crm14AttachmentServiceTest {
     Crm14AttachmentService crm14AttachmentService;
 
     @BeforeAll
-    void preTest() throws IOException {
+    void preTest() {
         CrmFormCRM14AttachmentStoreModel attachment = new CrmFormCRM14AttachmentStoreModel(5001817L,"61c6df22-c18c-4182-9560-897b0e18dfcd","Screenshot 2022-05-23 at 13.26.59.png",3,null,null,"Accepted","BANK_STATEMENTS",
                 "3x monthly statements","",341);
         crmFormCRM14AttachmentStoreRepository.save(attachment);

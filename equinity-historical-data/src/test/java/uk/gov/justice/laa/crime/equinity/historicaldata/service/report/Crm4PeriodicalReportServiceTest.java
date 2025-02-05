@@ -28,7 +28,7 @@ class Crm4PeriodicalReportServiceTest {
     private SoftAssertions softly;
 
     @MockBean
-    Crm4PeriodicalReportRepository reportRepository;
+    Crm4PeriodicalReportRepository mockReportRepository;
 
     @Autowired
     Crm4PeriodicalReportService reportService;
@@ -45,7 +45,7 @@ class Crm4PeriodicalReportServiceTest {
 
         expectedResponse.add(report);
 
-        when(reportRepository.getReport("2010-02-01", "2024-06-01"))
+        when(mockReportRepository.getReport("2010-02-01", "2024-06-01"))
                 .thenReturn(expectedResponse);
     }
 

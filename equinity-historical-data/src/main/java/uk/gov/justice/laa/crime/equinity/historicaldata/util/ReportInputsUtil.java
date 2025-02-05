@@ -12,15 +12,17 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.Dat
 @UtilityClass
 public class ReportInputsUtil {
     public static void checkInputs(String dateFrom, String dateTo,
-                                   String profileAcceptedTypes, int requiredType) throws DateRangeConstraintViolationException, UnauthorizedUserProfileException {
-        checkDateRange(DECISION, dateFrom, dateTo);
+                                   String profileAcceptedTypes, int requiredType, boolean applySevenYearsLimit) throws DateRangeConstraintViolationException, UnauthorizedUserProfileException {
+        checkDateRange(DECISION, dateFrom, dateTo, applySevenYearsLimit);
         ProfileAcceptedTypesUtil.checkTypeIsAcceptedByProfile(requiredType, profileAcceptedTypes);
     }
 
-    public static void checkDateRange(DateRange dateRange, String dateFrom, String dateTo) throws DateRangeConstraintViolationException {
+    public static void checkDateRange(DateRange dateRange, String dateFrom, String dateTo, boolean applySevenYearsLimit) throws DateRangeConstraintViolationException {
         LocalDate checkDateFrom = DateUtil.convertStringToLocalDate(dateFrom);
         LocalDate checkDateTo = DateUtil.convertStringToLocalDate(dateTo);
-        DateUtil.checkStartDateWithinLimit(dateRange, checkDateFrom);
+        if (applySevenYearsLimit) {
+            DateUtil.checkStartDateWithin7yrs(dateRange, checkDateFrom);
+        }
         DateUtil.checkDateRangeIsValid(dateRange, checkDateFrom, checkDateTo);
     }
 }

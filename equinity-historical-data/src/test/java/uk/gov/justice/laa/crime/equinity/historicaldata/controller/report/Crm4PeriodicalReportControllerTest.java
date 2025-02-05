@@ -21,6 +21,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConst
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm4PeriodicalReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm4PeriodicalReportRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +29,6 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -39,7 +39,7 @@ class Crm4PeriodicalReportControllerTest {
     private static final String DECISION_FROM = CURRENT_DATE.minusDays(1).toString();
     private static final String DECISION_TO = CURRENT_DATE.toString();
     private static final String DENIED_PROFILE_TYPES = "2,9";
-    private static final LocalDate MIN_START_DATE = getMinimumDate();
+    private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -87,12 +87,12 @@ class Crm4PeriodicalReportControllerTest {
     }
 
     @Test
-    void generateReportCrm4Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
-        String decisionFrom = MIN_START_DATE.minusMonths(2).toString();
+    void generateReportCrm4Test_WhenDecisionDateFromIsOver7ysAgoThenThrowConstraintViolationException() {
+        String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
 
         softly.assertThatThrownBy(() -> controller.generateReportCrm4(decisionFrom, DECISION_TO, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(StartDateConstraintViolationException.class)
-                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
+                .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + SEVEN_YEARS_AGO + "]");
     }
 
     @ParameterizedTest

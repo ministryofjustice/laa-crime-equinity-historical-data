@@ -6,18 +6,16 @@ import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.json.JSONObject;
 import org.json.XML;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +24,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 import uk.gov.justice.laa.crime.equinity.historicaldata.generated.dto.Crm4FormDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetailsModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
-import uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,7 +32,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.mockito.Mockito.mockStatic;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 
 @SpringBootTest
@@ -47,13 +44,14 @@ class Crm4ControllerTest {
     @InjectSoftAssertions
     private SoftAssertions softly;
 
+    @MockBean
+    private AppUtil mockAppUtil;
+
     @Autowired
     CrmFormDetailsRepository crmFormDetailsRepository;
 
     @Autowired
     Crm4Controller controller;
-
-    private MockedStatic<CrmFormUtil> mockStatic;
 
     @BeforeAll
     void preTest() {
@@ -69,16 +67,6 @@ class Crm4ControllerTest {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    @BeforeEach
-    public void setUp() {
-        mockStatic = mockStatic(CrmFormUtil.class);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        mockStatic.close();
     }
 
     /**

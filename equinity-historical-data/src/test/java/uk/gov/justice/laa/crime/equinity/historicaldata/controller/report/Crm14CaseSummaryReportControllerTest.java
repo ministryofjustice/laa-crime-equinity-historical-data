@@ -23,6 +23,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUs
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSummaryReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.Crm14CaseSummaryReportRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -33,7 +34,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.getMinimumDate;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
@@ -45,7 +45,7 @@ class Crm14CaseSummaryReportControllerTest {
     private static final String END_DATE = CURRENT_DATE.toString();
     private static final String DENIED_PROFILE_TYPES = "2,9";
     private static final String STATE_DEFAULT = "All";
-    private static final LocalDate MIN_START_DATE = getMinimumDate();
+    private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
 
     @InjectSoftAssertions
     private SoftAssertions softly;
@@ -129,8 +129,8 @@ class Crm14CaseSummaryReportControllerTest {
     }
 
     @Test
-    void generateReportCrm14Test_WhenDecisionDateFromIsBeforeMinStartDateThenThrowConstraintViolationException() {
-        String decisionFrom = MIN_START_DATE.minusMonths(2).toString();
+    void generateReportCrm14Test_WhenDecisionDateFromIsOver7ysAgoThenThrowConstraintViolationException() {
+        String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
         softly.assertThatThrownBy(() -> controller.generateReportCrm14(
                         1, decisionFrom, END_DATE,
                         0, START_DATE, END_DATE,
@@ -139,7 +139,7 @@ class Crm14CaseSummaryReportControllerTest {
                         ACCEPTED_PROFILE_TYPES, STATE_DEFAULT))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: decision start date ["
-                        + decisionFrom + "] cannot be earlier than [" + MIN_START_DATE + "]");
+                        + decisionFrom + "] cannot be earlier than [" + SEVEN_YEARS_AGO + "]");
     }
 
     @Test

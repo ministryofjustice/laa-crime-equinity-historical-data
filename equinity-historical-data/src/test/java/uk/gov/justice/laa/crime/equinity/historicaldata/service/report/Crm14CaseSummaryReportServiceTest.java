@@ -34,7 +34,7 @@ class Crm14CaseSummaryReportServiceTest {
     private SoftAssertions softly;
 
     @MockBean
-    Crm14CaseSummaryReportRepository reportRepository;
+    Crm14CaseSummaryReportRepository mockReportRepository;
 
     @Autowired
     Crm14CaseSummaryReportService reportService;
@@ -66,7 +66,7 @@ class Crm14CaseSummaryReportServiceTest {
                         null, null, null, null, null)
         );
 
-        when(reportRepository.getReport(
+        when(mockReportRepository.getReport(
                 1, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE, STATE,
@@ -86,7 +86,7 @@ class Crm14CaseSummaryReportServiceTest {
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
-                STATE, "0D182J", null
+                STATE, "0D182J", null, true
         );
 
         List<Crm14CaseSummaryReportModel> results = reportService.getReportData(criteria);
@@ -95,7 +95,7 @@ class Crm14CaseSummaryReportServiceTest {
         softly.assertThat(results.get(0).getUsn()).isEqualTo(5012603L);
         softly.assertThat(results.get(1).getUsn()).isEqualTo(4004444L);
 
-        verify(reportRepository).getReport(
+        verify(mockReportRepository).getReport(
                 1, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE, STATE,

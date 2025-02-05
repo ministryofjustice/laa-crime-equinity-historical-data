@@ -882,7 +882,7 @@ public class Crm14DetailsModel extends Crm14AdditionalDetails implements CrmForm
         if (!this.isSubformfundingdecision_1_subformisvisible()) {
             return null;
         }
-        List<Crm14FundDecisionModel> allDecisions = new ArrayList<Crm14FundDecisionModel>();
+        List<Crm14FundDecisionModel> allDecisions = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
             if (this.isSubformfundingdecision_1_subformisvisible()) {
                 Method instanceMethod;

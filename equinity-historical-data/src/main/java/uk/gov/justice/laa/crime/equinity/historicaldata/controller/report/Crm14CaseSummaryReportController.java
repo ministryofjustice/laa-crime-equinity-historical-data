@@ -14,6 +14,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.Crm14CaseSu
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.Crm14ReportCriteriaDTO;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.report.Crm14CaseSummaryReportService;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
     private final Crm14CaseSummaryReportService reportService;
     private final HttpServletResponse response;
     private final CsvWriterService csvService;
+    private final AppUtil appUtil;
 
     @Override
     public ResponseEntity<Void> generateReportCrm14(Integer filterByDecision, String decisionFrom, String decisionTo,
@@ -41,7 +43,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
                     filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
-                    state, null, profileAcceptedTypes
+                    state, null, profileAcceptedTypes, appUtil.applySevenYearsLimit()
             );
 
             log.info("eForm CRM14 report download request received :: [{}]", criteria);

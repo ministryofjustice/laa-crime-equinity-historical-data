@@ -13,13 +13,16 @@ public record CrmFormSearchCriteriaDTO(
         @Nullable String providerAccount,
         @Nullable Integer page, @Nullable Integer pageSize,
         @Nullable String profileAcceptedTypes,
-        @Nullable String sort, @Nullable String order
+        @Nullable String sort, @Nullable String order,
+        boolean applySevenYearsLimit
 ) {
     public CrmFormSearchCriteriaDTO {
         LocalDate dateSubmittedFrom = DateUtil.convertStringToLocalDate(submittedFrom);
         LocalDate dateSubmittedTo = DateUtil.convertStringToLocalDate(submittedTo);
 
-        DateUtil.checkStartDateWithinLimit(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom);
+        if (applySevenYearsLimit) {
+            DateUtil.checkStartDateWithin7yrs(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom);
+        }
 
         DateUtil.checkDateRangeIsValid(DateUtil.DateRange.SUBMITTED, dateSubmittedFrom, dateSubmittedTo);
 
@@ -37,18 +40,20 @@ public record CrmFormSearchCriteriaDTO(
 
     @Override
     public String toString() {
-        return "CrmFormSearchCriteriaDTO { " +
-                "usn='" + usn + "'" +
-                ", type='" + type + "'" +
-                ", client='" + client + "'" +
-                ", clientDoB='" + clientDoB + "'" +
-                ", submittedFrom='" + submittedFrom + "'" +
-                ", submittedTo='" + submittedTo + "'" +
-                ", providerAccount='" + providerAccount + "'" +
+        return "CrmFormSearchCriteriaDTO{" +
+                "usn='" + usn + '\'' +
+                ", type=" + type +
+                ", client='" + client + '\'' +
+                ", clientDoB='" + clientDoB + '\'' +
+                ", submittedFrom='" + submittedFrom + '\'' +
+                ", submittedTo='" + submittedTo + '\'' +
+                ", providerAccount='" + providerAccount + '\'' +
                 ", page=" + page +
                 ", pageSize=" + pageSize +
+                ", profileAcceptedTypes='" + profileAcceptedTypes + '\'' +
                 ", sort='" + sort + '\'' +
                 ", order='" + order + '\'' +
-                " }";
+                ", applySevenYearsLimit=" + applySevenYearsLimit +
+                '}';
     }
 }

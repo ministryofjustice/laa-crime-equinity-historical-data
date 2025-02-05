@@ -21,11 +21,12 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormDetail
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormDetailsRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.CrmFormDetailsCriteria;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.criteria.input.CrmFormDetailsCriteriaDTO;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
+import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
 import java.nio.charset.StandardCharsets;
-
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.CrmFormUtil.checkSubmittedDate;
-
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +70,7 @@ public class CrmFileService {
     private final CrmFormDetailsRepository crmFormDetailsRepository;
     private final ObjectMapper jsonObjectMapper;
     private final CrmFormDetailsCriteria crmFormDetailsCriteria;
+    private final AppUtil appUtil;
 
     private static Class<? extends CrmFormModelInterface> getCrmFormTypeMapClass(Integer type) throws NotEnoughSearchParametersException {
         return switch (type) {
@@ -89,7 +91,9 @@ public class CrmFileService {
 
         T crmFormModel = convertCrmFileJsonToModel(crmFileJsonObject, crmFormDetailsCriteriaDTO);
 
-        checkSubmittedDate(crmFormModel);
+        if (appUtil.applySevenYearsLimit()) {
+            checkSubmittedDate(crmFormModel);
+        }
 
         return crmFormModel;
     }
@@ -194,6 +198,13 @@ public class CrmFileService {
             toArray.put(jsonParentObject.get(jsonChildKey));
             jsonParentObject.put(jsonChildKey, toArray);
             crmFileJsonObject.put(jsonParentKey, jsonParentObject);
+        }
+    }
+
+    public <T extends CrmFormModelInterface> void checkSubmittedDate(T crmFormModel) {
+        LocalDate submittedDate = crmFormModel.getFormDetails().getTlTaskLastUpdated();
+        if (Objects.nonNull(submittedDate) && submittedDate.isBefore(DateUtil.getDateSevenYearsAgo())) {
+            throw new ResourceNotFoundException("USN " + crmFormModel.getFormDetails().getUsn() + " not found");
         }
     }
 }

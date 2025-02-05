@@ -10,3 +10,6 @@ server:
     client-secret:
       header: EQ-API-SECRET
       secret: local-secret-x
+
+app:
+  environment: test
