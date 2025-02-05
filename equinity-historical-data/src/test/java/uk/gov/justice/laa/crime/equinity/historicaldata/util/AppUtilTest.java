@@ -11,5 +11,5 @@ class AppUtilTest {
         AppUtil appUtil = new AppUtil();
         boolean applySevenYearsLimit = appUtil.applySevenYearsLimit();
         assertThat(applySevenYearsLimit).isTrue();
-    };
+    }
 }
