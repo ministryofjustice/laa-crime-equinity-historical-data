@@ -13,6 +13,11 @@ service:
   port: 8089
   environment: "archive"
 
+securityContext:
+  runAsNonRoot: true
+  readOnlyRootFilesystem: false
+  runAsUser: 10001
+
 database:
   name: "eq_archive"
 
