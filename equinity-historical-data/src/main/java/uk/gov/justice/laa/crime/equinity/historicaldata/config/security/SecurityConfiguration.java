@@ -33,7 +33,6 @@ public class SecurityConfiguration {
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers(String.format("%s/**", API_REQUEST_PATH)).authenticated()
                 .anyRequest().denyAll()
-
             )
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
             .httpBasic(Customizer.withDefaults())

@@ -18,6 +18,8 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  profiles:
+    active: ${HOST_ENV}
 
 springdoc:
   packagesToScan: uk.gov.justice.laa.crime.equinity.historicaldata
@@ -71,3 +73,8 @@ sentry:
 # custom application properties
 app:
   environment: ${HOST_ENV}
+
+scheduled:
+  archiveCrmFormData:
+#    cron: "0 0 0 * * ?" # daily at midnight
+    cron: "0 * * * * ?"
