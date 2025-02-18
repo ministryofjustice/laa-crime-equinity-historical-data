@@ -22,7 +22,7 @@ def versions = [
 		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
 		tomcatEmbed 				: '10.1.34',
-		nettyCodec 					: '4.1.108.Final',
+		nettyCodec 					: '4.1.118.Final',
 ]
 
 
