@@ -121,6 +121,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	testImplementation "org.xmlunit:xmlunit-core:$versions.xmlUnit"
+	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
 	testImplementation "net.minidev:json-smart:2.5.2"
 
 	testImplementation "io.projectreactor:reactor-test:$versions.reactorTest"
