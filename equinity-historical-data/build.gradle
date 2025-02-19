@@ -6,7 +6,7 @@ plugins {
 def versions = [
 		springStarter 				: '3.3.7',
 		springWeb 					: '6.1.14',
-		springSecurity 				: '6.3.4',
+		springSecurity 				: '6.3.5',
 		springdoc 					: '1.8.0',
 		json 						: '20240303',
 		logback 					: '1.5.6',
@@ -83,8 +83,8 @@ dependencies {
 
 	implementation "org.springframework:spring-webflux:$versions.springWeb"
 	implementation "io.netty:netty-codec-http:$versions.nettyCodec"
+	implementation "io.netty:netty-common:$versions.nettyCodec"
 	implementation "io.netty:netty-handler:$versions.nettyCodec"
-
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
@@ -156,9 +156,9 @@ jacocoTestReport {
 
 	reports {
 		xml.required = true
-		xml.outputLocation = file("$project.buildDir/reports/jacoco/coverage.xml")
+		xml.outputLocation = file("$project.layout.buildDirectory/reports/jacoco/coverage.xml")
 		html.required = true
-		html.outputLocation = file("$project.buildDir/reports/jacoco/html")
+		html.outputLocation = file("$project.layout.buildDirectory/reports/jacoco/html")
 	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
@@ -212,6 +212,6 @@ sonar {
 		property "sonar.exclusions", "**/entity/**.java , **/model/**.java , **/dto/**.java , **/config/**.java, **/jms/**.java,**/exception/**.java,**/handler/**.java,**/maatapi/**Client**.java,**/generated/**"
 		property "sonar.coverage.exclusions", "**/EquinityHistoricalDataApplication.java"
 		property "sonar.coverage.jacoco.xmlReportPaths",
-				"${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+				"${project.layout.buildDirectory}/reports/jacoco/test/jacocoTestReport.xml"
 	}
 }
