@@ -83,9 +83,8 @@ dependencies {
 
 	implementation "org.springframework:spring-webflux:$versions.springWeb"
 	implementation "io.netty:netty-codec-http:$versions.nettyCodec"
+	implementation "io.netty:netty-common:$versions.nettyCodec"
 	implementation "io.netty:netty-handler:$versions.nettyCodec"
-	implementation "io.netty:netty-handler:$versions.nettyCodec"
-
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
