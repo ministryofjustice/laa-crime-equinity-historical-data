@@ -156,9 +156,9 @@ jacocoTestReport {
 
 	reports {
 		xml.required = true
-		xml.outputLocation = file("$project.layout.buildDirectory/reports/jacoco/coverage.xml")
+		xml.outputLocation = file("$project.buildDir/reports/jacoco/coverage.xml")
 		html.required = true
-		html.outputLocation = file("$project.layout.buildDirectory/reports/jacoco/html")
+		html.outputLocation = file("$project.buildDir/reports/jacoco/html")
 	}
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
@@ -212,6 +212,6 @@ sonar {
 		property "sonar.exclusions", "**/entity/**.java , **/model/**.java , **/dto/**.java , **/config/**.java, **/jms/**.java,**/exception/**.java,**/handler/**.java,**/maatapi/**Client**.java,**/generated/**"
 		property "sonar.coverage.exclusions", "**/EquinityHistoricalDataApplication.java"
 		property "sonar.coverage.jacoco.xmlReportPaths",
-				"${project.layout.buildDirectory}/reports/jacoco/test/jacocoTestReport.xml"
+				"${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
 	}
 }
