@@ -6,7 +6,7 @@ plugins {
 def versions = [
 		springStarter 				: '3.3.7',
 		springWeb 					: '6.1.14',
-		springSecurity 				: '6.3.4',
+		springSecurity 				: '6.3.5',
 		springdoc 					: '1.8.0',
 		json 						: '20240303',
 		logback 					: '1.5.6',
@@ -22,7 +22,8 @@ def versions = [
 		micrometerio 				: '1.1.3',
 		prometheus 					: '1.12.6',
 		tomcatEmbed 				: '10.1.34',
-		nettyCodec 					: '4.1.108.Final',
+		nettyCodec 					: '4.1.118.Final',
+		jsonSmart				    : '2.5.2'
 ]
 
 
@@ -82,6 +83,8 @@ dependencies {
 
 	implementation "org.springframework:spring-webflux:$versions.springWeb"
 	implementation "io.netty:netty-codec-http:$versions.nettyCodec"
+	implementation "io.netty:netty-common:$versions.nettyCodec"
+	implementation "io.netty:netty-handler:$versions.nettyCodec"
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$versions.springStarter"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$versions.springStarter"
@@ -120,6 +123,8 @@ dependencies {
 
 	testImplementation "org.xmlunit:xmlunit-core:$versions.xmlUnit"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:$versions.springStarter"
+	testImplementation "net.minidev:json-smart:$versions.jsonSmart"
+
 	testImplementation "io.projectreactor:reactor-test:$versions.reactorTest"
 	testImplementation "com.h2database:h2:$versions.h2db"
 }
