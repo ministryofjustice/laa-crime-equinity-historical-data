@@ -8,6 +8,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormSummar
 
 
 public interface CrmFormSummaryRepository extends JpaRepository<CrmFormSummaryModel, Integer>, JpaSpecificationExecutor<CrmFormDataModelInterface> {
-    @Procedure("TransferCrmFormData")
+    @Procedure("ArchiveCrmFormData")
     void archiveCrmFormData ();
 }
