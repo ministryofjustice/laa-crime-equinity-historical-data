@@ -76,5 +76,4 @@ app:
 
 scheduled:
   archiveCrmFormData:
-#    cron: "0 0 0 * * ?" # daily at midnight
-    cron: "0 * * * * ?"
+    cron: "0 0 12 * * ?" # daily at noon
