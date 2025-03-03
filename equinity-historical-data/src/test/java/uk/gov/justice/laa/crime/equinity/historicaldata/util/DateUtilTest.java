@@ -34,7 +34,7 @@ class DateUtilTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"2024-02-29T00:00:00", "2024-02-29T09:10:21"})
-    void doSearchByTest_WhenInvalidDateFormatIsGivenThenReturnConstraintViolationException(String invalidDate) {
+    void convertStringToLocalDate_WhenInvalidDateFormatIsGivenThenReturnConstraintViolationException(String invalidDate) {
         String expectedMessage = "could not be parsed";
 
         // execute
@@ -109,6 +109,11 @@ class DateUtilTest {
     }
 
     @Test
+    void checkDateRangeIsValid_AcceptsValidDateRange() {
+        DateUtil.checkDateRangeIsValid(DateUtil.DateRange.DECISION, LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 31));
+    }
+
+    @Test
     void checkDateRangeIsValid_AcceptsNullStartDate() {
         DateUtil.checkDateRangeIsValid(DateUtil.DateRange.DECISION, null, LocalDate.of(2024, 1, 1));
     }
@@ -157,6 +162,20 @@ class DateUtilTest {
 
         softly.assertThat(result).isNotNull();
         softly.assertThat(result).isEqualTo(LocalDate.now());
+    }
+
+    @Test
+    void calculateTimeDifference_ShouldReturnDuration() {
+        String result = DateUtil.calculateTimeDifference("2018-07-27T09:23:52", "2018-07-27T14:23:52", "yyyy-MM-dd'T'HH:mm:ss");
+
+        softly.assertThat(result).isEqualTo("05:00:00");
+    }
+
+    @Test
+    void calculateTimeDifference_WhenGivenInvalidDateStringShouldReturnNull() {
+        String result = DateUtil.calculateTimeDifference("2018-07-27 09:23:52", "2018-07-27 14:23:52", "yyyy-MM-dd'T'HH:mm:ss");
+
+        softly.assertThat(result).isNull();
     }
 
     @Test

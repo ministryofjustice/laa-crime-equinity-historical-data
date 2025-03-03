@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
@@ -21,8 +22,10 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFou
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm14ProviderReportRepository;
+import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,6 +45,9 @@ class Crm14ProviderReportControllerTest {
 
     @InjectSoftAssertions
     private SoftAssertions softly;
+
+    @SpyBean
+    CsvWriterService spyCsvWriterService;
 
     @MockBean
     Crm14ProviderReportRepository mockReportRepository;
@@ -238,5 +244,35 @@ class Crm14ProviderReportControllerTest {
                 0, START_DATE, END_DATE,
                 1, START_DATE, END_DATE, STATE,
                 0, START_DATE, END_DATE);
+    }
+
+    @Test
+    void generateProviderReportCrm14_WhenIOExceptionThenReturnInternalServerErrorStatus() throws Exception {
+        when(mockReportRepository.getReport(PROVIDER_ACCOUNT,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                1, START_DATE, END_DATE)).thenReturn(List.of(new Crm14ProviderReportModel()));
+
+        when(spyCsvWriterService.open()).thenThrow(IOException.class);
+
+        // execute
+        ResponseEntity<Void> result = controller.generateProviderReportCrm14(
+                PROVIDER_ACCOUNT,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                1, START_DATE, END_DATE, STATE
+        );
+
+        softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        softly.assertThat(result).isNull();
+
+
+        verify(mockReportRepository).getReport(PROVIDER_ACCOUNT,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE, STATE,
+                1, START_DATE, END_DATE);
     }
 }

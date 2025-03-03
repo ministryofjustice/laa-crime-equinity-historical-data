@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
@@ -53,8 +54,8 @@ class Crm14CaseSummaryReportControllerTest {
     @MockBean
     Crm14CaseSummaryReportRepository mockReportRepository;
 
-    @MockBean
-    private CsvWriterService csvService;
+    @SpyBean
+    private CsvWriterService spyCsvService;
 
     @Autowired
     private Crm14CaseSummaryReportController controller;
@@ -206,7 +207,7 @@ class Crm14CaseSummaryReportControllerTest {
                 1, START_DATE, END_DATE, STATE_DEFAULT,
                 0, START_DATE, END_DATE)).thenReturn(List.of(new Crm14CaseSummaryReportModel()));
 
-        doThrow(IOException.class).when(csvService).close(any());
+        when(spyCsvService.open()).thenThrow(IOException.class);
 
         // execute
         ResponseEntity<Void> result = controller.generateReportCrm14(

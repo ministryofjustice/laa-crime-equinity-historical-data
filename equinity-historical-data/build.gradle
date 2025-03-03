@@ -150,16 +150,17 @@ test {
 	}
 }
 
-
 jacocoTestReport {
 	dependsOn test
 
 	reports {
 		xml.required = true
-		xml.outputLocation = file("$project.buildDir/reports/jacoco/coverage.xml")
+		xml.outputLocation = file("build/reports/jacoco/coverage.xml")
 		html.required = true
-		html.outputLocation = file("$project.buildDir/reports/jacoco/html")
+		html.outputLocation = file("build/reports/jacoco/html")
 	}
+
+	// exclude packages from reports
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
@@ -196,11 +197,13 @@ jacocoTestCoverageVerification {
 				'uk.gov.justice.laa.crime.equinity.historicaldata.controller.CrmFileController' // This is a temporary test class
 			]
 			limit {
-				minimum = 0.60
+				minimum = 0.90
 			}
 		}
 	}
 }
+
+check.dependsOn jacocoTestCoverageVerification
 
 sonar {
 	properties {

@@ -58,9 +58,7 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
 
         csvService.setupResponseHeaders(Crm14CaseSummaryReportService.getCSVFileName());
 
-        try {
-            CSVWriter writer = csvService.open();
-
+        try (CSVWriter writer = csvService.open()) {
             // Write header to CSV file
             csvService.writeLine(writer, Crm14CaseSummaryReportModel.exportHeaderToCSVArray());
 
@@ -68,8 +66,6 @@ public class Crm14CaseSummaryReportController implements ReportCrm14Api {
             for (Crm14CaseSummaryReportModel report : reportData) {
                 csvService.writeLine(writer, report.exportToCSVArray());
             }
-
-            csvService.close(writer);
         } catch (IOException e) {
             log.error("Something went wrong generating CRM14 report for given criteria [{}]. Error:: {}. StackTrace:: {}", criteria, e.getMessage(), e.getStackTrace());
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
