@@ -34,6 +34,10 @@ jobs:
           java-version: ${{env.JAVA_VERSION}}
           java-dist: ${{env.JAVA_DIST}}
 
+
+          name: Run SonarQube
+          command: ./gradlew sonarqube -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.organization=${SONAR_ORG}
+
   snyk-app:
     runs-on: ubuntu-latest
     needs:

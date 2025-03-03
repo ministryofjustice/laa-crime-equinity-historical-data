@@ -25,7 +25,6 @@ class ReportInputsUtilTest {
         softly.assertThatThrownBy(() -> ReportInputsUtil.checkInputs("2024-01-31",  "2024-01-01", null,  1, false))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-01-31] must not be after end date [2024-01-01]");
-        ;
     }
 
     @Test
@@ -33,6 +32,5 @@ class ReportInputsUtilTest {
         softly.assertThatThrownBy(() -> ReportInputsUtil.checkInputs("2024-01-31",  "2024-01-01", "1,4",  5, false))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: decision start date [2024-01-31] must not be after end date [2024-01-01]");
-        ;
     }
 }
