@@ -37,3 +37,10 @@ runs:
       with:
         arguments: jacocoTestCoverageVerification
         build-root-directory: ${{inputs.working-directory}}
+
+    - name: Run SonarQube
+      uses: gradle/gradle-build-action@v2.12.0
+      with:
+        arguments: sonarqube
+        build-root-directory: ${{inputs.working-directory}}
+
