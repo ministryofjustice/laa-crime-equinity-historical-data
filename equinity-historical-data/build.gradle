@@ -6,7 +6,7 @@ plugins {
 def versions = [
 		springStarter 				: '3.3.7',
 		springWeb 					: '6.1.14',
-		springSecurity 				: '6.3.5',
+		springSecurity 				: '6.3.8',
 		springdoc 					: '1.8.0',
 		json 						: '20240303',
 		logback 					: '1.5.6',
@@ -79,6 +79,7 @@ dependencies {
 	implementation "org.springframework.security:spring-security-core:$versions.springSecurity"
 	implementation "org.springframework.security:spring-security-web:$versions.springSecurity"
 	implementation "org.springframework.security:spring-security-config:$versions.springSecurity"
+	implementation "org.springframework.security:spring-security-crypto:$versions.springSecurity"
 	implementation "org.springframework.boot:spring-boot-starter-security:$versions.springStarter"
 
 	implementation "org.springframework:spring-webflux:$versions.springWeb"
