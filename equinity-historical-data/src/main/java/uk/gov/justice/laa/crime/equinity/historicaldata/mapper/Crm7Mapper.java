@@ -150,7 +150,7 @@ public interface Crm7Mapper extends CrmEvidenceFilesMapper {
     @Mapping(target="feeEarnerInitials", source="fe_initials")
     @Mapping(target="date", source="date")
     @Mapping(target="costType", source="cost_type")
-    @Mapping(target="time", source="time_total")
+    @Mapping(target="time", source="time_total", qualifiedByName="convertToTimeSpentString")
     @Mapping(target="hearingTypeCode", source="hearing_codes")
     @Mapping(target="personAttendedCode", source="person_codes")
     @Mapping(target="hourlyRate", source="rate")
