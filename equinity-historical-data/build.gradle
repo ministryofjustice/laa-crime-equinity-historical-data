@@ -79,6 +79,7 @@ dependencies {
 	implementation "org.springframework.security:spring-security-core:$versions.springSecurity"
 	implementation "org.springframework.security:spring-security-web:$versions.springSecurity"
 	implementation "org.springframework.security:spring-security-config:$versions.springSecurity"
+	implementation "org.springframework.security:spring-security-crypto:$versions.springSecurity"
 	implementation "org.springframework.boot:spring-boot-starter-security:$versions.springStarter"
 
 	implementation "org.springframework:spring-webflux:$versions.springWeb"
