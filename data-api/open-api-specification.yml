@@ -242,6 +242,7 @@ paths:
       summary: 'CRM4 Provider Report'
       operationId: 'generateProviderReportCrm4'
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - name: decisionFrom
           in: query
           required: true
@@ -279,6 +280,7 @@ paths:
       summary: 'CRM14 Provider Report'
       operationId: 'generateProviderReportCrm14'
       parameters:
+        - $ref: '#/components/parameters/profileAcceptedTypes'
         - name: providerAccount
           in: query
           required: true

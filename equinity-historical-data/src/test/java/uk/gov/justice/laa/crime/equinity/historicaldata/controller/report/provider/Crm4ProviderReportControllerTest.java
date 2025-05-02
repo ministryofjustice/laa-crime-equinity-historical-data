@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConstraintViolationException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm4ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm4ProviderReportRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil;
@@ -25,14 +26,17 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm4ProviderReportControllerTest {
+    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_4);
     private static final LocalDate CURRENT_DATE = LocalDate.now();
     private static final String DECISION_FROM = CURRENT_DATE.minusDays(1).toString();
     private static final String DECISION_TO = CURRENT_DATE.toString();
+    private static final String DENIED_PROFILE_TYPES = "2,9";
     private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
     private static final String PROVIDER_ACCOUNT = "123ABC";
 
@@ -57,7 +61,7 @@ class Crm4ProviderReportControllerTest {
         when(mockReportRepository.getReport(DECISION_FROM, DECISION_TO, PROVIDER_ACCOUNT)).thenReturn(List.of(report));
 
         // execute
-        ResponseEntity<String> response = controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, PROVIDER_ACCOUNT);
+        ResponseEntity<String> response = controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES);
 
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         String expectedReport = "Client UFN,Usn,Provider Account,Firm Name,Client Name," +
@@ -73,7 +77,7 @@ class Crm4ProviderReportControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateProviderReportCrm4_WhenInvalidDecisionDateFromIsGivenThenThrowConstraintViolationException(String invalidDecisionFrom) {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(invalidDecisionFrom, DECISION_TO, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(invalidDecisionFrom, DECISION_TO, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionFrom: must match \"^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$\"");
     }
@@ -82,7 +86,7 @@ class Crm4ProviderReportControllerTest {
     void generateProviderReportCrm4_WhenDecisionDateFromIsOver7yrsAgoThenThrowConstraintViolationException() {
         String decisionFrom = SEVEN_YEARS_AGO.minusMonths(2).toString();
 
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, DECISION_TO, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, DECISION_TO, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + SEVEN_YEARS_AGO + "]");
     }
@@ -90,7 +94,7 @@ class Crm4ProviderReportControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"123", "12-12-23", "12-12-2023", "10/11/2024", "2024/03/12", "2024-13-01", "2024-12-32", "2024-12-1", "2024-1-12"})
     void generateProviderReportCrm4_WhenInvalidDecisionDateToIsGivenThenThrowConstraintViolationException(String invalidDate) {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, invalidDate, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, invalidDate, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionTo: must match \"^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$\"");
     }
@@ -100,7 +104,7 @@ class Crm4ProviderReportControllerTest {
         String decisionFrom = CURRENT_DATE.toString();
         String decisionTo = CURRENT_DATE.minusDays(1).toString(); // before decisionFrom
 
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(decisionFrom, decisionTo, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: decision start date [" + decisionFrom + "] must not be after end date [" + decisionTo + "]");
     }
@@ -108,29 +112,36 @@ class Crm4ProviderReportControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"123", "123*", "1234ABCD"})
     void generateProviderReportCrm4_WhenInvalidProviderAccountIsGivenThenThrowConstraintViolationException(String invalidProviderAccount) {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, invalidProviderAccount))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, invalidProviderAccount, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateProviderReportCrm4.providerAccount: must match \"([0-9A-Za-z]){4,6}\"");
     }
 
     @Test
     void generateProviderReportCrm4_WhenDecisionFromIsMissingThenThrowConstraintViolationException() {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(null, DECISION_TO, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(null, DECISION_TO, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionFrom: must not be null");
     }
 
     @Test
     void generateProviderReportCrm4_WhenDecisionToIsMissingThenThrowConstraintViolationException() {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, null, PROVIDER_ACCOUNT))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, null, PROVIDER_ACCOUNT, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.decisionTo: must not be null");
     }
 
     @Test
     void generateProviderReportCrm4_WhenProviderAccountIsMissingThenThrowConstraintViolationException() {
-        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, null))
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, null, ACCEPTED_PROFILE_TYPES))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm4.providerAccount: must not be null");
+    }
+
+    @Test
+    void generateProviderReportCrm4_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm4(DECISION_FROM, DECISION_TO, PROVIDER_ACCOUNT, DENIED_PROFILE_TYPES))
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [1]");
     }
 }

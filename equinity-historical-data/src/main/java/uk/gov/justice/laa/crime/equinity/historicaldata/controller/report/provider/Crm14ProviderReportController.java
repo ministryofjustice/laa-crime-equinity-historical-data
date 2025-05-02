@@ -33,7 +33,7 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
                                                             Integer filterBySubmit, String submittedFrom, String submittedTo,
                                                             Integer filterByCreation, String createdFrom, String createdTo,
                                                             Integer filterByLastSubmit, String lastSubmittedFrom, String lastSubmittedTo,
-                                                            String state) {
+                                                            String profileAcceptedTypes, String state) {
         Crm14ReportCriteriaDTO criteria;
         List<Crm14ProviderReportModel> reportData;
 
@@ -43,7 +43,7 @@ public class Crm14ProviderReportController implements ProviderReportCrm14Api {
                     filterBySubmit, submittedFrom, submittedTo,
                     filterByCreation, createdFrom, createdTo,
                     filterByLastSubmit, lastSubmittedFrom, lastSubmittedTo,
-                    state, providerAccount, null, appUtil.applySevenYearsLimit()
+                    state, providerAccount, profileAcceptedTypes, appUtil.applySevenYearsLimit()
             );
 
             log.info("eForm CRM14 Provider report download request received :: [{}]", criteria);

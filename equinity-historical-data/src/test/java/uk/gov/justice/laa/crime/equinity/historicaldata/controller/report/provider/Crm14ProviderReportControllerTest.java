@@ -20,6 +20,7 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.exception.DateRangeConst
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.NotEnoughSearchParametersException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.ResourceNotFoundException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.exception.StartDateConstraintViolationException;
+import uk.gov.justice.laa.crime.equinity.historicaldata.exception.UnauthorizedUserProfileException;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.report.provider.Crm14ProviderReportModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.report.provider.Crm14ProviderReportRepository;
 import uk.gov.justice.laa.crime.equinity.historicaldata.service.CsvWriterService;
@@ -31,14 +32,17 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_14;
 
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Crm14ProviderReportControllerTest {
+    private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_14);
     private static final LocalDate CURRENT_DATE = LocalDate.now();
     private static final String START_DATE = CURRENT_DATE.minusDays(1).toString();
     private static final String END_DATE = CURRENT_DATE.toString();
+    private static final String DENIED_PROFILE_TYPES = "2,9";
     private static final String PROVIDER_ACCOUNT = "123ABC";
     private static final String STATE = "All";
     private static final LocalDate SEVEN_YEARS_AGO = DateUtil.getDateSevenYearsAgo();
@@ -77,7 +81,8 @@ class Crm14ProviderReportControllerTest {
                 1, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
-                0, START_DATE, END_DATE, STATE
+                0, START_DATE, END_DATE,
+                ACCEPTED_PROFILE_TYPES, STATE
         );
 
         softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -98,7 +103,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessage("generateProviderReportCrm14.providerAccount: must not be null");
     }
@@ -112,7 +117,7 @@ class Crm14ProviderReportControllerTest {
                         0, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
                         0, invalidDate, invalidDate,
-                        STATE))
+                       ACCEPTED_PROFILE_TYPES,  STATE))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContaining("generateProviderReportCrm14.decisionFrom: must match")
                 .hasMessageContaining("generateProviderReportCrm14.decisionTo: must match")
@@ -133,7 +138,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(StartDateConstraintViolationException.class)
                 .hasMessage("Start Date Constraint Violation Exception :: decision start date [" + decisionFrom + "] cannot be earlier than [" + SEVEN_YEARS_AGO + "]");
     }
@@ -150,7 +155,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: decision start date [" + decisionFrom + "] must not be after end date [" + decisionTo + "]");
     }
@@ -167,7 +172,7 @@ class Crm14ProviderReportControllerTest {
                         1, submittedFrom, submittedTo,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: submitted start date ["+ submittedFrom + "] must not be after end date [" + submittedTo + "]");
     }
@@ -184,7 +189,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         1, createdFrom, createdTo,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: created start date [" + createdFrom + "] must not be after end date [" + createdTo + "]");
     }
@@ -201,7 +206,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         1, lastSubmittedFrom, lastSubmittedTo,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(DateRangeConstraintViolationException.class)
                 .hasMessage("Date Range Constraint Violation Exception :: lastSubmitted start date [" + lastSubmittedFrom + "] must not be after end date [" + lastSubmittedTo + "]");
     }
@@ -215,7 +220,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(NotEnoughSearchParametersException.class)
                 .hasMessage("Not enough inputs to generate report. Please specify at least 1 date range and turn on the corresponding filter flag");
     }
@@ -235,7 +240,7 @@ class Crm14ProviderReportControllerTest {
                         0, START_DATE, END_DATE,
                         1, START_DATE, END_DATE,
                         0, START_DATE, END_DATE,
-                        STATE))
+                        ACCEPTED_PROFILE_TYPES, STATE))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("No data found for CRM14 Provider Report for inputs");
 
@@ -262,7 +267,8 @@ class Crm14ProviderReportControllerTest {
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE,
-                1, START_DATE, END_DATE, STATE
+                1, START_DATE, END_DATE,
+                ACCEPTED_PROFILE_TYPES, STATE
         );
 
         softly.assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -274,5 +280,18 @@ class Crm14ProviderReportControllerTest {
                 0, START_DATE, END_DATE,
                 0, START_DATE, END_DATE, STATE,
                 1, START_DATE, END_DATE);
+    }
+
+    @Test
+    void generateProviderReportCrm14_WhenExistingDecisionDatesAndInvalidProfileAreGivenThenReturnUnauthorizedUserProfileException() {
+        softly.assertThatThrownBy(() -> controller.generateProviderReportCrm14(
+                PROVIDER_ACCOUNT,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                0, START_DATE, END_DATE,
+                1, START_DATE, END_DATE,
+                DENIED_PROFILE_TYPES, STATE))
+                .isInstanceOf(UnauthorizedUserProfileException.class)
+                .hasMessage("Unauthorized. User profile does not have privileges to access requested report type [6]");
     }
 }
