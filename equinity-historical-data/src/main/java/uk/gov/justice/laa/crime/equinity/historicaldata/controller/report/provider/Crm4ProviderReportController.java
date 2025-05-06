@@ -10,7 +10,6 @@ import uk.gov.justice.laa.crime.equinity.historicaldata.util.AppUtil;
 import uk.gov.justice.laa.crime.equinity.historicaldata.util.ReportInputsUtil;
 
 import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileService.CRM_TYPE_4;
-import static uk.gov.justice.laa.crime.equinity.historicaldata.util.DateUtil.DateRange.DECISION;
 
 @RestController
 @RequiredArgsConstructor

@@ -36,7 +36,7 @@ import static uk.gov.justice.laa.crime.equinity.historicaldata.service.CrmFileSe
 @SpringBootTest
 @ExtendWith(SoftAssertionsExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class Crm5ControllerTest {
+class Crm5ControllerTest {
     private static final String ACCEPTED_PROFILE_TYPES = Integer.toString(CRM_TYPE_5);
     private static final String DENIED_PROFILE_TYPES = "9,19";
 

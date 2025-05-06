@@ -269,7 +269,7 @@ class CrmFormSearchServiceTest {
 
     @ParameterizedTest
     @MethodSource("inputForSubmittedDateRangeTest")
-    public void searchAllByCriteriaTest_WhenSubmittedDateIsGivenThenShouldReturnResultsWithinThatRange(String submittedFrom, String submittedTo, int expectedResult) {
+    void searchAllByCriteriaTest_WhenSubmittedDateIsGivenThenShouldReturnResultsWithinThatRange(String submittedFrom, String submittedTo, int expectedResult) {
         CrmFormSearchCriteriaDTO searchCriteria = new CrmFormSearchCriteriaDTO(null, null, null, null,
                 submittedFrom, submittedTo, null, null, null, ACCEPTED_TYPES_DEFAULT,
                 null, null, true);

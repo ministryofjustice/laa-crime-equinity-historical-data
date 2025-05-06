@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.justice.laa.crime.equinity.historicaldata.model.data.CrmFormCRM14AttachmentStoreModel;
 import uk.gov.justice.laa.crime.equinity.historicaldata.repository.CrmFormCRM14AttachmentStoreRepository;
 
-import java.io.IOException;
 import java.util.List;
 
 @SpringBootTest
