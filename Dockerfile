@@ -1,4 +1,4 @@
-FROM amazoncorretto:17-alpine
+FROM amazoncorretto:26-alpine
 
 # Downloading dependencies
 RUN apk update \
