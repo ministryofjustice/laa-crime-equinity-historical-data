@@ -26,7 +26,7 @@ jobs:
       - capture-repo-info
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Run unit tests with gradle
         uses: './.github/actions/test-app-gradle'
@@ -40,7 +40,7 @@ jobs:
       - test
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Run Snyk to check app for vulnerabilities
         uses: snyk/actions/gradle@master
         env:
@@ -61,7 +61,7 @@ jobs:
       IMAGE_TAG: ${{ needs.capture-repo-info.outputs.repo_name }}-${{ github.sha }} # Tags ECR image with commit sha
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build app jar with gradle
         uses: './.github/actions/build-app-gradle'
         with:
