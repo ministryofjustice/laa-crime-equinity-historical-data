@@ -57,7 +57,7 @@ jobs:
       - capture-repo-info
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup Snyk Monitor checks for Java app vulnerabilities
         uses: snyk/actions/gradle@master

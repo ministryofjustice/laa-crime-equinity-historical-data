@@ -30,7 +30,7 @@ jobs:
 
     steps:
       # Checkout github repo
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build app jar with gradle
         uses: './.github/actions/build-app-gradle'
