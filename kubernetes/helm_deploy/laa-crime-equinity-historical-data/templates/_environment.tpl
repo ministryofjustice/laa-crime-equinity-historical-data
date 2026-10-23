@@ -3,6 +3,10 @@ Environment variables for service containers
 */}}
 {{- define "laa-crime-equinity-historical-data.env-vars" }}
 env:
+  - name: JAVA_TOOL_OPTIONS
+    value: >-
+      -Dcom.sun.net.ssl.checkRevocation=true
+      -Dcom.sun.security.enableCRLDP=true
   - name: DB_ENDPOINT
     valueFrom:
       secretKeyRef:
